@@ -20,6 +20,8 @@ namespace DataAnalysisSystem.Controllers
 
         public IActionResult Index()
         {
+            //var products = new ExcelMapper("products.xlsx").Fetch<Product>();
+
             return View();
         }
 

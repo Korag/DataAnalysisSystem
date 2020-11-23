@@ -21,6 +21,38 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetIdentityProvider", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Identity.Mongo", "AspNetIdentityProvider\AspNetCore.Identity.Mongo\AspNetCore.Identity.Mongo.csproj", "{D810604A-818B-4930-928E-1744500BA19C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Materials", "Materials", "{E97C95E2-757D-4C8E-ACF4-F3296EAEE106}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MaterializeDataTable_configured", "MaterializeDataTable_configured", "{6E2E83E7-8419-4DCD-9E1C-02591CD08C59}"
+	ProjectSection(SolutionItems) = preProject
+		Materials\MaterializeDataTable_configured\dataTable.html = Materials\MaterializeDataTable_configured\dataTable.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D}"
+	ProjectSection(SolutionItems) = preProject
+		Materials\MaterializeDataTable_configured\css\admin-materialize.css = Materials\MaterializeDataTable_configured\css\admin-materialize.css
+		Materials\MaterializeDataTable_configured\css\datatables.css = Materials\MaterializeDataTable_configured\css\datatables.css
+		Materials\MaterializeDataTable_configured\css\materialize.css = Materials\MaterializeDataTable_configured\css\materialize.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{B584A586-1AE1-4D42-9FC8-D73FEA5F0490}"
+	ProjectSection(SolutionItems) = preProject
+		Materials\MaterializeDataTable_configured\js\datatables.js = Materials\MaterializeDataTable_configured\js\datatables.js
+		Materials\MaterializeDataTable_configured\js\jquery.min.js = Materials\MaterializeDataTable_configured\js\jquery.min.js
+		Materials\MaterializeDataTable_configured\js\materialize.js = Materials\MaterializeDataTable_configured\js\materialize.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataTables-1.10.22", "DataTables-1.10.22", "{B00F9B71-D675-494B-981F-261C259D1FA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{EB717E73-ABAA-4117-B4C8-913DE7CC67A8}"
+	ProjectSection(SolutionItems) = preProject
+		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc.png
+		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc_disabled.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc_disabled.png
+		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_both.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_both.png
+		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc.png
+		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc_disabled.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc_disabled.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +97,11 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D810604A-818B-4930-928E-1744500BA19C} = {4CAE6D5E-7133-46F4-9865-DF5BBE72BF20}
+		{6E2E83E7-8419-4DCD-9E1C-02591CD08C59} = {E97C95E2-757D-4C8E-ACF4-F3296EAEE106}
+		{23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D} = {6E2E83E7-8419-4DCD-9E1C-02591CD08C59}
+		{B584A586-1AE1-4D42-9FC8-D73FEA5F0490} = {6E2E83E7-8419-4DCD-9E1C-02591CD08C59}
+		{B00F9B71-D675-494B-981F-261C259D1FA0} = {23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D}
+		{EB717E73-ABAA-4117-B4C8-913DE7CC67A8} = {B00F9B71-D675-494B-981F-261C259D1FA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {108625B1-53DE-4EEC-A6D2-58DD96AA3983}
