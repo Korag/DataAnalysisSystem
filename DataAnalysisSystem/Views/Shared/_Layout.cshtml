@@ -4,14 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Data Analysis System</title>
+
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="~/css/materialize.css" rel="stylesheet" />
+
     <link href="~/css/datatables.css" rel="stylesheet" />
-    <link href="~/css/Chart.css" rel="stylesheet" />
-    <!--Import Google Icon Font-->
+
+    <link href="~/css/materialize.css" rel="stylesheet" />
+    <link href="~/css/admin-materialize.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    @*<link href="~/css/Chart.css" rel="stylesheet" />*@
+
+    @*Import Google Icon Font*@
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -42,17 +52,25 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - DataAnalysisSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <div id="footer-bottom" class="clr no-footer-nav control" style="color: #ffffff">
+        <div id="footer-bottom-inner" class="container clr">
+            <div id="copyright" class="clr" role="contentinfo">
+                © Copyright Łukasz Czepielik 2020/2021
+            </div><!-- #copyright -->
+        </div><!-- #footer-bottom-inner -->
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
-    <script src="~/js/materialize.js"></script>
+
     <script src="~/js/datatables.js"></script>
-    <script src="~/js/Chart.js"></script>
+
+    <script src="~/js/materialize.js"></script>
+
+    @*<script src="~/js/Chart.js"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
