@@ -17,4 +17,8 @@
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataAnalysisSystem.ServicesInterfaces\DataAnalysisSystem.ServicesInterfaces.csproj" />
+  </ItemGroup>
+
 </Project>

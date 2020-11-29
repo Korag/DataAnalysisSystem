@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
 
 namespace DataAnalysisSystem.Services.Serializers_Helpers
 {
-    public class JsonSerializerHelper
+    public static class JsonSerializerHelper
     {
+        public static dynamic ConvertJsonStringToDynamicObject(string jsonString)
+        {
+            return JsonConvert.DeserializeObject(jsonString);
+        }
     }
 }
