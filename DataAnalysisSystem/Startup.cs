@@ -7,6 +7,8 @@ using AspNetCore.Identity.Mongo;
 using Microsoft.AspNetCore.Identity;
 using DataAnalysisSystem.DataEntities;
 using Microsoft.Extensions.Identity.Core;
+using AutoMapper;
+using DataAnalysisSystem.Services;
 
 namespace DataAnalysisSystem
 {
@@ -24,12 +26,6 @@ namespace DataAnalysisSystem
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.AddIdentityMongoDbProvider<IdentityProviderUser>(identityOptions =>
             {
                 identityOptions.Password.RequiredLength = 6;
@@ -41,6 +37,15 @@ namespace DataAnalysisSystem
             {
                 mongoIdentityOptions.ConnectionString = _dbConnectionString;
             });
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(autoMapper =>
+            {
+                autoMapper.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             services.AddControllersWithViews();
             services.AddRazorPages();
