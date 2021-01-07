@@ -1,0 +1,31 @@
+﻿@model DataAnalysisSystem.DTOViewModels.ModalPopupViewModel
+
+<div id="@Model.ModalIdentificator" class="modal" style="z-index: 1010; border:solid 4px; border-color:#26a69a">
+
+    <div class="modal-content">
+        <h4>@Model.ModalTitle</h4>
+        <p style="text-align: justify">
+            @Model.ModalContent
+        </p>
+    </div>
+
+    <div class="modal-footer">
+
+        @if (Model.ModalActAsForm)
+        {
+        <button type="submit" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color:#26a69a">@Model.LabelOnButton</button>
+        }
+
+        else if (Model.RouteAdditionalArguments != null)
+        {
+            <button asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" asp-all-route-data="@Model.RouteAdditionalArguments" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color:#26a69a">@Model.LabelOnButton</button>
+        }
+
+        else
+        {
+            <button asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color: #26a69a">@Model.LabelOnButton</button>
+        }
+        <button type="button" class="modal-close waves-effect waves-red btn-flat" style="border:solid 1px; border-color:#B71C1C">Cancel</button>
+
+    </div>
+</div>
