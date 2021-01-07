@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Data Analysis System</title>
 
+    <!-- #region Dependencies -->
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -22,7 +23,20 @@
     @*Import Google Icon Font*@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!-- #endregion -->
+
 </head>
+
+@*@if (!this.User.Identity.IsAuthenticated)
+{
+    {@await Component.InvokeAsync("NotAuthorizedUserLayout")}
+}
+else
+{
+       {@await Component.InvokeAsync("AuthorizedUserLayout")}
+}*@
+
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -59,6 +73,9 @@
             </div><!-- #copyright -->
         </div><!-- #footer-bottom-inner -->
     </div>
+    }
+
+    <!-- #region Scripts -->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
@@ -72,5 +89,8 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
+
+    <!-- #endregion -->
+
 </body>
 </html>
