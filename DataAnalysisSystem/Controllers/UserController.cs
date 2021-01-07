@@ -10,7 +10,7 @@ namespace DataAnalysisSystem.Controllers
     {
         public UserController()
         {
-
+            //UserLogout
         }
     }
 }
