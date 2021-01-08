@@ -11,29 +11,12 @@
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <link href="~/css/datatables.css" rel="stylesheet" />
-
-    <link href="~/css/materialize.css" rel="stylesheet" />
-    <link href="~/css/admin-materialize.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <link rel="stylesheet" href="~/css/site.css" />
-
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-
-    @*<link href="~/css/Chart.css" rel="stylesheet" />*@
-
-    @*Import Google Icon Font*@
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- #endregion -->
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/materialize.js"></script>
+    <partial name="_CSSDependenciesPartial" />
+    <partial name="_JSDependenciesPartial" />
 
 </head>
 
-<body class="has-fixed-sidenav">
+<body>
     <header>
 
         <!-- #region Top Navbar -->
@@ -44,10 +27,8 @@
                     <a asp-controller="..." asp-action="..." class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:24px"><img src="~/images/logo_small.png" width="40" height="40" />  Data Analysis System</a>
 
                     <ul id="nav-mobile" class="right">
-                        <li><a href="#!" data-target="chat-dropdown" class="dropdown-trigger waves-effect"><i class="material-icons">settings</i></a></li>
+                        <partial name="_LoginPartial" />
                     </ul>
-
-                    <a href="#" data-target="sidenav-left" class="sidenav-trigger left"><i class="material-icons black-text">menu</i></a>
 
                 </div>
 
@@ -58,58 +39,6 @@
 
         @RenderSection("Notification", required: false)
 
-        <!-- #endregion -->
-        <!-- #region Left Navbar -->
-        <ul id="sidenav-left" class="sidenav sidenav-fixed teal lighten-1">
-            <li><a href="#" class="logo-container" style="font-weight:bold">Menu<i class="material-icons left">gamepad</i></a></li>
-            <ul class="collapsible expandable">
-                <li class="bold waves-effect">
-                    <a class="collapsible-header not-collapse" style="font-weight:bold">Datasets</a>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Add new dataset<i class="material-icons">description</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">List of datasets<i class="material-icons">view_list</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Share the dataset<i class="material-icons">folder_shared</i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="bold waves-effect">
-                    <a class="collapsible-header not-collapse" style="font-weight:bold">Analysis of data</a>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Perform the analysis<i class="material-icons">format_shapes</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">History of performed analyses<i class="material-icons">history</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Available exploration methods<i class="material-icons">functions</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Share the analysis<i class="material-icons">screen_share</i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="bold waves-effect">
-                    <a class="collapsible-header not-collapse" style="font-weight:bold">Resources made available</a>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Dataset browser<i class="material-icons">sticky_note_2</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Analysis browser<i class="material-icons">leaderboard</i></a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-            <li class="center-align" style="width:100%; vertical-align:text-bottom"><div class="divider"></div><span style="font-weight:bold; color:#F0F2F1">© Łukasz Czepielik 2020/2021</span></li>
-        </ul>
-
-        <div id="chat-dropdown" class="dropdown-content dropdown-tabbed">
-            <div id="settings" class="col s12">
-                <div class="settings-group">
-                    <div class="setting">
-                        <a asp-controller="..." asp-action="..." class="waves-effect waves-light btn-large teal lighten-1 white-text" style="width:140px; height:54px"> Account</a>
-                    </div>
-
-                    <partial name="_LogoutPartial" />
-
-                </div>
-            </div>
-
-        </div>
     </header>
 
     <!-- #region Logout Modal -->
@@ -130,7 +59,6 @@
                                                         })
     }
     <!-- #endregion -->
-
     <!-- #region Children Containers -->
 
     <div class="container">
@@ -143,44 +71,32 @@
 
     <!-- #endregion -->
 
-    <footer class="page-footer">
+    <footer class="page-footer center-align" style="padding: 5px 5px; max-width: 300px">
         <div class="container">
             <div class="row">
                 <div class="col s6 m4">
-                    <h6><a asp-controller="..." asp-action="..." class="waves-effect teal-text text-lighten-1"><i class="material-icons prefix">alternate_email</i>  Contact</a></h6>
-                </div>
-                <div class="col s6 m4">
-                    <h6><a asp-controller="..." asp-action="..." class="waves-effect teal-text text-lighten-1"><i class="material-icons prefix">mode_edit</i>  About application</a></h6>
+                    <h7><a asp-controller="..." asp-action="..." class="waves-effect teal-text text-lighten-1"><i class="material-icons prefix">alternate_email</i>  Contact</a></h7>
                 </div>
                 <div class="col s0 m4">
-
+                </div>
+                <div class="col s6 m4">
+                    <h7><a asp-controller="..." asp-action="..." class="waves-effect teal-text text-lighten-1"><i class="material-icons prefix">mode_edit</i>  About application</a></h7>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- #region Scripts -->
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
-
-    <script src="~/js/datatables.js"></script>
-
-    @*<script src="~/js/Chart.js"></script>*@
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script>
-        $(".not-collapse").on("click", function (e) { e.stopPropagation(); });
-
-        var elem = document.querySelector('.collapsible.expandable');
-        var instance = M.Collapsible.init(elem, {
-            accordion: false
-        });
-        instance.open();
-
-    </script>
-
+    <footer class="page-footer" style="padding: 20px 20px">
+        <div class="container">
+            <div class="row center-align">
+                <div class="col s12 m12">
+                    <h6 class="teal-text text-lighten-1">© Copyright Łukasz Czepielik 2020/2021</h6>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     @RenderSection("Scripts", required: false)
 
-    <!-- #endregion -->
 </body>
 </html>

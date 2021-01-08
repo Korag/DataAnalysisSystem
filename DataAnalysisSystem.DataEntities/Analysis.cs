@@ -20,7 +20,7 @@ namespace DataAnalysisSystem.DataEntities
 
         public string DateOfCreation { get; set; }
 
-        public bool Shared { get; set; }
+        public bool IsShared { get; set; }
         public string AccessKey { get; set; }
 
         //Podsumowanie danych -> podstawowe informacje z dziedziny statystyki

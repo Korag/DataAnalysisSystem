@@ -53,6 +53,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{EB717E
 		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc_disabled.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc_disabled.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{DDAC90E3-6A5A-453B-A02E-7729FAE4A1FA}"
+	ProjectSection(SolutionItems) = preProject
+		Materials\Diagrams\dataAnalysisSystem_classDiagram_v1.0.png = Materials\Diagrams\dataAnalysisSystem_classDiagram_v1.0.png
+		Materials\Diagrams\dataAnalysisSystem_classDiagram_v1.0.vsdx = Materials\Diagrams\dataAnalysisSystem_classDiagram_v1.0.vsdx
+		Materials\Diagrams\dataAnalysisSystem_mongoCollectionDiagram_v1.0.png = Materials\Diagrams\dataAnalysisSystem_mongoCollectionDiagram_v1.0.png
+		Materials\Diagrams\dataAnalysisSystem_mongoCollectionDiagram_v1.0.vsdx = Materials\Diagrams\dataAnalysisSystem_mongoCollectionDiagram_v1.0.vsdx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +110,7 @@ Global
 		{B584A586-1AE1-4D42-9FC8-D73FEA5F0490} = {6E2E83E7-8419-4DCD-9E1C-02591CD08C59}
 		{B00F9B71-D675-494B-981F-261C259D1FA0} = {23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D}
 		{EB717E73-ABAA-4117-B4C8-913DE7CC67A8} = {B00F9B71-D675-494B-981F-261C259D1FA0}
+		{DDAC90E3-6A5A-453B-A02E-7729FAE4A1FA} = {E97C95E2-757D-4C8E-ACF4-F3296EAEE106}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {108625B1-53DE-4EEC-A6D2-58DD96AA3983}

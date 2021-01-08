@@ -3,7 +3,7 @@
 @inject SignInManager<IdentityProviderUser> SignInManager
 @inject UserManager<IdentityProviderUser> UserManager
 
-@if (!SignInManager.IsSignedIn(User))
+@if (SignInManager.IsSignedIn(User))
 {
     <div class="setting">
         <form method="post" class="form-inline" asp-controller="User" asp-action="UserLogout">

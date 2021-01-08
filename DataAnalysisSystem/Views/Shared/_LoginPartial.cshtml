@@ -1,0 +1,11 @@
+﻿@using DataAnalysisSystem.DataEntities
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityProviderUser> SignInManager
+@inject UserManager<IdentityProviderUser> UserManager
+
+@if (!SignInManager.IsSignedIn(User))
+{
+
+    <button asp-controller="User" asp-action="Login" class="waves-effect waves-teal btn-flat" style="height:35px">Sign In</button>
+    <button asp-controller="User" asp-action="Register" class="waves-effect waves-teal btn-flat" style="border: solid #26a69a; border-radius: 12px 12px; height: 41px;">Sign Up</button>
+}

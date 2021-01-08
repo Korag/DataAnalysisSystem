@@ -14,12 +14,12 @@ namespace DataAnalysisSystem.DataEntities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string DatasetIdentificator { get; set; }
-        public string Name { get; set; }
+        public string DatasetName { get; set; }
 
         public string DateOfCreation { get; set; }
         public string DateOfEdition { get; set; }
 
-        public bool Shared { get; set; }
+        public bool IsShared { get; set; }
         public string AccessKey { get; set; }
 
         //Układ wierszy-kolumn zawierających dynamicznie przypisane dane
