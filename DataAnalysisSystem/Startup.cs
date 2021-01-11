@@ -47,6 +47,14 @@ namespace DataAnalysisSystem
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.LoginPath = "/User/UserLogin";
+            });
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

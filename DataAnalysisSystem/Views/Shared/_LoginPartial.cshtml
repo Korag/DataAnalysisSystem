@@ -6,6 +6,6 @@
 @if (!SignInManager.IsSignedIn(User))
 {
 
-    <button asp-controller="User" asp-action="Login" class="waves-effect waves-teal btn-flat" style="height:35px">Sign In</button>
-    <button asp-controller="User" asp-action="Register" class="waves-effect waves-teal btn-flat" style="border: solid #26a69a; border-radius: 12px 12px; height: 41px;">Sign Up</button>
+    <a asp-controller="User" asp-action="UserLogin" class="waves-effect waves-teal btn-flat" style="height:35px">Sign In</a>
+    <a asp-controller="User" asp-action="Register" class="waves-effect waves-teal btn-flat" style="border: solid #26a69a; border-radius: 12px 12px; height: 41px;">Sign Up</a>
 }

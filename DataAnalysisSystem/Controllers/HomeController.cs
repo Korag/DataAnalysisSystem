@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DataAnalysisSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DataAnalysisSystem.Controllers
 {
@@ -18,6 +19,7 @@ namespace DataAnalysisSystem.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             //var products = new ExcelMapper("products.xlsx").Fetch<Product>();

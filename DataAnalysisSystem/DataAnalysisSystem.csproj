@@ -26,7 +26,6 @@
   <ItemGroup>
     <Folder Include="Views\Analysis\" />
     <Folder Include="Views\Dataset\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
 
 </Project>
