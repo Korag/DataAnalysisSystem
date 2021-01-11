@@ -17,14 +17,14 @@ namespace DataAnalysisSystem.Controllers
         private readonly SignInManager<IdentityProviderUser> _signInManager;
         private readonly RoleManager<IdentityProviderUserRole> _roleManager;
 
-        public UserController(
-                                 UserManager<IdentityProviderUser> userManager,
-                                 SignInManager<IdentityProviderUser> signInManager,
-                                 RoleManager<IdentityProviderUserRole> roleManager)
+        public UserController()
+                                 //UserManager<IdentityProviderUser> userManager,
+                                 //SignInManager<IdentityProviderUser> signInManager,
+                                 //RoleManager<IdentityProviderUserRole> roleManager)
         {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._roleManager = roleManager;
+            //userManager = userManager;
+            //signInManager = signInManager;
+            //roleManager = roleManager;
         }
 
         [HttpGet]
@@ -78,6 +78,12 @@ namespace DataAnalysisSystem.Controllers
                     {
                         ModelState.AddModelError("Email", "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
 
+                        //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+
+                        //var emailToSend = _emailSender.GenerateEmailMessage(model.Email, user.FirstName + " " + user.LastName, "emailConfirmation", callbackUrl);
+                        //await _emailSender.SendEmailAsync(emailToSend);
+
                         return View();
                     }
                 }
@@ -97,6 +103,15 @@ namespace DataAnalysisSystem.Controllers
             }
 
             return View(loginViewModel);
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> UserRegister(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
     }
 }
