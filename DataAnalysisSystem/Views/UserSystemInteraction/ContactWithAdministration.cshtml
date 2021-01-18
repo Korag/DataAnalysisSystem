@@ -1,0 +1,78 @@
+﻿@model DataAnalysisSystem.DTO.ContactWithAdministrationViewModel
+
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<div class="row" style="margin-bottom:0px">
+
+    <div class="col s8 offset-s2" style="margin-top:10%">
+        <div class="card card-login">
+            <div class="card-content">
+                <span class="card-title center-align">Log In</span>
+
+                <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+
+                    <div class="input-field">
+
+                        <i class="material-icons prefix">mail_outline</i>
+                        <input type="email" asp-for="SenderEmail" required="" aria-required="true" class="validate">
+                        <label asp-for="SenderEmail"></label>
+
+                        <span asp-validation-for="SenderEmail" class="helper-text" style="color: #F44336"></span>
+
+                    </div>
+
+                    <div class="input-field">
+
+                        <i class="material-icons prefix">security</i>
+                        <input type="password" asp-for="Password" required="" aria-required="true" class="validate">
+                        <label asp-for="Password"></label>
+
+                        <span asp-validation-for="Password" class="helper-text" style="color: #F44336"></span>
+
+                    </div>
+
+                    <div class="input-field col s12">
+
+                        <i class="material-icons prefix">format_align_left</i>
+                        <textarea asp-for="EmailMessageContent" class="materialize-textarea"></textarea>
+                        <label asp-for="EmailMessageContent"></label>
+
+                        <span asp-validation-for="EmailMessageContent" class="helper-text" style="color: #F44336"></span>
+                    </div>
+
+                    <div class="file-field input-field">
+                        <div class="btn teal lighten-4">
+                            <span>Attachments</span>
+                            <input type="file" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input asp-for="Attachments" class="file-path validate" type="text" placeholder="Upload one or more attachments">
+                        </div>
+
+                        <span asp-validation-for="Attachments" class="helper-text" style="color: #F44336"></span>
+                    </div>
+
+                    <div class="center-align" style="margin-top: 10px">
+                        <input class="btn" type="submit" value="Send">
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Notification
+{
+    <div class="row">
+        <div class="col s8 offset-s2">
+
+            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
+
+        </div>
+    </div>
+}

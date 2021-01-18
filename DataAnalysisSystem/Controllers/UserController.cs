@@ -15,23 +15,12 @@ namespace DataAnalysisSystem.Controllers
     {
         private readonly UserManager<IdentityProviderUser> _userManager;
         private readonly SignInManager<IdentityProviderUser> _signInManager;
-        private readonly RoleManager<IdentityProviderUserRole> _roleManager;
 
-        public UserController()
-                                 //UserManager<IdentityProviderUser> userManager,
-                                 //SignInManager<IdentityProviderUser> signInManager,
-                                 //RoleManager<IdentityProviderUserRole> roleManager)
+        public UserController(
+                                 UserManager<IdentityProviderUser> userManager,
+                                 SignInManager<IdentityProviderUser> signInManager)
         {
-            //userManager = userManager;
-            //signInManager = signInManager;
-            //roleManager = roleManager;
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult MainAction()
-        {
-            return View();
+            
         }
 
         [HttpPost]
@@ -47,7 +36,7 @@ namespace DataAnalysisSystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> UserLogin(string returnUrl = null, string message = null)
         {
-            ViewBag.message = message;
+            ViewData["Message"] = message;
 
             if (this.User.Identity.IsAuthenticated)
             {
@@ -92,7 +81,7 @@ namespace DataAnalysisSystem.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(MainAction), "User");
+                    return RedirectToAction("MainAction", "UserSystemInteraction");
                 }
                 else
                 {
