@@ -8,25 +8,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Controllers
 {
-    public class UserSystemInteraction : Controller
+    public class UserSystemInteractionController : Controller
     {
         public const string MAINACTION_ACTION_NAME = "MainAction";
         public const string CONTACT_ACTION_NAME = "Contact";
 
-        public UserSystemInteraction()
+        public UserSystemInteractionController()
         {
 
         }
 
-        [HttpGet]
         [Authorize]
+        [HttpGet]
         public IActionResult MainAction()
         {
             return View();
         }
 
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AboutTheProject()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
         public IActionResult ContactWithAdministration(string notificationMessage)
         {
             ViewData["notificationMessage"] = notificationMessage;
@@ -34,11 +41,11 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        [HttpPost]
         [AllowAnonymous]
+        [HttpPost]
         public IActionResult ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
         {
-            string notificationMessage = "";
+            string notificationMessage = "Thank you for your message. Your message has been forwarded to the application administration.";
             string actionName = "";
 
             //Send email with attachments

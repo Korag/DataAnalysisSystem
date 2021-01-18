@@ -23,12 +23,17 @@
 
         <div class="navbar-fixed">
             <nav class="navbar white">
-                <div class="nav-wrapper">
-                    <a asp-controller="..." asp-action="..." class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:24px"><img src="~/images/logo_small.png" width="40" height="40" />  Data Analysis System</a>
+                <div class="nav-wrapper col-12">
 
-                    <ul id="nav-mobile" class="right">
-                        <partial name="_LoginPartial" />
-                    </ul>
+                    <div class="m8 s6">
+                        <a asp-controller="User" asp-action="UserLogin" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:24px"><img src="~/images/logo_small.png" width="40" height="40" />  Data Analysis System</a>
+                    </div>
+
+                    <div class="m4 s6">
+                        <ul id="nav-mobile" class="right">
+                            <partial name="_LoginPartial" />
+                        </ul>
+                    </div>
 
                 </div>
 

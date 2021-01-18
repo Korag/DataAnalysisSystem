@@ -6,10 +6,10 @@
 
 <div class="row" style="margin-bottom:0px">
 
-    <div class="col s8 offset-s2" style="margin-top:10%">
+    <div class="col s8 offset-s2" style="margin-top:5%">
         <div class="card card-login">
             <div class="card-content">
-                <span class="card-title center-align">Log In</span>
+                <span class="card-title center-align">Contact</span>
 
                 <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
 
@@ -26,14 +26,14 @@
                     <div class="input-field">
 
                         <i class="material-icons prefix">security</i>
-                        <input type="password" asp-for="Password" required="" aria-required="true" class="validate">
-                        <label asp-for="Password"></label>
+                        <input type="password" asp-for="Topic" required="" aria-required="true" class="validate">
+                        <label asp-for="Topic"></label>
 
-                        <span asp-validation-for="Password" class="helper-text" style="color: #F44336"></span>
+                        <span asp-validation-for="Topic" class="helper-text" style="color: #F44336"></span>
 
                     </div>
 
-                    <div class="input-field col s12">
+                    <div class="input-field">
 
                         <i class="material-icons prefix">format_align_left</i>
                         <textarea asp-for="EmailMessageContent" class="materialize-textarea"></textarea>
@@ -42,8 +42,8 @@
                         <span asp-validation-for="EmailMessageContent" class="helper-text" style="color: #F44336"></span>
                     </div>
 
-                    <div class="file-field input-field">
-                        <div class="btn teal lighten-4">
+                    <div class="file-field">
+                        <div class="btn teal darken-4">
                             <span>Attachments</span>
                             <input type="file" multiple>
                         </div>

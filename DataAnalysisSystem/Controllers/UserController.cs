@@ -23,8 +23,8 @@ namespace DataAnalysisSystem.Controllers
             
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public async Task<IActionResult> UserLogout()
         {
             await _signInManager.SignOutAsync();
@@ -32,8 +32,8 @@ namespace DataAnalysisSystem.Controllers
             return RedirectToAction(nameof(UserLogin), "User");
         }
 
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> UserLogin(string returnUrl = null, string message = null)
         {
             ViewData["Message"] = message;
@@ -49,8 +49,8 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        [HttpPost]
         [AllowAnonymous]
+        [HttpPost]
         public async Task<ActionResult> UserLogin(UserLoginViewModel loginViewModel, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -95,8 +95,8 @@ namespace DataAnalysisSystem.Controllers
         }
 
 
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> UserRegister(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
