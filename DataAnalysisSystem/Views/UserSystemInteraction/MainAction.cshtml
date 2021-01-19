@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "MainAction";
+}
+
+<div class="row" style="margin-bottom:0px">
+    <div class="col s8 offset-s2" style="margin-top:5%">
+        <div class="card card-login">
+            <div class="card-content">
+                <img src="~/images/logo_fill_transparent.png" style="opacity: 0.5;" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewData["Message"] != null)
+{
+    @section Notification
+    {
+        <div class="row">
+            <div class="col s8 offset-s2">
+
+                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
+
+            </div>
+        </div>
+    }
+}

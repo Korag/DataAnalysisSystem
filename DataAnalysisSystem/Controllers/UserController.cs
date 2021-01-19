@@ -29,14 +29,14 @@ namespace DataAnalysisSystem.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction(nameof(UserLogin), "User");
+            return RedirectToAction("UserLogin", "User");
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> UserLogin(string returnUrl = null, string message = null)
+        public async Task<IActionResult> UserLogin(string returnUrl = null, string notificationMessage = null)
         {
-            ViewData["Message"] = message;
+            ViewData["Message"] = notificationMessage;
 
             if (this.User.Identity.IsAuthenticated)
             {
@@ -66,12 +66,7 @@ namespace DataAnalysisSystem.Controllers
                     if (!isEmailConfirmed)
                     {
                         ModelState.AddModelError("Email", "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
-
-                        //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                        //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-
-                        //var emailToSend = _emailSender.GenerateEmailMessage(model.Email, user.FirstName + " " + user.LastName, "emailConfirmation", callbackUrl);
-                        //await _emailSender.SendEmailAsync(emailToSend);
+                        await SendEmailConfirmationMessageToUser(user);
 
                         return View();
                     }
@@ -94,13 +89,64 @@ namespace DataAnalysisSystem.Controllers
             return View(loginViewModel);
         }
 
-
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> UserRegister(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
             return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ForgotPassword(string notificationMessage = null)
+        {
+            ViewData["notificationMessage"] = notificationMessage;
+
+            return View();
+        } !
+
+        [AllowAnonymous] 
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel emailModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(emailModel.Email);
+
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    await SendEmailConfirmationMessageToUser(user);
+
+                    return RedirectToAction("ForgotPassword", "UserSystemInteraction", new { notificationMessage = "To reset your password you must first confirm the email address that is associated with the account you wish to regain access to." });
+                }
+                await SendEmailToUser(user, "resetPassword");
+
+                return RedirectToAction("UserLogin", "User", new { notificationMessage = "We have sent a message with further instructions to the email address associated with the account you wish to regain access to.We have sent a message with further instructions to the email address associated with the account you wish to regain access to." );
+                }
+
+            return View(emailModel);
+        } !
+
+        public async Task<IActionResult> SendEmailConfirmationMessageToUser(IdentityProviderUser user)
+        {
+            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+
+            //var emailToSend = _emailSender.GenerateEmailMessage(model.Email, user.FirstName + " " + user.LastName, "emailConfirmation", callbackUrl);
+            //await _emailSender.SendEmailAsync(emailToSend);
+ 
+            return Ok();
+        }
+
+        public async Task<IActionResult> SendEmailToUser(IdentityProviderUser user, string emailTemplateName)
+        {
+            //var emailMessage = _emailSender.GenerateEmailMessage(emailModel.Email, "", emailTemplateName);
+            //await _emailSender.SendEmailAsync(emailMessage);
+
+            return Ok();
         }
     }
 }

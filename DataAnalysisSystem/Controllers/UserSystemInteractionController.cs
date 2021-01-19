@@ -11,17 +11,19 @@ namespace DataAnalysisSystem.Controllers
     public class UserSystemInteractionController : Controller
     {
         public const string MAINACTION_ACTION_NAME = "MainAction";
-        public const string CONTACT_ACTION_NAME = "Contact";
+        public const string USERLOGIN_ACTION_NAME = "UserLogin";
 
         public UserSystemInteractionController()
         {
 
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
-        public IActionResult MainAction()
+        public IActionResult MainAction(string notificationMessage = null)
         {
+            ViewData["Message"] = notificationMessage;
+
             return View();
         }
 
@@ -34,10 +36,8 @@ namespace DataAnalysisSystem.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult ContactWithAdministration(string notificationMessage)
+        public IActionResult ContactWithAdministration()
         {
-            ViewData["notificationMessage"] = notificationMessage;
-
             return View();
         }
 
@@ -53,7 +53,7 @@ namespace DataAnalysisSystem.Controllers
             if (this.User.Identity.IsAuthenticated)
                 actionName = MAINACTION_ACTION_NAME;
             else
-                actionName = CONTACT_ACTION_NAME;
+                actionName = USERLOGIN_ACTION_NAME;
 
             return RedirectToAction(actionName, "UserSystemInteraction", new { notificationMessage = notificationMessage });
         }
