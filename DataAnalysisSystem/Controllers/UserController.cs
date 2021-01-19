@@ -110,11 +110,11 @@ namespace DataAnalysisSystem.Controllers
 
         [AllowAnonymous] 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel emailModel)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgottenpasswordViewModel)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(emailModel.Email);
+                var user = await _userManager.FindByEmailAsync(forgottenpasswordViewModel.Email);
 
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
@@ -127,10 +127,22 @@ namespace DataAnalysisSystem.Controllers
                 return RedirectToAction("UserLogin", "User", new { notificationMessage = "We have sent a message with further instructions to the email address associated with the account you wish to regain access to.We have sent a message with further instructions to the email address associated with the account you wish to regain access to." });
                 }
 
-            return View(emailModel);
+            return View(forgottenpasswordViewModel);
         }
 
- 
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ChangeForgottenPassword()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> ChangeForgottenPassword(ChangeForgottenPasswordViewModel changedPasswordViewModel)
+        {
+            return View();
+        }
 
         public async Task<IActionResult> SendEmailConfirmationMessageToUser(IdentityProviderUser user)
         {
