@@ -61,6 +61,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{DD
 		Materials\Diagrams\dataAnalysisSystem_mongoCollectionDiagram_v1.0.vsdx = Materials\Diagrams\dataAnalysisSystem_mongoCollectionDiagram_v1.0.vsdx
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HTMLTemplateOfEmailMessage", "HTMLTemplateOfEmailMessage", "{4D89DB09-8267-4131-92F7-C8D2A6F1B5E3}"
+	ProjectSection(SolutionItems) = preProject
+		Materials\HTMLTemplateOfEmailMessage\index.htm = Materials\HTMLTemplateOfEmailMessage\index.htm
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{D8C2DAB8-B925-459B-A5D4-D79436BCAE58}"
+	ProjectSection(SolutionItems) = preProject
+		Materials\HTMLTemplateOfEmailMessage\images\logo_fill_transparent.png = Materials\HTMLTemplateOfEmailMessage\images\logo_fill_transparent.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +121,8 @@ Global
 		{B00F9B71-D675-494B-981F-261C259D1FA0} = {23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D}
 		{EB717E73-ABAA-4117-B4C8-913DE7CC67A8} = {B00F9B71-D675-494B-981F-261C259D1FA0}
 		{DDAC90E3-6A5A-453B-A02E-7729FAE4A1FA} = {E97C95E2-757D-4C8E-ACF4-F3296EAEE106}
+		{4D89DB09-8267-4131-92F7-C8D2A6F1B5E3} = {E97C95E2-757D-4C8E-ACF4-F3296EAEE106}
+		{D8C2DAB8-B925-459B-A5D4-D79436BCAE58} = {4D89DB09-8267-4131-92F7-C8D2A6F1B5E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {108625B1-53DE-4EEC-A6D2-58DD96AA3983}
