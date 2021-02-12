@@ -123,14 +123,44 @@ namespace DataAnalysisSystem.Controllers
         }
 
         //Ok
+        [HttpPost]
         [AllowAnonymous]
-        [HttpGet]
-        public IActionResult ForgotPassword(string notificationMessage = null)
+        public async Task<IActionResult> UserRegister(UserRegisterViewModel registerViewModel, string returnUrl = null)
         {
-            ViewData["notificationMessage"] = notificationMessage;
+            ViewData["ReturnUrl"] = returnUrl;
 
-            return View();
-        } 
+            if (ModelState.IsValid)
+            {
+                var newUser = _autoMapper.Map<IdentityProviderUser>(registerViewModel);
+                newUser.Id = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsObjectId();
+                newUser.SecurityStamp = _codeGenerator.GenerateNewUniqueCodeAsString();
+
+                var result = await _userManager.CreateAsync(newUser, registerViewModel.Password);
+
+                if (result.Succeeded)
+                {
+                    var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                    var callbackUrl = Url.GenerateEmailConfirmationLink(newUser.Id.ToString(), emailConfirmationToken, Request.Scheme);
+
+                    await SendEmailMessageToUser(newUser, "emailConfirmation", callbackUrl);
+
+                    return RedirectToAction("UserLogin", "User", new { notificationMessage = "A message has been sent to your email inbox to confirm the email address you entered during registration." });
+                }
+
+                ModelState.AddModelError(string.Empty, "A user with the specified email address already exists in the system.");
+            }
+
+            return View(registerViewModel);
+        }
+
+        //Ok
+        public async Task<IActionResult> SendEmailMessageToUser(IdentityProviderUser user, string emailClassifierKey, string additionalURL = "")
+        {   
+            EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(user.Email, user.FirstName + " " + user.LastName, emailClassifierKey, additionalURL);
+            await _emailProvider.SendEmailMessageAsync(emailMessage);
+
+            return Ok();
+        }
 
         //Ok
         [AllowAnonymous]
