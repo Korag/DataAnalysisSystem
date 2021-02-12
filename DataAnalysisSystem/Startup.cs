@@ -7,8 +7,13 @@ using AspNetCore.Identity.Mongo;
 using DataAnalysisSystem.DataEntities;
 using AutoMapper;
 using DataAnalysisSystem.Services;
+using DataAnalysisSystem.ServicesInterfaces;
+using DataAnalysisSystem.Repository.DataAccessLayer;
+using DataAnalysisSystem.RepositoryInterfaces.DataAccessLayerAbstract;
 using DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract;
 using DataAnalysisSystem.Repository.Repository;
+using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
+using DataAnalysisSystem.Services.EmailProvider;
 
 namespace DataAnalysisSystem
 {
@@ -46,6 +51,17 @@ namespace DataAnalysisSystem
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+
+            // Services Layer
+            services.AddTransient<IEmailProvider, EmailServiceProvider>();
+            services.AddSingleton<IEmailProviderConfigurationProfile>(Configuration.GetSection("EmailProviderConfiguration").Get<EmailProviderConfigurationProfile>());
+            services.AddTransient<IEmailAttachmentsHandler, EmailAttachmentsHandler>();
+
+            services.AddTransient<ICodeGenerator, CodeGeneratorUtilityForMongoDB>();
+
+            // Data Access Layer
+            services.AddSingleton<RepositoryContext, RepositoryContext>();
+            services.AddSingleton<DbContextAbstract, MongoDbContext>();
 
             // Repository Layer
             services.AddTransient<IUserRepository, MongoUserRepository>();
