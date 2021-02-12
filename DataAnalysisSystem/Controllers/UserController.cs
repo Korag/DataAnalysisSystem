@@ -154,6 +154,47 @@ namespace DataAnalysisSystem.Controllers
         }
 
         //Ok
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult ForgotPassword(string notificationMessage = null)
+        {
+            ViewData["notificationMessage"] = notificationMessage;
+
+            return View();
+        }
+
+        //Ok
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgottenpasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(forgottenpasswordViewModel.Email);
+                var callbackUrl = "";
+
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    callbackUrl = Url.GenerateEmailConfirmationLink(user.Id.ToString(), emailConfirmationToken, Request.Scheme);
+
+                    await SendEmailMessageToUser(user, "emailConfirmation", callbackUrl);
+
+                    return RedirectToAction("ForgotPassword", "UserSystemInteraction", new { notificationMessage = "To reset your password you must first confirm the email address that is associated with the account you wish to regain access to." });
+                }
+ 
+                var passwordResetAuthorizationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                callbackUrl = Url.GenerateResetForgottenPasswordLink(user.Id.ToString(), passwordResetAuthorizationToken, Request.Scheme);
+
+                await SendEmailMessageToUser(user, "resetPassword", callbackUrl);
+
+                return RedirectToAction("UserLogin", "User", new { notificationMessage = "We have sent a message with further instructions to the email address associated with the account you wish to regain access to.We have sent a message with further instructions to the email address associated with the account you wish to regain access to." });
+            }
+
+            return View(forgottenpasswordViewModel);
+        }
+
+        //Ok
         public async Task<IActionResult> SendEmailMessageToUser(IdentityProviderUser user, string emailClassifierKey, string additionalURL = "")
         {   
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(user.Email, user.FirstName + " " + user.LastName, emailClassifierKey, additionalURL);

@@ -20,12 +20,14 @@
     <ProjectReference Include="..\AspNetIdentityProvider\AspNetCore.Identity.Mongo\AspNetCore.Identity.Mongo.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.DataEntities\DataAnalysisSystem.DataEntities.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.DTO\DataAnalysisSystem.DTO.csproj" />
+    <ProjectReference Include="..\DataAnalysisSystem.Repository\DataAnalysisSystem.Repository.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.Services\DataAnalysisSystem.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Views\Analysis\" />
     <Folder Include="Views\Dataset\" />
+    <Folder Include="wwwroot\resources\EmailAttachments\" />
   </ItemGroup>
 
 </Project>
