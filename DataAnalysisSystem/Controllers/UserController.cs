@@ -1,12 +1,14 @@
-﻿using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.DTO;
+﻿using AutoMapper;
+using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.DTO.AdditionalFunctionalities;
+using DataAnalysisSystem.DTO.UserDTO;
+using DataAnalysisSystem.Extensions;
+using DataAnalysisSystem.ServicesInterfaces;
+using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAnalysisSystem.Controllers
@@ -16,13 +18,27 @@ namespace DataAnalysisSystem.Controllers
         private readonly UserManager<IdentityProviderUser> _userManager;
         private readonly SignInManager<IdentityProviderUser> _signInManager;
 
+        private readonly ICodeGenerator _codeGenerator;
+        private readonly IEmailProvider _emailProvider;
+        private readonly IMapper _autoMapper;
+
         public UserController(
-                                 UserManager<IdentityProviderUser> userManager,
-                                 SignInManager<IdentityProviderUser> signInManager)
-        {
-            
+                              UserManager<IdentityProviderUser> userManager,
+                              SignInManager<IdentityProviderUser> signInManager,
+                              ICodeGenerator codeGenerator,
+                              IEmailProvider emailProvider,
+                              IMapper autoMapper){
+
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+
+            this._codeGenerator = codeGenerator;
+            this._emailProvider = emailProvider;
+
+            this._autoMapper = autoMapper;
         }
 
+        //Ok
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> UserLogout()
@@ -32,6 +48,7 @@ namespace DataAnalysisSystem.Controllers
             return RedirectToAction("UserLogin", "User");
         }
 
+        //Ok
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> UserLogin(string returnUrl = null, string notificationMessage = null)
@@ -49,6 +66,7 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
+        //Ok
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> UserLogin(UserLoginViewModel loginViewModel, string returnUrl = null)
@@ -57,16 +75,20 @@ namespace DataAnalysisSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = _userManager.FindByEmailAsync(loginViewModel.Email).Result;
+                var loggedUser = _userManager.FindByEmailAsync(loginViewModel.Email).Result;
 
-                if (user != null)
+                if (loggedUser != null)
                 {
-                    var isEmailConfirmed = _userManager.IsEmailConfirmedAsync(user).Result;
+                    var isEmailConfirmed = _userManager.IsEmailConfirmedAsync(loggedUser).Result;
 
                     if (!isEmailConfirmed)
                     {
                         ModelState.AddModelError("Email", "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
-                        await SendEmailConfirmationMessageToUser(user);
+
+                        var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(loggedUser);
+                        var callbackUrl = Url.GenerateEmailConfirmationLink(loggedUser.Id.ToString(), emailConfirmationToken, Request.Scheme);
+
+                        await SendEmailMessageToUser(loggedUser, "emailConfirmation", callbackUrl);
 
                         return View();
                     }
@@ -89,6 +111,7 @@ namespace DataAnalysisSystem.Controllers
             return View(loginViewModel);
         }
 
+        //Ok
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> UserRegister(string returnUrl = null)
@@ -99,6 +122,7 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
+        //Ok
         [AllowAnonymous]
         [HttpGet]
         public IActionResult ForgotPassword(string notificationMessage = null)
@@ -106,61 +130,33 @@ namespace DataAnalysisSystem.Controllers
             ViewData["notificationMessage"] = notificationMessage;
 
             return View();
-        }
+        } 
 
-        [AllowAnonymous] 
-        [HttpPost]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgottenpasswordViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(forgottenpasswordViewModel.Email);
-
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                {
-                    await SendEmailConfirmationMessageToUser(user);
-
-                    return RedirectToAction("ForgotPassword", "UserSystemInteraction", new { notificationMessage = "To reset your password you must first confirm the email address that is associated with the account you wish to regain access to." });
-                }
-                await SendEmailToUser(user, "resetPassword");
-
-                return RedirectToAction("UserLogin", "User", new { notificationMessage = "We have sent a message with further instructions to the email address associated with the account you wish to regain access to.We have sent a message with further instructions to the email address associated with the account you wish to regain access to." });
-                }
-
-            return View(forgottenpasswordViewModel);
-        }
-
+        //Ok
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult ChangeForgottenPassword()
+        public async Task<IActionResult> ConfirmEmailAddress(EmailConfirmationViewModel emailConfirmation)
         {
-            return View();
-        }
+            string notificationMessageText = null;
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> ChangeForgottenPassword(ChangeForgottenPasswordViewModel changedPasswordViewModel)
-        {
-            return View();
-        }
+            if (ModelState.IsValid)
+            {
+                var userWNotConfirmedEmail = _userManager.FindByIdAsync(emailConfirmation.UserIdentificator).Result;
 
-        public async Task<IActionResult> SendEmailConfirmationMessageToUser(IdentityProviderUser user)
-        {
-            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                if (userWNotConfirmedEmail != null)
+                {
+                    var result = await _userManager.ConfirmEmailAsync(userWNotConfirmedEmail, emailConfirmation.AuthorizationToken);
 
-            //var emailToSend = _emailSender.GenerateEmailMessage(model.Email, user.FirstName + " " + user.LastName, "emailConfirmation", callbackUrl);
-            //await _emailSender.SendEmailAsync(emailToSend);
- 
-            return Ok();
-        }
+                    if (result.Succeeded)
+                    {
+                        notificationMessageText = "The email address has been confirmed.";
+                    }
+                }
 
-        public async Task<IActionResult> SendEmailToUser(IdentityProviderUser user, string emailTemplateName)
-        {
-            //var emailMessage = _emailSender.GenerateEmailMessage(emailModel.Email, "", emailTemplateName);
-            //await _emailSender.SendEmailAsync(emailMessage);
+                return RedirectToAction("UserLogin", "User", new { notificationMessage = notificationMessageText });
+            }
 
-            return Ok();
+            return RedirectToAction("UserLogin", "User", new { notificationMessage = notificationMessageText });
         }
     }
 }
