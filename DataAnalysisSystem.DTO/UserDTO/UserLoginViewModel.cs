@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAnalysisSystem.DTO
+namespace DataAnalysisSystem.DTO.UserDTO
 {
     public class UserLoginViewModel
     {

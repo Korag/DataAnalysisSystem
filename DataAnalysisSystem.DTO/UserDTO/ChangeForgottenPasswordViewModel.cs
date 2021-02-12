@@ -1,11 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAnalysisSystem.DTO
+namespace DataAnalysisSystem.DTO.UserDTO
 {
     public class ChangeForgottenPasswordViewModel
     {
+        public ChangeForgottenPasswordViewModel(string userIdentificator, string authorizationToken)
+        {
+            this.UserIdentificator = userIdentificator;
+            this.AuthorizationToken = authorizationToken;
+        }
+
         public string UserIdentificator { get; set; }
-        public string ConfirmationCode { get; set; }
+        public string AuthorizationToken { get; set; }
 
         [Required(ErrorMessage = "Field \"{0}\" is required.")]
         [DataType(DataType.Password)]

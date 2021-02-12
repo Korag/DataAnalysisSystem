@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataAnalysisSystem.DTO
+namespace DataAnalysisSystem.DTO.UserSystemInteractionDTO
 {
     public class ContactWithAdministrationViewModel
     {

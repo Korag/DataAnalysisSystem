@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalysisSystem.DTOViewModels
+namespace DataAnalysisSystem.DTO.AdditionalFunctionalities
 {
     public class ModalPopupViewModel
     {
