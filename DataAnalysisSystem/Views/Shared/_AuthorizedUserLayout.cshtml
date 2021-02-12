@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Data Analysis System</title>
 
-    <!-- #region Dependencies -->
-
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
 
     <partial name="_CSSDependenciesPartial" />
@@ -23,14 +21,15 @@
 
         <div class="navbar-fixed">
             <nav class="navbar white">
-                <div class="nav-wrapper">              
-                    <a asp-controller="UserSystemInteraction" asp-action="MainAction" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:24px"><img src="~/images/logo_small.png" width="40" height="40" />  Data Analysis System</a>
+                <div class="nav-wrapper">
+                  
+                    <a asp-controller="UserSystemInteraction" asp-action="MainAction" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:20px"><img src="~/images/logo_small.png" width="40" height="40" /><span id="applicationName">  Data Analysis System</span></a>
 
                     <ul id="nav-mobile" class="right">
                         <li><a href="#!" data-target="chat-dropdown" class="dropdown-trigger waves-effect"><i class="material-icons">settings</i></a></li>
                     </ul>
 
-                    <a href="#" data-target="sidenav-left" class="sidenav-trigger left"><i class="material-icons black-text">menu</i></a>
+                    <a data-target="sidenav-left" class="sidenav-trigger left"><i class="material-icons black-text">menu</i></a>
 
                 </div>
 
@@ -77,7 +76,7 @@
                     </div>
                 </li>
             </ul>
-            <li class="center-align" style="width:100%; vertical-align:text-bottom"><div class="divider"></div><span style="font-weight:bold; color:#F0F2F1">© Copyright Łukasz Czepielik 2020/2021</span></li>
+            <li class="center-align" style="width:100%; vertical-align:text-bottom"><div class="divider"></div><span style="font-weight:bold; color:#F0F2F1">© Łukasz Czepielik 2020/2021</span></li>
         </ul>
 
         <div id="chat-dropdown" class="dropdown-content dropdown-tabbed">
@@ -96,7 +95,7 @@
     </header>
 
     <!-- #region Logout Modal -->
-    @if (!this.User.Identity.IsAuthenticated)
+    @if (this.User.Identity.IsAuthenticated)
     {
         @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
                                                         {
@@ -104,11 +103,11 @@
                                                          ModalTitle = "Logout from application",
                                                          ModalContent = "Are you sure you want to leave the application ?",
 
-                                                         ControllerName = null,
-                                                         ActionName = null,
+                                                         ControllerName = "User",
+                                                         ActionName = "UserLogout",
                                                          RouteAdditionalArguments = null,
 
-                                                         ModalActAsForm = true,
+                                                         ModalActAsForm = false,
                                                          LabelOnButton = "Do it"
                                                         })
     }
@@ -116,7 +115,7 @@
     <!-- #region Children Containers -->
 
     <div class="container">
-        <main role="main" style="margin-bottom: 3%">
+        <main role="main" style="margin-bottom: 3%; margin-top: 3%">
 
             @RenderBody()
 
@@ -125,7 +124,7 @@
 
     <!-- #endregion -->
 
-    <footer class="page-footer center-align">
+    <footer class="page-footer center-align" style="margin-bottom: 0px; margin-top:auto">
         <div class="container">
             <div class="row">
                 <div class="col s6 m4">
@@ -135,13 +134,39 @@
                     <h6><a asp-controller="UserSystemInteraction" asp-action="AboutTheProject" class="waves-effect teal-text text-lighten-1"><i class="material-icons prefix">mode_edit</i>  About</a></h6>
                 </div>
                 <div class="col s6 m4">
-                    <h7><a href="https://github.com/Korag/DataAnalysisSystem" class="waves-effect teal-text text-lighten-1"><i class="material-icons prefix">how_to_vote</i>  Contribute</a></h7>
+                    <h6><a href="https://github.com/Korag/DataAnalysisSystem" class="waves-effect teal-text text-lighten-1"><i class="material-icons prefix">how_to_vote</i>  Contribute</a></h6>
                 </div>
             </div>
         </div>
     </footer>
 
     @RenderSection("Scripts", required: false)
+
+    <script>
+
+        $(".not-collapse").on("click", function (e) { e.stopPropagation(); });
+
+        var elem = document.querySelector('.collapsible.expandable');
+        var instance = M.Collapsible.init(elem, {
+            accordion: false
+        });
+        instance.open();
+
+        $(".dropdown-trigger").dropdown({ alignment: "right", constrainWidth: !1, coverTrigger: !1, closeOnClick: !1 });
+        $(".sidenav").sidenav({ edge: "left" });
+        $(".modal").modal(), $(".scrollspy").scrollSpy();
+
+        $(window).on('resize', function () {
+            var win = $(this); 
+            if (win.width() < 520)
+            {
+                $("#applicationName").text(' D.A.S.');
+            }
+            if (win.width() >= 520) {
+                $("#applicationName").text(' Data Analysis System');
+            }
+        });
+    </script>
 
 </body>
 </html>

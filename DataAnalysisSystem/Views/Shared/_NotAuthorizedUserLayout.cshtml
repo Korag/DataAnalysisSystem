@@ -26,7 +26,7 @@
                 <div class="nav-wrapper col-12">
 
                     <div class="m8 s6">
-                        <a asp-controller="User" asp-action="UserLogin" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:24px"><img src="~/images/logo_small.png" width="40" height="40" />  Data Analysis System</a>
+                        <a asp-controller="User" asp-action="UserLogin" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:20px"><img src="~/images/logo_small.png" width="40" height="40" /><span id="applicationName">  Data Analysis System</span></a>
                     </div>
 
                     <div class="m4 s6">
@@ -45,24 +45,6 @@
         @RenderSection("Notification", required: false)
 
     </header>
-
-    <!-- #region Logout Modal -->
-    @if (!this.User.Identity.IsAuthenticated)
-    {
-        @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
-                                                        {
-                                                         ModalIdentificator = "modalLogout",
-                                                         ModalTitle = "Logout from application",
-                                                         ModalContent = "Are you sure you want to leave the application ?",
-
-                                                         ControllerName = null,
-                                                         ActionName = null,
-                                                         RouteAdditionalArguments = null,
-
-                                                         ModalActAsForm = true,
-                                                         LabelOnButton = "Do it"
-                                                        })
-    }
 
     <!-- #endregion -->
     <!-- #region Children Containers -->
@@ -97,13 +79,25 @@
         <div class="container">
             <div class="row center-align">
                 <div class="col s12 m12">
-                    <h6 class="teal-text text-lighten-1">© Copyright Łukasz Czepielik 2020/2021</h6>
+                    <h6 class="teal-text text-lighten-1">© Łukasz Czepielik 2020/2021</h6>
                 </div>
             </div>
         </div>
     </footer>
 
     @RenderSection("Scripts", required: false)
+
+    <script>
+        $(window).on('resize', function () {
+            var win = $(this);
+            if (win.width() < 520) {
+                $("#applicationName").text(' D.A.S.');
+            }
+            if (win.width() >= 520) {
+                $("#applicationName").text(' Data Analysis System');
+            }
+        });
+    </script>
 
 </body>
 </html>
