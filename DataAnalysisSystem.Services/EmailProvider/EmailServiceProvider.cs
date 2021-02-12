@@ -67,7 +67,7 @@ Data Analysis System Administration Team";
                 builder.HtmlBody = builder.HtmlBody
                                                  .Replace("display: none", "display: inline-block")
                                                  .Replace("{AdditionalURLToAction}", emailMessageContent.AdditionalURLToAction)
-                                                 .Replace("{URLCaptionText}", emailMessageContent.URLActionText);
+                                                 .Replace("{URLActionText}", emailMessageContent.URLActionText);
             };
 
             message.Body = builder.ToMessageBody();

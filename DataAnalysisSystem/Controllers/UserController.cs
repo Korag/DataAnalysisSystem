@@ -80,13 +80,13 @@ namespace DataAnalysisSystem.Controllers
 
                     if (!isEmailConfirmed)
                     {
-                        ModelState.AddModelError("Email", "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
+                        ModelState.AddModelError(string.Empty, "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
 
                         var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(loggedUser);
                         var callbackUrl = Url.GenerateEmailConfirmationLink(loggedUser.Id.ToString(), emailConfirmationToken, Request.Scheme);
 
-                        await SendEmailMessageToUser(loggedUser, "emailConfirmation", callbackUrl);
-
+                        var emailSenderTask = Task.Run(() => SendEmailMessageToUser(loggedUser, "emailConfirmation", callbackUrl));
+                        
                         return View();
                     }
                 }
@@ -137,8 +137,8 @@ namespace DataAnalysisSystem.Controllers
                     var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
                     var callbackUrl = Url.GenerateEmailConfirmationLink(newUser.Id.ToString(), emailConfirmationToken, Request.Scheme);
 
-                    await SendEmailMessageToUser(newUser, "emailConfirmation", callbackUrl);
-
+                    var emailSenderTask = Task.Run(() => SendEmailMessageToUser(newUser, "emailConfirmation", callbackUrl));
+                    
                     return RedirectToAction("UserLogin", "User", new { notificationMessage = "A message has been sent to your email inbox to confirm the email address you entered during registration." });
                 }
 
@@ -170,8 +170,8 @@ namespace DataAnalysisSystem.Controllers
                 {
                     var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     callbackUrl = Url.GenerateEmailConfirmationLink(user.Id.ToString(), emailConfirmationToken, Request.Scheme);
-
-                    await SendEmailMessageToUser(user, "emailConfirmation", callbackUrl);
+                   
+                    var emailSenderTask1 = Task.Run(() => SendEmailMessageToUser(user, "emailConfirmation", callbackUrl));
 
                     return RedirectToAction("ForgotPassword", "UserSystemInteraction", new { notificationMessage = "To reset your password you must first confirm the email address that is associated with the account you wish to regain access to." });
                 }
@@ -179,7 +179,7 @@ namespace DataAnalysisSystem.Controllers
                 var passwordResetAuthorizationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
                 callbackUrl = Url.GenerateResetForgottenPasswordLink(user.Id.ToString(), passwordResetAuthorizationToken, Request.Scheme);
 
-                await SendEmailMessageToUser(user, "resetPassword", callbackUrl);
+                var emailSenderTask2 = Task.Run(() => SendEmailMessageToUser(user, "resetPassword", callbackUrl));
 
                 return RedirectToAction("UserLogin", "User", new { notificationMessage = "We have sent a message with further instructions to the email address associated with the account you wish to regain access to.We have sent a message with further instructions to the email address associated with the account you wish to regain access to." });
             }
@@ -260,5 +260,9 @@ namespace DataAnalysisSystem.Controllers
 
             return RedirectToAction("UserLogin", "User", new { notificationMessage = notificationMessageText });
         }
+
+        //TO DO:
+        //ChangeUserPassword
+        //ChangeUserData
     }
 }

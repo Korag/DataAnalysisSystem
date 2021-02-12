@@ -27,7 +27,7 @@ namespace DataAnalysisSystem.Controllers
             this._emailAttachmentsHandler = emailAttachmentsHandler;
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public IActionResult MainAction(string notificationMessage = null)
         {
@@ -50,9 +50,10 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
+        //Add waiting modal
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
+        public ActionResult ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
         {
             string notificationMessage = "Thank you for your message. Your message has been forwarded to the application administration.";
             string actionName = "";
@@ -66,10 +67,9 @@ namespace DataAnalysisSystem.Controllers
                                                                                          contactViewModel.EmailMessageContent,
                                                                                          attachmentsFileNames);
 
-            await _emailProvider.SendEmailMessageAsync(emailMessage);
-
-            _emailAttachmentsHandler.RemoveAttachmentsFromHardDrive(attachmentsFileNames);
-
+            var emailSenderTask = Task.Run(() => _emailProvider.SendEmailMessageAsync(emailMessage))
+                                                               .ContinueWith(result => { _emailAttachmentsHandler.RemoveAttachmentsFromHardDrive(attachmentsFileNames); });
+           
             if (this.User.Identity.IsAuthenticated)
                 actionName = MAINACTION_ACTION_NAME;
             else
