@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AspNetCore.Identity.Mongo;
-using Microsoft.AspNetCore.Identity;
 using DataAnalysisSystem.DataEntities;
-using Microsoft.Extensions.Identity.Core;
 using AutoMapper;
 using DataAnalysisSystem.Services;
+using DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract;
+using DataAnalysisSystem.Repository.Repository;
 
 namespace DataAnalysisSystem
 {
@@ -46,6 +46,11 @@ namespace DataAnalysisSystem
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+
+            // Repository Layer
+            services.AddTransient<IUserRepository, MongoUserRepository>();
+            services.AddTransient<IDatasetRepository, MongoDatasetRepository>();
+            services.AddTransient<IAnalysisRepository, MongoAnalysisRepository>();
 
 
             services.ConfigureApplicationCookie(options =>

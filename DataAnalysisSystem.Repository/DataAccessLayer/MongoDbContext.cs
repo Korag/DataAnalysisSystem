@@ -1,12 +1,12 @@
-﻿using DataAnalysisSystem.RepositoryInterfaces;
+﻿using DataAnalysisSystem.RepositoryInterfaces.DataAccessLayerAbstract;
 using DataAnalysisSystem.Services.Serializers_Helpers;
 using MongoDB.Driver;
 using System;
 using System.IO;
 
-namespace DataAnalysisSystem.Repository
+namespace DataAnalysisSystem.Repository.DataAccessLayer
 {
-    public class MongoDbContext : DbContext
+    public class MongoDbContext : DbContextAbstract
     {
         private string _connectionString { get; set; }
         private string _databaseName { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace DataAnalysisSystem.RepositoryInterfaces
+﻿namespace DataAnalysisSystem.RepositoryInterfaces.DataAccessLayerAbstract
 {
-    public interface DbContext
+    public interface DbContextAbstract
     {
         string ReadConnectionString(string path);
         void InitializeContext(string connectionString);
