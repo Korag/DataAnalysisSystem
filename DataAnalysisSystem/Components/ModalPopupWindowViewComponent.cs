@@ -1,4 +1,4 @@
-﻿using DataAnalysisSystem.DTOViewModels;
+﻿using DataAnalysisSystem.DTO.AdditionalFunctionalities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Components
