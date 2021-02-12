@@ -13,17 +13,17 @@
 
         @if (Model.ModalActAsForm)
         {
-        <button type="submit" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color:#26a69a">@Model.LabelOnButton</button>
+            <button type="submit" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color:#26a69a">@Model.LabelOnButton</button>
         }
 
         else if (Model.RouteAdditionalArguments != null)
         {
-            <button asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" asp-all-route-data="@Model.RouteAdditionalArguments" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color:#26a69a">@Model.LabelOnButton</button>
+            <a asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" asp-all-route-data="@Model.RouteAdditionalArguments" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color:#26a69a">@Model.LabelOnButton</a>
         }
 
         else
         {
-            <button asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color: #26a69a">@Model.LabelOnButton</button>
+            <a asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" class="modal-close waves-effect waves-teal btn-flat" style="border:solid 1px; border-color: #26a69a">@Model.LabelOnButton</a>
         }
         <button type="button" class="modal-close waves-effect waves-red btn-flat" style="border:solid 1px; border-color:#B71C1C">Cancel</button>
 

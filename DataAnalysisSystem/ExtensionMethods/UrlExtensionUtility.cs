@@ -5,12 +5,12 @@ namespace DataAnalysisSystem.Extensions
 {
     public static class UrlExtensionUtility
     {
-        public static string GenerateEmailConfirmationLink(this IUrlHelper urlHelper, string userIdentificator, string authorizationCode, string scheme)
+        public static string GenerateEmailConfirmationLink(this IUrlHelper urlHelper, string userIdentificator, string authorizationToken, string scheme)
         {
             return urlHelper.Action(
                 action: nameof(UserController.ConfirmEmailAddress),
                 controller: "User",
-                values: new { userIdentificator, authorizationCode },
+                values: new { userIdentificator, authorizationToken },
                 protocol: scheme);
         }
 

@@ -39,7 +39,7 @@ namespace DataAnalysisSystem.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> UserLogout()
         {
             await _signInManager.SignOutAsync();
@@ -72,15 +72,17 @@ namespace DataAnalysisSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                var loggedUser = _userManager.FindByEmailAsync(loginViewModel.Email).Result;
+                var loggedUser = await _userManager.FindByEmailAsync(loginViewModel.Email);
+                var correctPassword = await _signInManager.UserManager.CheckPasswordAsync(loggedUser, loginViewModel.Password);
 
-                if (loggedUser != null)
+                if (correctPassword)
                 {
-                    var isEmailConfirmed = _userManager.IsEmailConfirmedAsync(loggedUser).Result;
+                    var isEmailConfirmed = await _userManager.IsEmailConfirmedAsync(loggedUser);
 
                     if (!isEmailConfirmed)
                     {
-                        ModelState.AddModelError(string.Empty, "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
+                        //ModelState.AddModelError(string.Empty, "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
+                        ViewData["Message"] = "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.";
 
                         var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(loggedUser);
                         var callbackUrl = Url.GenerateEmailConfirmationLink(loggedUser.Id.ToString(), emailConfirmationToken, Request.Scheme);
@@ -99,7 +101,7 @@ namespace DataAnalysisSystem.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Overall", "Wrong email or password.");
+                    ModelState.AddModelError(string.Empty, "Wrong email or password.");
 
                     return View(loginViewModel);
                 }
@@ -209,7 +211,7 @@ namespace DataAnalysisSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = _userManager.FindByIdAsync(changedPasswordViewModel.UserIdentificator).Result;
+                var user = await _userManager.FindByIdAsync(changedPasswordViewModel.UserIdentificator);
 
                 if (user == null)
                 {
@@ -243,7 +245,7 @@ namespace DataAnalysisSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                var userWNotConfirmedEmail = _userManager.FindByIdAsync(emailConfirmation.UserIdentificator).Result;
+                var userWNotConfirmedEmail = await _userManager.FindByIdAsync(emailConfirmation.UserIdentificator);
 
                 if (userWNotConfirmedEmail != null)
                 {

@@ -6,8 +6,6 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="setting">
-        <form method="post" class="form-inline" asp-controller="User" asp-action="UserLogout">
-            <a class="waves-effect waves-light btn-large red darken-4 white-text modal-trigger" style="width:140px; height:54px" data-target="modalLogout">Logout</a>
-        </form>
+        <a class="waves-effect waves-light btn-large red darken-4 white-text modal-trigger" style="width:140px; height:54px" data-target="modalLogout">Logout</a>
     </div>
 }
