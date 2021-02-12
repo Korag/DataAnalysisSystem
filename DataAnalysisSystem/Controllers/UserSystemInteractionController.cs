@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DataAnalysisSystem.DTO.AdditionalFunctionalities;
+using DataAnalysisSystem.DTO.UserSystemInteractionDTO;
+using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAnalysisSystem.DTO;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Controllers
 {
@@ -13,11 +14,20 @@ namespace DataAnalysisSystem.Controllers
         public const string MAINACTION_ACTION_NAME = "MainAction";
         public const string USERLOGIN_ACTION_NAME = "UserLogin";
 
-        public UserSystemInteractionController()
-        {
+        private readonly IEmailProvider _emailProvider;
+        private readonly IEmailProviderConfigurationProfile _emailProviderConfigurationProfile;
+        private readonly IEmailAttachmentsHandler _emailAttachmentsHandler;
+        
+        public UserSystemInteractionController(IEmailProvider emailProvider,
+                                               IEmailProviderConfigurationProfile emailProviderConfigurationProfile,
+                                               IEmailAttachmentsHandler emailAttachmentsHandler){
 
+            this._emailProvider = emailProvider;
+            this._emailProviderConfigurationProfile = emailProviderConfigurationProfile;
+            this._emailAttachmentsHandler = emailAttachmentsHandler;
         }
 
+        //Ok
         [AllowAnonymous]
         [HttpGet]
         public IActionResult MainAction(string notificationMessage = null)
@@ -34,6 +44,7 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
+        //Ok
         [AllowAnonymous]
         [HttpGet]
         public IActionResult ContactWithAdministration()
@@ -41,14 +52,26 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
+        //Ok
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
+        public async Task<IActionResult> ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
         {
             string notificationMessage = "Thank you for your message. Your message has been forwarded to the application administration.";
             string actionName = "";
 
-            //Send email with attachments
+            List<string> attachmentsFileNames = _emailAttachmentsHandler.SaveAttachmentsOnHardDrive(contactViewModel.Attachments).ToList();
+
+            EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(_emailProviderConfigurationProfile.SmtpUsername, 
+                                                                                         _emailProviderConfigurationProfile.SenderName, 
+                                                                                         contactViewModel.SenderEmail, 
+                                                                                         contactViewModel.Topic, 
+                                                                                         contactViewModel.EmailMessageContent,
+                                                                                         attachmentsFileNames);
+
+            await _emailProvider.SendEmailMessageAsync(emailMessage);
+
+            _emailAttachmentsHandler.RemoveAttachmentsFromHardDrive(attachmentsFileNames);
 
             if (this.User.Identity.IsAuthenticated)
                 actionName = MAINACTION_ACTION_NAME;
