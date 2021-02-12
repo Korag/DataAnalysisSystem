@@ -195,6 +195,48 @@ namespace DataAnalysisSystem.Controllers
         }
 
         //Ok
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ChangeForgottenPassword(string userIdentificator, string authorizationToken = null)
+        {
+            var user = await _userManager.FindByIdAsync(userIdentificator);
+
+            if (authorizationToken == null || user == null)
+            {
+                return RedirectToAction("UserLogin", "User");
+            }
+
+            ChangeForgottenPasswordViewModel resetPasswordViewModel = new ChangeForgottenPasswordViewModel(userIdentificator, authorizationToken);
+
+            return View(resetPasswordViewModel);
+        }
+
+        //Ok
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> ChangeForgottenPassword(ChangeForgottenPasswordViewModel changedPasswordViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userManager.FindByIdAsync(changedPasswordViewModel.UserIdentificator).Result;
+
+                if (user == null)
+                {
+                    return RedirectToAction("UserLogin", "User");
+                }
+
+                var result = await _userManager.ResetPasswordAsync(user, changedPasswordViewModel.AuthorizationToken, changedPasswordViewModel.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("UserLogin", "User", new { message = "Your password has been changed." });
+                }
+            }
+
+            return View(changedPasswordViewModel);
+        }
+
+        //Ok
         public async Task<IActionResult> SendEmailMessageToUser(IdentityProviderUser user, string emailClassifierKey, string additionalURL = "")
         {   
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(user.Email, user.FirstName + " " + user.LastName, emailClassifierKey, additionalURL);
