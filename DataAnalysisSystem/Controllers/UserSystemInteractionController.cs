@@ -27,7 +27,6 @@ namespace DataAnalysisSystem.Controllers
             this._emailAttachmentsHandler = emailAttachmentsHandler;
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpGet]
         public IActionResult MainAction(string notificationMessage = null)
@@ -44,7 +43,6 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpGet]
         public IActionResult ContactWithAdministration()
@@ -52,7 +50,6 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)

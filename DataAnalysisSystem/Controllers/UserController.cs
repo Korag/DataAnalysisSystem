@@ -38,7 +38,6 @@ namespace DataAnalysisSystem.Controllers
             this._autoMapper = autoMapper;
         }
 
-        //Ok
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> UserLogout()
@@ -48,7 +47,6 @@ namespace DataAnalysisSystem.Controllers
             return RedirectToAction("UserLogin", "User");
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> UserLogin(string returnUrl = null, string notificationMessage = null)
@@ -66,7 +64,6 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> UserLogin(UserLoginViewModel loginViewModel, string returnUrl = null)
@@ -111,7 +108,6 @@ namespace DataAnalysisSystem.Controllers
             return View(loginViewModel);
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> UserRegister(string returnUrl = null)
@@ -122,7 +118,6 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        //Ok
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> UserRegister(UserRegisterViewModel registerViewModel, string returnUrl = null)
@@ -153,7 +148,6 @@ namespace DataAnalysisSystem.Controllers
             return View(registerViewModel);
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpGet]
         public IActionResult ForgotPassword(string notificationMessage = null)
@@ -163,7 +157,6 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgottenpasswordViewModel)
@@ -194,7 +187,6 @@ namespace DataAnalysisSystem.Controllers
             return View(forgottenpasswordViewModel);
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> ChangeForgottenPassword(string userIdentificator, string authorizationToken = null)
@@ -211,7 +203,6 @@ namespace DataAnalysisSystem.Controllers
             return View(resetPasswordViewModel);
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ChangeForgottenPassword(ChangeForgottenPasswordViewModel changedPasswordViewModel)
@@ -236,7 +227,6 @@ namespace DataAnalysisSystem.Controllers
             return View(changedPasswordViewModel);
         }
 
-        //Ok
         public async Task<IActionResult> SendEmailMessageToUser(IdentityProviderUser user, string emailClassifierKey, string additionalURL = "")
         {   
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(user.Email, user.FirstName + " " + user.LastName, emailClassifierKey, additionalURL);
@@ -245,7 +235,6 @@ namespace DataAnalysisSystem.Controllers
             return Ok();
         }
 
-        //Ok
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> ConfirmEmailAddress(EmailConfirmationViewModel emailConfirmation)
