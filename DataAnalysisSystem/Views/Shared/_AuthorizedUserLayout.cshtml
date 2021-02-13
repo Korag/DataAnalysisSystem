@@ -20,7 +20,7 @@
         <!-- #region Top Navbar -->
 
         <div class="navbar-fixed">
-            <nav class="navbar white">
+            <nav class="navbar white" id="navbar-top">
                 <div class="nav-wrapper">
                   
                     <a asp-controller="UserSystemInteraction" asp-action="MainAction" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:20px"><img src="~/images/logo_small.png" width="40" height="40" /><span id="applicationName">  Data Analysis System</span></a>
@@ -83,7 +83,7 @@
             <div id="settings" class="col s12">
                 <div class="settings-group">
                     <div class="setting">
-                        <a asp-controller="..." asp-action="..." class="waves-effect waves-light btn-large teal lighten-1 white-text" style="width:140px; height:54px"> Account</a>
+                        <a asp-controller="User" asp-action="EditUserData" class="waves-effect waves-light btn-large teal lighten-1 white-text" style="width:140px; height:54px"> Account</a>
                     </div>
 
                     <partial name="_LogoutPartial" />

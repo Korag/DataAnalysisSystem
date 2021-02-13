@@ -263,6 +263,21 @@ namespace DataAnalysisSystem.Controllers
             return RedirectToAction("UserLogin", "User", new { notificationMessage = notificationMessageText });
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> EditUserData(string notificationMessage)
+        {
+            ViewData["notificationMessage"] = notificationMessage;
+
+            var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
+            EditUserDataViewModel userData = _autoMapper.Map<EditUserDataViewModel>(user);
+
+            return View(userData);
+        }
+
+
+    
+
         //TO DO:
         //ChangeUserPassword
         //ChangeUserData

@@ -1,0 +1,141 @@
+﻿@model DataAnalysisSystem.DTO.UserDTO.EditUserDataViewModel
+
+@{
+    ViewData["Title"] = "Edit User Data";
+}
+
+<div id="userData" class="col s12">
+    <div class="row" style="margin-bottom:0px">
+
+        <div class="col s8 offset-s2" style="margin-top:10%">
+            <div class="card card-login">
+                <div class="card-content">
+                    <span class="card-title center-align">Edit User Personal Information</span>
+
+                    <form asp-route-returnUrl="EditUserData" method="post">
+
+                        <input asp-for="UserIdentificator" class="form-control" hidden readonly />
+
+                        <div class="input-field">
+
+                            <i class="material-icons prefix">mail_outline</i>
+                            <input type="email" asp-for="Email" required="" aria-required="true" class="validate">
+                            <label asp-for="Email"></label>
+
+                            <span asp-validation-for="Email" class="helper-text" style="color: #F44336"></span>
+
+                        </div>
+
+                        <div class="input-field">
+
+                            <i class="material-icons prefix">contact_page</i>
+                            <input type="text" asp-for="FirstName" required="" aria-required="true" class="validate">
+                            <label asp-for="FirstName"></label>
+
+                            <span asp-validation-for="FirstName" class="helper-text" style="color: #F44336"></span>
+
+                        </div>
+
+                        <div class="input-field">
+
+                            <i class="material-icons prefix">supervisor_account</i>
+                            <input type="text" asp-for="LastName" required="" aria-required="true" class="validate">
+                            <label asp-for="LastName"></label>
+
+                            <span asp-validation-for="LastName" class="helper-text" style="color: #F44336"></span>
+
+                        </div>
+
+                        <div class="center-align" style="margin-top: 10px">
+                            <input class="btn" type="submit" value="Edit">
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="password" class="col s12">
+    <div class="row" style="margin-bottom:0px">
+
+        <div class="col s8 offset-s2" style="margin-top:10%">
+            <div class="card card-login">
+                <div class="card-content">
+                    <span class="card-title center-align">Change User Password</span>
+
+                    <form asp-route-returnUrl="EditUserData" method="post">
+
+                        <input asp-for="UserIdentificator" class="form-control" hidden readonly />
+
+                        <div class="input-field">
+
+                            <i class="material-icons prefix">lock</i>
+                            <input type="password" asp-for="Password" required="" aria-required="true" class="validate">
+                            <label asp-for="Password"></label>
+
+                            <span asp-validation-for="Password" class="helper-text" style="color: #F44336"></span>
+
+                        </div>
+
+                        <div class="input-field">
+
+                            <i class="material-icons prefix">lock_open</i>
+                            <input type="password" asp-for="ConfirmPassword" required="" aria-required="true" class="validate">
+                            <label asp-for="ConfirmPassword"></label>
+
+                            <span asp-validation-for="ConfirmPassword" class="helper-text" style="color: #F44336"></span>
+
+                        </div>
+
+                        <div class="center-align" style="margin-top: 10px">
+                            <input class="btn" type="submit" value="Change password">
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section NavContent {
+    <div class="nav-content">
+        <ul class="tabs">
+            <li class="tab">
+                <a href="#userData" class="active">User Data</a>
+            </li>
+            <li class="tab">
+                <a href="#password">Password</a>
+            </li>
+        </ul>
+    </div>
+}
+
+@section Notification
+{
+    <div class="row">
+        <div class="col s8 offset-s2">
+
+            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
+
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.tabs').tabs()
+        });
+    </script>
+
+    <script>
+        $("#navbar-top").addClass("nav-extended");
+    </script>
+}
