@@ -22,15 +22,15 @@
         <!-- #region Top Navbar -->
 
         <div class="navbar-fixed">
-            <nav class="navbar white">
+            <nav id="navbar-top" class="navbar white">
                 <div class="nav-wrapper col-12">
 
                     <div class="m8 s6">
-                        <a asp-controller="User" asp-action="UserLogin" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:20px"><img src="~/images/logo_small.png" width="40" height="40" /><span id="applicationName">  Data Analysis System</span></a>
+                        <a asp-controller="User" asp-action="UserLogin" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:20px"><img id="logo" src="~/images/logo_small.png" width="40" height="40" /><span id="applicationName">  Data Analysis System</span></a>
                     </div>
 
                     <div class="m4 s6">
-                        <ul id="nav-mobile" class="right">
+                        <ul class="right">
                             <partial name="_LoginPartial" />
                         </ul>
                     </div>
@@ -50,7 +50,7 @@
     <!-- #region Children Containers -->
 
     <div class="container">
-        <main role="main" style="margin-bottom: 3%; margin-top: 3%">
+        <main role="main" style="margin-bottom: 3vh; margin-top: 3vh">
 
             @RenderBody()
 
@@ -90,11 +90,18 @@
     <script>
         $(window).on('resize', function () {
             var win = $(this);
-            if (win.width() < 520) {
-                $("#applicationName").text(' D.A.S.');
+            if (win.width() < 620) {
+                $("#applicationName").text('');
+                $("#logo").css("display", "none");
             }
-            if (win.width() >= 520) {
+            if (win.width() > 620 && win.width() < 760) {
+                $("#applicationName").text(' D.A.S.');
+                $("#logo").css("display", "inline");
+            
+            }
+            if (win.width() >= 760) {
                 $("#applicationName").text(' Data Analysis System');
+                $("#logo").css("display", "inline");
             }
         });
     </script>
