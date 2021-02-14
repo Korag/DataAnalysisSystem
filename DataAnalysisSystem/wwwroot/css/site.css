@@ -1,20 +1,388 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-.sidenav .collapsible .collapsible-body li > a:hover, .sidenav .collapsible .collapsible-body li > a.active {
-    background-color: rgba(0,255,255,0.15);
-}
+/*#region General */
 
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background-color: #f4f4f4;
+    font-family: Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    font-size: 14px;
 }
 
 main {
     flex: 1 0 auto;
 }
 
+    main > .container {
+        margin-top: 20px
+    }
+
+.card {
+    display: flex;
+}
+
+.card-content {
+    flex: 1
+}
+
+.fixed-sidenav {
+    left: 300px
+}
+
+td, th {
+    border-radius: 0
+}
+
+/*#endregion */
+
+/*#region Sidenav */
+
+.sidenav {
+    box-shadow: none;
+    background-color: #448AFF
+}
+
+    .sidenav > li {
+        width: 100%
+    }
+
+    .sidenav .sidenav-header {
+        padding: 0 16px;
+        height: 64px;
+        line-height: 64px;
+        font-size: 24px;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+        box-sizing: content-box;
+        font-weight: bold
+    }
+
+        .sidenav .sidenav-header i.material-icons {
+            line-height: inherit;
+        }
+
+    .sidenav .collapsible {
+        border-bottom: 1px solid rgba(0,0,0,0.2)
+    }
+
+        .sidenav .collapsible > .active .collapsible-header .chevron {
+            transform: rotate(-90deg)
+        }
+
+        .sidenav .collapsible > li {
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+            transition: background-color .2s
+        }
+
+            .sidenav .collapsible > li:hover {
+                background-color: rgba(0,0,0,0.05)
+            }
+
+            .sidenav .collapsible > li.waves-effect {
+                display: block
+            }
+
+            .sidenav .collapsible > li:last-child {
+                border-bottom: 0
+            }
+
+        .sidenav .collapsible .collapsible-header {
+            text-transform: uppercase;
+            height: 64px;
+            line-height: 64px;
+            font-weight: bold
+        }
+
+            .sidenav .collapsible .collapsible-header:hover {
+                background-color: transparent
+            }
+
+            .sidenav .collapsible .collapsible-header .chevron {
+                float: right;
+                height: 24px;
+                width: 24px;
+                line-height: 24px;
+                margin: 20px 0 0 0;
+                transition: transform .2s
+            }
+
+        .sidenav .collapsible .collapsible-body {
+            padding-bottom: 16px;
+            background-color: transparent
+        }
+
+            .sidenav .collapsible .collapsible-body li > a {
+                padding: 0 16px;
+                transition: background-color .2s ease-out
+            }
+
+                .sidenav .collapsible .collapsible-body li > a:hover, .sidenav .collapsible .collapsible-body li > a.active {
+                    background-color: rgba(0,255,255,0.15);
+                }
+
+                .sidenav .collapsible .collapsible-body li > a > i.material-icons {
+                    margin-right: 16px
+                }
+
+    .sidenav li.active > a, .sidenav li:hover > a, .sidenav li > a:hover, .sidenav li > a.active {
+        background-color: transparent
+    }
+
+        .sidenav li.active > a::before, .sidenav li:hover > a::before, .sidenav li > a:hover::before, .sidenav li > a.active::before {
+            transform: scaleY(1)
+        }
+
+    .sidenav li > a {
+        position: relative;
+        padding: 0 16px
+    }
+
+        .sidenav li > a::before {
+            left: auto;
+            right: 0
+        }
+
+/*#endregion */
+
+/*#region Navbar */
+
+nav {
+    height: 64px;
+    line-height: 64px;
+}
+
+    nav .sidenav-trigger i {
+        height: 64px;
+        line-height: 64px;
+    }
+
+.navbar-fixed nav.navbar {
+    width: 100%;
+    left: 0
+}
+
+nav.navbar {
+    z-index: 10;
+    transition: box-shadow .3s, background-color .3s;
+    padding: 0 20px;
+    color: rgba(0,0,0,0.87)
+}
+
+/*#endregion */
+
+/*#region Tabs */
+
+.tabs.tabs-transparent .tab a, .tabs.tabs-transparent .tab.disabled a, .tabs.tabs-transparent .tab.disabled a:hover {
+    color: #26a69a;
+}
+
+.tabs .tab a {
+    color: rgba(38,166, 154, 0.6);
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0 24px;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: color .28s ease, background-color .28s ease
+}
+
+    .tabs .tab a:focus, .tabs .tab a:focus.active {
+        background-color: rgba(38,166, 154, 0.2);
+        outline: none
+    }
+
+    .tabs .tab a:hover, .tabs .tab a.active {
+        background-color: transparent;
+        color: #26a69a;
+    }
+
+.tabs .tab.disabled a, .tabs .tab.disabled a:hover {
+    color: rgba(68,138,255,0.4);
+    cursor: default
+}
+
+.tabs .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #26a69a;
+    will-change: left, right
+}
+
+/*#endregion */
+
+/*#region Options List Dropdown */
+.options-container {
+    margin-bottom: 50px
+}
+
+    .options-container .single-option {
+        color: #181818;
+        font-size: 16px;
+        margin: 0;
+        background-color: #fff;
+        padding: 24px;
+        border-bottom: 1px solid #ddd
+    }
+
+.dropdown-content .options-container {
+    box-shadow: none;
+    border: 0;
+    margin: 0
+}
+
+    .dropdown-content .options-container .single-option {
+        padding: 16px;
+        line-height: 24px
+    }
+
+/*#endregion */
+
+/*#region Footer */
+
+.page-footer {
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    color: #444;
+    padding: 40px 0;
+    margin: 0
+}
+
+    .page-footer .row {
+        margin: 0
+    }
+
+/*#endregion */
+
+/*#region MediaQueries */
+
+@media only screen and (max-width: 992px) {
+    nav .navbar a.brand-logo {
+        position: absolute
+    }
+
+    .fixed-sidenav {
+        left: 0
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    .fixed-sidenav .navbar-fixed nav.navbar {
+        width: calc(100% - 300px);
+        left: 300px
+    }
+
+    body:not(.fixed-sidenav) nav a.sidenav-trigger {
+        display: block
+    }
+
+    body:not(.fixed-sidenav) nav.navbar .brand-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%)
+    }
+
+    body.fixed-sidenav {
+        padding-left: 300px
+    }
+
+    .container {
+        width: 80%
+    }
+}
+
+/*#endregion */
+
+/*#region Data Tables */
+
+.dataTables_wrapper {
+    border-top: 1px solid rgba(0,0,0,0.12);
+    border-bottom: 1px solid rgba(0,0,0,0.12)
+}
+
+    .dataTables_wrapper .dataTables_filter {
+        padding-right: 18px
+    }
+
+    .dataTables_wrapper table.dataTable tr {
+        border-color: rgba(0,0,0,0.12);
+        background-color: transparent
+    }
+
+        .dataTables_wrapper table.dataTable tr.selected {
+            background-color: #7af
+        }
+
+    .dataTables_wrapper .dataTables-checkbox-column {
+        width: 40px;
+        text-align: center
+    }
+
+        .dataTables_wrapper .dataTables-checkbox-column label > span {
+            padding-left: 24px;
+            transform: translateY(4px)
+        }
+
+        .dataTables_wrapper .dataTables-checkbox-column [type="checkbox"].filled-in:checked + span:not(.lever):before {
+            width: 6px
+        }
+
+    .dataTables_wrapper table.dataTable thead th, .dataTables_wrapper table.dataTable thead td {
+        border-color: rgba(0,0,0,0.12);
+        padding: 8px 10px
+    }
+
+    .dataTables_wrapper.no-footer .dataTables_scrollHead .dataTables_scrollHeadInner table.dataTable {
+        border-top: 1px solid rgba(0,0,0,0.12)
+    }
+
+    .dataTables_wrapper.no-footer .dataTables_scrollBody {
+        border-color: rgba(0,0,0,0.12)
+    }
+
+    .dataTables_wrapper .footer-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px
+    }
+
+    .dataTables_wrapper .dataTables_length .select-wrapper {
+        display: inline-block;
+        margin: 0 8px;
+        width: 60px
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        line-height: 48px;
+        padding: 0
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        padding: 4px
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.first::before {
+            content: 'first_page'
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.previous::before {
+            content: 'chevron_left'
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.next::before {
+            content: 'chevron_right'
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.last::before {
+            content: 'last_page'
+        }
+
+/*#endregion */
 
 /*#region Bootstrap Alerts */
 
@@ -122,97 +490,3 @@ main {
     }
 
 /*#endregion */
-
-.tabs {
-    position: relative;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 48px;
-    width: 100%;
-    background-color: #fff;
-    margin: 0 auto;
-    white-space: nowrap
-}
-
-    .tabs.tabs-transparent {
-        background-color: transparent
-    }
-
-        .tabs.tabs-transparent .tab a, .tabs.tabs-transparent .tab.disabled a, .tabs.tabs-transparent .tab.disabled a:hover {
-            color: #26a69a;
-        }
-
-            .tabs.tabs-transparent .tab a:hover, .tabs.tabs-transparent .tab a.active {
-                color: #fff
-            }
-
-        .tabs.tabs-transparent .indicator {
-            background-color: #fff
-        }
-
-    .tabs.tabs-fixed-width {
-        display: flex
-    }
-
-        .tabs.tabs-fixed-width .tab {
-            flex-grow: 1
-        }
-
-    .tabs .tab {
-        display: inline-block;
-        text-align: center;
-        line-height: 48px;
-        height: 48px;
-        padding: 0;
-        margin: 0;
-        text-transform: uppercase
-    }
-
-        .tabs .tab a {
-            color: rgba(38,166, 154, 0.6);
-            display: block;
-            width: 100%;
-            height: 100%;
-            padding: 0 24px;
-            font-size: 14px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            transition: color .28s ease, background-color .28s ease
-        }
-
-            .tabs .tab a:focus, .tabs .tab a:focus.active {
-                background-color: rgba(38,166, 154, 0.2);
-                outline: none
-            }
-
-            .tabs .tab a:hover, .tabs .tab a.active {
-                background-color: transparent;
-                color: #26a69a;
-            }
-
-        .tabs .tab.disabled a, .tabs .tab.disabled a:hover {
-            color: rgba(68,138,255,0.4);
-            cursor: default
-        }
-
-    .tabs .indicator {
-        position: absolute;
-        bottom: 0;
-        height: 2px;
-        background-color: #26a69a;
-        will-change: left, right
-    }
-
-@media only screen and (max-width: 992px) {
-    .tabs {
-        display: flex
-    }
-
-        .tabs .tab {
-            flex-grow: 1
-        }
-
-            .tabs .tab a {
-                padding: 0 12px
-            }
-}
