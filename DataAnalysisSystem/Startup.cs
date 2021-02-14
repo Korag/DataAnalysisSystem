@@ -62,6 +62,8 @@ namespace DataAnalysisSystem
             // Data Access Layer
             services.AddSingleton<RepositoryContext, RepositoryContext>();
             services.AddSingleton<DbContextAbstract, MongoDbContext>();
+            services.AddSingleton<MongoDbContext, MongoDbContext>();
+
 
             // Repository Layer
             services.AddTransient<IUserRepository, MongoUserRepository>();

@@ -20,6 +20,13 @@ namespace DataAnalysisSystem.Services
 
             CreateMap<IdentityProviderUser, EditUserDataViewModel>()
                          .ForMember(dest => dest.UserIdentificator, opts => opts.MapFrom(src => src.Id));
+
+
+            CreateMap<EditUserDataViewModel, IdentityProviderUser>()
+                         .ForMember(dest => dest.Id, opts => opts.Ignore())
+                         .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.Email))
+                         .ForMember(dest => dest.NormalizedUserName, opts => opts.MapFrom(src => src.Email.ToUpper()))
+                         .ForMember(dest => dest.NormalizedEmail, opts => opts.MapFrom(src => src.Email.ToUpper()));
         }
     }
 }

@@ -3,6 +3,7 @@ using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AdditionalFunctionalities;
 using DataAnalysisSystem.DTO.UserDTO;
 using DataAnalysisSystem.Extensions;
+using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.ServicesInterfaces;
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authentication;
@@ -22,15 +23,20 @@ namespace DataAnalysisSystem.Controllers
         private readonly IEmailProvider _emailProvider;
         private readonly IMapper _autoMapper;
 
+        private readonly RepositoryContext _context;
+
         public UserController(
                               UserManager<IdentityProviderUser> userManager,
                               SignInManager<IdentityProviderUser> signInManager,
+                              RepositoryContext context,
                               ICodeGenerator codeGenerator,
                               IEmailProvider emailProvider,
                               IMapper autoMapper){
 
             this._userManager = userManager;
             this._signInManager = signInManager;
+
+            this._context = context;
 
             this._codeGenerator = codeGenerator;
             this._emailProvider = emailProvider;
@@ -265,21 +271,71 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> EditUserData(string notificationMessage)
+        public async Task<IActionResult> EditUserData(string notificationMessage, bool userDataSection = true)
         {
-            ViewData["notificationMessage"] = notificationMessage;
+            ViewData["Message"] = notificationMessage;
 
             var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
             EditUserDataViewModel userData = _autoMapper.Map<EditUserDataViewModel>(user);
+            userData.UserDataSection = userDataSection;
 
             return View(userData);
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditUserData(EditUserDataViewModel modifiedUserData)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(modifiedUserData.UserIdentificator.ToString());
 
-    
+                user = _autoMapper.Map<EditUserDataViewModel, IdentityProviderUser>(modifiedUserData, user);
+                _context.userRepository.UpdateUser(user);
 
-        //TO DO:
-        //ChangeUserPassword
-        //ChangeUserData
+                if (user.Email != modifiedUserData.Email)
+                {
+                    user.EmailConfirmed = false;
+                    
+                    var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.GenerateEmailConfirmationLink(user.Id.ToString(), emailConfirmationToken, Request.Scheme);
+
+                    var emailSenderTask = Task.Run(() => SendEmailMessageToUser(user, "emailConfirmation", callbackUrl));
+
+                    return RedirectToAction("UserLogin", "User", new { notificationMessage = "You have been automatically logged off because you have changed your email address. An email has been sent to your new address to enable you to confirm it." });
+                }
+
+                return RedirectToAction("EditUserData", "User", new { notificationMessage = "User data has been updated." });
+            }
+
+            return View(modifiedUserData);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangeUserPassword(EditUserDataViewModel modifiedUserData)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(modifiedUserData.UserIdentificator.ToString());
+                var result = await _userManager.ChangePasswordAsync(user, modifiedUserData.CurrentPassword, modifiedUserData.NewPassword);
+                modifiedUserData.UserDataSection = false;
+
+                if (result.Succeeded)
+                {
+                    var emailSenderTask = Task.Run(() => SendEmailMessageToUser(user, "changePassword"));
+                    _signInManager.SignOutAsync().Wait();
+
+                    return RedirectToAction("UserLogin", "User", new { notificationMessage = "You have been automatically logged off because you have changed your account password." });
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "An incorrect password has been entered which is currently assigned to this user account.");
+                    return View(modifiedUserData);
+                }
+            }
+
+            return View("EditUserData", modifiedUserData);
+        }
     }
 }
