@@ -189,7 +189,7 @@ namespace DataAnalysisSystem.Controllers
 
                 var emailSenderTask2 = Task.Run(() => SendEmailMessageToUser(user, "resetPassword", callbackUrl));
 
-                return RedirectToAction("UserLogin", "User", new { notificationMessage = "We have sent a message with further instructions to the email address associated with the account you wish to regain access to.We have sent a message with further instructions to the email address associated with the account you wish to regain access to." });
+                return RedirectToAction("UserLogin", "User", new { notificationMessage = "We have sent a message with further instructions to the email address associated with the account you wish to regain access to." });
             }
 
             return View(forgottenpasswordViewModel);

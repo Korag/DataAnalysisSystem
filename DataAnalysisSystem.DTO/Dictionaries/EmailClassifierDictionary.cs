@@ -25,7 +25,7 @@ namespace DataAnalysisSystem.DTO.Dictionaries
         public static readonly Dictionary<string, string> PrimaryContent = new Dictionary<string, string>
          {
            {"register", "We have just noted the registration of a new user account associated with this email address. Before using the system you must confirm your email address by clicking on the button below."},
-           {"emailConfirmation", "You want to log in to your user account but cannot do so? Login has been interrupted because you have not yet confirmed your email address. Would you like to enable login to your account by confirming this email address ? Press the button below to do so."},
+           {"emailConfirmation", "You want to log in to your user account but cannot do so? Login has been interrupted because you have not yet confirmed your email address. Would you like to enable login to your account by confirming this email address? Press the button below to do so."},
            {"changePassword", "The password for the user account associated with this email address has just been reset."},
            {"resetPassword", "We have just registered a request to reset the password of the user account associated with this email address. If you wish to reset your password please click on the button below."},
            {"resetPasswordWithoutEmailConfirmation", "An attempt was detected to change the password for the account associated with this email address. This address has not yet been confirmed. If you wish to reset your password, please first confirm your email address by clicking on the button below."},
@@ -43,10 +43,10 @@ namespace DataAnalysisSystem.DTO.Dictionaries
         public static readonly Dictionary<string, string> URLActionText = new Dictionary<string, string>
          {
            {"register", "Confirm this email address"},
-           {"emailConfirmation", "Confirm this email address."},
+           {"emailConfirmation", "Confirm this email address"},
            {"changePassword", ""},
-           {"resetPassword", "Reset your password."},
-           {"resetPasswordWithoutEmailConfirmation", "Confirm this email address."},
+           {"resetPassword", "Reset your password"},
+           {"resetPasswordWithoutEmailConfirmation", "Confirm this email address"},
         };
     }
 }

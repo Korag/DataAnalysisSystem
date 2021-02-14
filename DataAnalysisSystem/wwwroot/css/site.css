@@ -153,6 +153,10 @@ nav {
     line-height: 64px;
 }
 
+    nav .sidenav-trigger {
+        cursor: pointer;
+    }
+
     nav .sidenav-trigger i {
         height: 64px;
         line-height: 64px;

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\DatabaseCredentials\dbCredentials.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="jquery.datatables" Version="1.10.15" />
     <PackageReference Include="materialize" Version="0.97.6" />
@@ -28,6 +32,10 @@
     <Folder Include="Views\Analysis\" />
     <Folder Include="Views\Dataset\" />
     <Folder Include="wwwroot\resources\EmailAttachments\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\DatabaseCredentials\dbCredentials.json" />
   </ItemGroup>
 
 </Project>

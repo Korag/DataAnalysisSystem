@@ -23,7 +23,7 @@
             <nav id="navbar-top" class="navbar white">
                 <div class="nav-wrapper">
                   
-                    <a asp-controller="UserSystemInteraction" asp-action="MainAction" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:20px"><img id="logo" src="~/images/logo_small.png" width="40" height="40" /><span id="applicationName">  Data Analysis System</span></a>
+                    <a asp-controller="UserSystemInteraction" asp-action="MainAction" class="brand-logo grey-text text-darken-4 valign-wrapper" style="margin-top:10px; font-size:20px"><img id="logo" src="~/images/logo_small.png" width="40" height="40" /><span id="applicationName"></span></a>
 
                     <ul class="right">
                         <li><a href="#!" data-target="options-list" class="dropdown-trigger waves-effect"><i class="material-icons" style="color:black">settings</i></a></li>
@@ -156,15 +156,22 @@
         $(".sidenav").sidenav({ edge: "left" });
         $(".modal").modal(), $(".scrollspy").scrollSpy();
 
-        $(window).on('resize', function () {
-            var win = $(this); 
-            if (win.width() < 520)
-            {
+        function ChangeNavbarContentDueToResize() {
+            var win = $(this);
+            if (win.width() < 520) {
                 $("#applicationName").text(' D.A.S.');
             }
             if (win.width() >= 520) {
                 $("#applicationName").text(' Data Analysis System');
             }
+        }
+
+        $(document).ready(function () {
+            ChangeNavbarContentDueToResize();
+        });
+
+        $(window).on('resize', function () {
+            ChangeNavbarContentDueToResize();
         });
     </script>
 
