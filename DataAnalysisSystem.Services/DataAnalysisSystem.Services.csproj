@@ -24,4 +24,11 @@
     <ProjectReference Include="..\DataAnalysisSystem.ServicesInterfaces\DataAnalysisSystem.ServicesInterfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Design Patterns\Adapter Design Pattern\" />
+    <Folder Include="Design Patterns\Command Design Pattern\" />
+    <Folder Include="Design Patterns\Facade Design Pattern\" />
+    <Folder Include="Design Patterns\Builder Design Pattern\" />
+  </ItemGroup>
+
 </Project>

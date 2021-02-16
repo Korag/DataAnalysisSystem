@@ -8,7 +8,9 @@ namespace DataAnalysisSystem.DataEntities
     {
         public Dataset()
         {
-            this.DatasetContent = new List<string>();
+            this.DatasetContent = new List<DatasetColumnAbstract>();
+
+            this.DatasetContent.Add(new DatasetColumnDouble("fileName", typeof(double).ToString()));
         }
 
         [BsonId]
@@ -22,10 +24,7 @@ namespace DataAnalysisSystem.DataEntities
         public bool IsShared { get; set; }
         public string AccessKey { get; set; }
 
-        //Układ wierszy-kolumn zawierających dynamicznie przypisane dane
-        //struktura musi być dynamiczna
-        public ICollection<string> DatasetContent { get; set; }
-        //Statystyki zbioru
+        public ICollection<DatasetColumnAbstract> DatasetContent { get; set; }
         public DatasetStatistics DatasetStatistics { get; set; }
     }
 }
