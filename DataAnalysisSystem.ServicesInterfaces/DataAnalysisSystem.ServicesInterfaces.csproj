@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataAnalysisSystem.DataEntities\DataAnalysisSystem.DataEntities.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.DTO\DataAnalysisSystem.DTO.csproj" />
   </ItemGroup>
 
