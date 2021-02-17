@@ -4,7 +4,9 @@ namespace DataAnalysisSystem.ServicesInterfaces.DesignPatterns.ChainOfResponsibi
 {
     public class RegexDecisionDTO
     {
-        public string StringFileContent { get; set; }
+        public string FileExtension { get; set; }
+        public string MimeType { get; set; }
+
         public ISerializerStrategy RegexMatchesSerializer { get; set; }
     }
 }

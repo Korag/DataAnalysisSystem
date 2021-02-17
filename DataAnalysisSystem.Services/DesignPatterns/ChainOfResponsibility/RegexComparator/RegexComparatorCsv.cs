@@ -1,12 +1,14 @@
 ﻿using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.ChainOfResponsibility.RegexComparator;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.RegexComparator
 {
     public class RegexComparatorCsv : RegexComparatorAbstract
     {
-        public string RegexExpression = "";
+        public List<string> FileExtension = new List<string> { ".CSV", ".TXT" };
+        public string MimeType = "text/csv";
 
         public RegexComparatorCsv()
         {
@@ -15,8 +17,8 @@ namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.Regex
 
         public ISerializerStrategy RegexComparatorJson_onMatchFound(RegexComparatorAbstract comparator, RegexDecisionDTO regexDecision)
         {
-            // check if regex matches
-            if (true)
+            
+            if (this.FileExtension.Contains(regexDecision.FileExtension) && regexDecision.MimeType == this.MimeType)
             {
                 regexDecision.RegexMatchesSerializer = new CsvSerializerStrategy();
             }

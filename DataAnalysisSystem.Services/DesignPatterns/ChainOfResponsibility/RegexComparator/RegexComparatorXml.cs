@@ -1,12 +1,14 @@
 ﻿using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.ChainOfResponsibility.RegexComparator;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.RegexComparator
 {
     public class RegexComparatorXml : RegexComparatorAbstract
     {
-        public string RegexExpression = "";
+        public List<string> FileExtension = new List<string> { ".XML", ".TXT" };
+        public List<string> MimeType = new List<string> { "application/xml", "text/xml" };
 
         public RegexComparatorXml()
         {
@@ -15,10 +17,9 @@ namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.Regex
 
         public ISerializerStrategy RegexComparatorJson_onMatchFound(RegexComparatorAbstract comparator, RegexDecisionDTO regexDecision)
         {
-            // check if regex matches
-            if (true)
+            if (this.FileExtension.Contains(regexDecision.FileExtension) && this.MimeType.Contains(regexDecision.MimeType))
             {
-                regexDecision.RegexMatchesSerializer = new XmlSerializerStrategy();
+                regexDecision.RegexMatchesSerializer = new CsvSerializerStrategy();
             }
             else
             {
