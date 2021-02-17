@@ -24,10 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Design Patterns\Adapter Design Pattern\" />
-    <Folder Include="Design Patterns\Builder Design Pattern\" />
-    <Folder Include="Design Patterns\Command Design Pattern\" />
-    <Folder Include="Design Patterns\Facade Design Pattern\" />
+    <Folder Include="DesignPatterns\AdapterDesignPattern\" />
+    <Folder Include="DesignPatterns\BuilderDesignPattern\" />
+    <Folder Include="DesignPatterns\CommandDesignPattern\" />
+    <Folder Include="DesignPatterns\FacadeDesignPattern\" />
   </ItemGroup>
 
 </Project>

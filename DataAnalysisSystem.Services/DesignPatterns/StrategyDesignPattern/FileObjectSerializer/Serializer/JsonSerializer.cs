@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace DataAnalysisSystem.Services.Serializers_Helpers
+namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer
 {
-    public static class JsonSerializerHelper
+    public static class JsonSerializer
     {
         public static dynamic ConvertJsonStringToDynamicObject(string jsonString)
         {

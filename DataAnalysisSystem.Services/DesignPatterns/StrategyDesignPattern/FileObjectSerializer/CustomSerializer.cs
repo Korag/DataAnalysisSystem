@@ -1,8 +1,8 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.ServicesInterfaces.Serializers;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using System.Collections.Generic;
 
-namespace DataAnalysisSystem.Services.Serializers
+namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
 {
     public sealed class CustomSerializer
     {

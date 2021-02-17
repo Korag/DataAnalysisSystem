@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DatasetDTO\" />
     <Folder Include="AnalysisDTO\" />
+    <Folder Include="DatasetDTO\" />
   </ItemGroup>
 
 </Project>

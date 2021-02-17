@@ -1,5 +1,5 @@
 ﻿using DataAnalysisSystem.RepositoryInterfaces.DataAccessLayerAbstract;
-using DataAnalysisSystem.Services.Serializers_Helpers;
+using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
 using MongoDB.Driver;
 using System;
 using System.IO;
@@ -35,7 +35,7 @@ namespace DataAnalysisSystem.Repository.DataAccessLayer
                 var fileContent = streamReader.ReadToEnd();
                 try
                 {
-                    dynamic deserializedObject = JsonSerializerHelper.ConvertJsonStringToDynamicObject(fileContent);
+                    dynamic deserializedObject = JsonSerializer.ConvertJsonStringToDynamicObject(fileContent);
 
                     _databaseName = deserializedObject["DatabaseName"];
                     _connectionString = deserializedObject["MongoAtlasConnectionString"];

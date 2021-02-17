@@ -1,13 +1,13 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.ServicesInterfaces.Serializers;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using System;
 using System.Collections.Generic;
 
-namespace DataAnalysisSystem.Services.Serializers
+namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
 {
-    public class JsonSerializerStrategy : ISerializerStrategy
+    class XlsxSerializerStrategy : ISerializerStrategy
     {
-        public JsonSerializerStrategy()
+        public XlsxSerializerStrategy()
         {
 
         }

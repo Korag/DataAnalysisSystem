@@ -1,9 +1,9 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.ServicesInterfaces.Serializers;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using System;
 using System.Collections.Generic;
 
-namespace DataAnalysisSystem.Services.Serializers
+namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
 {
     public class CsvSerializerStrategy : ISerializerStrategy
     {
