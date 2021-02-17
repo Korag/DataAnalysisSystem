@@ -58,6 +58,7 @@ namespace DataAnalysisSystem
             services.AddTransient<IEmailAttachmentsHandler, EmailAttachmentsHandler>();
 
             services.AddTransient<ICodeGenerator, CodeGeneratorUtilityForMongoDB>();
+            services.AddTransient<IMimeTypeGuesser, MimeTypeGuesser>();
 
             // Data Access Layer
             services.AddSingleton<RepositoryContext, RepositoryContext>();
