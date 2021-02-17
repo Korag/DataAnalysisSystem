@@ -494,3 +494,36 @@ nav.navbar {
     }
 
 /*#endregion */
+
+.fc .fc-button.fc-prev-button, .fc .fc-button.fc-next-button, .fc-icon, .dataTables_wrapper .dataTables_paginate .paginate_button.first, .dataTables_wrapper .dataTables_paginate .paginate_button.previous, .dataTables_wrapper .dataTables_paginate .paginate_button.next, .dataTables_wrapper .dataTables_paginate .paginate_button.last {
+    color: rgba(0,0,0,0.87) !important;
+    font-family: "Material Icons";
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0 2px;
+    box-shadow: none;
+    border: 0;
+    border-radius: 50%;
+    background: transparent
+}
+
+    .fc .fc-button.fc-prev-button::before, .fc .fc-button.fc-next-button::before, .fc-icon::before, .dataTables_wrapper .dataTables_paginate .paginate_button.first::before, .dataTables_wrapper .dataTables_paginate .paginate_button.previous::before, .dataTables_wrapper .dataTables_paginate .paginate_button.next::before, .dataTables_wrapper .dataTables_paginate .paginate_button.last::before {
+        display: block;
+        padding: 8px;
+        line-height: 24px;
+        font-size: 24px
+    }
+
+.fc .disabled.fc-button.fc-prev-button, .fc .disabled.fc-button.fc-next-button, .disabled.fc-icon, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.first, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.previous, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.next, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.last, .fc .disabled.fc-button.fc-prev-button:hover, .fc .disabled.fc-button.fc-next-button:hover, .disabled.fc-icon:hover, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.first:hover, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.previous:hover, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.next:hover, .dataTables_wrapper .dataTables_paginate .disabled.paginate_button.last:hover {
+    color: rgba(0,0,0,0.26) !important;
+    border: 0
+}
+
+.fc .fc-button.fc-prev-button:hover, .fc .fc-button.fc-next-button:hover, .fc-icon:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.first:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.next:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.last:hover, .fc .fc-button.fc-prev-button:active, .fc .fc-button.fc-next-button:active, .fc-icon:active, .dataTables_wrapper .dataTables_paginate .paginate_button.first:active, .dataTables_wrapper .dataTables_paginate .paginate_button.previous:active, .dataTables_wrapper .dataTables_paginate .paginate_button.next:active, .dataTables_wrapper .dataTables_paginate .paginate_button.last:active {
+    color: rgba(0,0,0,0.87) !important;
+    background: rgba(0,0,0,0.05);
+    border: 0;
+    box-shadow: none
+}

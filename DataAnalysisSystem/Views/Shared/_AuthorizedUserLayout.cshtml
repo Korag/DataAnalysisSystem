@@ -35,7 +35,7 @@
 
                 @RenderSection("NavContent", required: false)
 
-            </navid="navbar-top">
+            </nav>
         </div>
 
         @RenderSection("Notification", required: false)
@@ -49,7 +49,7 @@
                     <a class="collapsible-header not-collapse">Datasets</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Add new dataset<i class="material-icons">description</i></a></li>
+                            <li><a asp-controller="Dataset" asp-action="AddNewDataset" class="waves-effect">Add new dataset<i class="material-icons">description</i></a></li>
                             <li><a asp-controller="..." asp-action="..." class="waves-effect">List of datasets<i class="material-icons">view_list</i></a></li>
                             <li><a asp-controller="..." asp-action="..." class="waves-effect">Share the dataset<i class="material-icons">folder_shared</i></a></li>
                         </ul>
@@ -154,7 +154,7 @@
 
         $(".dropdown-trigger").dropdown({ alignment: "right", constrainWidth: !1, coverTrigger: !1, closeOnClick: !1 });
         $(".sidenav").sidenav({ edge: "left" });
-        $(".modal").modal(), $(".scrollspy").scrollSpy();
+        $("#modalLogout").modal(), $(".scrollspy").scrollSpy();
 
         function ChangeNavbarContentDueToResize() {
             var win = $(this);

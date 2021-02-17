@@ -11,7 +11,7 @@ namespace DataAnalysisSystem.Controllers
 {
     public class UserSystemInteractionController : Controller
     {
-        public const string MAINACTION_ACTION_NAME = "MainAction";
+        public const string CONTACT_ACTION_NAME = "ContactWithAdministration";
         public const string USERLOGIN_ACTION_NAME = "UserLogin";
 
         private readonly IEmailProvider _emailProvider;
@@ -36,6 +36,7 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
+        //Empty action
         [AllowAnonymous]
         [HttpGet]
         public IActionResult AboutTheProject()
@@ -45,12 +46,13 @@ namespace DataAnalysisSystem.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult ContactWithAdministration()
+        public IActionResult ContactWithAdministration(string notificationMessage = null)
         {
+            ViewData["Message"] = notificationMessage;
+
             return View();
         }
 
-        //Add waiting modal
         [AllowAnonymous]
         [HttpPost]
         public ActionResult ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
@@ -62,7 +64,6 @@ namespace DataAnalysisSystem.Controllers
 
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(_emailProviderConfigurationProfile.SmtpUsername, 
                                                                                          _emailProviderConfigurationProfile.SenderName, 
-                                                                                         contactViewModel.SenderEmail, 
                                                                                          contactViewModel.Topic, 
                                                                                          contactViewModel.EmailMessageContent,
                                                                                          attachmentsFileNames);
@@ -71,7 +72,7 @@ namespace DataAnalysisSystem.Controllers
                                                                .ContinueWith(result => { _emailAttachmentsHandler.RemoveAttachmentsFromHardDrive(attachmentsFileNames); });
            
             if (this.User.Identity.IsAuthenticated)
-                actionName = MAINACTION_ACTION_NAME;
+                actionName = CONTACT_ACTION_NAME;
             else
                 actionName = USERLOGIN_ACTION_NAME;
 

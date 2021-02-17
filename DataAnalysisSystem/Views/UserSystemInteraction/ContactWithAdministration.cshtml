@@ -26,7 +26,7 @@
                     <div class="input-field">
 
                         <i class="material-icons prefix">security</i>
-                        <input type="password" asp-for="Topic" required="" aria-required="true" class="validate">
+                        <input type="text" asp-for="Topic" required="" aria-required="true" class="validate">
                         <label asp-for="Topic"></label>
 
                         <span asp-validation-for="Topic" class="helper-text" style="color: #F44336"></span>
@@ -36,7 +36,7 @@
                     <div class="input-field">
 
                         <i class="material-icons prefix">format_align_left</i>
-                        <textarea asp-for="EmailMessageContent" class="materialize-textarea"></textarea>
+                        <textarea asp-for="EmailMessageContent" class="materialize-textarea validate"></textarea>
                         <label asp-for="EmailMessageContent"></label>
 
                         <span asp-validation-for="EmailMessageContent" class="helper-text" style="color: #F44336"></span>
@@ -70,6 +70,11 @@
 {
     <div class="row">
         <div class="col s8 offset-s2">
+
+            @if (ViewData["Message"] != null)
+            {
+                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
+            }
 
             <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
 

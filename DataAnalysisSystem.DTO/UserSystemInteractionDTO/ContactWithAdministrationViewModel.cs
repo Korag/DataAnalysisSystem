@@ -15,8 +15,8 @@ namespace DataAnalysisSystem.DTO.UserSystemInteractionDTO
         [Display(Name = "Topic")]
         public string Topic { get; set; }
 
-        [Display(Name = "Message content")]
         [Required(ErrorMessage = "Field \"{0}\" is required.")]
+        [Display(Name = "Message content")]
         public string EmailMessageContent { get; set; }
 
         [Display(Name = "Attachments")]

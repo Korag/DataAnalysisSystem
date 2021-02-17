@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Analysis\" />
-    <Folder Include="Views\Dataset\" />
     <Folder Include="wwwroot\resources\EmailAttachments\" />
   </ItemGroup>
 
