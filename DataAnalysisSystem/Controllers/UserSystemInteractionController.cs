@@ -60,16 +60,17 @@ namespace DataAnalysisSystem.Controllers
             string notificationMessage = "Thank you for your message. Your message has been forwarded to the application administration.";
             string actionName = "";
 
-            List<string> attachmentsFileNames = _emailAttachmentsHandler.SaveAttachmentsOnHardDrive(contactViewModel.Attachments).ToList();
+            //TO DO: Swap to FileHelper
+            List<string> attachmentsPaths = _emailAttachmentsHandler.SaveAttachmentsOnHardDrive(contactViewModel.Attachments).ToList();
 
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(_emailProviderConfigurationProfile.SmtpUsername, 
                                                                                          _emailProviderConfigurationProfile.SenderName, 
                                                                                          contactViewModel.Topic, 
                                                                                          contactViewModel.EmailMessageContent,
-                                                                                         attachmentsFileNames);
+                                                                                         attachmentsPaths);
 
             var emailSenderTask = Task.Run(() => _emailProvider.SendEmailMessageAsync(emailMessage))
-                                                               .ContinueWith(result => { _emailAttachmentsHandler.RemoveAttachmentsFromHardDrive(attachmentsFileNames); });
+                                                               .ContinueWith(result => { _emailAttachmentsHandler.RemoveAttachmentsFromHardDrive(attachmentsPaths); });
            
             if (this.User.Identity.IsAuthenticated)
                 actionName = CONTACT_ACTION_NAME;

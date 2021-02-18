@@ -30,5 +30,10 @@ namespace DataAnalysisSystem.Services
         {
             return GenerateNewUniqueCode().ToString();
         }
+
+        public string GenerateNewUniqueXLengthCodeAsString(int length)
+        {
+            return GenerateNewUniqueCode().ToString().Substring(length);
+        }
     }
 }

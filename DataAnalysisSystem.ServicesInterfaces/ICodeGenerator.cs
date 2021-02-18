@@ -7,5 +7,6 @@ namespace DataAnalysisSystem.ServicesInterfaces
         public string GenerateNewDbEntityUniqueIdentificatorAsString();
         public ObjectId GenerateNewDbEntityUniqueIdentificatorAsObjectId();
         public string GenerateNewUniqueCodeAsString();
+        public string GenerateNewUniqueXLengthCodeAsString(int length);
     }
 }

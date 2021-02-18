@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace DataAnalysisSystem.ServicesInterfaces
 {
@@ -12,5 +13,10 @@ namespace DataAnalysisSystem.ServicesInterfaces
         public int CountFilesInDirectory(string path);
         public byte[] ConvertIFormFileToByteArray(IFormFile file);
         public string ConvertIFormFileToString(IFormFile file);
+        public string SaveFileOnHardDrive(IFormFile file, string folderName);
+        public ICollection<string> SaveFilesOnHardDrive(ICollection<IFormFile> files, string folderName);
+        public void RemoveFileFromHardDrive(string filePath);
+        public void RemoveFilesFromHardDrive(ICollection<string> filePaths);
+
     }
 }

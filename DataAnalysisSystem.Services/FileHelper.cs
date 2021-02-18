@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -10,10 +11,12 @@ namespace DataAnalysisSystem.Services
     public class FileHelper : IFileHelper
     {
         private IHostingEnvironment _environment;
+        private ICodeGenerator _codeGenerator;
 
-        public FileHelper(IHostingEnvironment environment)
+        public FileHelper(IHostingEnvironment environment, ICodeGenerator codeGenerator)
         {
             _environment = environment;
+            _codeGenerator = codeGenerator;
         }
 
         public string ExtractExtensionFromFilePath(string filePath)
@@ -82,6 +85,53 @@ namespace DataAnalysisSystem.Services
             }
 
             return fileText;
+        }
+
+        public string SaveFileOnHardDrive(IFormFile file, string folderName)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+            string extension = Path.GetExtension(fileName).ToLower();
+            string generatedUniqueFileName = fileName + _codeGenerator.GenerateNewUniqueXLengthCodeAsString(4) + extension;
+
+            var filePath = Path.Combine(_environment.WebRootPath, folderName, generatedUniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(fileStream);
+            }
+
+            return filePath;
+        }
+
+        public ICollection<string> SaveFilesOnHardDrive(ICollection<IFormFile> files, string folderName)
+        {
+            List<string> createdFilePaths = new List<string>();
+
+            foreach (var file in files)
+            {
+                createdFilePaths.Add(SaveFileOnHardDrive(file, folderName));
+            }
+
+            return createdFilePaths;
+        }
+
+        public void RemoveFileFromHardDrive(string filePath)
+        {
+            if (!String.IsNullOrWhiteSpace(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        public void RemoveFilesFromHardDrive(ICollection<string> filePaths)
+        {
+            if (filePaths != null && filePaths.Count != 0)
+            {
+                foreach (var path in filePaths)
+                {
+                    RemoveFileFromHardDrive(path);
+                }
+            }
         }
 
         public bool CheckIfDirectoryEmpty(string path)
