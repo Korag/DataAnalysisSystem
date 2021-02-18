@@ -14,6 +14,7 @@ using DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract;
 using DataAnalysisSystem.Repository.Repository;
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using DataAnalysisSystem.Services.EmailProvider;
+using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 
 namespace DataAnalysisSystem
 {
@@ -59,6 +60,9 @@ namespace DataAnalysisSystem
 
             services.AddTransient<ICodeGenerator, CodeGeneratorUtilityForMongoDB>();
             services.AddTransient<IMimeTypeGuesser, MimeTypeGuesser>();
+            services.AddTransient<IFileHelper, FileHelper>();
+
+            services.AddTransient<CustomSerializer, CustomSerializer>();
 
             // Data Access Layer
             services.AddSingleton<RepositoryContext, RepositoryContext>();
