@@ -13,6 +13,7 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.3.0" />
     <PackageReference Include="MailKit" Version="2.9.0" />
+    <PackageReference Include="Mime" Version="3.2.2" />
     <PackageReference Include="MongoDB.Bson" Version="2.11.6" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
@@ -27,7 +28,6 @@
   <ItemGroup>
     <Folder Include="DesignPatterns\AdapterDesignPattern\" />
     <Folder Include="DesignPatterns\CommandDesignPattern\" />
-    <Folder Include="DesignPatterns\FacadeDesignPattern\" />
     <Folder Include="DesignPatterns\BuilderDesignPattern\" />
   </ItemGroup>
 
