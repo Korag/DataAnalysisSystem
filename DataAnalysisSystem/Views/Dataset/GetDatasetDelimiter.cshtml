@@ -1,0 +1,101 @@
+﻿@model DataAnalysisSystem.DTO.DatasetDTO.AddDelimiterInformationViewModel
+
+@{
+    ViewData["Title"] = "Add new dataset";
+}
+
+<div class="row" style="margin-bottom:0px">
+
+    <div class="col s8 offset-s2" style="margin-top: 5vh">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align">Add new Dataset</span>
+
+                <form method="post" asp-action="GetDatasetDelimiter" asp-controller="Dataset" enctype="multipart/form-data" onsubmit="openModalWaiter()">
+                    <div class="input-field" style="width:70%; margin:auto;">
+
+                        <input type="text" asp-for="InputFileName" hidden>
+                        <input type="text" asp-for="InputFileFormat" hidden>
+                        <input asp-for="DatasetContentString" hidden>
+                        <input asp-for="DatasetContentByteArray" hidden>
+
+                        <i class="material-icons prefix">input</i>
+                        <input type="text" asp-for="DatasetName" required="" aria-required="true" readonly>
+                        <label asp-for="DatasetName"></label>
+
+                    </div>
+
+                    <div class="file-field">
+
+                        <div class="btn teal darken-4 tooltipped" data-position="left" data-tooltip="Supported formats: .csv, .json, .xml, .xls, .xlsx">
+                            <span>Dataset</span>
+                            <input asp-for="DatasetFile" type="file" readonly>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" value="@Model.InputFileName" placeholder="Upload dataset" accept=".txt,.csv,.xml,.json,.xls,.xlsx" readonly>
+                        </div>
+
+                    </div>
+
+                    <div class="input-field" style="width:70%; margin:auto;">
+
+                        <i class="material-icons prefix">settings_ethernet</i>
+                        <input type="text" asp-for="CsvDelimiter" required="" aria-required="true" class="validate">
+                        <label asp-for="CsvDelimiter"></label>
+
+                        <span asp-validation-for="CsvDelimiter" class="helper-text" style="color: #F44336"></span>
+
+                    </div>
+
+                    <div class="center-align" style="margin-top: 10px">
+                        <input class="btn modal-trigger" type="submit" value="Continue">
+                        <a asp-action="AddNewDataset" asp-controller="Dataset" class="btn waves-effect waves-red btn-flat">Abort</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalWaiter" class="modal bottom-sheet" style="z-index: 1010; border:solid 2px; border-color:#26a69a">
+    <div class="modal-content">
+        <h4 class="center-align">Loading a dataset.</h4>
+        <h4 class="center-align">This may take a while.</h4>
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function openModalWaiter() {
+            $('#modalWaiter').modal('open');
+        }
+
+        $(document).ready(function () {
+            $('#modalWaiter').modal({
+                dismissible: false
+            })
+        });
+
+        $(document).ready(function () {
+            $('.tooltipped').tooltip();
+        });
+    </script>
+}
+
+@section Notification
+{
+    <div class="row">
+        <div class="col s8 offset-s2">
+
+            <h2 class="alert alert-info" role="alert">A .csv file was selected. Please indicate the delimiter character.</h2>
+            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
+
+        </div>
+    </div>
+}

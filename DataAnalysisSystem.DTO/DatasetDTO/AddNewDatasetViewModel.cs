@@ -17,7 +17,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         public string DatasetName { get; set; }
 
         [Required(ErrorMessage = "Field \"{0}\" is required.")]
-        [Display(Name = "Dataset file")]
+        [Display(Name = "Upload dataset")]
         public IFormFile DatasetFile { get; set; }
 
         [Display(Name = "Loaded Dataset")]

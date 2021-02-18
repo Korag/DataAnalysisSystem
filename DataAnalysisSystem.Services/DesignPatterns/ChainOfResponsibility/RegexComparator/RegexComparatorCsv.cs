@@ -8,7 +8,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.Regex
     public class RegexComparatorCsv : RegexComparatorAbstract
     {
         public List<string> FileExtension = new List<string> { ".CSV", ".TXT" };
-        public string MimeType = "text/csv";
+        public List<string> MimeType = new List<string> { "text/csv", "application/csv", "application/vnd.ms-excel" };
 
         public RegexComparatorCsv()
         {
@@ -18,7 +18,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.Regex
         public ISerializerStrategy RegexComparatorJson_onMatchFound(RegexComparatorAbstract comparator, RegexDecisionDTO regexDecision)
         {
             
-            if (this.FileExtension.Contains(regexDecision.FileExtension) && regexDecision.MimeType == this.MimeType)
+            if (this.FileExtension.Contains(regexDecision.FileExtension) && this.MimeType.Contains(regexDecision.MimeType))
             {
                 regexDecision.RegexMatchesSerializer = new CsvSerializerStrategy();
             }

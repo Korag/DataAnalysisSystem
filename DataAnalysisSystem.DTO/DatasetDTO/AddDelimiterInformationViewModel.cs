@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAnalysisSystem.DTO.DatasetDTO
 {
@@ -6,6 +7,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
     {
         public string DatasetName { get; set; }
 
+        public IFormFile DatasetFile { get; set; }
         public byte[] DatasetContentByteArray { get; set; }
         public string DatasetContentString { get; set; }
 

@@ -15,6 +15,8 @@ using DataAnalysisSystem.Repository.Repository;
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using DataAnalysisSystem.Services.EmailProvider;
 using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
+using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
 
 namespace DataAnalysisSystem
 {
@@ -62,7 +64,9 @@ namespace DataAnalysisSystem
             services.AddTransient<IMimeTypeGuesser, MimeTypeGuesser>();
             services.AddTransient<IFileHelper, FileHelper>();
 
-            services.AddTransient<CustomSerializer, CustomSerializer>();
+            //services.AddTransient<CustomSerializer, CustomSerializer>();
+            services.AddTransient<IRegexComparatorChainFacade, RegexComparatorChainFacade>();
+
 
             // Data Access Layer
             services.AddSingleton<RepositoryContext, RepositoryContext>();

@@ -11,7 +11,7 @@
             <div class="card-content">
                 <span class="card-title center-align">Contact</span>
 
-                <form method="post">
+                <form method="post" asp-action="ContactWithAdministration" asp-controller="UserSystem">
 
                     <div class="input-field">
 
@@ -45,10 +45,10 @@
                     <div class="file-field">
                         <div class="btn teal darken-4">
                             <span>Attachments</span>
-                            <input type="file" multiple>
+                            <input asp-for="Attachments" type="file" multiple>
                         </div>
                         <div class="file-path-wrapper">
-                            <input asp-for="Attachments" class="file-path validate" type="text" placeholder="Upload one or more attachments">
+                            <input class="file-path validate" type="text" placeholder="Upload one or more attachments">
                         </div>
 
                         <span asp-validation-for="Attachments" class="helper-text" style="color: #F44336"></span>

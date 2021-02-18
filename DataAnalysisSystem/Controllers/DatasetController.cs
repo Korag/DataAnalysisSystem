@@ -64,11 +64,7 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult AddNewDataset(string notificationMessage = null, AddNewDatasetViewModel newDataset = null)
         {
             ViewData["notificationMessage"] = notificationMessage;
-
-            if (newDataset == null)
-            {
-                newDataset = new AddNewDatasetViewModel();
-            }
+            ModelState.Clear();
 
             return View(newDataset);
         }
@@ -82,18 +78,28 @@ namespace DataAnalysisSystem.Controllers
                 IRegexComparatorChainFacade comparatorFacade = new RegexComparatorChainFacade();
                 IMimeTypeGuesser mimeTypeGuesser = new MimeTypeGuesser();
 
-                RegexDecisionDTO modelDecision = new RegexDecisionDTO()
-                {
-                    FileExtension = _fileHelper.ExtractExtensionFromFilePath(newDataset.DatasetFile.FileName),
-                    MimeType = newDataset.DatasetFile.ContentType
-                };
-
                 byte[] datasetBinaryFile = _fileHelper.ConvertIFormFileToByteArray(newDataset.DatasetFile);
+                
+                //Something is wrong - FIX IT
                 string datasetStringFile = _fileHelper.ConvertIFormFileToString(newDataset.DatasetFile);
 
                 string mimeType = _mimeTypeGuesser.GetMimeTypeFromByteArray(datasetBinaryFile, newDataset.DatasetFile.FileName);
 
+                RegexDecisionDTO modelDecision = new RegexDecisionDTO()
+                {
+                    FileExtension = _fileHelper.ExtractExtensionFromFilePath(newDataset.DatasetFile.FileName),
+                    MimeType = mimeType
+                };
+
                 ISerializerStrategy chosenStrategy = comparatorFacade.GetSerializerStrategyBasedOnFileType(modelDecision);
+
+                if (chosenStrategy == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Incorrect format of the uploaded file. Only the following formats are supported: .csv, .json, .xml, .xls, .xlsx.");
+
+                    return View(newDataset);
+                }
+
                 _customSerializer.ChangeStrategy(chosenStrategy);
 
                 if (chosenStrategy.GetType() == typeof(CsvSerializerStrategy))
@@ -103,14 +109,20 @@ namespace DataAnalysisSystem.Controllers
                     AddDelimiterInformationViewModel delimiterInformation = new AddDelimiterInformationViewModel()
                     {
                         DatasetName = newDataset.DatasetName,
+
                         DatasetContentByteArray = datasetBinaryFile,
                         DatasetContentString = datasetStringFile,
+                        DatasetFile = newDataset.DatasetFile,
+
                         InputFileName = newDataset.DatasetFile.FileName,
                         InputFileFormat = modelDecision.FileExtension,
+
                         CsvDelimiter = ";"
                     };
 
-                    return RedirectToAction("GetDatasetDelimiter", "Dataset", new { delimiterInformation = delimiterInformation, notificationMessage = "A .csv file was selected. Please indicate the delimiter character." });
+                    return View("GetDatasetDelimiter");
+
+                    //return RedirectToAction("GetDatasetDelimiter", "Dataset", new { delimiterInformation, notificationMessage = "A .csv file was selected. Please indicate the delimiter character." });
                 }
                 else
                 {
@@ -122,7 +134,7 @@ namespace DataAnalysisSystem.Controllers
                         InputFileName = newDataset.DatasetFile.FileName,
                         InputFileFormat = modelDecision.FileExtension
                     };
-
+                  
                     return RedirectToAction("MapDatasetToObjectModel", "Dataset", new { notificationMessage = mapDataset });
                 }
             }
@@ -130,16 +142,15 @@ namespace DataAnalysisSystem.Controllers
             return View(newDataset);
         }
 
-        //TO DO: Add View with spinner
-        [Authorize]
-        [HttpGet]
-        public IActionResult GetDatasetDelimiter(AddDelimiterInformationViewModel delimiterInformation, string notificationMessage = null)
-        {
-            //If strategy is CSV then ask question to user about Delimiter -> form
-            ViewData["notificationMessage"] = notificationMessage;
+        //[Authorize]
+        //[HttpGet]
+        //public IActionResult GetDatasetDelimiter(AddDelimiterInformationViewModel delimiterInformation, string notificationMessage = null)
+        //{
+        //    //If strategy is CSV then ask question to user about Delimiter -> form
+        //    ViewData["notificationMessage"] = notificationMessage;
 
-            return View(delimiterInformation);
-        }
+        //    return View(delimiterInformation);
+        //}
 
         //TO DO: Add View with spinner
         [Authorize]

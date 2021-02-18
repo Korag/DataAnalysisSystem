@@ -1,6 +1,7 @@
 ﻿using DataAnalysisSystem.ServicesInterfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -76,7 +77,8 @@ namespace DataAnalysisSystem.Services
             using (var memoryStream = new MemoryStream())
             {
                 file.CopyTo(memoryStream);
-                fileText = memoryStream.ToString();
+                var fileBytes = memoryStream.ToArray();
+                fileText = Convert.ToBase64String(fileBytes);
             }
 
             return fileText;
