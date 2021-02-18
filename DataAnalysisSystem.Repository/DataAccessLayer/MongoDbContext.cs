@@ -28,9 +28,9 @@ namespace DataAnalysisSystem.Repository.DataAccessLayer
             databaseInfo = _mongoClient.GetDatabase(_databaseName);
         }
 
-        public string ReadConnectionString(string pathToFile)
+        public string ReadConnectionString(string filePath)
         {
-            using (StreamReader streamReader = new StreamReader(pathToFile))
+            using (StreamReader streamReader = new StreamReader(filePath))
             {
                 var fileContent = streamReader.ReadToEnd();
                 try

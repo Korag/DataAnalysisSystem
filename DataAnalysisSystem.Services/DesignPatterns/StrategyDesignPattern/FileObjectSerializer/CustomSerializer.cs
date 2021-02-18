@@ -1,4 +1,5 @@
 ﻿using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using System.Collections.Generic;
 
@@ -29,9 +30,9 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
             _serializerStrategy = serializerStrategy;
         }
 
-        public ICollection<DatasetColumnAbstract> MapFileContentToObject(string fileContent)
+        public ICollection<DatasetColumnAbstract> MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
         {
-            return _serializerStrategy.MapFileContentToObject(fileContent);
+            return _serializerStrategy.MapFileContentToObject(filePath, parameters);
         }
 
         public string ConvertFromObjectToSpecificFile(ICollection<DatasetColumnAbstract> dataSet)

@@ -1,4 +1,5 @@
 ﻿using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
             throw new NotImplementedException();
         }
 
-        public ICollection<DatasetColumnAbstract> MapFileContentToObject(string fileContent)
+        public ICollection<DatasetColumnAbstract> MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
         {
             throw new NotImplementedException();
         }
