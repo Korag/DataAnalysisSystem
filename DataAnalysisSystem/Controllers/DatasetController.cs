@@ -21,6 +21,8 @@ namespace DataAnalysisSystem.Controllers
 {
     public class DatasetController : Controller
     {
+        private const string DATASET_FOLDER_NAME = "Datasets";
+
         private readonly ICodeGenerator _codeGenerator;
         private readonly IEmailProvider _emailProvider;
         private readonly IRegexComparatorChainFacade _regexComparator;
@@ -69,6 +71,7 @@ namespace DataAnalysisSystem.Controllers
             return View(newDataset);
         }
 
+        //TO DO: Display FileContent in DataTable
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddNewDataset(AddNewDatasetViewModel newDataset)
@@ -79,9 +82,7 @@ namespace DataAnalysisSystem.Controllers
                 IMimeTypeGuesser mimeTypeGuesser = new MimeTypeGuesser();
 
                 byte[] datasetBinaryFile = _fileHelper.ConvertIFormFileToByteArray(newDataset.DatasetFile);
-                
-                //Something is wrong - FIX IT
-                string datasetStringFile = _fileHelper.ConvertIFormFileToString(newDataset.DatasetFile);
+                string filePath = _fileHelper.SaveFileOnHardDrive(newDataset.DatasetFile, DATASET_FOLDER_NAME);
 
                 string mimeType = _mimeTypeGuesser.GetMimeTypeFromByteArray(datasetBinaryFile, newDataset.DatasetFile.FileName);
 
@@ -101,93 +102,19 @@ namespace DataAnalysisSystem.Controllers
                 }
 
                 _customSerializer.ChangeStrategy(chosenStrategy);
+               
+                newDataset.DatasetContent = _customSerializer.MapFileContentToObject(filePath, newDataset.AdditionalParameters);
+               
+                newDataset.InputFileName = newDataset.DatasetFile.Name;
+                newDataset.InputFileFormat = modelDecision.FileExtension.ToLower();
 
-                if (chosenStrategy.GetType() == typeof(CsvSerializerStrategy))
-                {
-                    //If strategy is CSV then ask question to user about Delimiter -> form
-
-                    AddDelimiterInformationViewModel delimiterInformation = new AddDelimiterInformationViewModel()
-                    {
-                        DatasetName = newDataset.DatasetName,
-
-                        DatasetContentByteArray = datasetBinaryFile,
-                        DatasetContentString = datasetStringFile,
-                        DatasetFile = newDataset.DatasetFile,
-
-                        InputFileName = newDataset.DatasetFile.FileName,
-                        InputFileFormat = modelDecision.FileExtension,
-
-                        CsvDelimiter = ";"
-                    };
-
-                    return View("GetDatasetDelimiter");
-
-                    //return RedirectToAction("GetDatasetDelimiter", "Dataset", new { delimiterInformation, notificationMessage = "A .csv file was selected. Please indicate the delimiter character." });
-                }
-                else
-                {
-                    MapDatasetToObjectViewModel mapDataset = new MapDatasetToObjectViewModel()
-                    {
-                        DatasetName = newDataset.DatasetName,
-                        DatasetContentByteArray = datasetBinaryFile,
-                        DatasetContentString = datasetStringFile,
-                        InputFileName = newDataset.DatasetFile.FileName,
-                        InputFileFormat = modelDecision.FileExtension
-                    };
-                  
-                    return RedirectToAction("MapDatasetToObjectModel", "Dataset", new { notificationMessage = mapDataset });
-                }
+                _fileHelper.RemoveFileFromHardDrive(filePath);
             }
 
             return View(newDataset);
         }
 
-        //[Authorize]
-        //[HttpGet]
-        //public IActionResult GetDatasetDelimiter(AddDelimiterInformationViewModel delimiterInformation, string notificationMessage = null)
-        //{
-        //    //If strategy is CSV then ask question to user about Delimiter -> form
-        //    ViewData["notificationMessage"] = notificationMessage;
-
-        //    return View(delimiterInformation);
-        //}
-
-        //TO DO: Add View with spinner
-        [Authorize]
-        [HttpPost]
-        public IActionResult GetDatasetDelimiter(AddDelimiterInformationViewModel delimiterInformation)
-        {
-            //If strategy is CSV then ask question to user about Delimiter -> form
-
-            if (ModelState.IsValid)
-            {
-                MapDatasetToObjectViewModel mapDataset = _autoMapper.Map<MapDatasetToObjectViewModel>(delimiterInformation);
-
-                return RedirectToAction("MapDatasetToObjectModel", "Dataset", new { datasetToMap = mapDataset, csvDelimiter = delimiterInformation.CsvDelimiter });
-            }
-
-            return View(delimiterInformation);
-        }
-
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> MapDatasetToObject(MapDatasetToObjectViewModel datasetToMap, string csvDelimiter = null)
-        {
-            //Parse file content by tool 
-            //Return to AddNewDataset View and display loaded dataset (in object model)
-            _customSerializer.MapFileContentToObject(datasetToMap.DatasetContentString);
-
-            //if()
-            //{
-
-            //}
-            
-            //TO DO: Add mapAdditionalParameters class with delimiter and pass to strategy. User in CsvSerializerStrategy.
-            //Create AddNewDatasetViewModel and pass through Redirect method
-
-            return RedirectToAction("AddNewDataset", "Dataset", new { notificationMessage = "The dataset has been loaded." });
-        }
-
+        //TO DO: Save DatasetStatistics and Dataset to Database
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> SaveDataset(AddNewDatasetViewModel datasetToSave)
