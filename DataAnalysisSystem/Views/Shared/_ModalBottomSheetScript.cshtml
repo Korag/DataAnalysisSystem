@@ -1,0 +1,9 @@
+﻿@model DataAnalysisSystem.DTO.Scripts.ModalBottomSheetScriptViewModel
+
+<script>
+    $(document).ready(function () {
+        $('#@Model.ModalIdentificator').modal({
+            dismissible: @Model.ModalDismissible
+        })
+    });
+</script>

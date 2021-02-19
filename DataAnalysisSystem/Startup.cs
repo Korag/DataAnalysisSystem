@@ -14,7 +14,6 @@ using DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract;
 using DataAnalysisSystem.Repository.Repository;
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using DataAnalysisSystem.Services.EmailProvider;
-using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
 using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
 
@@ -58,7 +57,6 @@ namespace DataAnalysisSystem
             // Services Layer
             services.AddTransient<IEmailProvider, EmailServiceProvider>();
             services.AddSingleton<IEmailProviderConfigurationProfile>(Configuration.GetSection("EmailProviderConfiguration").Get<EmailProviderConfigurationProfile>());
-            services.AddTransient<IEmailAttachmentsHandler, EmailAttachmentsHandler>();
 
             services.AddTransient<ICodeGenerator, CodeGeneratorUtilityForMongoDB>();
             services.AddTransient<IMimeTypeGuesser, MimeTypeGuesser>();

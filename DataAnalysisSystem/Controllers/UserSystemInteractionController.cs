@@ -1,5 +1,6 @@
 ﻿using DataAnalysisSystem.DTO.AdditionalFunctionalities;
 using DataAnalysisSystem.DTO.UserSystemInteractionDTO;
+using DataAnalysisSystem.ServicesInterfaces;
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,20 +12,21 @@ namespace DataAnalysisSystem.Controllers
 {
     public class UserSystemInteractionController : Controller
     {
-        public const string CONTACT_ACTION_NAME = "ContactWithAdministration";
-        public const string USERLOGIN_ACTION_NAME = "UserLogin";
+        private const string CONTACT_ACTION_NAME = "ContactWithAdministration";
+        private const string USERLOGIN_ACTION_NAME = "UserLogin";
+        private const string EMAIL_ATTACHMENTS_FOLDER_NAME = "EmailAttachments";
 
         private readonly IEmailProvider _emailProvider;
         private readonly IEmailProviderConfigurationProfile _emailProviderConfigurationProfile;
-        private readonly IEmailAttachmentsHandler _emailAttachmentsHandler;
+        private readonly IFileHelper _fileHelper;
         
         public UserSystemInteractionController(IEmailProvider emailProvider,
                                                IEmailProviderConfigurationProfile emailProviderConfigurationProfile,
-                                               IEmailAttachmentsHandler emailAttachmentsHandler){
+                                               IFileHelper fileHelper){
 
             this._emailProvider = emailProvider;
             this._emailProviderConfigurationProfile = emailProviderConfigurationProfile;
-            this._emailAttachmentsHandler = emailAttachmentsHandler;
+            this._fileHelper = fileHelper;
         }
 
         [Authorize]
@@ -60,8 +62,7 @@ namespace DataAnalysisSystem.Controllers
             string notificationMessage = "Thank you for your message. Your message has been forwarded to the application administration.";
             string actionName = "";
 
-            //TO DO: Swap to FileHelper
-            List<string> attachmentsPaths = _emailAttachmentsHandler.SaveAttachmentsOnHardDrive(contactViewModel.Attachments).ToList();
+            List<string> attachmentsPaths = _fileHelper.SaveFilesOnHardDrive(contactViewModel.Attachments, EMAIL_ATTACHMENTS_FOLDER_NAME).ToList();
 
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(_emailProviderConfigurationProfile.SmtpUsername, 
                                                                                          _emailProviderConfigurationProfile.SenderName, 
@@ -70,7 +71,7 @@ namespace DataAnalysisSystem.Controllers
                                                                                          attachmentsPaths);
 
             var emailSenderTask = Task.Run(() => _emailProvider.SendEmailMessageAsync(emailMessage))
-                                                               .ContinueWith(result => { _emailAttachmentsHandler.RemoveAttachmentsFromHardDrive(attachmentsPaths); });
+                                                               .ContinueWith(result => { _fileHelper.RemoveFilesFromHardDrive(attachmentsPaths); });
            
             if (this.User.Identity.IsAuthenticated)
                 actionName = CONTACT_ACTION_NAME;

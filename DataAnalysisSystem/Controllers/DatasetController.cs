@@ -11,10 +11,6 @@ using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAnalysisSystem.Controllers
@@ -71,7 +67,6 @@ namespace DataAnalysisSystem.Controllers
             return View(newDataset);
         }
 
-        //TO DO: Display FileContent in DataTable
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddNewDataset(AddNewDatasetViewModel newDataset)
@@ -114,7 +109,6 @@ namespace DataAnalysisSystem.Controllers
             return View(newDataset);
         }
 
-        //TO DO: Save DatasetStatistics and Dataset to Database
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> SaveDataset(AddNewDatasetViewModel datasetToSave)
