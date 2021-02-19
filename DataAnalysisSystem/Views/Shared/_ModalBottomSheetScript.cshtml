@@ -3,7 +3,7 @@
 <script>
     $(document).ready(function () {
         $('#@Model.ModalIdentificator').modal({
-            dismissible: @Model.ModalDismissible
+            dismissible: @Model.ModalDismissible.ToString().ToLower()
         })
     });
 </script>
