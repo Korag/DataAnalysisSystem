@@ -6,7 +6,7 @@ namespace DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPatt
 {
     public interface ISerializerStrategy
     {
-        public ICollection<DatasetColumnAbstract> MapFileContentToObject(string pathToFile, DatasetAdditionalParametersViewModel parameters);
+        public DatasetContent MapFileContentToObject(string pathToFile, DatasetAdditionalParametersViewModel parameters);
         public string ConvertFromObjectToSpecificFile(ICollection<DatasetColumnAbstract> dataSet);
     }
 }

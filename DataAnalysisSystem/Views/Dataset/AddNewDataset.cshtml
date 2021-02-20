@@ -13,7 +13,7 @@
             <div class="card-content">
                 <span class="card-title center-align">Add new Dataset</span>
 
-                @if (Model.DatasetContent.Count != 0)
+                @if (Model.DatasetContent != null)
                 {
                     <form id="AddNewDatasetForm" method="post" asp-action="AddNewDataset" asp-controller="Dataset" enctype="multipart/form-data" onsubmit="openModalWaiter()">
                         <fieldset disabled="disabled" style="border-width: 0px">
@@ -23,8 +23,6 @@
                                 <i class="material-icons prefix">input</i>
                                 <input type="text" asp-for="DatasetName" required="" aria-required="true" class="validate">
                                 <label asp-for="DatasetName"></label>
-
-                                <span asp-validation-for="DatasetName" class="helper-text" style="color: #F44336"></span>
 
                             </div>
 
@@ -38,7 +36,6 @@
                                     <input class="file-path validate" type="text" placeholder="Upload dataset" accept=".txt,.csv,.xml,.json,.xls,.xlsx">
                                 </div>
 
-                                <span asp-validation-for="DatasetFile" class="helper-text" style="color: #F44336"></span>
                             </div>
 
                             <ul class="collapsible" style="width:50%; margin-right:0px; margin-left: auto;">
@@ -119,7 +116,7 @@
     </div>
 </div>
 
-@if (Model.DatasetContent.Count != 0)
+@if (Model.DatasetContent != null)
 {
     <form method="post" asp-action="SaveNewDataset" asp-controller="Dataset" onsubmit="openModalWaiter()">
 
@@ -127,32 +124,78 @@
         <input type="text" asp-for="InputFileName" hidden readonly>
         <input type="text" asp-for="InputFileFormat" hidden readonly>
 
+        @*<div class="row">
+                <div class="col s12">
+
+                    <div class="card" style="display:block; margin-bottom: 5vh">
+                        <div class="card-content">
+                            <span class="card-title">Dataset</span>
+                            <div class="left-align" style="margin-top: 10px">
+                                <input class="btn modal-trigger" type="submit" value="Save">
+                                <a asp-action="AddNewDataset" asp-controller="Dataset" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
+                            </div>
+                        </div>
+
+                        <table id="table-custom-elements" class="row-border" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th><label><input class="filled-in select-all" name="select_all" value="1" type="checkbox" /><span></span></label></th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd"><td class="dataTables-checkbox-column"><label><input class="filled-in" type="checkbox" name="id[]" value="1"><span></span></label></td><td></td><td></td><td><span class="new badge" data-badge-caption=""></span></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>*@
+
         <div class="row">
             <div class="col s12">
 
                 <div class="card" style="display:block; margin-bottom: 5vh">
                     <div class="card-content">
                         <span class="card-title">Dataset</span>
-                        <div class="right-align" style="margin-top: 10px">
+                        <div class="left-align" style="margin-top: 10px">
                             <input class="btn modal-trigger" type="submit" value="Save">
-                            <button type="button" class="waves-effect waves-red btn-flat">Cancel</button>
+                            <a asp-action="AddNewDataset" asp-controller="Dataset" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
                         </div>
                     </div>
 
                     <table id="table-custom-elements" class="row-border" cellspacing="0">
                         <thead>
                             <tr>
-                                <th><label><input class="filled-in select-all" name="select_all" value="1" type="checkbox" /><span></span></label></th>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                @foreach (var column in Model.DatasetContent.NumberColumns)
+                                {
+                                    <th>@column.AttributeName</th>
+                                }
+                                @foreach (var column in Model.DatasetContent.StringColumns)
+                                {
+                                    <th>@column.AttributeName</th>
+                                }
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="odd"><td class="dataTables-checkbox-column"><label><input class="filled-in" type="checkbox" name="id[]" value="1"><span></span></label></td><td></td><td></td><td><span class="new badge" data-badge-caption=""></span></td><td></td><td></td><td></td></tr>
+                            <tr>
+                                @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                                {
+                                    for (int j = 0; j < Model.DatasetContent.NumberColumns.Count(); j++)
+                                    {
+                                        <td>Model.DatasetContent.NumberColumns.ElementAt(j).AttributeValue[i]</td>
+                                    }
+                                    for (int j = 0; j < Model.DatasetContent.StringColumns.Count(); j++)
+                                    {
+                                        <td>Model.DatasetContent.NumberColumns.ElementAt(j).AttributeValue[i]</td>
+                                    }
+                                }
+                            </tr>
                         </tbody>
                     </table>
                 </div>

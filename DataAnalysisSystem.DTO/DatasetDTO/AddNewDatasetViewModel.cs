@@ -9,11 +9,9 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
     {
         public AddNewDatasetViewModel()
         {
-            this.DatasetContent = new List<DatasetColumnAbstract>();
-
             this.AdditionalParameters = new DatasetAdditionalParametersViewModel()
             {
-                Delimiter = ";"
+                Delimiter = ","
             };
         }
 
@@ -28,7 +26,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         public DatasetAdditionalParametersViewModel AdditionalParameters { get; set; }
 
         
-        public ICollection<DatasetColumnAbstract> DatasetContent { get; set; }
+        public DatasetContent DatasetContent { get; set; }
         public string InputFileName { get; set; }
         public string InputFileFormat { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.DataEntities.Datasets;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,7 +15,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
         private const string REGEX_DOUBLE_PATTERN2 = @"(/\d+\.\d*|\.?\d+/)";
         private const string REGEX_INT_PATTERN = @"^\d$";
 
-        public ICollection<DatasetColumnAbstract> ReadCsvFileAndMapToObject(string filePath, string delimiter = ",")
+        public DatasetContent ReadCsvFileAndMapToObject(string filePath, string delimiter = ",")
         {
             using (var reader = new StreamReader(filePath))
             {
@@ -83,7 +82,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
                         }
                     }
 
-                    return new List<DatasetColumnAbstract>();
+                    return datasetContent;
                 }
             }
         }

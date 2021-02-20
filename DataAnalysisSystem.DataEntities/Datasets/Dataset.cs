@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Collections.Generic;
 
 namespace DataAnalysisSystem.DataEntities
 {
@@ -8,7 +7,6 @@ namespace DataAnalysisSystem.DataEntities
     {
         public Dataset()
         {
-            this.DatasetContent = new List<DatasetColumnAbstract>();
         }
 
         [BsonId]
@@ -22,7 +20,7 @@ namespace DataAnalysisSystem.DataEntities
         public bool IsShared { get; set; }
         public string AccessKey { get; set; }
 
-        public ICollection<DatasetColumnAbstract> DatasetContent { get; set; }
+        public DatasetContent DatasetContent { get; set; }
         public DatasetStatistics DatasetStatistics { get; set; }
     }
 }

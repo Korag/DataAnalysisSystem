@@ -18,7 +18,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
             throw new NotImplementedException();
         }
 
-        public ICollection<DatasetColumnAbstract> MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
+        public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
         {
             throw new NotImplementedException();
         }

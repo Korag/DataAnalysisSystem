@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalysisSystem.DataEntities.Datasets
+namespace DataAnalysisSystem.DataEntities
 {
     public class DatasetColumnTypeDouble
     {

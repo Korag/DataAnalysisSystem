@@ -30,7 +30,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
             _serializerStrategy = serializerStrategy;
         }
 
-        public ICollection<DatasetColumnAbstract> MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
+        public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
         {
             return _serializerStrategy.MapFileContentToObject(filePath, parameters);
         }
