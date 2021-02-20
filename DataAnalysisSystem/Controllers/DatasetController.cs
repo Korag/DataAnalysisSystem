@@ -17,7 +17,7 @@ namespace DataAnalysisSystem.Controllers
 {
     public class DatasetController : Controller
     {
-        private const string DATASET_FOLDER_NAME = "Datasets";
+        private const string DATASET_FOLDER_NAME = "resources/Datasets";
 
         private readonly ICodeGenerator _codeGenerator;
         private readonly IEmailProvider _emailProvider;

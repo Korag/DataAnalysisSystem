@@ -14,7 +14,7 @@ namespace DataAnalysisSystem.Controllers
     {
         private const string CONTACT_ACTION_NAME = "ContactWithAdministration";
         private const string USERLOGIN_ACTION_NAME = "UserLogin";
-        private const string EMAIL_ATTACHMENTS_FOLDER_NAME = "EmailAttachments";
+        private const string EMAIL_ATTACHMENTS_FOLDER_NAME = "resources/EmailAttachments";
 
         private readonly IEmailProvider _emailProvider;
         private readonly IEmailProviderConfigurationProfile _emailProviderConfigurationProfile;

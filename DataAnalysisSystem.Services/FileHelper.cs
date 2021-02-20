@@ -90,7 +90,7 @@ namespace DataAnalysisSystem.Services
         public string SaveFileOnHardDrive(IFormFile file, string folderName)
         {
             string fileName = Path.GetFileNameWithoutExtension(file.FileName);
-            string extension = Path.GetExtension(fileName).ToLower();
+            string extension = Path.GetExtension(file.FileName).ToLower();
             string generatedUniqueFileName = fileName + _codeGenerator.GenerateNewUniqueXLengthCodeAsString(4) + extension;
 
             var filePath = Path.Combine(_environment.WebRootPath, folderName, generatedUniqueFileName);
