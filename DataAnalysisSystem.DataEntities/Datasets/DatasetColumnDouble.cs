@@ -4,7 +4,7 @@ namespace DataAnalysisSystem.DataEntities
 {
     public class DatasetColumnDouble : DatasetColumnAbstract
     {
-        public DatasetColumnDouble(string attributeName, string typeOfAttribute) : base(attributeName, typeOfAttribute)
+        public DatasetColumnDouble(string attributeName, string typeOfAttribute = "double") : base(attributeName, typeOfAttribute)
         {
             this.AttributeValue = new List<double>();
         }

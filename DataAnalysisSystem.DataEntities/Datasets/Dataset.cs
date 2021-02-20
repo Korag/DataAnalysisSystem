@@ -9,8 +9,6 @@ namespace DataAnalysisSystem.DataEntities
         public Dataset()
         {
             this.DatasetContent = new List<DatasetColumnAbstract>();
-
-            this.DatasetContent.Add(new DatasetColumnDouble("fileName", typeof(double).ToString()));
         }
 
         [BsonId]
