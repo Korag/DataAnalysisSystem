@@ -91,7 +91,10 @@ namespace DataAnalysisSystem.Controllers
 
                 if (chosenStrategy == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Incorrect format of the uploaded file. Only the following formats are supported: .csv, .json, .xml, .xls, .xlsx.");
+                    ModelState.AddModelError(string.Empty, "Incorrect format of the uploaded file. Only the following formats are supported: .csv, .json, .xml, .xls, .xlsx.\n");
+                    ModelState.AddModelError(string.Empty, "If you have entered a file in the correct format and receive this error, it means that the indicated file contains syntax errors such as omitted values.");
+
+                    _fileHelper.RemoveFileFromHardDrive(filePath);
 
                     return View(newDataset);
                 }

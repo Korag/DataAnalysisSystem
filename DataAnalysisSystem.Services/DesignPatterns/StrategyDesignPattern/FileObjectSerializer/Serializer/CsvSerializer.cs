@@ -44,7 +44,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
 
                     for (int i = 0; i < variableNames.Length; i++)
                     {
-                        if (regexDouble.IsMatch(firstRecordValues[i]) || regexInt.IsMatch(firstRecordValues[i]))
+                        if (!String.IsNullOrWhiteSpace(firstRecordValues[i]) && (regexDouble.IsMatch(firstRecordValues[i]) || regexInt.IsMatch(firstRecordValues[i])))
                         {
                             DatasetColumnTypeDouble column = new DatasetColumnTypeDouble(variableNames[i], i);
                             column.AttributeValue.Add(double.Parse(Convert.ToString(firstRecordValues[i]), CultureInfo.InvariantCulture));
