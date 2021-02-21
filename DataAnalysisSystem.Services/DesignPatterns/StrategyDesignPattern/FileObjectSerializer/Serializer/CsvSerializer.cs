@@ -55,7 +55,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
                             DatasetColumnTypeString column = new DatasetColumnTypeString(variableNames[i], i);
                             column.AttributeValue.Add(Convert.ToString(firstRecordValues[i]));
 
-                            datasetContent.StringColumns.Add(new DatasetColumnTypeString(variableNames[i], i));
+                            datasetContent.StringColumns.Add(column);
                         }
                     }
 

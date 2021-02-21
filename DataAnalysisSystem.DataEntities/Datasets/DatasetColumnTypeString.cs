@@ -4,6 +4,11 @@ namespace DataAnalysisSystem.DataEntities
 {
     public class DatasetColumnTypeString
     {
+        public DatasetColumnTypeString()
+        {
+
+        }
+
         public DatasetColumnTypeString(string attributeName, int positionInDataset)
         {
             this.AttributeName = attributeName;
@@ -15,6 +20,6 @@ namespace DataAnalysisSystem.DataEntities
         public string AttributeName { get; set; }
         public int PositionInDataset { get; set; }
 
-        public ICollection<string> AttributeValue { get; set; }
+        public IList<string> AttributeValue { get; set; }
     }
 }

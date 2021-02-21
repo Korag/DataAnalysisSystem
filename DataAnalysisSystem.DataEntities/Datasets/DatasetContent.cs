@@ -10,7 +10,7 @@ namespace DataAnalysisSystem.DataEntities
             this.StringColumns = new List<DatasetColumnTypeString>();
         }
 
-        public ICollection<DatasetColumnTypeDouble> NumberColumns { get; set; }
-        public ICollection<DatasetColumnTypeString> StringColumns { get; set; }
+        public IList<DatasetColumnTypeDouble> NumberColumns { get; set; }
+        public IList<DatasetColumnTypeString> StringColumns { get; set; }
     }
 }
