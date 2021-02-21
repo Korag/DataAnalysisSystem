@@ -103,21 +103,18 @@ namespace DataAnalysisSystem.Controllers
                
                 newDataset.DatasetContent = _customSerializer.MapFileContentToObject(filePath, newDataset.AdditionalParameters);
                
-                newDataset.InputFileName = newDataset.DatasetFile.Name;
                 newDataset.InputFileFormat = modelDecision.FileExtension.ToLower();
+                newDataset.InputFileName = newDataset.DatasetFile.FileName.Replace(newDataset.InputFileFormat, "");
 
                 _fileHelper.RemoveFileFromHardDrive(filePath);
             }
-
-            //Display DatasetContent
-            //SaveToDb
 
             return View(newDataset);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> SaveDataset(AddNewDatasetViewModel datasetToSave)
+        public IActionResult SaveNewDataset(AddNewDatasetViewModel datasetToSave)
         {
             //Save ICollection<DatasetColumnAbstract> DatasetContent to database and redirect to empty AddNewDataset with notification
 
