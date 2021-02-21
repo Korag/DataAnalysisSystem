@@ -16,6 +16,8 @@ using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using DataAnalysisSystem.Services.EmailProvider;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
 using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace DataAnalysisSystem
 {
@@ -84,7 +86,6 @@ namespace DataAnalysisSystem
                 options.LoginPath = "/User/UserLogin";
             });
 
-
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -110,6 +111,14 @@ namespace DataAnalysisSystem
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            var supportedCultures = new[] { CultureInfo.InvariantCulture };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-GB"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseEndpoints(endpoints =>
             {
