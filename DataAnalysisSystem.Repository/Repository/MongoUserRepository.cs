@@ -22,10 +22,34 @@ namespace DataAnalysisSystem.Repository.Repository
             return _users = _context.databaseInfo.GetCollection<IdentityProviderUser>(_usersCollectionName);
         }
 
+        public IdentityProviderUser GetUserById(string userIdentificator)
+        {
+            var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.Id.ToString(), userIdentificator);
+            var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
+
+            return user;
+        }
+
+        public IdentityProviderUser GetUserByName(string userName)
+        {
+            var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.UserName, userName);
+            var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
+
+            return user;
+        }
+
         public void UpdateUser(IdentityProviderUser user)
         {
             var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.Id, user.Id);
             var result = GetUsers().ReplaceOne(filter, user);
+        }
+
+        public void AddDatasetToOwner(string userIdentificator, string datasetIdentificator)
+        {
+            var user = GetUserById(userIdentificator);
+            user.UserDatasets.Add(datasetIdentificator);
+
+            UpdateUser(user);
         }
     }
 }

@@ -138,16 +138,6 @@
 
                 <table id="table-custom-elements" class="row-border" cellspacing="0">
                     <thead>
-                        @*<tr>
-                                @foreach (var column in Model.DatasetContent.NumberColumns)
-                                {
-                                    <th>@column.AttributeName</th>
-                                }
-                                @foreach (var column in Model.DatasetContent.StringColumns)
-                                {
-                                    <th>@column.AttributeName</th>
-                                }
-                            </tr>*@
 
                         <tr>
                             @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
@@ -167,20 +157,6 @@
 
                     </thead>
                     <tbody>
-
-                        @*@for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
-                            {
-                                <tr>
-                                    @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count(); j++)
-                                    {
-                                        <td>@Model.DatasetContent.NumberColumns.ElementAt(j).AttributeValue.ElementAt(i)</td>
-                                    }
-                                    @for (int j = 0; j < Model.DatasetContent.StringColumns.Count(); j++)
-                                    {
-                                        <td>@Model.DatasetContent.StringColumns.ElementAt(j).AttributeValue.ElementAt(i)</td>
-                                    }
-                                </tr>
-                            }*@
 
                         @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
                         {

@@ -11,7 +11,7 @@
         public int NumberOfRows { get; set; }
         public int NumberOfMissingValues { get; set; }
 
-        public double SizeOfTheFileLoaded { get; set; }
         public string InputFileFormat { get; set; }
+        public string InputFileName { get; set; }
     }
 }

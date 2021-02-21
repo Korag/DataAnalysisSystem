@@ -7,6 +7,8 @@ namespace DataAnalysisSystem.DataEntities
     {
         public Dataset()
         {
+            this.DatasetContent = new DatasetContent();
+            this.DatasetStatistics = new DatasetStatistics();
         }
 
         [BsonId]

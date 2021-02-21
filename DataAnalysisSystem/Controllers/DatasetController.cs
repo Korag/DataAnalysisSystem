@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services;
@@ -11,6 +12,8 @@ using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DataAnalysisSystem.Controllers
@@ -106,6 +109,11 @@ namespace DataAnalysisSystem.Controllers
                 newDataset.InputFileFormat = modelDecision.FileExtension.ToLower();
                 newDataset.InputFileName = newDataset.DatasetFile.FileName.Replace(newDataset.InputFileFormat, "");
 
+                if (newDataset.DatasetContent == null)
+                {
+                    ModelState.AddModelError(string.Empty, "The file containing the dataset has a syntax error. Please verify the correctness of the uploaded file.");
+                }
+
                 _fileHelper.RemoveFileFromHardDrive(filePath);
             }
 
@@ -114,9 +122,39 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult SaveNewDataset(AddNewDatasetViewModel datasetToSave)
+        public async Task<IActionResult> SaveNewDataset(AddNewDatasetViewModel datasetToSave)
         {
-            //Save ICollection<DatasetColumnAbstract> DatasetContent to database and redirect to empty AddNewDataset with notification
+            Dataset dataset = new Dataset
+            {
+                DatasetIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString(),
+                DatasetName = datasetToSave.DatasetName,
+
+                DateOfCreation = DateTime.UtcNow.ToString(),
+                DateOfEdition = DateTime.UtcNow.ToString(),
+
+                IsShared = false,
+                AccessKey = "000",
+            };
+            dataset.DatasetContent = datasetToSave.DatasetContent;
+
+            DatasetStatistics datasetStatistics = new DatasetStatistics
+            {
+                NumberOfColumns = datasetToSave.DatasetContent.NumberColumns.Count + datasetToSave.DatasetContent.StringColumns.Count,
+                NumberOfRows = datasetToSave.DatasetContent.NumberColumns.Count != 0
+                                ? datasetToSave.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count
+                                : datasetToSave.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count,
+
+                NumberOfMissingValues = datasetToSave.DatasetContent.StringColumns.Select(z=> z.AttributeValue.Where(s=> String.IsNullOrWhiteSpace(s))).Count(),
+
+                InputFileFormat = datasetToSave.InputFileFormat,
+                InputFileName = datasetToSave.InputFileName
+            };
+            dataset.DatasetStatistics = datasetStatistics;
+
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            _context.datasetRepository.AddDataset(dataset);
+            _context.userRepository.AddDatasetToOwner(loggedUser.Id.ToString(), dataset.DatasetIdentificator);
 
             return RedirectToAction("AddNewDataset", "Dataset", new { notificationMessage = "The dataset has been successfully uploaded to the server." });
         }

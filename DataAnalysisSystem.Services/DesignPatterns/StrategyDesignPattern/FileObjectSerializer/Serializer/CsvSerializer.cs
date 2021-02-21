@@ -68,6 +68,11 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
                             if (datasetContent.NumberColumns.Where(z => z.PositionInDataset == i && z.AttributeName == attribute.Key)
                                                                 .Count() != 0)
                             {
+                                if (String.IsNullOrWhiteSpace(Convert.ToString(attribute.Value)))
+                                {
+                                    return null;
+                                }
+
                                 datasetContent.NumberColumns.Where(z => z.PositionInDataset == i && z.AttributeName == attribute.Key)
                                                             .Select(z => z.AttributeValue)
                                                             .FirstOrDefault().Add(double.Parse(Convert.ToString(attribute.Value), CultureInfo.InvariantCulture));
