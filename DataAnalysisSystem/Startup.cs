@@ -18,6 +18,7 @@ using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
 using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace DataAnalysisSystem
 {
@@ -79,6 +80,7 @@ namespace DataAnalysisSystem
             services.AddTransient<IDatasetRepository, MongoDatasetRepository>();
             services.AddTransient<IAnalysisRepository, MongoAnalysisRepository>();
 
+            services.Configure<FormOptions>(x => x.ValueCountLimit = 1000000);
 
             services.ConfigureApplicationCookie(options =>
             {

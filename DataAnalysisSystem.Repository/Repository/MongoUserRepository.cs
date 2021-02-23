@@ -1,6 +1,7 @@
 ﻿using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DataAnalysisSystem.Repository.Repository
@@ -24,7 +25,7 @@ namespace DataAnalysisSystem.Repository.Repository
 
         public IdentityProviderUser GetUserById(string userIdentificator)
         {
-            var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.Id.ToString(), userIdentificator);
+            var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.Id, new ObjectId(userIdentificator));
             var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
 
             return user;

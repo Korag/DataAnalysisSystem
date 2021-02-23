@@ -47,6 +47,7 @@ namespace DataAnalysisSystem.Controllers
         }
 
         [AllowAnonymous]
+        [DisableRequestSizeLimit]
         [HttpGet]
         public IActionResult ContactWithAdministration(string notificationMessage = null)
         {

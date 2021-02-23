@@ -118,98 +118,139 @@
 
 @if (Model.DatasetContent != null)
 {
-<form id="DatasetContentForm" method="post" asp-action="SaveNewDataset" asp-controller="Dataset" onsubmit="openModalWaiter2()">
+    <form id="DatasetContentForm" method="post" asp-action="SaveNewDataset" asp-controller="Dataset" onsubmit="openModalWaiter()">
 
-    <input type="text" asp-for="DatasetName" hidden readonly>
-    <input type="text" asp-for="InputFileName" hidden readonly>
-    <input type="text" asp-for="InputFileFormat" hidden readonly>
+        <input type="text" asp-for="DatasetName" hidden readonly>
+        <input type="text" asp-for="InputFileName" hidden readonly>
+        <input type="text" asp-for="InputFileFormat" hidden readonly>
 
-    <div class="row">
-        <div class="col s12">
+        <div class="row">
+            <div class="col s12">
 
-            <div class="card" style="display:block; margin-bottom: 5vh">
-                <div class="card-content">
-                    <span class="card-title">Dataset</span>
-                    <div class="left-align" style="margin-top: 10px">
-                        <input class="btn modal-trigger" type="submit" value="Save">
-                        <a asp-action="AddNewDataset" asp-controller="Dataset" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
+                <div class="card" style="display:block; margin-bottom: 5vh">
+                    <div class="card-content">
+                        <span class="card-title">Dataset</span>
+                        <div class="left-align" style="margin-top: 10px">
+                            <input class="btn modal-trigger" type="submit" id="submitButton" value="Save">
+                            <a asp-action="AddNewDataset" asp-controller="Dataset" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
+                        </div>
                     </div>
-                </div>
 
-                <table id="table-custom-elements" class="row-border" cellspacing="0">
-                    <thead>
+                    <table id="table-custom-elements" class="row-border" cellspacing="0">
+                        <thead>
 
-                        <tr>
-                            @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
-                            {
-                                var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-
-                                if (numberColumn != null)
-                                {
-                                    <th>@numberColumn.AttributeName</th>
-                                }
-                                else
-                                {
-                                    <th>@Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault().AttributeName</th>
-                                }
-                            }
-                        </tr>
-
-                    </thead>
-                    <tbody>
-
-                        @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
-                        {
                             <tr>
-                                @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                                @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
                                 {
-
-                                    var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                    var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                                     if (numberColumn != null)
                                     {
-                                        <td>@numberColumn.AttributeValue.ElementAt(i)</td>
+                                        <th>@numberColumn.AttributeName</th>
                                     }
                                     else
                                     {
-                                        <td>@Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault().AttributeValue.ElementAt(i)</td>
+                                        <th>@Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault().AttributeName</th>
                                     }
                                 }
                             </tr>
-                        }
 
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+                            @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                            {
+                                var n = 0;
+                                var s = 0;
+
+                                <tr>
+                                    @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                                    {
+                                        var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                        var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+
+                                        if (numberColumn != null)
+                                        {
+                                            <td>
+                                                @numberColumn.AttributeValue.ElementAt(i)
+
+                                                <input asp-for="DatasetContent.NumberColumns[n].AttributeValue[i]" value="@Model.DatasetContent.NumberColumns[n].AttributeValue[i]" readonly hidden />
+                                                <input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />
+                                                <input asp-for="DatasetContent.NumberColumns[n].PositionInDataset" value="@Model.DatasetContent.NumberColumns[n].PositionInDataset" readonly hidden />
+
+                                                @{n++;}
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                            <td>
+                                                @stringColumn.AttributeValue.ElementAt(i)
+
+                                                <input asp-for="DatasetContent.StringColumns[s].AttributeValue[i]" value="@Model.DatasetContent.StringColumns[s].AttributeValue[i]" readonly hidden />
+                                                <input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />
+                                                <input asp-for="DatasetContent.StringColumns[s].PositionInDataset" value="@Model.DatasetContent.StringColumns[s].PositionInDataset" readonly hidden />
+
+                                                @{s++;}
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
-
         </div>
-    </div>
 
-    @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+        @*@for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+            {
+                @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count(); j++)
+                {
+                    <input asp-for="DatasetContent.NumberColumns[j].AttributeValue[i]" value="@Model.DatasetContent.NumberColumns[j].AttributeValue[i]" readonly hidden />
+                    <input asp-for="DatasetContent.NumberColumns[j].AttributeName" value="@Model.DatasetContent.NumberColumns[j].AttributeName" readonly hidden />
+                    <input asp-for="DatasetContent.NumberColumns[j].PositionInDataset" value="@Model.DatasetContent.NumberColumns[j].PositionInDataset" readonly hidden />
+                }
+                @for (int j = 0; j < Model.DatasetContent.StringColumns.Count(); j++)
+                {
+                    <input asp-for="DatasetContent.StringColumns[j].AttributeValue[i]" value="@Model.DatasetContent.StringColumns[j].AttributeValue[i]" readonly hidden />
+                    <input asp-for="DatasetContent.StringColumns[j].AttributeName" value="@Model.DatasetContent.StringColumns[j].AttributeName" readonly hidden />
+                    <input asp-for="DatasetContent.StringColumns[j].PositionInDataset" value="@Model.DatasetContent.StringColumns[j].PositionInDataset" readonly hidden />
+                }
+            }*@
+
+    </form>
+}
+
+@if (Model.DatasetContent == null)
+{
+    @await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
     {
-        @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count(); j++)
-        {
-            <input asp-for="DatasetContent.NumberColumns[j].AttributeValue[i]" value="@Model.DatasetContent.NumberColumns[j].AttributeValue[i]" readonly hidden />
-            <input asp-for="DatasetContent.NumberColumns[j].AttributeName" value="@Model.DatasetContent.NumberColumns[j].AttributeName" readonly hidden />
-            <input asp-for="DatasetContent.NumberColumns[j].PositionInDataset" value="@Model.DatasetContent.NumberColumns[j].PositionInDataset" readonly hidden />
-        }
-        @for (int j = 0; j < Model.DatasetContent.StringColumns.Count(); j++)
-        {
-            <input asp-for="DatasetContent.StringColumns[j].AttributeValue[i]" value="@Model.DatasetContent.StringColumns[j].AttributeValue[i]" readonly hidden />
-            <input asp-for="DatasetContent.StringColumns[j].AttributeName" value="@Model.DatasetContent.StringColumns[j].AttributeName" readonly hidden />
-            <input asp-for="DatasetContent.StringColumns[j].PositionInDataset" value="@Model.DatasetContent.StringColumns[j].PositionInDataset" readonly hidden />
-        }
-    }
-
-</form>
+        ModalIdentificator = "modalWaiter",
+        ModalHeader = "Loading a dataset.",
+        ModalPrimaryText = "This may take a while."
+    })
+}
+else
+{
+    @await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
+       {
+           ModalIdentificator = "modalWaiter",
+           ModalHeader = "Saving a dataset.",
+           ModalPrimaryText = "This may take a while."
+       })
 }
 
 @await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
-                                                        {
-                                                         ModalIdentificator = "modalWaiter",
-                                                         ModalHeader = "Loading a dataset.",
-                                                         ModalPrimaryText = "This may take a while."
-                                                        })
+      {
+          ModalIdentificator = "modalLoadingPage",
+          ModalHeader = "Loading page.",
+          ModalPrimaryText = "This may take a while."
+      })
 
 @section Scripts{
 
@@ -225,30 +266,84 @@
             }
         }
 
-        function openModalWaiter2() {
-            var form = $("#DatasetContentForm");
-            form.validate();
-
-            if (form.valid()) {
-                $('#modalWaiter').modal('open');
-            }
-        }
-
         $(document).ready(function () {
             $('.tooltipped').tooltip();
-        });
+            });
 
         $(document).ready(function () {
             $('.collapsible').collapsible();
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements").DataTable({ language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollY: "600px", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollY: "600px", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
 
         });
 
+        @{var rows = 0;
+
+            if (Model.DatasetContent != null)
+            {
+                if (Model.DatasetContent.NumberColumns.Count() != 0)
+                {
+                    rows = Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count();
+                }
+                else
+                {
+                    rows = Model.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count();
+                }
+            }
+        }
+
+        $('#submitButton').click(function () {
+                var oTable = $('#table-custom-elements').DataTable();
+                oTable.page.len(@rows).draw();
+            });
+
+        //$('#DatasetContentForm').on('submit', function (e) {
+        //    var form = this;
+
+        //    // Encode a set of form elements from all pages as an array of names and values
+        //    var params = table.$('input,select,textarea').serializeArray();
+
+        //    // Iterate over all form elements
+        //    $.each(params, function () {
+        //        // If element doesn't exist in DOM
+        //        if (!$.contains(document, form[this.name])) {
+        //            // Create a hidden element
+        //            $(form).append(
+        //                $('<input>')
+        //                    .attr('type', 'hidden')
+        //                    .attr('name', this.name)
+        //                    .val(this.value)
+        //            );
+        //        }
+        //    });
+        //});
+
     </script>
+
+    @if (Model.DatasetContent != null)
+    {
+
+        <script>
+            // >>> ?????
+            $('#modalLoadingPage').modal('open');
+
+            $(document).ready(function () {
+                $('#modalLoadingPage').modal('close');
+            });
+
+        </script>
+
+        @*<script>
+                $('#table-custom-elements').dataTable({
+                    "initComplete": function (settings, json) {
+                        $('#modalWaiter').modal('close');
+                    }
+                });
+            </script>*@
+    }
 }
 
 @section Notification
@@ -257,6 +352,12 @@
         <div class="col s8 offset-s2">
 
             <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
+
+            @if (ViewData["Message"] != null)
+            {
+
+                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
+            }
 
         </div>
     </div>

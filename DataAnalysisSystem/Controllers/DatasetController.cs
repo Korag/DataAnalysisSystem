@@ -64,15 +64,16 @@ namespace DataAnalysisSystem.Controllers
         [HttpGet]
         public IActionResult AddNewDataset(string notificationMessage = null, AddNewDatasetViewModel newDataset = null)
         {
-            ViewData["notificationMessage"] = notificationMessage;
+            ViewData["Message"] = notificationMessage;
             ModelState.Clear();
 
             return View(newDataset);
         }
 
         [Authorize]
+        [DisableRequestSizeLimit]
         [HttpPost]
-        public async Task<IActionResult> AddNewDataset(AddNewDatasetViewModel newDataset)
+        public IActionResult AddNewDataset(AddNewDatasetViewModel newDataset)
         {
             if (ModelState.IsValid)
             {
@@ -121,8 +122,9 @@ namespace DataAnalysisSystem.Controllers
         }
 
         [Authorize]
+        [DisableRequestSizeLimit]
         [HttpPost]
-        public async Task<IActionResult> SaveNewDataset(AddNewDatasetViewModel datasetToSave)
+        public IActionResult SaveNewDataset(AddNewDatasetViewModel datasetToSave)
         {
             Dataset dataset = new Dataset
             {
