@@ -16,7 +16,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
         private const string REGEX_DOUBLE_PATTERN2 = @"(/\d+\.\d*|\.?\d+/)";
         private const string REGEX_INT_PATTERN = @"^\d$";
 
-        public CsvSerializer(IFileHelper fileHelper = null)
+        public CsvSerializer()
         {
         }
 

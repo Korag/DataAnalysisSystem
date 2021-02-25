@@ -1,4 +1,5 @@
 ﻿using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using System;
@@ -8,9 +9,11 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
 {
     public class XmlSerializerStrategy : ISerializerStrategy
     {
+        private XmlSerializer _serializer;
+
         public XmlSerializerStrategy()
         {
-
+            _serializer = new XmlSerializer();
         }
 
         public string ConvertFromObjectToSpecificFile(ICollection<DatasetColumnAbstract> dataSet)
@@ -20,7 +23,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
 
         public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
         {
-            throw new NotImplementedException();
+            return _serializer.ReadXmlFileAndMapToObject(filePath);
         }
     }
 }
