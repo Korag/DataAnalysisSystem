@@ -24,6 +24,18 @@ namespace DataAnalysisSystem.Services
             return Path.GetExtension(filePath).ToUpper();
         }
 
+        public static string ReadFileContentToStringStatic(string path)
+        {
+            string fileText = "";
+
+            if (File.Exists(path))
+            {
+                fileText = File.ReadAllText(path);
+            }
+
+            return fileText;
+        }
+
         public string ReadFileContentToString(string path)
         {
             string fileText = "";

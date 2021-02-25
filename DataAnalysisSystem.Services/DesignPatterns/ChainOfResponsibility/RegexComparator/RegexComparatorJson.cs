@@ -19,7 +19,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.Regex
         {
             if (this.FileExtension.Contains(regexDecision.FileExtension) && this.MimeType.Contains(regexDecision.MimeType))
             {
-                regexDecision.RegexMatchesSerializer = new CsvSerializerStrategy();
+                regexDecision.RegexMatchesSerializer = new JsonSerializerStrategy();
             }
             else
             {

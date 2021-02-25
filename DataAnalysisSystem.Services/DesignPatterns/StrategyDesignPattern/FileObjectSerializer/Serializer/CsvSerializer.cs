@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.ServicesInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,6 +15,10 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
         private const string REGEX_DOUBLE_PATTERN = @"^[0-9]*(?:\.[0-9]*)?$";
         private const string REGEX_DOUBLE_PATTERN2 = @"(/\d+\.\d*|\.?\d+/)";
         private const string REGEX_INT_PATTERN = @"^\d$";
+
+        public CsvSerializer(IFileHelper fileHelper = null)
+        {
+        }
 
         public DatasetContent ReadCsvFileAndMapToObject(string filePath, string delimiter = ",")
         {

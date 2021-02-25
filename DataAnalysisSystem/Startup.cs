@@ -19,6 +19,7 @@ using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http.Features;
+using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
 
 namespace DataAnalysisSystem
 {
@@ -67,8 +68,7 @@ namespace DataAnalysisSystem
 
             //services.AddTransient<CustomSerializer, CustomSerializer>();
             services.AddTransient<IRegexComparatorChainFacade, RegexComparatorChainFacade>();
-
-
+    
             // Data Access Layer
             services.AddSingleton<RepositoryContext, RepositoryContext>();
             services.AddSingleton<DbContextAbstract, MongoDbContext>();
