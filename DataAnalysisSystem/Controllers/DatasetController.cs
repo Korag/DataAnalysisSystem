@@ -174,5 +174,14 @@ namespace DataAnalysisSystem.Controllers
 
             return View(userDatasetsDTO);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult DatasetDetails(string datasetIdentificator)
+        {
+            var a = 0;
+
+            return View();
+        }
     }
 }

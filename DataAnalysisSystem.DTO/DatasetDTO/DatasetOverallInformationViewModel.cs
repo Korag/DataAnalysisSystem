@@ -8,8 +8,6 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
 
         [Display(Name = "Dataset name")]
         public string DatasetName { get; set; }
-        [Display(Name = "Creation at")]
-        public string DateOfCreation { get; set; }
         [Display(Name = "Edition at")]
         public string DateOfEdition { get; set; }
 

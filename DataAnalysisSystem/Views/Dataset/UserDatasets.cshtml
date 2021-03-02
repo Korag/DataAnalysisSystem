@@ -16,12 +16,6 @@
                     @Html.DisplayNameFor(model => model.DatasetName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.DateOfCreation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateOfEdition)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.NumberOfColumns)
                 </th>
                 <th>
@@ -30,35 +24,37 @@
                 <th>
                     @Html.DisplayNameFor(model => model.InputFileName)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfEdition)
+                </th>
+                <th>
+                    Details
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var dataset in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => dataset.DatasetIdentificator)
-                        @Html.DisplayFor(model => dataset.DatasetName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.DateOfCreation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.DateOfEdition)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.NumberOfColumns)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.NumberOfRows)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.InputFileFormat)@Html.DisplayFor(model => dataset.InputFileName)
-                    </td>
-                    <td>
-                        <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" type="button" class="waves-effect">Details</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => dataset.DatasetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => dataset.NumberOfColumns)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => dataset.NumberOfRows)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => dataset.InputFileName)@Html.DisplayFor(model => dataset.InputFileFormat)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => dataset.DateOfEdition)
+                </td>
+                <td>
+                    <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
