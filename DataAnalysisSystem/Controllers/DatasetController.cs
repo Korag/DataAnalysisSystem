@@ -13,6 +13,7 @@ using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,7 +60,6 @@ namespace DataAnalysisSystem.Controllers
             this._autoMapper = autoMapper;
         }
 
-        //Add block when dataTable is displayed and add form to action MapDatasetToObject
         [Authorize]
         [HttpGet]
         public IActionResult AddNewDataset(string notificationMessage = null, AddNewDatasetViewModel newDataset = null)
@@ -104,9 +104,9 @@ namespace DataAnalysisSystem.Controllers
                 }
 
                 _customSerializer.ChangeStrategy(chosenStrategy);
-               
+
                 newDataset.DatasetContent = _customSerializer.MapFileContentToObject(filePath, newDataset.AdditionalParameters);
-               
+
                 newDataset.InputFileFormat = modelDecision.FileExtension.ToLower();
                 newDataset.InputFileName = newDataset.DatasetFile.FileName.Replace(newDataset.InputFileFormat, "");
 
@@ -146,7 +146,7 @@ namespace DataAnalysisSystem.Controllers
                                 ? datasetToSave.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count
                                 : datasetToSave.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count,
 
-                NumberOfMissingValues = datasetToSave.DatasetContent.StringColumns.Select(z=> z.AttributeValue.Where(s=> String.IsNullOrWhiteSpace(s))).Count(),
+                NumberOfMissingValues = datasetToSave.DatasetContent.StringColumns.Select(z => z.AttributeValue.Where(s => String.IsNullOrWhiteSpace(s))).Count(),
 
                 InputFileFormat = datasetToSave.InputFileFormat,
                 InputFileName = datasetToSave.InputFileName
@@ -159,6 +159,20 @@ namespace DataAnalysisSystem.Controllers
             _context.userRepository.AddDatasetToOwner(loggedUser.Id.ToString(), dataset.DatasetIdentificator);
 
             return RedirectToAction("AddNewDataset", "Dataset", new { notificationMessage = "The dataset has been successfully uploaded to the server." });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult UserDatasets(string notificationMessage = null)
+        {
+            ViewData["Message"] = notificationMessage;
+
+            var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            List<Dataset> userDatasets = _context.datasetRepository.GetDatasetsById(currentUser.UserDatasets).ToList();
+
+            List<DatasetOverallInformationViewModel> userDatasetsDTO = _autoMapper.Map<List<DatasetOverallInformationViewModel>>(userDatasets);
+
+            return View(userDatasetsDTO);
         }
     }
 }

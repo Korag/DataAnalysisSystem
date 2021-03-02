@@ -2,6 +2,7 @@
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract;
 using MongoDB.Driver;
+using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Repository.Repository
 {
@@ -20,6 +21,22 @@ namespace DataAnalysisSystem.Repository.Repository
         private IMongoCollection<Dataset> GetDatasets()
         {
             return _datasets = _context.databaseInfo.GetCollection<Dataset>(_datasetsCollectionName);
+        }
+
+        public Dataset GetDatasetById(string datasetIdentificator)
+        {
+            var filter = Builders<Dataset>.Filter.Eq(x => x.DatasetIdentificator, datasetIdentificator);
+            var dataset = GetDatasets().Find<Dataset>(filter).FirstOrDefault();
+
+            return dataset;
+        }
+
+        public ICollection<Dataset> GetDatasetsById(ICollection<string> datasetIdentificators)
+        {
+            var filter = Builders<Dataset>.Filter.Where(x => datasetIdentificators.Contains(x.DatasetIdentificator));
+            var datasets = GetDatasets().Find<Dataset>(filter).ToList();
+
+            return datasets;
         }
 
         public void UpdateDataset(Dataset dataset)

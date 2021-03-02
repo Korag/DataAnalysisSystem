@@ -1,0 +1,99 @@
+﻿@model IEnumerable<DataAnalysisSystem.DTO.DatasetDTO.DatasetOverallInformationViewModel>
+
+@{
+    ViewData["Title"] = "My datasets";
+}
+
+<div class="card" style="display:block; margin-bottom: 5vh">
+    <div class="card-content">
+        <span class="card-title center">My datasets</span>
+    </div>
+
+    <table id="table-custom-elements" class="row-border" cellspacing="0">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatasetName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfCreation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfEdition)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfColumns)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfRows)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InputFileName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dataset in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => dataset.DatasetIdentificator)
+                        @Html.DisplayFor(model => dataset.DatasetName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.DateOfCreation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.DateOfEdition)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.NumberOfColumns)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.NumberOfRows)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.InputFileFormat)@Html.DisplayFor(model => dataset.InputFileName)
+                    </td>
+                    <td>
+                        <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" type="button" class="waves-effect">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('.tooltipped').tooltip();
+        });
+
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
+
+        $(document).ready(function () {
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollY: "600px", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            jQuery("select").not(".disabled").formSelect();
+
+        });
+    </script>
+}
+
+@section Notification
+{
+    <div class="row">
+        <div class="col s8 offset-s2">
+
+            @if (ViewData["Message"] != null)
+            {
+
+                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
+            }
+
+        </div>
+    </div>
+}

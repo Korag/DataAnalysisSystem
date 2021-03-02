@@ -1,4 +1,5 @@
 ﻿using DataAnalysisSystem.DataEntities;
+using System.Collections.Generic;
 
 namespace DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract
 {
@@ -6,5 +7,7 @@ namespace DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract
     {
         public void UpdateDataset(Dataset dataset);
         public void AddDataset(Dataset dataset);
+        public Dataset GetDatasetById(string datasetIdentificator);
+        public ICollection<Dataset> GetDatasetsById(ICollection<string> datasetIdentificators);
     }
 }
