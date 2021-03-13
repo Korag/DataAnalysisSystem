@@ -105,7 +105,7 @@ namespace DataAnalysisSystem.Controllers
 
                 _customSerializer.ChangeStrategy(chosenStrategy);
 
-                newDataset.DatasetContent = _customSerializer.MapFileContentToObject(filePath, newDataset.AdditionalParameters);
+                newDataset.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(_customSerializer.MapFileContentToObject(filePath, newDataset.AdditionalParameters));
 
                 newDataset.InputFileFormat = modelDecision.FileExtension.ToLower();
                 newDataset.InputFileName = newDataset.DatasetFile.FileName.Replace(newDataset.InputFileFormat, "");
@@ -137,7 +137,7 @@ namespace DataAnalysisSystem.Controllers
                 IsShared = false,
                 AccessKey = "000",
             };
-            dataset.DatasetContent = datasetToSave.DatasetContent;
+            dataset.DatasetContent = _autoMapper.Map<DatasetContent>(datasetToSave.DatasetContent);
 
             DatasetStatistics datasetStatistics = new DatasetStatistics
             {

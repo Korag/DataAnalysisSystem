@@ -1,6 +1,4 @@
-﻿using DataAnalysisSystem.DataEntities;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataAnalysisSystem.DTO.DatasetDTO
@@ -26,7 +24,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         public DatasetAdditionalParametersViewModel AdditionalParameters { get; set; }
 
         
-        public DatasetContent DatasetContent { get; set; }
+        public DatasetContentViewModel DatasetContent { get; set; }
         public string InputFileName { get; set; }
         public string InputFileFormat { get; set; }
 

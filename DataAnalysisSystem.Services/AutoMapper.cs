@@ -40,6 +40,8 @@ namespace DataAnalysisSystem.Services
                            .ForMember(dest => dest.DatasetStatistics, opts => opts.Ignore());
 
             CreateMap<DatasetContent, DatasetContentViewModel>();
+
+            CreateMap<DatasetContentViewModel, DatasetContent>();
         }
     }
 }
