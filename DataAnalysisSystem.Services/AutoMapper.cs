@@ -35,6 +35,11 @@ namespace DataAnalysisSystem.Services
                             .ForMember(dest => dest.InputFileFormat, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileFormat))
                             .ForMember(dest => dest.InputFileName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName));
 
+            CreateMap<Dataset, DatasetDetailsViewModel>()
+                           .ForMember(dest => dest.DatasetContent, opts => opts.Ignore())
+                           .ForMember(dest => dest.DatasetStatistics, opts => opts.Ignore());
+
+            CreateMap<DatasetContent, DatasetContentViewModel>();
         }
     }
 }

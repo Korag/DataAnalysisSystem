@@ -1,0 +1,106 @@
+﻿@model DataAnalysisSystem.DTO.DatasetDTO.DatasetDetailsViewModel
+
+@{
+    ViewData["Title"] = "DatasetDetails";
+}
+
+<div class="row">
+    <div class="col s12">
+
+        <div class="card" style="display:block; margin-bottom: 5vh">
+            <div class="card-content">
+                <span class="card-title center">Dataset content</span>
+            </div>
+
+            <table id="table-custom-elements" class="row-border" cellspacing="0">
+                <thead>
+
+                    <tr>
+                        @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
+                        {
+                            var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+
+                            if (numberColumn != null)
+                            {
+                                <th>@numberColumn.AttributeName</th>
+                            }
+                            else
+                            {
+                                var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                                <th>@stringColumn.AttributeName</th>
+                            }
+                        }
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                    @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                    {
+                        var n = 0;
+                        var s = 0;
+
+                        <tr>
+                            @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                            {
+                                var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                if (numberColumn != null)
+                                {
+                                    <td>
+                                        @numberColumn.AttributeValue[i]
+                                        @{n++;}
+                                    </td>
+                                }
+                                else
+                                {
+                                    var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                    <td>
+                                        @stringColumn.AttributeValue[i]
+                                        @{s++;}
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
+
+        $(document).ready(function () {
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollY: "600px", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            jQuery("select").not(".disabled").formSelect();
+
+        });
+
+    </script>
+}
+
+@section Notification
+{
+    <div class="row">
+        <div class="col s8 offset-s2">
+
+            @if (ViewData["Message"] != null)
+            {
+
+                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
+            }
+
+        </div>
+    </div>
+}

@@ -179,9 +179,12 @@ namespace DataAnalysisSystem.Controllers
         [HttpGet]
         public IActionResult DatasetDetails(string datasetIdentificator)
         {
-            var a = 0;
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
 
-            return View();
+            DatasetDetailsViewModel datasetDetails = _autoMapper.Map<DatasetDetailsViewModel>(dataset);
+            datasetDetails.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(dataset.DatasetContent);
+
+            return View(datasetDetails);
         }
     }
 }
