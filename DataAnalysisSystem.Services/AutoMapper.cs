@@ -42,6 +42,9 @@ namespace DataAnalysisSystem.Services
             CreateMap<DatasetContent, DatasetContentViewModel>();
 
             CreateMap<DatasetContentViewModel, DatasetContent>();
+
+            CreateMap<DatasetStatistics, DatasetDetailsStatisticsViewModel>();
+
         }
     }
 }

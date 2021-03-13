@@ -9,6 +9,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         [Display(Name = "Number of rows")]
         public int NumberOfRows { get; set; }
 
+        [Display(Name = "Number of missing values")]
         public int NumberOfMissingValues { get; set; }
 
         [Display(Name = "Input file format")]
