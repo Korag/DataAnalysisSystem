@@ -1,4 +1,5 @@
 ﻿@model DataAnalysisSystem.DTO.DatasetDTO.DatasetDetailsViewModel
+@using DataAnalysisSystem.DTO.AdditionalFunctionalities
 
 @{
     ViewData["Title"] = "DatasetDetails";
@@ -178,6 +179,24 @@
     </div>
 </div>
 
+<!-- #region Logout Modal -->
+@await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+                                                {
+                                                 ModalIdentificator = "modalDeleteDataset",
+                                                 ModalTitle = "Delete Dataset",
+                                                 ModalContent = "Are you sure you want to delete the dataset and all the analyses associated with it?",
+
+                                                 ControllerName = "Dataset",
+                                                 ActionName = "DeleteDataset",
+                                                 RouteAdditionalArguments = new Dictionary<string, string>
+                                                                                    {
+                                                                                        { "datasetIdentificator", Model.DatasetIdentificator }
+                                                                                    },
+                                                 ModalActAsForm = false,
+                                                 LabelOnButton = "Delete"
+                                                })
+}
+
 @section Scripts{
 
     <script>
@@ -187,7 +206,7 @@
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollY: "600px", scrollX:"600px", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollY: "600px", scrollX: "600px", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
 
         });

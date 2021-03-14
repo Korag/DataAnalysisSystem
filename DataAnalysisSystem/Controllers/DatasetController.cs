@@ -187,5 +187,31 @@ namespace DataAnalysisSystem.Controllers
 
             return View(datasetDetails);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult DeleteDataset(string datasetIdentificator)
+        {
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+
+            if (dataset == null)
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            _context.datasetRepository.DeleteDataset(dataset.DatasetIdentificator);
+            _context.userRepository.RemoveDatasetFromOwner(loggedUser.Id.ToString(), dataset.DatasetIdentificator);
+            _context.userRepository.RemoveSharedDatasetsFromUsers(dataset.DatasetIdentificator);
+
+            List<string> dataAnalysesId = _context.analysisRepository.GetAnalysesByDatasetId(dataset.DatasetIdentificator).Select(z=> z.AnalysisIdentificator).ToList();
+
+            _context.analysisRepository.DeleteAnalyses(dataAnalysesId);
+            _context.userRepository.RemoveAnalysesFromOwner(loggedUser.Id.ToString(), dataAnalysesId);
+            _context.userRepository.RemoveSharedAnalysesFromUsers(dataAnalysesId);
+
+            return RedirectToAction("MainAction", "UserSystemInteraction", new { notificationMessage = "The dataset and associated data analyses were successfully removed from the system." });
+        }
     }
 }

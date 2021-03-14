@@ -49,5 +49,11 @@ namespace DataAnalysisSystem.Repository.Repository
         {
             GetDatasets().InsertOne(dataset);
         }
+
+        public void DeleteDataset(string datasetIdentificator)
+        {
+            var filter = Builders<Dataset>.Filter.Where(z => z.DatasetIdentificator == datasetIdentificator);
+            var result = GetDatasets().DeleteOne(filter);
+        }
     }
 }
