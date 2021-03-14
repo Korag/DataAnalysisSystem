@@ -1,5 +1,7 @@
 ﻿using DataAnalysisSystem.ServicesInterfaces;
 using MongoDB.Bson;
+using RandomDataGenerator.FieldOptions;
+using RandomDataGenerator.Randomizers;
 using System;
 
 namespace DataAnalysisSystem.Services
@@ -34,6 +36,12 @@ namespace DataAnalysisSystem.Services
         public string GenerateNewUniqueXLengthCodeAsString(int length)
         {
             return GenerateNewUniqueCode().ToString().Substring(length);
+        }
+
+        public string GenerateAccessKey(int length)
+        {
+            var randomizerText = RandomizerFactory.GetRandomizer(new FieldOptionsText { UseNumber = true, UseSpecial = false, Max = length, Min = length});
+            return randomizerText.Generate();
         }
     }
 }

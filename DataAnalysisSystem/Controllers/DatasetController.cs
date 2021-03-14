@@ -186,8 +186,8 @@ namespace DataAnalysisSystem.Controllers
             datasetDetails.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(dataset.DatasetContent);
             datasetDetails.DatasetStatistics = _autoMapper.Map<DatasetDetailsStatisticsViewModel>(dataset.DatasetStatistics);
 
-            datasetDetails.DatasetStatistics.AttributesDistribution = JsonConvert.SerializeObject(new int[]{ datasetDetails.DatasetContent.NumberColumns.Count, datasetDetails.DatasetContent.StringColumns.Count});
-            datasetDetails.DatasetStatistics.MissingValuePercentage = JsonConvert.SerializeObject(dataset.DatasetStatistics.NumberOfMissingValues/((dataset.DatasetStatistics.NumberOfColumns*dataset.DatasetStatistics.NumberOfRows)-dataset.DatasetStatistics.NumberOfMissingValues));
+            datasetDetails.DatasetStatistics.AttributesDistribution = JsonConvert.SerializeObject(new int[] { datasetDetails.DatasetContent.NumberColumns.Count, datasetDetails.DatasetContent.StringColumns.Count });
+            datasetDetails.DatasetStatistics.MissingValuePercentage = JsonConvert.SerializeObject(dataset.DatasetStatistics.NumberOfMissingValues / ((dataset.DatasetStatistics.NumberOfColumns * dataset.DatasetStatistics.NumberOfRows) - dataset.DatasetStatistics.NumberOfMissingValues));
 
             return View(datasetDetails);
         }
@@ -209,7 +209,7 @@ namespace DataAnalysisSystem.Controllers
             _context.userRepository.RemoveDatasetFromOwner(loggedUser.Id.ToString(), dataset.DatasetIdentificator);
             _context.userRepository.RemoveSharedDatasetsFromUsers(dataset.DatasetIdentificator);
 
-            List<string> dataAnalysesId = _context.analysisRepository.GetAnalysesByDatasetId(dataset.DatasetIdentificator).Select(z=> z.AnalysisIdentificator).ToList();
+            List<string> dataAnalysesId = _context.analysisRepository.GetAnalysesByDatasetId(dataset.DatasetIdentificator).Select(z => z.AnalysisIdentificator).ToList();
 
             _context.analysisRepository.DeleteAnalyses(dataAnalysesId);
             _context.userRepository.RemoveAnalysesFromOwner(loggedUser.Id.ToString(), dataAnalysesId);
@@ -243,7 +243,7 @@ namespace DataAnalysisSystem.Controllers
                 else
                 {
                     NotSharedDatasetViewModel notSharedDataset = _autoMapper.Map<NotSharedDatasetViewModel>(dataset);
-                    notSharedDataset = _autoMapper.Map<DatasetStatistics,NotSharedDatasetViewModel>(dataset.DatasetStatistics, notSharedDataset);
+                    notSharedDataset = _autoMapper.Map<DatasetStatistics, NotSharedDatasetViewModel>(dataset.DatasetStatistics, notSharedDataset);
 
                     sharedDatasetInfo.NotSharedDatasets.Add(notSharedDataset);
                 }
@@ -251,5 +251,18 @@ namespace DataAnalysisSystem.Controllers
 
             return View(sharedDatasetInfo);
         }
-    }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ShareDataset(string datasetIdentificator)
+        {
+            Dataset datasetToShare = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            datasetToShare.IsShared = true;
+            datasetToShare.AccessKey = _codeGenerator.GenerateAccessKey(8);
+
+            _context.datasetRepository.UpdateDataset(datasetToShare);
+
+            return RedirectToAction("SharedUserDatasets", "Dataset", new { notificationMessage = "A data set has been made available" });
+        }
+    } 
 }
