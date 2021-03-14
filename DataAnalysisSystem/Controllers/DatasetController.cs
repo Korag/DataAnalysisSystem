@@ -262,7 +262,7 @@ namespace DataAnalysisSystem.Controllers
 
             _context.datasetRepository.UpdateDataset(datasetToShare);
 
-            return RedirectToAction("SharedUserDatasets", "Dataset", new { notificationMessage = "A data set has been made available" });
+            return RedirectToAction("SharedUserDatasets", "Dataset", new { notificationMessage = "A data set has been made available." });
         }
     } 
 }
