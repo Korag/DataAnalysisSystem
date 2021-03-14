@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="center-align" style="margin-top: 10px">
-                    <a asp-controller="Analysis" asp-action="AnalyseDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal">Analyze</a>
+                    <a asp-controller="Analysis" asp-action="AnalyseDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Analyze</a>
 
                     <a href="#!" data-target="options-list2" class="dropdown-trigger waves-effect right"><i class="material-icons" style="color:black">more_horiz</i></a>
 
@@ -118,7 +118,7 @@
                 <span class="card-title center">Dataset content</span>
             </div>
 
-            <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
+            <table id="table-custom-elements" class="row-border" style="text-align:center" cellspacing="0" width="100%">
                 <thead>
 
                     <tr>
@@ -206,7 +206,7 @@
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
 
         });

@@ -217,5 +217,39 @@ namespace DataAnalysisSystem.Controllers
 
             return RedirectToAction("MainAction", "UserSystemInteraction", new { notificationMessage = "The dataset and associated data analyses were successfully removed from the system." });
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult SharedUserDatasets(string notificationMessage = null)
+        {
+            ViewData["Message"] = notificationMessage;
+
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            List<Dataset> userDatasets = _context.datasetRepository.GetDatasetsById(loggedUser.UserDatasets).ToList();
+
+            ShareDatasetActionViewModel sharedDatasetInfo = new ShareDatasetActionViewModel();
+
+            foreach (var dataset in userDatasets)
+            {
+                if (dataset.IsShared)
+                {
+                    SharedDatasetViewModel sharedDataset = _autoMapper.Map<SharedDatasetViewModel>(dataset);
+                    sharedDataset = _autoMapper.Map<DatasetStatistics, SharedDatasetViewModel>(dataset.DatasetStatistics, sharedDataset);
+
+                    //GenerateQR Code and save to variable
+
+                    sharedDatasetInfo.SharedDatasets.Add(sharedDataset);
+                }
+                else
+                {
+                    NotSharedDatasetViewModel notSharedDataset = _autoMapper.Map<NotSharedDatasetViewModel>(dataset);
+                    notSharedDataset = _autoMapper.Map<DatasetStatistics,NotSharedDatasetViewModel>(dataset.DatasetStatistics, notSharedDataset);
+
+                    sharedDatasetInfo.NotSharedDatasets.Add(notSharedDataset);
+                }
+            }
+
+            return View(sharedDatasetInfo);
+        }
     }
 }

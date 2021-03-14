@@ -43,7 +43,13 @@ namespace DataAnalysisSystem.Services
 
             CreateMap<DatasetContentViewModel, DatasetContent>();
 
-            CreateMap<DatasetStatistics, DatasetDetailsStatisticsViewModel>();
+            CreateMap<Dataset, NotSharedDatasetViewModel>();
+
+            CreateMap<DatasetStatistics, NotSharedDatasetViewModel>();
+
+            CreateMap<Dataset, SharedDatasetViewModel>();
+
+            CreateMap<DatasetStatistics, SharedDatasetViewModel>();
 
         }
     }

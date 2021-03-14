@@ -31,7 +31,7 @@ namespace DataAnalysisSystem.Repository.Repository
             return dataset;
         }
 
-        public ICollection<Dataset> GetDatasetsById(ICollection<string> datasetIdentificators)
+        public IList<Dataset> GetDatasetsById(ICollection<string> datasetIdentificators)
         {
             var filter = Builders<Dataset>.Filter.Where(x => datasetIdentificators.Contains(x.DatasetIdentificator));
             var datasets = GetDatasets().Find<Dataset>(filter).ToList();
