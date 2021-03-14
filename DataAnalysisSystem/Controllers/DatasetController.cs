@@ -12,6 +12,7 @@ using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -184,6 +185,9 @@ namespace DataAnalysisSystem.Controllers
             DatasetDetailsViewModel datasetDetails = _autoMapper.Map<DatasetDetailsViewModel>(dataset);
             datasetDetails.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(dataset.DatasetContent);
             datasetDetails.DatasetStatistics = _autoMapper.Map<DatasetDetailsStatisticsViewModel>(dataset.DatasetStatistics);
+
+            datasetDetails.DatasetStatistics.AttributesDistribution = JsonConvert.SerializeObject(new int[]{ datasetDetails.DatasetContent.NumberColumns.Count, datasetDetails.DatasetContent.StringColumns.Count});
+            datasetDetails.DatasetStatistics.MissingValuePercentage = JsonConvert.SerializeObject(dataset.DatasetStatistics.NumberOfMissingValues/((dataset.DatasetStatistics.NumberOfColumns*dataset.DatasetStatistics.NumberOfRows)-dataset.DatasetStatistics.NumberOfMissingValues));
 
             return View(datasetDetails);
         }

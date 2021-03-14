@@ -17,7 +17,10 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         [Display(Name = "Input file name")]
         public string InputFileName { get; set; }
 
-        //Collections for Chart - attribute string to attribute value
-        //Percentage chart of missing values
+        [Display(Name = "Distribution of attributes")]
+        public string AttributesDistribution { get; set; }
+
+        [Display(Name = "Percentage of missing values")]
+        public string MissingValuePercentage { get; set; }
     }
 }
