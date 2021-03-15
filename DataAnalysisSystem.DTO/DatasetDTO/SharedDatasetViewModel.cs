@@ -12,6 +12,9 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         [Display(Name = "Dataset name")]
         public string DatasetName { get; set; }
 
+        [Display(Name = "Edition at")]
+        public string DateOfEdition { get; set; }
+
         [Display(Name = "Number of columns")]
         public int NumberOfColumns { get; set; }
         [Display(Name = "Number of rows")]

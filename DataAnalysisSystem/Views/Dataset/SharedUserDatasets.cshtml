@@ -28,7 +28,10 @@
                         @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileFormat)
                     </th>
                     <th>
-                        Action
+                        SHARE
+                    </th>
+                    <th>
+                        Details
                     </th>
                 </tr>
             </thead>
@@ -56,6 +59,9 @@
                             @{string modalDataTarget = "modalShareDataset" + i;}
                             <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
                             @{i++;}
+                        </td>
+                        <td>
+                            <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
                         </td>
                     </tr>
                 }
@@ -87,6 +93,12 @@
                         @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileFormat)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DateOfEdition)
+                    </th>
+                    <th>
+                        SHARE FURTHER
+                    </th>
+                    <th>
                         Details
                     </th>
                 </tr>
@@ -94,26 +106,32 @@
             <tbody>
                 @foreach (var dataset in Model.SharedDatasets)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => dataset.DatasetName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.NumberOfColumns)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.NumberOfRows)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.InputFileName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.InputFileFormat)
-                        </td>
-                        <td>
-                            Missing modal with email input, AccessKey and generated QR Code
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => dataset.DatasetName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.NumberOfColumns)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.NumberOfRows)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.InputFileName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.InputFileFormat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => dataset.DateOfEdition)
+                    </td>
+                    <td>
+                        Missing modal with email input, AccessKey and generated QR Code
+                    </td>
+                    <td>
+                        <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

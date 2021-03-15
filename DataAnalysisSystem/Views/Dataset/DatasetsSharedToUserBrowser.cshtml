@@ -1,0 +1,140 @@
+﻿@model DataAnalysisSystem.DTO.DatasetDTO.SharedDatasetsBrowserViewModel
+
+@{
+    ViewData["Title"] = "Datasets Browser";
+}
+
+<div class="row" style="margin-bottom:0px">
+
+    <div class="col s8 offset-s2" style="margin-top:10vh">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align">Datasets Browser</span>
+
+                <div class="center-align" style="margin-top: 10px">
+
+                    <form id="AddNewDatasetSharedToForm" method="post" asp-action="DatasetsSharedToUserBrowser" asp-controller="Dataset">
+
+                        <div class="input-field" style="width:70%; margin:auto;">
+
+                            <i class="material-icons prefix">input</i>
+                            <input type="text" asp-for="NewSharedDatasetAccessKey" required="" aria-required="true" class="validate">
+                            <label asp-for="NewSharedDatasetAccessKey"></label>
+
+                        </div>
+
+                        <div class="center-align" style="margin-top: 10px">
+                            <input class="btn" type="submit" value="Add">
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card" style="display:block; margin-bottom: 5vh">
+    <div class="card-content">
+        <span class="card-title center">Datasets shared to me</span>
+
+        <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DatasetName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfColumns)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfRows)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileFormat)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DateOfEdition)
+                    </th>
+                    <th>
+                        SHARE FURTHER
+                    </th>
+                    <th>
+                        Details
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dataset in Model.SharedDatasets)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => dataset.DatasetName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfColumns)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfRows)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.InputFileName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.InputFileFormat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.DateOfEdition)
+                        </td>
+                        <td>
+                            Missing modal with email input, AccessKey and generated QR Code
+                        </td>
+                        <td>
+                            <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
+
+        $(document).ready(function () {
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            jQuery("select").not(".disabled").formSelect();
+
+        });
+
+    </script>
+}
+
+@section Notification
+{
+    <div class="row">
+        <div class="col s8 offset-s2">
+
+            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
+
+            @if (ViewData["Message"] != null)
+            {
+
+                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
+            }
+
+        </div>
+    </div>
+}

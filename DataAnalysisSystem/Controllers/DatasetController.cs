@@ -276,5 +276,49 @@ namespace DataAnalysisSystem.Controllers
 
             return View(exportDataset);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult DatasetsSharedToUserBrowser(string notificationMessage)
+        {
+            ViewData["Message"] = notificationMessage;
+
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            List<Dataset> datasetShared = _context.datasetRepository.GetDatasetsById(loggedUser.SharedDatasetsToUser).ToList();
+
+            SharedDatasetsBrowserViewModel datasetBrowser = new SharedDatasetsBrowserViewModel();
+            datasetBrowser.SharedDatasets = _autoMapper.Map<List<SharedDatasetViewModel>>(datasetShared).ToList();
+            datasetBrowser.SharedDatasets = _autoMapper.Map<List<DatasetStatistics>, List<SharedDatasetViewModel>>(datasetShared.Select(z => z.DatasetStatistics).ToList(), datasetBrowser.SharedDatasets.ToList()).ToList();
+
+            //Add generated QR Code
+
+            return View(datasetBrowser);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult DatasetsSharedToUserBrowser(SharedDatasetsBrowserViewModel datasetBrowser)
+        {
+            if (ModelState.IsValid)
+            {
+                //Dataset datasetShared = _context.datasetRepository.GetDatasetsByAccessCode(loggedUser.SharedDatasetsToUser).ToList();
+
+            
+            }
+            else if (true)
+            {
+
+            }
+            else
+            {
+                    
+            }
+
+
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+
+            return View(datasetBrowser);
+        }
     }
 }
