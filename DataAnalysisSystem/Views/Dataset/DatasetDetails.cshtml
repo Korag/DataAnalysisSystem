@@ -116,66 +116,65 @@
         <div class="card" style="display:block; margin-bottom: 5vh">
             <div class="card-content">
                 <span class="card-title center">Dataset content</span>
-            </div>
 
-            <table id="table-custom-elements" class="row-border" style="text-align:center" cellspacing="0" width="100%">
-                <thead>
-
-                    <tr>
-                        @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
-                        {
-                            var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-
-                            if (numberColumn != null)
-                            {
-                                <th>@numberColumn.AttributeName</th>
-                            }
-                            else
-                            {
-                                var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-                                <th>@stringColumn.AttributeName</th>
-                            }
-                        }
-                    </tr>
-
-                </thead>
-                <tbody>
-
-                    @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
-                    {
-                        var n = 0;
-                        var s = 0;
+                <table id="table-custom-elements" class="row-border" style="text-align:center" cellspacing="0" width="100%">
+                    <thead>
 
                         <tr>
-                            @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                            @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
                             {
-                                var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-                                var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                                 if (numberColumn != null)
                                 {
-                                    <td>
-                                        @numberColumn.AttributeValue[i]
-                                        @{n++;}
-                                    </td>
+                                    <th>@numberColumn.AttributeName</th>
                                 }
                                 else
                                 {
-                                    var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-
-                                    <td>
-                                        @stringColumn.AttributeValue[i]
-                                        @{s++;}
-                                    </td>
+                                    var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                                    <th>@stringColumn.AttributeName</th>
                                 }
                             }
                         </tr>
-                    }
 
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+
+                        @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                        {
+                            var n = 0;
+                            var s = 0;
+
+                            <tr>
+                                @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                                {
+                                    var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                    var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                    if (numberColumn != null)
+                                    {
+                                        <td>
+                                            @numberColumn.AttributeValue[i]
+                                            @{n++;}
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                        <td>
+                                            @stringColumn.AttributeValue[i]
+                                            @{s++;}
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
         </div>
-
     </div>
 </div>
 

@@ -134,74 +134,75 @@
                             <input class="btn modal-trigger" type="submit" id="submitButton" value="Save">
                             <a asp-action="AddNewDataset" asp-controller="Dataset" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
                         </div>
-                    </div>
 
-                    <table id="table-custom-elements" class="row-border" cellspacing="0">
-                        <thead>
-
-                            <tr>
-                                @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
-                                {
-                                    var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-
-                                    if (numberColumn != null)
-                                    {
-                                        <th>@numberColumn.AttributeName</th>
-                                    }
-                                    else
-                                    {
-                                        <th>@Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault().AttributeName</th>
-                                    }
-                                }
-                            </tr>
-
-                        </thead>
-                        <tbody>
-
-                            @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
-                            {
-                                var n = 0;
-                                var s = 0;
+                        <table id="table-custom-elements" class="row-border" cellspacing="0">
+                            <thead>
 
                                 <tr>
-                                    @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                                    @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
                                     {
-                                        var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-                                        var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-
+                                        var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                                         if (numberColumn != null)
                                         {
-                                            <td>
-                                                @numberColumn.AttributeValue.ElementAt(i)
-
-                                                <input asp-for="DatasetContent.NumberColumns[n].AttributeValue[i]" value="@Model.DatasetContent.NumberColumns[n].AttributeValue[i]" readonly hidden />
-                                                <input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />
-                                                <input asp-for="DatasetContent.NumberColumns[n].PositionInDataset" value="@Model.DatasetContent.NumberColumns[n].PositionInDataset" readonly hidden />
-
-                                                @{n++;}
-                                            </td>
+                                            <th>@numberColumn.AttributeName</th>
                                         }
                                         else
                                         {
-                                            var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-
-                                            <td>
-                                                @stringColumn.AttributeValue.ElementAt(i)
-
-                                                <input asp-for="DatasetContent.StringColumns[s].AttributeValue[i]" value="@Model.DatasetContent.StringColumns[s].AttributeValue[i]" readonly hidden />
-                                                <input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />
-                                                <input asp-for="DatasetContent.StringColumns[s].PositionInDataset" value="@Model.DatasetContent.StringColumns[s].PositionInDataset" readonly hidden />
-
-                                                @{s++;}
-                                            </td>
+                                            <th>@Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault().AttributeName</th>
                                         }
                                     }
                                 </tr>
-                            }
 
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                                @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                                {
+                                    var n = 0;
+                                    var s = 0;
+
+                                    <tr>
+                                        @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                                        {
+                                            var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                            var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+
+                                            if (numberColumn != null)
+                                            {
+                                                <td>
+                                                    @numberColumn.AttributeValue.ElementAt(i)
+
+                                                    <input asp-for="DatasetContent.NumberColumns[n].AttributeValue[i]" value="@Model.DatasetContent.NumberColumns[n].AttributeValue[i]" readonly hidden />
+                                                    <input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />
+                                                    <input asp-for="DatasetContent.NumberColumns[n].PositionInDataset" value="@Model.DatasetContent.NumberColumns[n].PositionInDataset" readonly hidden />
+
+                                                    @{n++;}
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                                <td>
+                                                    @stringColumn.AttributeValue.ElementAt(i)
+
+                                                    <input asp-for="DatasetContent.StringColumns[s].AttributeValue[i]" value="@Model.DatasetContent.StringColumns[s].AttributeValue[i]" readonly hidden />
+                                                    <input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />
+                                                    <input asp-for="DatasetContent.StringColumns[s].PositionInDataset" value="@Model.DatasetContent.StringColumns[s].PositionInDataset" readonly hidden />
+
+                                                    @{s++;}
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
             </div>

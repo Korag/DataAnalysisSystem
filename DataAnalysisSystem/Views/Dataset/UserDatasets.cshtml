@@ -7,57 +7,57 @@
 <div class="card" style="display:block; margin-bottom: 5vh">
     <div class="card-content">
         <span class="card-title center">My datasets</span>
-    </div>
 
-    <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.DatasetName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberOfColumns)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberOfRows)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.InputFileName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateOfEdition)
-                </th>
-                <th>
-                    Details
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var dataset in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => dataset.DatasetName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => dataset.NumberOfColumns)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => dataset.NumberOfRows)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => dataset.InputFileName)@Html.DisplayFor(model => dataset.InputFileFormat)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => dataset.DateOfEdition)
-                </td>
-                <td>
-                    <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+        <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DatasetName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumberOfColumns)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumberOfRows)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InputFileName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateOfEdition)
+                    </th>
+                    <th>
+                        Details
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dataset in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => dataset.DatasetName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfColumns)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfRows)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.InputFileName)@Html.DisplayFor(model => dataset.InputFileFormat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.DateOfEdition)
+                        </td>
+                        <td>
+                            <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @section Scripts{

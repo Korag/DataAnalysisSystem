@@ -8,116 +8,116 @@
 <div class="card" style="display:block; margin-bottom: 5vh">
     <div class="card-content">
         <span class="card-title center">My not shared datasets</span>
-    </div>
 
-    <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().DatasetName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfColumns)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfRows)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileFormat)
-                </th>
-                <th>
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{int i = 0;}
-            @foreach (var dataset in Model.NotSharedDatasets)
-            {
+        <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(model => dataset.DatasetName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.NumberOfColumns)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.NumberOfRows)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.InputFileName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.InputFileFormat)
-                    </td>
-                    <td>
-                        @{string modalDataTarget = "modalShareDataset" + i;}
-                        <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
-                        @{i++;}
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().DatasetName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfColumns)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfRows)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileFormat)
+                    </th>
+                    <th>
+                        Action
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @{int i = 0;}
+                @foreach (var dataset in Model.NotSharedDatasets)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => dataset.DatasetName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfColumns)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfRows)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.InputFileName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.InputFileFormat)
+                        </td>
+                        <td>
+                            @{string modalDataTarget = "modalShareDataset" + i;}
+                            <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
+                            @{i++;}
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="card" style="display:block; margin-bottom: 5vh">
     <div class="card-content">
         <span class="card-title center">My shared datasets</span>
-    </div>
 
-    <table id="table-custom-elements2" class="row-border" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DatasetName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfColumns)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfRows)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileFormat)
-                </th>
-                <th>
-                    Details
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var dataset in Model.SharedDatasets)
-            {
+        <table id="table-custom-elements2" class="row-border" cellspacing="0" width="100%">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(model => dataset.DatasetName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.NumberOfColumns)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.NumberOfRows)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.InputFileName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => dataset.InputFileFormat)
-                    </td>
-                    <td>
-                        Missing modal with email input, AccessKey and generated QR Code
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DatasetName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfColumns)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfRows)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileFormat)
+                    </th>
+                    <th>
+                        Details
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var dataset in Model.SharedDatasets)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => dataset.DatasetName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfColumns)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.NumberOfRows)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.InputFileName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => dataset.InputFileFormat)
+                        </td>
+                        <td>
+                            Missing modal with email input, AccessKey and generated QR Code
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
