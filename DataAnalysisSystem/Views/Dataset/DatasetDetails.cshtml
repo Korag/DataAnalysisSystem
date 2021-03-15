@@ -31,10 +31,10 @@
                         <div class="col s12">
                             <div class="options-container">
                                 <div class="single-option">
-                                    <a asp-controller="Datset" asp-action="ExportDataset" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
+                                    <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
                                 </div>
                                 <div class="single-option">
-                                    <a asp-controller="Dataset" asp-action="EditDataset" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
+                                    <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
                                 </div>
                                 <div class="single-option">
                                     <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>

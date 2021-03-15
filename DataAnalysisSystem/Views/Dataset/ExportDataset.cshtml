@@ -1,0 +1,296 @@
+﻿@model DataAnalysisSystem.DTO.DatasetDTO.ExportDatasetViewModel
+
+@{
+    ViewData["Title"] = "Export Dataset";
+}
+
+<div id="displayTable" class="col s12">
+    <div class="row" style="margin-bottom:0px">
+
+        <div class="col s8 offset-s2" style="margin-top:10vh">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align">Export Dataset</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+
+                    <div class="right-align" style="margin-top: 10px">
+
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Save to PDF</a>
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+
+            <div class="card" style="display:block; margin-bottom: 5vh">
+                <div class="card-content">
+                    <span class="card-title center">Dataset content</span>
+                </div>
+
+                <table id="table-custom-elements" class="row-border" style="text-align:center" cellspacing="0" width="100%">
+                    <thead>
+
+                        <tr>
+                            @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
+                            {
+                                var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+
+                                if (numberColumn != null)
+                                {
+                                    <th>@numberColumn.AttributeName</th>
+                                }
+                                else
+                                {
+                                    var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                                    <th>@stringColumn.AttributeName</th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                        {
+                            var n = 0;
+                            var s = 0;
+
+                            <tr>
+                                @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                                {
+                                    var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                    var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                    if (numberColumn != null)
+                                    {
+                                        <td>
+                                            @numberColumn.AttributeValue[i]
+                                            @{n++;}
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                        <td>
+                                            @stringColumn.AttributeValue[i]
+                                            @{s++;}
+                                        </td>
+                                    }
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="displayCSV" class="col s12">
+    <div class="row" style="margin-bottom:0px">
+
+        <div class="col s8 offset-s2" style="margin-top:10vh">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align">Export Dataset</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+
+                    <div class="right-align" style="margin-top: 10px">
+
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Save to PDF</a>
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+
+            <div class="card" style="display:block; margin-bottom: 5vh">
+                <div class="card-content">
+                    <span class="card-title center">Dataset content</span>
+                    <textarea @*asp-for="asd"*@ class="materialize-textarea" readonly>CSV</textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="displayJSON" class="col s12">
+    <div class="row" style="margin-bottom:0px">
+
+        <div class="col s8 offset-s2" style="margin-top:10vh">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align">Export Dataset</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+
+                    <div class="right-align" style="margin-top: 10px">
+
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Save to PDF</a>
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+
+            <div class="card" style="display:block; margin-bottom: 5vh">
+                <div class="card-content">
+                    <span class="card-title center">Dataset content</span>
+                    <textarea @*asp-for="asd"*@ class="materialize-textarea" readonly>JSON</textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="displayXLSX" class="col s12">
+    <div class="row" style="margin-bottom:0px">
+
+        <div class="col s8 offset-s2" style="margin-top:10vh">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align">Export Dataset</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+
+                    <div class="right-align" style="margin-top: 10px">
+
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Save to PDF</a>
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+
+            <div class="card" style="display:block; margin-bottom: 5vh">
+                <div class="card-content">
+                    <span class="card-title center">Dataset content</span>
+                    <textarea @*asp-for="asd"*@ class="materialize-textarea" readonly>XLSX</textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="displayXML" class="col s12">
+    <div class="row" style="margin-bottom:0px">
+
+        <div class="col s8 offset-s2" style="margin-top:10vh">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align">Export Dataset</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+
+                    <div class="right-align" style="margin-top: 10px">
+
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Save to PDF</a>
+                        <a asp-controller="" asp-action="" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+
+            <div class="card" style="display:block; margin-bottom: 5vh">
+                <div class="card-content">
+                    <span class="card-title center">Dataset content</span>
+                    <textarea @*asp-for="asd"*@ class="materialize-textarea" readonly>XML</textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section NavContent {
+
+    <div class="nav-content">
+        <ul class="tabs">
+            <li class="tab">
+                <a href="#displayTable" class="active">Table</a>
+            </li>
+            <li class="tab">
+                <a href="#displayCSV">CSV</a>
+            </li>
+            <li class="tab">
+                <a href="#displayJSON">JSON</a>
+            </li>
+            <li class="tab">
+                <a href="#displayXLSX">XLSX</a>
+            </li>
+            <li class="tab">
+                <a href="#displayXML">XML</a>
+            </li>
+        </ul>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.tabs').tabs()
+        });
+    </script>
+
+    <script>
+        $("#navbar-top").addClass("nav-extended");
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
+
+        $(document).ready(function () {
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            jQuery("select").not(".disabled").formSelect();
+
+        });
+
+    </script>
+}
+

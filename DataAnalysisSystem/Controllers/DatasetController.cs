@@ -264,5 +264,17 @@ namespace DataAnalysisSystem.Controllers
 
             return RedirectToAction("SharedUserDatasets", "Dataset", new { notificationMessage = "A data set has been made available." });
         }
-    } 
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ExportDataset(string datasetIdentificator)
+        {
+            Dataset datasetToExport = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+
+            ExportDatasetViewModel exportDataset = _autoMapper.Map<ExportDatasetViewModel>(datasetToExport);
+            exportDataset.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(datasetToExport.DatasetContent);
+
+            return View(exportDataset);
+        }
+    }
 }

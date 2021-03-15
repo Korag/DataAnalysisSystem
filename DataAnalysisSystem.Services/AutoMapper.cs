@@ -43,6 +43,8 @@ namespace DataAnalysisSystem.Services
 
             CreateMap<DatasetContentViewModel, DatasetContent>();
 
+            CreateMap<DatasetStatistics, DatasetDetailsStatisticsViewModel>();
+
             CreateMap<Dataset, NotSharedDatasetViewModel>();
 
             CreateMap<DatasetStatistics, NotSharedDatasetViewModel>();
@@ -50,7 +52,8 @@ namespace DataAnalysisSystem.Services
             CreateMap<Dataset, SharedDatasetViewModel>();
 
             CreateMap<DatasetStatistics, SharedDatasetViewModel>();
-
+    
+            CreateMap<Dataset, ExportDatasetViewModel>();
         }
     }
 }
