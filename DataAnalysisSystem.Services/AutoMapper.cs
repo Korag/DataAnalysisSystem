@@ -49,10 +49,12 @@ namespace DataAnalysisSystem.Services
 
             CreateMap<DatasetStatistics, NotSharedDatasetViewModel>();
 
-            CreateMap<Dataset, SharedDatasetViewModel>();
+            CreateMap<Dataset, SharedDatasetByOwnerViewModel>();
 
-            CreateMap<DatasetStatistics, SharedDatasetViewModel>();
-    
+            CreateMap<DatasetStatistics, SharedDatasetByOwnerViewModel>();
+
+            CreateMap<DatasetStatistics, SharedDatasetByCollabViewModel>();
+
             CreateMap<Dataset, ExportDatasetViewModel>();
         }
     }

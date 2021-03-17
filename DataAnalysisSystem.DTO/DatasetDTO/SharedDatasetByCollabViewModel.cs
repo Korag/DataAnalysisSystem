@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataAnalysisSystem.DTO.DatasetDTO
 {
-    public class SharedDatasetViewModel
+    public class SharedDatasetByCollabViewModel
     {
         public string DatasetIdentificator { get; set; }
 
@@ -25,9 +22,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         [Display(Name = "Input file name")]
         public string InputFileName { get; set; }
 
-        [Display(Name = "Access Key")]
-        public string AccessKey { get; set; }
-        [Display(Name = "QR Code")]
-        public byte[] AccessQRCode { get; set; }
+        [Display(Name = "Owner")]
+        public string OwnerName { get; set; }
     }
 }

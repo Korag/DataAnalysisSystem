@@ -233,8 +233,8 @@ namespace DataAnalysisSystem.Controllers
             {
                 if (dataset.IsShared)
                 {
-                    SharedDatasetViewModel sharedDataset = _autoMapper.Map<SharedDatasetViewModel>(dataset);
-                    sharedDataset = _autoMapper.Map<DatasetStatistics, SharedDatasetViewModel>(dataset.DatasetStatistics, sharedDataset);
+                    SharedDatasetByOwnerViewModel sharedDataset = _autoMapper.Map<SharedDatasetByOwnerViewModel>(dataset);
+                    sharedDataset = _autoMapper.Map<DatasetStatistics, SharedDatasetByOwnerViewModel>(dataset.DatasetStatistics, sharedDataset);
 
                     //GenerateQR Code and save to variable
 
@@ -284,14 +284,22 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
+        public string GetDatasetOwnerName(string datasetIdentificator)
+        {
+            IdentityProviderUser datasetOwner = _context.userRepository.GetUserByDatasetId(datasetIdentificator);
+
+            return datasetOwner.FirstName + " " + datasetOwner.LastName;
+        }
+
         public SharedDatasetsBrowserViewModel GetDatasetsSharedToLoggedUser()
         {
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
             List<Dataset> datasetShared = _context.datasetRepository.GetDatasetsById(loggedUser.SharedDatasetsToUser).ToList();
 
             SharedDatasetsBrowserViewModel datasetSharedVm = new SharedDatasetsBrowserViewModel();
-            datasetSharedVm.SharedDatasets = _autoMapper.Map<List<SharedDatasetViewModel>>(datasetShared).ToList();
-            datasetSharedVm.SharedDatasets = _autoMapper.Map<List<DatasetStatistics>, List<SharedDatasetViewModel>>(datasetShared.Select(z => z.DatasetStatistics).ToList());
+            datasetSharedVm.SharedDatasets = _autoMapper.Map<List<SharedDatasetByCollabViewModel>>(datasetShared).ToList();
+            datasetSharedVm.SharedDatasets = _autoMapper.Map<List<DatasetStatistics>, List<SharedDatasetByCollabViewModel>>(datasetShared.Select(z => z.DatasetStatistics).ToList());
+            datasetSharedVm.SharedDatasets.ToList().ForEach(z => z.OwnerName = GetDatasetOwnerName(z.DatasetIdentificator));
 
             return datasetSharedVm;
         }

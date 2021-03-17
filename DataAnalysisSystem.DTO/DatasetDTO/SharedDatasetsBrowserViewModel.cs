@@ -10,6 +10,6 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         [StringLength(8, ErrorMessage = "Field \"{0}\" does not contain a valid access code.")]
         public string NewSharedDatasetAccessKey { get; set; }
 
-        public IList<SharedDatasetViewModel> SharedDatasets { get; set; }
+        public IList<SharedDatasetByCollabViewModel> SharedDatasets { get; set; }
     }
 }

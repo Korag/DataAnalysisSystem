@@ -63,7 +63,7 @@
                         @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DateOfEdition)
                     </th>
                     <th>
-                        Share
+                        @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().OwnerName)
                     </th>
                     <th>
                         Details
@@ -93,10 +93,10 @@
                             @Html.DisplayFor(model => dataset.DateOfEdition)
                         </td>
                         <td>
-                            Missing modal with email input, AccessKey and generated QR Code
+                            @Html.DisplayFor(model => dataset.OwnerName)
                         </td>
                         <td>
-                            <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                            <a asp-action="SharedDatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
                         </td>
                     </tr>
                 }

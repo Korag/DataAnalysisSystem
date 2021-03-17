@@ -6,11 +6,11 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
     {
         public ShareDatasetActionViewModel()
         {
-            this.SharedDatasets = new List<SharedDatasetViewModel>();
+            this.SharedDatasets = new List<SharedDatasetByOwnerViewModel>();
             this.NotSharedDatasets = new List<NotSharedDatasetViewModel>();
         }
 
-        public List<SharedDatasetViewModel> SharedDatasets { get; set; }
+        public List<SharedDatasetByOwnerViewModel> SharedDatasets { get; set; }
         public List<NotSharedDatasetViewModel> NotSharedDatasets { get; set; }
     }
 }
