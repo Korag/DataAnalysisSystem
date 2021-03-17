@@ -41,6 +41,14 @@ namespace DataAnalysisSystem.Repository.Repository
             return user;
         }
 
+        public IdentityProviderUser GetUserByDatasetId(string datasetIdentificator)
+        {
+            var filter = Builders<IdentityProviderUser>.Filter.Where(x => x.UserDatasets.Contains(datasetIdentificator));
+            var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
+
+            return user;
+        }
+
         public void UpdateUser(IdentityProviderUser user)
         {
             var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.Id, user.Id);

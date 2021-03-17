@@ -181,6 +181,16 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult DatasetDetails(string datasetIdentificator)
         {
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator))
+            {
+                return RedirectToAction("SharedDatasetDetails", "Dataset");
+            }
+            else if (!loggedUser.UserDatasets.Contains(datasetIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
 
             DatasetDetailsViewModel datasetDetails = _autoMapper.Map<DatasetDetailsViewModel>(dataset);
             datasetDetails.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(dataset.DatasetContent);
@@ -341,9 +351,28 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult SharedDatasetDetails()
+        public IActionResult SharedDatasetDetails(string datasetIdentificator)
         {
-            return View();
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (loggedUser.UserDatasets.Contains(datasetIdentificator))
+            {
+                return RedirectToAction("DatasetDetails", "Dataset");
+            }
+            else if (!loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            DatasetDetailsViewModel datasetDetails = _autoMapper.Map<DatasetDetailsViewModel>(dataset);
+            datasetDetails.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(dataset.DatasetContent);
+            datasetDetails.DatasetStatistics = _autoMapper.Map<DatasetDetailsStatisticsViewModel>(dataset.DatasetStatistics);
+
+            datasetDetails.DatasetStatistics.AttributesDistribution = JsonConvert.SerializeObject(new int[] { datasetDetails.DatasetContent.NumberColumns.Count, datasetDetails.DatasetContent.StringColumns.Count });
+            datasetDetails.DatasetStatistics.MissingValuePercentage = JsonConvert.SerializeObject(dataset.DatasetStatistics.NumberOfMissingValues / ((dataset.DatasetStatistics.NumberOfColumns * dataset.DatasetStatistics.NumberOfRows) - dataset.DatasetStatistics.NumberOfMissingValues));
+
+            return View(datasetDetails);
         }
 
         [Authorize]
