@@ -220,7 +220,7 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult SharedUserDatasets(string notificationMessage = null)
+        public IActionResult UserSharedDatasets(string notificationMessage = null)
         {
             ViewData["Message"] = notificationMessage;
 
@@ -278,8 +278,15 @@ namespace DataAnalysisSystem.Controllers
         }
 
         [Authorize]
+        [HttpPost]
+        public IActionResult ExportDataset(int a)
+        {
+            return View();
+        }
+
+        [Authorize]
         [HttpGet]
-        public IActionResult DatasetsSharedToUserBrowser(string notificationMessage)
+        public IActionResult SharedDatasetsBrowser(string notificationMessage)
         {
             ViewData["Message"] = notificationMessage;
 
@@ -297,7 +304,7 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult DatasetsSharedToUserBrowser(SharedDatasetsBrowserViewModel datasetBrowser)
+        public IActionResult SharedDatasetsBrowser(SharedDatasetsBrowserViewModel datasetBrowser)
         {
             if (ModelState.IsValid)
             {
@@ -319,6 +326,27 @@ namespace DataAnalysisSystem.Controllers
 
 
             return View(datasetBrowser);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult SharedDatasetDetails()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult EditDataset()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditDataset(int a)
+        {
+            return View();
         }
     }
 }
