@@ -22,5 +22,14 @@ namespace DataAnalysisSystem.Extensions
                 values: new { userIdentificator, authorizationToken },
                 protocol: scheme);
         }
+
+        public static string GenerateAccessKeyToDataset(this IUrlHelper urlHelper, string datasetAccessKey, string scheme)
+        {
+            return urlHelper.Action(
+                action: nameof(DatasetController.GainAccessToSharedDataset),
+                controller: "Dataset",
+                values: new { datasetAccessKey },
+                protocol: scheme);
+        }
     }
 }
