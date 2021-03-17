@@ -12,10 +12,12 @@ using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,6 +34,7 @@ namespace DataAnalysisSystem.Controllers
         private readonly IMimeTypeGuesser _mimeTypeGuesser;
         private readonly IFileHelper _fileHelper;
 
+        private readonly IHostingEnvironment _environment;
         private readonly ISerializerStrategy _serializerStrategy;
 
         private readonly CustomSerializer _customSerializer;
@@ -42,6 +45,7 @@ namespace DataAnalysisSystem.Controllers
 
         public DatasetController(
                                  RepositoryContext context,
+                                 IHostingEnvironment environment,
                                  ICodeGenerator codeGenerator,
                                  ICodeQRGenerator qrCodeGenerator,
                                  IEmailProvider emailProvider,
@@ -52,6 +56,7 @@ namespace DataAnalysisSystem.Controllers
         {
 
             this._context = context;
+            this._environment = environment;
 
             this._codeGenerator = codeGenerator;
             this._qrCodeGenerator = qrCodeGenerator;
@@ -251,7 +256,7 @@ namespace DataAnalysisSystem.Controllers
                     sharedDataset = _autoMapper.Map<DatasetStatistics, SharedDatasetByOwnerViewModel>(dataset.DatasetStatistics, sharedDataset);
 
                     string payload = Url.GenerateAccessKeyToDataset(sharedDataset.DatasetIdentificator, Request.Scheme);
-                    //string iconURL = Path.Combine(_environment.WebRootPath, "Image") + $@"";
+                    //string iconURL = Path.Combine(_environment.WebRootPath, "Images") + $@"\qrCodeIcon.bmp";
                     //sharedDataset.AccessQRCode = _qrCodeGenerator.GenerateQRCode(payload, iconURL);
 
                     sharedDatasetInfo.SharedDatasets.Add(sharedDataset);
@@ -290,6 +295,20 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult StopSharingDataset(string datasetIdentificator)
+        {
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            _context.userRepository.RemoveSharedDatasetsFromUsers(datasetIdentificator); 
+
+            dataset.IsShared = false;
+            dataset.AccessKey = "000";
+            _context.datasetRepository.UpdateDataset(dataset);
+
+            return RedirectToAction("SharedUserDatasets", "Dataset", new { notificationMessage = "The selected dataset is no longer shared with other system users." });
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult ExportDataset(string datasetIdentificator)
         {
             Dataset datasetToExport = _context.datasetRepository.GetDatasetById(datasetIdentificator);
@@ -314,7 +333,7 @@ namespace DataAnalysisSystem.Controllers
 
         public string GetDatasetOwnerName(string datasetIdentificator)
         {
-            IdentityProviderUser datasetOwner = _context.userRepository.GetUserByDatasetId(datasetIdentificator);
+            IdentityProviderUser datasetOwner = _context.userRepository.GetDatasetOwnerByDatasetId(datasetIdentificator);
 
             if (datasetOwner == null)
             {
@@ -350,48 +369,52 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult SharedDatasetsBrowser(SharedDatasetsBrowserViewModel datasetBrowser)
+        [ActionName("SharedDatasetsBrowser")]
+        public IActionResult SharedDatasetsBrowserPost(string datasetAccessKey)
         {
-            Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetBrowser.NewSharedDatasetAccessKey);
+            //Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetBrowser.NewSharedDatasetAccessKey);
 
-            if (ModelState.IsValid && datasetShared != null)
-            {
-                var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-                
-                if (loggedUser.UserDatasets.Contains(datasetShared.DatasetIdentificator))
-                {
-                    datasetBrowser = GetDatasetsSharedToLoggedUser();
-                    ModelState.AddModelError(string.Empty, "You are the owner of this data set.");
+            //if (ModelState.IsValid && datasetShared != null)
+            //{
+            //    var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
 
-                    return View(datasetBrowser);
-                }
-                if(loggedUser.SharedDatasetsToUser.Contains(datasetShared.DatasetIdentificator))
-                {
-                    datasetBrowser = GetDatasetsSharedToLoggedUser();
-                    ModelState.AddModelError(string.Empty, "You already have access to this dataset.");
+            //    if (loggedUser.UserDatasets.Contains(datasetShared.DatasetIdentificator))
+            //    {
+            //        datasetBrowser = GetDatasetsSharedToLoggedUser();
+            //        ModelState.AddModelError(string.Empty, "You are the owner of this data set.");
 
-                    return View(datasetBrowser);
-                }
+            //        return View(datasetBrowser);
+            //    }
+            //    if(loggedUser.SharedDatasetsToUser.Contains(datasetShared.DatasetIdentificator))
+            //    {
+            //        datasetBrowser = GetDatasetsSharedToLoggedUser();
+            //        ModelState.AddModelError(string.Empty, "You already have access to this dataset.");
 
-                loggedUser.SharedDatasetsToUser.Add(datasetShared.DatasetIdentificator);
-                _context.userRepository.UpdateUser(loggedUser);
+            //        return View(datasetBrowser);
+            //    }
 
-                return RedirectToAction("SharedDatasetsBrowser", "Dataset", new { notificationMessage = "You have successfully gained access to a shared dataset." });
-            }
-            else
-            {
-                datasetBrowser = GetDatasetsSharedToLoggedUser();
-                ModelState.AddModelError(string.Empty, "Invalid access key.");
+            //    loggedUser.SharedDatasetsToUser.Add(datasetShared.DatasetIdentificator);
+            //    _context.userRepository.UpdateUser(loggedUser);
 
-                return View(datasetBrowser);
-            }
+            //    return RedirectToAction("SharedDatasetsBrowser", "Dataset", new { notificationMessage = "You have successfully gained access to a shared dataset." });
+            //}
+            //else
+            //{
+            //    datasetBrowser = GetDatasetsSharedToLoggedUser();
+            //    ModelState.AddModelError(string.Empty, "Invalid access key.");
+
+            //    return View(datasetBrowser);
+            //}
+
+            return RedirectToAction("GainAccessToSharedDataset", new { datasetAccessKey = datasetAccessKey });
         }
 
         [Authorize]
         [HttpGet]
-        public IActionResult GainAccessToSharedDataset(string datasetAccessKey, SharedDatasetsBrowserViewModel datasetBrowser = null)
+        public IActionResult GainAccessToSharedDataset(string datasetAccessKey)
         {
             Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetAccessKey);
+            SharedDatasetsBrowserViewModel datasetBrowser = GetDatasetsSharedToLoggedUser();
 
             if (datasetShared != null)
             {
@@ -399,14 +422,12 @@ namespace DataAnalysisSystem.Controllers
 
                 if (loggedUser.UserDatasets.Contains(datasetShared.DatasetIdentificator))
                 {
-                    datasetBrowser = GetDatasetsSharedToLoggedUser();
                     ModelState.AddModelError(string.Empty, "You are the owner of this data set.");
 
                     return View("SharedDatasetBrowser", datasetBrowser);
                 }
                 if (loggedUser.SharedDatasetsToUser.Contains(datasetShared.DatasetIdentificator))
                 {
-                    datasetBrowser = GetDatasetsSharedToLoggedUser();
                     ModelState.AddModelError(string.Empty, "You already have access to this dataset.");
 
                     return View("SharedDatasetBrowser", datasetBrowser);
@@ -419,7 +440,6 @@ namespace DataAnalysisSystem.Controllers
             }
             else
             {
-                datasetBrowser = GetDatasetsSharedToLoggedUser();
                 ModelState.AddModelError(string.Empty, "Invalid access key.");
 
                 return View("SharedDatasetBrowser", datasetBrowser);

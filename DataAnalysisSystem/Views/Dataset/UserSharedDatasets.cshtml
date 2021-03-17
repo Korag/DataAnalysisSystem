@@ -129,7 +129,8 @@
                                 @Html.DisplayFor(model => dataset.DateOfEdition)
                             </td>
                             <td>
-                                Missing modal with email input, AccessKey and generated QR Code
+                                <a href="#!" data-target="options-list2" class="dropdown-trigger waves-effect right"><i class="material-icons" style="color:black">more_horiz</i></a>
+
                             </td>
                             <td>
                                 <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
@@ -142,6 +143,22 @@
     </div>
 </div>
 
+<div id="options-list2" class="dropdown-content">
+    <div class="col s12">
+        <div class="options-container">
+            <div class="single-option">
+                <a asp-controller="Dataset" asp-action="ExportDataset" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
+            </div>
+            <div class="single-option">
+                <a asp-controller="Dataset" asp-action="EditDataset" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
+            </div>
+            <div class="single-option">
+                <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @for (int z = 0; z < Model.NotSharedDatasets.Count; z++)
 {
@@ -161,6 +178,21 @@
         ModalActAsForm = false,
         LabelOnButton = "Share"
     });
+};
+
+
+@for (int z = 0; z < Model.SharedDatasets.Count; z++)
+{
+    string modalDataTarget = "modalAccessToSharedDataset" + z;
+    @await Component.InvokeAsync("ModalAccessToSharedDataset", new ModalAccessToSharedDataset
+{
+    ModalIdentificator = modalDataTarget,
+    ModalTitle = "Access shared dataset",
+    ModalContent = "Are you sure you want to make this dataset available to other users of the system?",
+
+    ModalActAsForm = false,
+    LabelOnButton = "Share"
+});
 };
 
 @section NavContent {

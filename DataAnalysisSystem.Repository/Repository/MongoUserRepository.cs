@@ -41,12 +41,20 @@ namespace DataAnalysisSystem.Repository.Repository
             return user;
         }
 
-        public IdentityProviderUser GetUserByDatasetId(string datasetIdentificator)
+        public IdentityProviderUser GetDatasetOwnerByDatasetId(string datasetIdentificator)
         {
             var filter = Builders<IdentityProviderUser>.Filter.Where(x => x.UserDatasets.Contains(datasetIdentificator));
             var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
 
             return user;
+        }
+
+        public IList<IdentityProviderUser> GetUsersSharedDatasetBySharedDatasetId(string datasetIdentificator)
+        {
+            var filter = Builders<IdentityProviderUser>.Filter.Where(x => x.SharedDatasetsToUser.Contains(datasetIdentificator));
+            var users = GetUsers().Find<IdentityProviderUser>(filter).ToList();
+
+            return users;
         }
 
         public void UpdateUser(IdentityProviderUser user)
