@@ -59,10 +59,10 @@
                     <a class="collapsible-header not-collapse">Analysis of data</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Perform the analysis<i class="material-icons">format_shapes</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">History of performed analyses<i class="material-icons">history</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="PerformNewAnalysis" class="waves-effect">Perform the analysis<i class="material-icons">format_shapes</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="UserAnalyses" class="waves-effect">History of performed analyses<i class="material-icons">history</i></a></li>
                             <li><a asp-controller="..." asp-action="..." class="waves-effect">Available exploration methods<i class="material-icons">functions</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Share the analysis<i class="material-icons">screen_share</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="UserSharedAnalysis" class="waves-effect">Share the analysis<i class="material-icons">screen_share</i></a></li>
                         </ul>
                     </div>
                 </li>
@@ -71,7 +71,7 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a asp-controller="Dataset" asp-action="SharedDatasetsBrowser" class="waves-effect">Dataset browser<i class="material-icons">sticky_note_2</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Analysis browser<i class="material-icons">leaderboard</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="SharedAnalysisBrowser" class="waves-effect">Analysis browser<i class="material-icons">leaderboard</i></a></li>
                         </ul>
                     </div>
                 </li>

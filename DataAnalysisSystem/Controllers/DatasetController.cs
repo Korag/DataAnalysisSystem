@@ -284,19 +284,25 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        [Authorize]
-        [HttpGet]
-        public IActionResult SharedDatasetsBrowser(string notificationMessage)
+        public SharedDatasetsBrowserViewModel GetDatasetsSharedToLoggedUser()
         {
-            ViewData["Message"] = notificationMessage;
-
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
             List<Dataset> datasetShared = _context.datasetRepository.GetDatasetsById(loggedUser.SharedDatasetsToUser).ToList();
 
-            SharedDatasetsBrowserViewModel datasetBrowser = new SharedDatasetsBrowserViewModel();
-            datasetBrowser.SharedDatasets = _autoMapper.Map<List<SharedDatasetViewModel>>(datasetShared).ToList();
-            datasetBrowser.SharedDatasets = _autoMapper.Map<List<DatasetStatistics>, List<SharedDatasetViewModel>>(datasetShared.Select(z => z.DatasetStatistics).ToList(), datasetBrowser.SharedDatasets.ToList()).ToList();
+            SharedDatasetsBrowserViewModel datasetSharedVm = new SharedDatasetsBrowserViewModel();
+            datasetSharedVm.SharedDatasets = _autoMapper.Map<List<SharedDatasetViewModel>>(datasetShared).ToList();
+            datasetSharedVm.SharedDatasets = _autoMapper.Map<List<DatasetStatistics>, List<SharedDatasetViewModel>>(datasetShared.Select(z => z.DatasetStatistics).ToList());
 
+            return datasetSharedVm;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult SharedDatasetsBrowser(string notificationMessage = null)
+        {
+            ViewData["Message"] = notificationMessage;
+
+            SharedDatasetsBrowserViewModel datasetBrowser = GetDatasetsSharedToLoggedUser();
             //Add generated QR Code
 
             return View(datasetBrowser);
@@ -306,26 +312,23 @@ namespace DataAnalysisSystem.Controllers
         [HttpPost]
         public IActionResult SharedDatasetsBrowser(SharedDatasetsBrowserViewModel datasetBrowser)
         {
-            if (ModelState.IsValid)
-            {
-                //Dataset datasetShared = _context.datasetRepository.GetDatasetsByAccessCode(loggedUser.SharedDatasetsToUser).ToList();
+            Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetBrowser.NewSharedDatasetAccessKey);
 
-            
-            }
-            else if (true)
+            if (ModelState.IsValid && datasetShared != null)
             {
-
+                var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+                loggedUser.SharedDatasetsToUser.Add(datasetShared.DatasetIdentificator);
+                _context.userRepository.UpdateUser(loggedUser);
             }
             else
             {
-                    
+                datasetBrowser = GetDatasetsSharedToLoggedUser();
+                ModelState.AddModelError(string.Empty, "Invalid access key.");
+
+                return View(datasetBrowser);
             }
 
-
-            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-
-
-            return View(datasetBrowser);
+            return RedirectToAction("SharedDatasetsBrowser", "Dataset", new { notificationMessage = "You have successfully gained access to a shared dataset." });
         }
 
         [Authorize]

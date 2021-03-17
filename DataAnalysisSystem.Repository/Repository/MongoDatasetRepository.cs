@@ -31,6 +31,16 @@ namespace DataAnalysisSystem.Repository.Repository
             return dataset;
         }
 
+        public Dataset GetDatasetByAccessKey(string accessKey)
+        {
+            var filter = Builders<Dataset>.Filter.Eq(x => x.AccessKey, accessKey);
+            var filter2 = Builders<Dataset>.Filter.Eq(x => x.IsShared, true);
+
+            var dataset = GetDatasets().Find<Dataset>(filter&filter2).FirstOrDefault();
+
+            return dataset;
+        }
+
         public IList<Dataset> GetDatasetsById(ICollection<string> datasetIdentificators)
         {
             var filter = Builders<Dataset>.Filter.Where(x => datasetIdentificators.Contains(x.DatasetIdentificator));

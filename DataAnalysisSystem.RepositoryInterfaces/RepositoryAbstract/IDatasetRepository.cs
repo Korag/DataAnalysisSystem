@@ -10,5 +10,6 @@ namespace DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract
         public Dataset GetDatasetById(string datasetIdentificator);
         public IList<Dataset> GetDatasetsById(ICollection<string> datasetIdentificators);
         public void DeleteDataset(string datasetIdentificator);
+        public Dataset GetDatasetByAccessKey(string accessCode);
     }
 }
