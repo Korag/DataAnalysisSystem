@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<div id="sharedDatasets" class="col s12">
+<div id="sharedDatasets" class="col 12">
     <div class="card" style="display:block; margin-bottom: 5vh; margin-top: 10vh">
         <div class="card-content">
             <span class="card-title center">My shared datasets</span>
@@ -98,8 +98,8 @@
                         <th>
                             @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DateOfEdition)
                         </th>
-                        <th>
-                            SHARE FURTHER
+                        <th style="white-space:nowrap;">
+                            Gain access
                         </th>
                         <th>
                             Details
@@ -129,9 +129,11 @@
                             <td>
                                 @Html.DisplayFor(model => dataset.DateOfEdition)
                             </td>
-                            <td>
+                            <td style="white-space: nowrap;">
                                 @{string modalDataTarget = "modalGainAccessToSharedDataset" + t;}
                                 <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Gain Access</a>
+                                @{modalDataTarget = "modalStopSharingDataset" + t;}
+                                <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
                                 @{t++;}
                             </td>
                             <td>
@@ -146,7 +148,7 @@
 </div>
 
 <div id="options-list2" class="dropdown-content">
-    <div class="col s12">
+    <div class="col 12">
         <div class="options-container">
             <div class="single-option">
                 <a asp-controller="Dataset" asp-action="ExportDataset" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
@@ -180,18 +182,35 @@
         ModalActAsForm = false,
         LabelOnButton = "Share"
     });
-};
+}
 
 @for (int z = 0; z < Model.SharedDatasets.Count; z++)
 {
     string modalDataTarget = "modalGainAccessToSharedDataset" + z;
     @await Component.InvokeAsync("ModalGainAccessToSharedDatasetWindow", new ModalGainAccessToSharedDatasetWindowViewModel
-{
-    ModalIdentificator = modalDataTarget,
-    AccessKey = Model.SharedDatasets[z].AccessKey,
-    UrlToAction = Model.SharedDatasets[z].UrlToAction,
-});
-};
+    {
+        ModalIdentificator = modalDataTarget,
+        AccessKey = Model.SharedDatasets[z].AccessKey,
+        UrlToAction = Model.SharedDatasets[z].UrlToAction,
+    });
+
+    modalDataTarget = "modalStopSharingDataset" + z;
+    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+    {
+        ModalIdentificator = modalDataTarget,
+        ModalTitle = "Stop sharing dataset",
+        ModalContent = "Are you sure you want to stop sharing access to your dataset?",
+
+        ControllerName = "Dataset",
+        ActionName = "StopSharingDataset",
+        RouteAdditionalArguments = new Dictionary<string, string>
+                                                    {
+                                                        { "datasetIdentificator", Model.SharedDatasets[z].DatasetIdentificator }
+                                                    },
+        ModalActAsForm = false,
+        LabelOnButton = "Stop sharing"
+    });
+}
 
 @section NavContent {
 
@@ -241,6 +260,11 @@
                  @{string id = "#modalGainAccessToSharedDataset" + f;}
                  $("@id").modal();
             </text>
+
+            <text>
+                 @{id = "#modalStopSharingDataset" + f;}
+                 $("@id").modal();
+            </text>
         }
     </script>
 
@@ -254,16 +278,16 @@
         $("#navbar-top").addClass("nav-extended");
     </script>
 
-<script>
-    function copyToClipboard(text) {
-        var dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = text;
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
-    }
-</script>
+    <script>
+        function copyToClipboard(text) {
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+        }
+    </script>
 }
 
 @section Notification

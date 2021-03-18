@@ -373,6 +373,7 @@ namespace DataAnalysisSystem.Controllers
         [ActionName("SharedDatasetsBrowser")]
         public IActionResult SharedDatasetsBrowserPost(string datasetAccessKey)
         {
+            #region Legacy
             //Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetBrowser.NewSharedDatasetAccessKey);
 
             //if (ModelState.IsValid && datasetShared != null)
@@ -406,6 +407,7 @@ namespace DataAnalysisSystem.Controllers
 
             //    return View(datasetBrowser);
             //}
+            #endregion
 
             return RedirectToAction("GainAccessToSharedDataset", new { datasetAccessKey = datasetAccessKey });
         }
