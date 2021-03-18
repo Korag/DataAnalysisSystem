@@ -23,7 +23,7 @@ namespace DataAnalysisSystem.Extensions
                 protocol: scheme);
         }
 
-        public static string GenerateAccessKeyToDataset(this IUrlHelper urlHelper, string datasetAccessKey, string scheme)
+        public static string GenerateLinkToSharedDataset(this IUrlHelper urlHelper, string datasetAccessKey, string scheme)
         {
             return urlHelper.Action(
                 action: nameof(DatasetController.GainAccessToSharedDataset),

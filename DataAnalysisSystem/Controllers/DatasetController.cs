@@ -255,7 +255,8 @@ namespace DataAnalysisSystem.Controllers
                     SharedDatasetByOwnerViewModel sharedDataset = _autoMapper.Map<SharedDatasetByOwnerViewModel>(dataset);
                     sharedDataset = _autoMapper.Map<DatasetStatistics, SharedDatasetByOwnerViewModel>(dataset.DatasetStatistics, sharedDataset);
 
-                    string payload = Url.GenerateAccessKeyToDataset(sharedDataset.DatasetIdentificator, Request.Scheme);
+                    string urlToAction = Url.GenerateLinkToSharedDataset(sharedDataset.AccessKey, Request.Scheme);
+                    sharedDataset.UrlToAction = urlToAction;
                     //string iconURL = Path.Combine(_environment.WebRootPath, "Images") + $@"\qrCodeIcon.bmp";
                     //sharedDataset.AccessQRCode = _qrCodeGenerator.GenerateQRCode(payload, iconURL);
 

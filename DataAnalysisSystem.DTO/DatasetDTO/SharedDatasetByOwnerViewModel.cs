@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataAnalysisSystem.DTO.DatasetDTO
 {
@@ -27,7 +24,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
 
         [Display(Name = "Access Key")]
         public string AccessKey { get; set; }
-        [Display(Name = "QR Code")]
-        public byte[] AccessQRCode { get; set; }
+        [Display(Name = "URL Gaining Access Action")]
+        public string UrlToAction { get; set; }
     }
 }

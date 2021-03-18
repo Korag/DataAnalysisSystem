@@ -107,6 +107,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @{int t = 0;}
                     @foreach (var dataset in Model.SharedDatasets)
                     {
                         <tr>
@@ -129,8 +130,9 @@
                                 @Html.DisplayFor(model => dataset.DateOfEdition)
                             </td>
                             <td>
-                                <a href="#!" data-target="options-list2" class="dropdown-trigger waves-effect right"><i class="material-icons" style="color:black">more_horiz</i></a>
-
+                                @{string modalDataTarget = "modalGainAccessToSharedDataset" + t;}
+                                <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Gain Access</a>
+                                @{t++;}
                             </td>
                             <td>
                                 <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
@@ -180,18 +182,14 @@
     });
 };
 
-
 @for (int z = 0; z < Model.SharedDatasets.Count; z++)
 {
-    string modalDataTarget = "modalAccessToSharedDataset" + z;
-    @await Component.InvokeAsync("ModalAccessToSharedDataset", new ModalAccessToSharedDataset
+    string modalDataTarget = "modalGainAccessToSharedDataset" + z;
+    @await Component.InvokeAsync("ModalGainAccessToSharedDatasetWindow", new ModalGainAccessToSharedDatasetWindowViewModel
 {
     ModalIdentificator = modalDataTarget,
-    ModalTitle = "Access shared dataset",
-    ModalContent = "Are you sure you want to make this dataset available to other users of the system?",
-
-    ModalActAsForm = false,
-    LabelOnButton = "Share"
+    AccessKey = Model.SharedDatasets[z].AccessKey,
+    UrlToAction = Model.SharedDatasets[z].UrlToAction,
 });
 };
 
@@ -236,6 +234,14 @@
                  $("@id").modal();
             </text>
         }
+
+        @for (int f = 0; f < Model.SharedDatasets.Count; f++)
+        {
+            <text>
+                 @{string id = "#modalGainAccessToSharedDataset" + f;}
+                 $("@id").modal();
+            </text>
+        }
     </script>
 
     <script>
@@ -247,6 +253,17 @@
     <script>
         $("#navbar-top").addClass("nav-extended");
     </script>
+
+<script>
+    function copyToClipboard(text) {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+    }
+</script>
 }
 
 @section Notification

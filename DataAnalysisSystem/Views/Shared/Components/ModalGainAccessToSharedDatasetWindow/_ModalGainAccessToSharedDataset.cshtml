@@ -1,0 +1,20 @@
+﻿@model DataAnalysisSystem.DTO.AdditionalFunctionalities.ModalGainAccessToSharedDatasetWindowViewModel
+
+<div id="@Model.ModalIdentificator" class="modal" style="z-index: 1010; border:solid 2px; border-color:#26a69a">
+
+    <div class="modal-content">
+        <h4>Gain access to dataset</h4>
+        <h6>
+            <span><b>Access key:</b></span> <text class="teal-text text-lighten-1">@Model.AccessKey</text>
+            @*<a class="waves-effect right" onclick="copyToClipboard('@Model.AccessKey')"><i class="material-icons" style="color:#26a69a">content_copy</i></a>*@
+        </h6>
+        <h6>
+            <span><b>Link:</b></span> <text class="teal-text text-lighten-1">@Model.UrlToAction</text>
+            @*<a class="waves-effect right" onclick="copyToClipboard('@Model.UrlToAction')"><i class="material-icons" style="color:#26a69a">content_copy</i></a>*@
+        </h6>
+    </div>
+    
+    <div class="modal-footer">
+        <button type="button" class="modal-close waves-effect waves-red btn-flat" style="border:solid 1px; border-color:#B71C1C">Close</button>
+    </div>
+</div>
