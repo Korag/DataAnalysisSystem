@@ -477,8 +477,11 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult EditDataset()
+        public IActionResult EditDataset(string datasetIdentificator)
         {
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+
+
             return View();
         }
 
