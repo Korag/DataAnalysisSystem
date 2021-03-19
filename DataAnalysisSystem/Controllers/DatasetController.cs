@@ -480,9 +480,19 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult EditDataset(string datasetIdentificator)
         {
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            EditDatasetViewModel datasetToEdition = _autoMapper.Map<EditDatasetViewModel>(dataset);
+            datasetToEdition.DatasetContent = _autoMapper.Map<EditDatasetContentViewModel>(dataset.DatasetContent);
 
+            if (dataset.DatasetContent.StringColumns.Count != 0)
+            {
+                datasetToEdition.DatasetContent.RowsToDelete = new bool[dataset.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count()];
+            }
+            else
+            {
+                datasetToEdition.DatasetContent.RowsToDelete = new bool[dataset.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count()];
+            }
 
-            return View();
+            return View(datasetToEdition);
         }
 
         [Authorize]

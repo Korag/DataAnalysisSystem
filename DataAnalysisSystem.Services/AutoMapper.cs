@@ -56,6 +56,14 @@ namespace DataAnalysisSystem.Services
             CreateMap<DatasetStatistics, SharedDatasetByCollabViewModel>();
 
             CreateMap<Dataset, ExportDatasetViewModel>();
+
+            CreateMap<Dataset, EditDatasetViewModel>()
+                           .ForMember(dest => dest.DatasetContent, opts => opts.Ignore());
+
+            CreateMap<DatasetContent, EditDatasetContentViewModel>();
+
+            CreateMap<DatasetColumnTypeString, EditDatasetColumnTypeStringViewModel>();
+            CreateMap<DatasetColumnTypeDouble, EditDatasetColumnTypeDoubleViewModel>();
         }
     }
 }

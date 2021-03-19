@@ -12,6 +12,6 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
         [Display(Name = "Edition at")]
         public string DateOfEdition { get; set; }
 
-        public DatasetContentViewModel DatasetContent { get; set; }
+        public EditDatasetContentViewModel DatasetContent { get; set; }
     }
 }
