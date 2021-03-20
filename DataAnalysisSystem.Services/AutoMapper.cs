@@ -61,9 +61,12 @@ namespace DataAnalysisSystem.Services
                            .ForMember(dest => dest.DatasetContent, opts => opts.Ignore());
 
             CreateMap<DatasetContent, EditDatasetContentViewModel>();
+            CreateMap<EditDatasetContentViewModel, DatasetContent>();
 
             CreateMap<DatasetColumnTypeString, EditDatasetColumnTypeStringViewModel>();
             CreateMap<DatasetColumnTypeDouble, EditDatasetColumnTypeDoubleViewModel>();
+            CreateMap<EditDatasetColumnTypeStringViewModel, DatasetColumnTypeString>();
+            CreateMap<EditDatasetColumnTypeDoubleViewModel, DatasetColumnTypeDouble>();
         }
     }
 }

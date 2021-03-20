@@ -218,12 +218,12 @@ namespace DataAnalysisSystem.Controllers
         {
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-           
+
             if (dataset == null || !loggedUser.UserDatasets.Contains(datasetIdentificator))
             {
                 return RedirectToAction("MainAction", "UserSystemInteraction");
             }
-      
+
             _context.datasetRepository.DeleteDataset(dataset.DatasetIdentificator);
             _context.userRepository.RemoveDatasetFromOwner(loggedUser.Id.ToString(), dataset.DatasetIdentificator);
             _context.userRepository.RemoveSharedDatasetsFromUsers(dataset.DatasetIdentificator);
@@ -299,7 +299,7 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult StopSharingDataset(string datasetIdentificator)
         {
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
-            _context.userRepository.RemoveSharedDatasetsFromUsers(datasetIdentificator); 
+            _context.userRepository.RemoveSharedDatasetsFromUsers(datasetIdentificator);
 
             dataset.IsShared = false;
             dataset.AccessKey = "000";
@@ -458,7 +458,7 @@ namespace DataAnalysisSystem.Controllers
 
             if (loggedUser.UserDatasets.Contains(datasetIdentificator))
             {
-                return RedirectToAction("DatasetDetails", "Dataset");
+                return RedirectToAction("DatasetDetails", "Dataset", new { datasetIdentificator = datasetIdentificator });
             }
             else if (!loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator))
             {
@@ -480,7 +480,14 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult EditDataset(string datasetIdentificator)
         {
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
-            EditDatasetViewModel datasetToEdit= _autoMapper.Map<EditDatasetViewModel>(dataset);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            EditDatasetViewModel datasetToEdit = _autoMapper.Map<EditDatasetViewModel>(dataset);
             datasetToEdit.DatasetContent = _autoMapper.Map<EditDatasetContentViewModel>(dataset.DatasetContent);
 
             if (dataset.DatasetContent.StringColumns.Count != 0)
@@ -499,10 +506,105 @@ namespace DataAnalysisSystem.Controllers
         [HttpPost]
         public IActionResult EditDataset(EditDatasetViewModel datasetToEdit)
         {
+            if (ModelState.IsValid)
+            {
+                Dataset dataset = _context.datasetRepository.GetDatasetById(datasetToEdit.DatasetIdentificator);
+                var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
 
+                if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetToEdit.DatasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetToEdit.DatasetIdentificator)))
+                {
+                    return RedirectToAction("MainAction", "UserSystemInteraction");
+                }
 
+                dataset.DateOfEdition = DateTime.UtcNow.ToString();
+                dataset.DatasetContent = _autoMapper.Map<DatasetContent>(datasetToEdit.DatasetContent);
 
-            return View();
+                int i = 0;
+                foreach (var rowToDelete in datasetToEdit.DatasetContent.RowsToDelete)
+                {
+                    if (rowToDelete == false)
+                    {
+                        continue;
+                    }
+                    dataset.DatasetContent.NumberColumns.ToList().ForEach(z => z.AttributeValue.RemoveAt(i));
+                    dataset.DatasetContent.StringColumns.ToList().ForEach(z => z.AttributeValue.RemoveAt(i));
+
+                    i++;
+                }
+
+                var numberAttributePositionToDelete = datasetToEdit.DatasetContent.NumberColumns.Where(z => z.ColumnToDelete).Select(z => z.PositionInDataset).ToList();
+                var numberAttributeToDelete = dataset.DatasetContent.NumberColumns.Where(z => numberAttributePositionToDelete.Contains(z.PositionInDataset)).ToList();
+                numberAttributeToDelete.ForEach(z => dataset.DatasetContent.NumberColumns.ToList().Remove(z));
+
+                var stringAttributePositionToDelete = datasetToEdit.DatasetContent.StringColumns.Where(z => z.ColumnToDelete).Select(z => z.PositionInDataset).ToList();
+                var stringAttributeToDelete = dataset.DatasetContent.StringColumns.Where(z => stringAttributePositionToDelete.Contains(z.PositionInDataset)).ToList();
+                stringAttributeToDelete.ForEach(z => dataset.DatasetContent.StringColumns.ToList().Remove(z));
+
+                dataset.DatasetStatistics.NumberOfColumns = dataset.DatasetContent.NumberColumns.Count + dataset.DatasetContent.StringColumns.Count;
+                dataset.DatasetStatistics.NumberOfRows = dataset.DatasetContent.NumberColumns.Count != 0
+                                ? dataset.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count
+                                : dataset.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count;
+                dataset.DatasetStatistics.NumberOfMissingValues = dataset.DatasetContent.StringColumns.Select(z => z.AttributeValue.Where(s => String.IsNullOrWhiteSpace(s))).Count();
+
+                int globalColumnPosition = 0;
+                int numberColumnsAmount = dataset.DatasetContent.NumberColumns.Count;
+                int stringColumnsAmount = dataset.DatasetContent.StringColumns.Count;
+                int n = 0;
+                int s = 0;
+
+                if (numberColumnsAmount == 0)
+                {
+                    dataset.DatasetContent.StringColumns.ToList().ForEach(z => z.PositionInDataset = globalColumnPosition++);
+                }
+                else if (stringColumnsAmount == 0)
+                {
+                    dataset.DatasetContent.NumberColumns.ToList().ForEach(z => z.PositionInDataset = globalColumnPosition++);
+                }
+                else
+                {
+                    for (globalColumnPosition = 0; globalColumnPosition < numberColumnsAmount + stringColumnsAmount; globalColumnPosition++)
+                    {
+                        if (n == numberColumnsAmount)
+                        {
+                            dataset.DatasetContent.StringColumns[n].PositionInDataset = globalColumnPosition;
+                            s++;
+                        }
+                        else if (s == stringColumnsAmount)
+                        {
+                            dataset.DatasetContent.NumberColumns[n].PositionInDataset = globalColumnPosition;
+                            n++;
+                        }
+
+                        if (dataset.DatasetContent.NumberColumns[n].PositionInDataset < dataset.DatasetContent.StringColumns[s].PositionInDataset)
+                        {
+                            dataset.DatasetContent.NumberColumns[n].PositionInDataset = globalColumnPosition;
+
+                            if (n + 1 < numberColumnsAmount)
+                            {
+                                n++;
+                            }
+                        }
+                        else
+                        {
+                            dataset.DatasetContent.StringColumns[n].PositionInDataset = globalColumnPosition;
+
+                            if (s + 1 < stringColumnsAmount)
+                            {
+                                s++;
+                            }
+                        }
+                    }
+                }
+
+                _context.datasetRepository.UpdateDataset(dataset);
+
+                return RedirectToAction("DatasetDetails", "Dataset", new { datasetIdentificator = datasetToEdit.DatasetIdentificator });
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid data has been entered.");
+                return View(datasetToEdit);
+            }
         }
     }
 }
