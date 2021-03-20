@@ -35,7 +35,11 @@
                         <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
                     </div>
 
-                    <table id="table-custom-elements" class="row-border" style="text-align:center" cellspacing="0" width="100%">
+                    <div class="progress" id="dt_loader">
+                        <div class="indeterminate"></div>
+                    </div>
+
+                    <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
                         <thead>
 
                             <tr>
@@ -53,7 +57,7 @@
 
                                         @*<th>@numberColumn.AttributeName</th>*@
                                         <th>
-                                            <input asp-for="DatasetContent.NumberColumns[index].AttributeName" value="@Model.DatasetContent.NumberColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" />
+                                            <input asp-for="DatasetContent.NumberColumns[index].AttributeName" value="@Model.DatasetContent.NumberColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" style="width:auto" />
                                             <span asp-validation-for="DatasetContent.NumberColumns[index].AttributeName" class="helper-text" style="color: #F44336" onclick="StopEventPropagation(event)"></span>
                                             <p class="center" onclick="StopEventPropagation(event)">
                                                 <label>
@@ -70,7 +74,7 @@
 
                                         @*<th>@stringColumn.AttributeName</th>*@
                                         <th>
-                                            <input asp-for="DatasetContent.StringColumns[index].AttributeName" value="@Model.DatasetContent.StringColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" />
+                                            <input asp-for="DatasetContent.StringColumns[index].AttributeName" value="@Model.DatasetContent.StringColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" style="width:auto" />
                                             <span asp-validation-for="DatasetContent.StringColumns[index].AttributeName" class="helper-text" style="color: #F44336" onclick="StopEventPropagation(event)"></span>
 
                                             <p class="center" onclick="StopEventPropagation(event)">
@@ -195,9 +199,11 @@
         }
 
         $(document).ready(function () {
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
-            jQuery("select").not(".disabled").formSelect();
+            $("#table-custom-elements").show(); 
+            $('div#dt_loader').hide();
 
+            $("#table-custom-elements").DataTable({ processing: true, language: { processing: '<div class="progress"><div class="indeterminate"></div></div>', search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            jQuery("select").not(".disabled").formSelect();
         });
 
         @{var rows = 0;
