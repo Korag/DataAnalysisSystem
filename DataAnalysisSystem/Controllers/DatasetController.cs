@@ -26,6 +26,15 @@ namespace DataAnalysisSystem.Controllers
     public class DatasetController : Controller
     {
         private const string DATASET_FOLDER_NAME = "resources/Datasets";
+        private const string DATASET_CSV_FILE_EXTENSION = ".csv";
+        private const string DATASET_JSON_FILE_EXTENSION = ".json";
+        private const string DATASET_XLSX_FILE_EXTENSION = ".xlsx";
+        private const string DATASET_XML_FILE_EXTENSION = ".xml";
+
+        private const string DATASET_CSV_FORMAT_TYPE = "csv";
+        private const string DATASET_JSON_FORMAT_TYPE = "json";
+        private const string DATASET_XLSX_FORMAT_TYPE = "xlsx";
+        private const string DATASET_XML_FORMAT_TYPE = "xml";
 
         private readonly ICodeGenerator _codeGenerator;
         private readonly ICodeQRGenerator _qrCodeGenerator;
@@ -333,7 +342,7 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult DownloadDatasetCSV(string datasetIdentificator, string datasetContentFormatCsv)
+        public IActionResult DownloadDatasetInSpecificFormat(string datasetIdentificator, string datasetContentFormat, string formatType)
         {
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
@@ -343,76 +352,37 @@ namespace DataAnalysisSystem.Controllers
                 return RedirectToAction("MainAction", "UserSystemInteraction");
             }
 
-            //Save string to file and get path to it
-            //After sending to user -> delete the temporary file
+            string filePath = "";
+            string fileDownloadName = dataset.DatasetName;
 
-            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.csv");
-            var fs = new FileStream(path, FileMode.Open);
-
-            return File(fs, "application/octet-stream", "iris.csv");
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult DownloadDatasetJSON(string datasetIdentificator, string datasetContentFormatJson)
-        {
-            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
-            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-
-            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
+            switch (formatType)
             {
-                return RedirectToAction("MainAction", "UserSystemInteraction");
+                case DATASET_CSV_FORMAT_TYPE:
+                    filePath = _fileHelper.SaveStringToFileLocatedOnHardDrive(datasetContentFormat, dataset.DatasetName, DATASET_CSV_FILE_EXTENSION, DATASET_FOLDER_NAME);
+                    fileDownloadName += DATASET_CSV_FILE_EXTENSION;
+                    break;
+                case DATASET_JSON_FORMAT_TYPE:
+                    filePath = _fileHelper.SaveStringToFileLocatedOnHardDrive(datasetContentFormat, dataset.DatasetName, DATASET_JSON_FILE_EXTENSION, DATASET_FOLDER_NAME);
+                    fileDownloadName += DATASET_JSON_FILE_EXTENSION;
+                    break;
+                case DATASET_XLSX_FORMAT_TYPE:
+                    filePath = _fileHelper.SaveStringToFileLocatedOnHardDrive(datasetContentFormat, dataset.DatasetName, DATASET_XLSX_FILE_EXTENSION, DATASET_FOLDER_NAME);
+                    fileDownloadName += DATASET_XLSX_FILE_EXTENSION;
+                    break;
+                case DATASET_XML_FORMAT_TYPE:
+                    filePath = _fileHelper.SaveStringToFileLocatedOnHardDrive(datasetContentFormat, dataset.DatasetName, DATASET_XML_FILE_EXTENSION, DATASET_FOLDER_NAME);
+                    fileDownloadName += DATASET_XML_FILE_EXTENSION;
+                    break;
             }
 
-            //Save string to file and get path to it
-            //After sending to user -> delete the temporary file
+            var fs = new FileStream(filePath, FileMode.Open);
 
-            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.json");
-            var fs = new FileStream(path, FileMode.Open);
+            Response.OnCompleted(() => {
+                _fileHelper.RemoveFileFromHardDrive(filePath);
+                return Task.CompletedTask;
+            });
 
-            return File(fs, "application/octet-stream", "iris.json");
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult DownloadDatasetXLSX(string datasetIdentificator, string datasetContentFormatXlsx)
-        {
-            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
-            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-
-            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
-            {
-                return RedirectToAction("MainAction", "UserSystemInteraction");
-            }
-
-            //Save string to file and get path to it
-            //After sending to user -> delete the temporary file
-
-            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.xlsx");
-            var fs = new FileStream(path, FileMode.Open);
-
-            return File(fs, "application/octet-stream", "iris.xlsx");
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult DownloadDatasetXML(string datasetIdentificator, string datasetContentFormatXml)
-        {
-            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
-            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-
-            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
-            {
-                return RedirectToAction("MainAction", "UserSystemInteraction");
-            }
-
-            //Save string to file and get path to it
-            //After sending to user -> delete the temporary file
-
-            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.xml");
-            var fs = new FileStream(path, FileMode.Open);
-
-            return File(fs, "application/octet-stream", "iris.xml");
+            return File(fs, "application/octet-stream", fileDownloadName);
         }
 
         public string GetDatasetOwnerName(string datasetIdentificator)

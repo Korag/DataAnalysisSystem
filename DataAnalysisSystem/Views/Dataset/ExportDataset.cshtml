@@ -104,7 +104,7 @@
                     <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
                     <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetCSV" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormatCsv="@Model.DatasetContentFormatCSV" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatCSV" asp-route-formatType="csv" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
                     </div>
 
                 </div>
@@ -138,7 +138,7 @@
                     <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
                     <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetJSON" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormatJson="@Model.DatasetContentFormatJSON" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatJSON" asp-route-formatType="json" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
                     </div>
 
                 </div>
@@ -172,7 +172,7 @@
                     <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
                     <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetXLSX" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormatXlsx="@Model.DatasetContentFormatXLSX" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatXLSX" asp-route-formatType="xlsx" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
                     </div>
 
                 </div>
@@ -206,7 +206,7 @@
                     <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
                     <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetXML" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormatXml="@Model.DatasetContentFormatXML" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatXML" asp-route-formatType="xml" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
                     </div>
 
                 </div>

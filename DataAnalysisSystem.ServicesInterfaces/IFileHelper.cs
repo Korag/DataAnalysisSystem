@@ -15,6 +15,7 @@ namespace DataAnalysisSystem.ServicesInterfaces
         public string ConvertIFormFileToString(IFormFile file);
         public string SaveFileOnHardDrive(IFormFile file, string folderName);
         public ICollection<string> SaveFilesOnHardDrive(ICollection<IFormFile> files, string folderName);
+        public string SaveStringToFileLocatedOnHardDrive(string fileContent, string fileName, string extension, string folderName);
         public void RemoveFileFromHardDrive(string filePath);
         public void RemoveFilesFromHardDrive(ICollection<string> filePaths);
 

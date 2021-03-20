@@ -115,6 +115,15 @@ namespace DataAnalysisSystem.Services
             return filePath;
         }
 
+        public string SaveStringToFileLocatedOnHardDrive(string fileContent, string fileName, string extension, string folderName)
+        {
+            string generatedUniqueFileName = fileName + _codeGenerator.GenerateNewUniqueXLengthCodeAsString(4) + extension;
+            var filePath = Path.Combine(_environment.WebRootPath, folderName, generatedUniqueFileName);
+
+            File.WriteAllTextAsync(filePath, fileContent);
+            return filePath;
+        }
+
         public ICollection<string> SaveFilesOnHardDrive(ICollection<IFormFile> files, string folderName)
         {
             List<string> createdFilePaths = new List<string>();
