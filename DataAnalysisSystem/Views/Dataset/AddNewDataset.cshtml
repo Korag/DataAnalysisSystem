@@ -23,7 +23,6 @@
                                 <i class="material-icons prefix">input</i>
                                 <input type="text" asp-for="DatasetName" required="" aria-required="true" class="validate">
                                 <label asp-for="DatasetName"></label>
-
                             </div>
 
                             <div class="file-field">
@@ -97,6 +96,7 @@
                                             <div class="collapsible-header"><label asp-for="AdditionalParameters.Delimiter"></label></div>
                                             <div class="collapsible-body">
                                                 <input type="text" asp-for="AdditionalParameters.Delimiter" value="," class="disabled">
+                                                <span asp-validation-for="AdditionalParameters" class="helper-text" style="color: #F44336"></span>
                                             </div>
                                         </li>
                                     </ul>

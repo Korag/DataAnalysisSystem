@@ -17,14 +17,16 @@
 
                     <input type="text" asp-for="DatasetIdentificator" hidden readonly>
 
-                    <div class="left-align" style="margin-top: 10px">
-                        <input type="text" asp-for="DatasetName" required="" aria-required="true" class="validate">
-                        <label asp-for="DatasetName"></label>
-                    </div>
+                    <div class="row">
+                        <div class="col 6 left">
+                            <input type="text" asp-for="DatasetName" required="" aria-required="true" class="validate">
+                            <label asp-for="DatasetName"></label>
+                        </div>
 
-                    <div class="right-align" style="margin-top: 10px">
-                        <input type="text" asp-for="DateOfEdition" readonly>
-                        <label asp-for="DateOfEdition"></label>
+                        <div class="col 6 right">
+                            <input type="text" asp-for="DateOfEdition" readonly disabled>
+                            <label asp-for="DateOfEdition"></label>
+                        </div>
                     </div>
 
                     <table id="table-custom-elements" class="row-border" style="text-align:center" cellspacing="0" width="100%">
@@ -37,12 +39,20 @@
 
                                     if (numberColumn != null)
                                     {
-                                        <th>@numberColumn.AttributeName</th>
+                                        @*<th>@numberColumn.AttributeName</th>*@
+                                        <th>
+                                            <input asp-for="@numberColumn.AttributeName" value="@numberColumn.AttributeName" required="" aria-required="true" class="validate" />
+                                            <span asp-validation-for="@numberColumn" class="helper-text" style="color: #F44336"></span>
+                                        </th>
                                     }
                                     else
                                     {
                                         var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-                                        <th>@stringColumn.AttributeName</th>
+                                        @*<th>@stringColumn.AttributeName</th>*@
+                                        <th>
+                                            <input asp-for="@stringColumn.AttributeName" value="@stringColumn.AttributeName" required="" aria-required="true" class="validate" />
+                                            <span asp-validation-for="@stringColumn" class="helper-text" style="color: #F44336"></span>
+                                        </th>
                                     }
                                 }
                             </tr>
@@ -64,10 +74,12 @@
                                         if (numberColumn != null)
                                         {
                                             <td>
-                                                <input type="text" asp-for="DatasetContent.NumberColumns[n].AttributeValue[i]" value="@Model.DatasetContent.NumberColumns[n].AttributeValue[i]" required="" aria-required="true" class="validate" />
-                                                <input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />
-                                                <input asp-for="DatasetContent.NumberColumns[n].PositionInDataset" value="@Model.DatasetContent.NumberColumns[n].PositionInDataset" readonly hidden />
+                                                @*onload="auto_grow(this)" data-autoresize*@
+                                                <textarea asp-for="DatasetContent.NumberColumns[n].AttributeValue[i]" class="validate" oninput="auto_grow(this)"></textarea>
+                                                <span asp-validation-for="DatasetContent.NumberColumns[n].AttributeValue[i]" class="helper-text" style="color: #F44336"></span>
 
+                                                @*<input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />*@
+                                                <input asp-for="DatasetContent.NumberColumns[n].PositionInDataset" value="@Model.DatasetContent.NumberColumns[n].PositionInDataset" readonly hidden />
 
                                                 @{n++;}
                                             </td>
@@ -77,8 +89,11 @@
                                             var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
 
                                             <td>
-                                                <input type="text" asp-for="DatasetContent.StringColumns[s].AttributeValue[i]" value="@Model.DatasetContent.StringColumns[s].AttributeValue[i]" required="" aria-required="true" class="validate" />
-                                                <input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />
+                                                @*oninput="auto_grow(this)" data-autoresize*@
+                                                <textarea asp-for="DatasetContent.StringColumns[s].AttributeValue[i]" class="validate" oninput="auto_grow(this)"></textarea>
+                                                <span asp-validation-for="DatasetContent.StringColumns[s].AttributeValue[i]" class="helper-text" style="color: #F44336"></span>
+
+                                                @*<input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />*@
                                                 <input asp-for="DatasetContent.StringColumns[s].PositionInDataset" value="@Model.DatasetContent.StringColumns[s].PositionInDataset" readonly hidden />
 
                                                 @{s++;}
@@ -109,6 +124,21 @@
 
 
     <script>
+        function auto_grow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight) + "px";
+        }
+
+        //$.each($('textarea[data-autoresize]'), function () {
+        //    var offset = this.offsetHeight - this.clientHeight;
+        //    var resizeTextarea = function (el) {
+        //        $(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+        //    };
+        //    $(this).each(function () {
+        //        resizeTextarea(this);
+        //    }).removeAttr('data-autoresize');
+        //});
+
         function openModalWaiter() {
             var form = $("#EditDatasetForm");
             form.validate();
@@ -119,7 +149,7 @@
         }
 
         $(document).ready(function () {
-            $("#table-custom-elements").DataTable({ "autoWidth": true, processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
 
         });
