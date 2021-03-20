@@ -39,6 +39,10 @@
                         <thead>
 
                             <tr>
+                                <th>
+                                    Delete row?
+                                </th>
+
                                 @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
                                 {
                                     var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
@@ -51,6 +55,13 @@
                                         <th>
                                             <input asp-for="DatasetContent.NumberColumns[index].AttributeName" value="@Model.DatasetContent.NumberColumns[index].AttributeName" required="" aria-required="true" class="validate" />
                                             <span asp-validation-for="DatasetContent.NumberColumns[index].AttributeName" class="helper-text" style="color: #F44336"></span>
+                                        
+                                            <p class="center">
+                                                <label>
+                                                    <input asp-for="@Model.DatasetContent.NumberColumns[index].ColumnToDelete" type="checkbox" class="filled-in" />
+                                                    <span></span>
+                                                </label>
+                                            </p>
                                         </th>
                                     }
                                     else
@@ -62,6 +73,13 @@
                                         <th>
                                             <input asp-for="DatasetContent.StringColumns[index].AttributeName" value="@Model.DatasetContent.StringColumns[index].AttributeName" required="" aria-required="true" class="validate" />
                                             <span asp-validation-for="DatasetContent.StringColumns[index].AttributeName" class="helper-text" style="color: #F44336"></span>
+                                        
+                                            <p class="center">
+                                                <label>
+                                                    <input asp-for="@Model.DatasetContent.StringColumns[index].ColumnToDelete" type="checkbox" class="filled-in" />
+                                                    <span></span>
+                                                </label>
+                                            </p>
                                         </th>
                                     }
                                 }
@@ -70,12 +88,35 @@
                         </thead>
                         <tbody>
 
+                            @*<tr>
+                                <td>
+                                   
+                                </td>
+
+                                @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
+                                {
+                                    <td>
+                                        <input type="checkbox" class="filled-in" checked="checked" />
+                                        AAA
+                                    </td>
+                                }
+                            </tr>*@
+
                             @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
                             {
                                 var n = 0;
                                 var s = 0;
 
                                 <tr>
+                                    <td>
+                                        <p class="center">
+                                            <label>
+                                                <input asp-for="@Model.DatasetContent.RowsToDelete[i]" type="checkbox" class="filled-in" />
+                                                <span></span>
+                                            </label>
+                                        </p>
+                                    </td>
+
                                     @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
                                     {
                                         var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
@@ -88,7 +129,7 @@
                                                 <textarea asp-for="DatasetContent.NumberColumns[n].AttributeValue[i]" class="validate" oninput="auto_grow(this)"></textarea>
                                                 <span asp-validation-for="DatasetContent.NumberColumns[n].AttributeValue[i]" class="helper-text" style="color: #F44336"></span>
 
-                                                @*<input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />*@
+                                                @*<input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />*@<input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />
                                                 <input asp-for="DatasetContent.NumberColumns[n].PositionInDataset" value="@Model.DatasetContent.NumberColumns[n].PositionInDataset" readonly hidden />
 
                                                 @{n++;}
@@ -103,7 +144,7 @@
                                                 <textarea asp-for="DatasetContent.StringColumns[s].AttributeValue[i]" class="validate" oninput="auto_grow(this)"></textarea>
                                                 <span asp-validation-for="DatasetContent.StringColumns[s].AttributeValue[i]" class="helper-text" style="color: #F44336"></span>
 
-                                                @*<input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />*@
+                                                @*<input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />*@<input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />
                                                 <input asp-for="DatasetContent.StringColumns[s].PositionInDataset" value="@Model.DatasetContent.StringColumns[s].PositionInDataset" readonly hidden />
 
                                                 @{s++;}
