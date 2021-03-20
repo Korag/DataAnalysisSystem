@@ -40,7 +40,7 @@
 
                             <tr>
                                 <th>
-                                    Delete row?
+                                    Delete?
                                 </th>
 
                                 @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
@@ -53,10 +53,9 @@
 
                                         @*<th>@numberColumn.AttributeName</th>*@
                                         <th>
-                                            <input asp-for="DatasetContent.NumberColumns[index].AttributeName" value="@Model.DatasetContent.NumberColumns[index].AttributeName" required="" aria-required="true" class="validate" />
-                                            <span asp-validation-for="DatasetContent.NumberColumns[index].AttributeName" class="helper-text" style="color: #F44336"></span>
-                                        
-                                            <p class="center">
+                                            <input asp-for="DatasetContent.NumberColumns[index].AttributeName" value="@Model.DatasetContent.NumberColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" />
+                                            <span asp-validation-for="DatasetContent.NumberColumns[index].AttributeName" class="helper-text" style="color: #F44336" onclick="StopEventPropagation(event)"></span>
+                                            <p class="center" onclick="StopEventPropagation(event)">
                                                 <label>
                                                     <input asp-for="@Model.DatasetContent.NumberColumns[index].ColumnToDelete" type="checkbox" class="filled-in" />
                                                     <span></span>
@@ -71,10 +70,10 @@
 
                                         @*<th>@stringColumn.AttributeName</th>*@
                                         <th>
-                                            <input asp-for="DatasetContent.StringColumns[index].AttributeName" value="@Model.DatasetContent.StringColumns[index].AttributeName" required="" aria-required="true" class="validate" />
-                                            <span asp-validation-for="DatasetContent.StringColumns[index].AttributeName" class="helper-text" style="color: #F44336"></span>
-                                        
-                                            <p class="center">
+                                            <input asp-for="DatasetContent.StringColumns[index].AttributeName" value="@Model.DatasetContent.StringColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" />
+                                            <span asp-validation-for="DatasetContent.StringColumns[index].AttributeName" class="helper-text" style="color: #F44336" onclick="StopEventPropagation(event)"></span>
+
+                                            <p class="center" onclick="StopEventPropagation(event)">
                                                 <label>
                                                     <input asp-for="@Model.DatasetContent.StringColumns[index].ColumnToDelete" type="checkbox" class="filled-in" />
                                                     <span></span>
@@ -87,20 +86,6 @@
 
                         </thead>
                         <tbody>
-
-                            @*<tr>
-                                <td>
-                                   
-                                </td>
-
-                                @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
-                                {
-                                    <td>
-                                        <input type="checkbox" class="filled-in" checked="checked" />
-                                        AAA
-                                    </td>
-                                }
-                            </tr>*@
 
                             @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
                             {
@@ -173,6 +158,16 @@
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
 
+    <script>
+        function StopEventPropagation(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            }
+            else if (window.event) {
+                window.event.cancelBubble = true;
+            }
+        }
+    </script>
 
     <script>
         function auto_grow(element) {
