@@ -313,8 +313,9 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult ExportDataset(string datasetIdentificator)
         {
             Dataset datasetToExport = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
 
-            if (datasetToExport == null)
+            if (datasetToExport == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
             {
                 return RedirectToAction("MainAction", "UserSystemInteraction");
             }
@@ -322,14 +323,96 @@ namespace DataAnalysisSystem.Controllers
             ExportDatasetViewModel exportDataset = _autoMapper.Map<ExportDatasetViewModel>(datasetToExport);
             exportDataset.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(datasetToExport.DatasetContent);
 
+            exportDataset.DatasetContentFormatCSV = "This is CSV file structure";
+            exportDataset.DatasetContentFormatJSON = "This is JSON file structure";
+            exportDataset.DatasetContentFormatXLSX = "This is XLSX file structure";
+            exportDataset.DatasetContentFormatXML = "This is XML file structure";
+
             return View(exportDataset);
         }
 
         [Authorize]
-        [HttpPost]
-        public IActionResult ExportDataset(int a)
+        [HttpGet]
+        public IActionResult DownloadDatasetCSV(string datasetIdentificator, string datasetContentFormatCsv)
         {
-            return View();
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            //Save string to file and get path to it
+            //After sending to user -> delete the temporary file
+
+            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.csv");
+            var fs = new FileStream(path, FileMode.Open);
+
+            return File(fs, "application/octet-stream", "iris.csv");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult DownloadDatasetJSON(string datasetIdentificator, string datasetContentFormatJson)
+        {
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            //Save string to file and get path to it
+            //After sending to user -> delete the temporary file
+
+            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.json");
+            var fs = new FileStream(path, FileMode.Open);
+
+            return File(fs, "application/octet-stream", "iris.json");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult DownloadDatasetXLSX(string datasetIdentificator, string datasetContentFormatXlsx)
+        {
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            //Save string to file and get path to it
+            //After sending to user -> delete the temporary file
+
+            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.xlsx");
+            var fs = new FileStream(path, FileMode.Open);
+
+            return File(fs, "application/octet-stream", "iris.xlsx");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult DownloadDatasetXML(string datasetIdentificator, string datasetContentFormatXml)
+        {
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (dataset == null && (!loggedUser.UserDatasets.Contains(datasetIdentificator) || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator)))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            //Save string to file and get path to it
+            //After sending to user -> delete the temporary file
+
+            var path = Path.Combine(_environment.WebRootPath + "/resources/Datasets/", "iris.xml");
+            var fs = new FileStream(path, FileMode.Open);
+
+            return File(fs, "application/octet-stream", "iris.xml");
         }
 
         public string GetDatasetOwnerName(string datasetIdentificator)

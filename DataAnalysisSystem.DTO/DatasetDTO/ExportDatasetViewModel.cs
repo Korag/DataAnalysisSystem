@@ -11,9 +11,9 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
 
         public DatasetContentViewModel DatasetContent { get; set; }
 
-        //CSV
-        //JSON
-        //XLSX
-        //XML
+        public string DatasetContentFormatCSV { get; set; }
+        public string DatasetContentFormatJSON { get; set; }
+        public string DatasetContentFormatXLSX { get; set; }
+        public string DatasetContentFormatXML { get; set; }
     }
 }
