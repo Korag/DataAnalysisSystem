@@ -1,5 +1,6 @@
 ﻿@model DataAnalysisSystem.DTO.DatasetDTO.DatasetDetailsViewModel
 @using DataAnalysisSystem.DTO.AdditionalFunctionalities
+@using DataAnalysisSystem.DTO.Scripts
 
 @{
     ViewData["Title"] = "Dataset Details";
@@ -34,7 +35,7 @@
                                     <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
                                 </div>
                                 <div class="single-option">
-                                    <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
+                                    <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px" onclick="openModalWaiter()">Edit</a>
                                 </div>
                                 <div class="single-option">
                                     <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
@@ -179,7 +180,6 @@
 </div>
 
 <!-- Analyses List with action -->
-
 <!-- #region Logout Modal -->
 @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
                                                 {
@@ -197,8 +197,16 @@
                                                  LabelOnButton = "Delete"
                                                 })
 
+@await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
+       {
+           ModalIdentificator = "modalWaiter",
+           ModalHeader = "Preparing a dataset.",
+           ModalPrimaryText = "This may take a while."
+       })
 
 @section Scripts{
+
+    @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
 
     <script>
 
@@ -213,6 +221,10 @@
         });
 
         $("#modalDeleteDataset").modal(), $(".scrollspy").scrollSpy();
+
+        function openModalWaiter() {
+            $('#modalWaiter').modal('open');
+        }
 
     </script>
 
