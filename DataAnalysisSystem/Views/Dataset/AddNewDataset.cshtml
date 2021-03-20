@@ -135,7 +135,11 @@
                             <a asp-action="AddNewDataset" asp-controller="Dataset" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
                         </div>
 
-                        <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
+                        <div class="progress" id="dt_loader" style="margin-top:30px;">
+                            <div class="indeterminate"></div>
+                        </div>
+
+                        <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
                             <thead>
 
                                 <tr>
@@ -276,9 +280,11 @@ else
         });
 
         $(document).ready(function () {
+            $("#table-custom-elements").show();
+            $('div#dt_loader').hide();
+
             $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
-
         });
 
         @{var rows = 0;
@@ -323,28 +329,6 @@ else
         //});
 
     </script>
-
-    @if (Model.DatasetContent != null)
-    {
-
-        <script>
-            // >>> ?????
-            $('#modalLoadingPage').modal('open');
-
-            $(document).ready(function () {
-                $('#modalLoadingPage').modal('close');
-            });
-
-        </script>
-
-        @*<script>
-                $('#table-custom-elements').dataTable({
-                    "initComplete": function (settings, json) {
-                        $('#modalWaiter').modal('close');
-                    }
-                });
-            </script>*@
-    }
 }
 
 @section Notification

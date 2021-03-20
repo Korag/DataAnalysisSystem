@@ -118,7 +118,11 @@
             <div class="card-content">
                 <span class="card-title center">Dataset content</span>
 
-                <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%">
+                <div class="progress" id="dt_loader" style="margin-top:30px;">
+                    <div class="indeterminate"></div>
+                </div>
+
+                <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
                     <thead>
 
                         <tr>
@@ -215,6 +219,9 @@
         });
 
         $(document).ready(function () {
+            $("#table-custom-elements").show(); 
+            $('div#dt_loader').hide();
+
             $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
 
