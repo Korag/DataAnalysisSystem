@@ -54,6 +54,7 @@ namespace DataAnalysisSystem.Controllers
 
         public DatasetController(
                                  RepositoryContext context,
+                                 CustomSerializer customSerializer,
                                  IHostingEnvironment environment,
                                  ICodeGenerator codeGenerator,
                                  ICodeQRGenerator qrCodeGenerator,
@@ -61,6 +62,7 @@ namespace DataAnalysisSystem.Controllers
                                  IMapper autoMapper,
                                  IRegexComparatorChainFacade regexComparator,
                                  IMimeTypeGuesser mimeTypeGuesser,
+                                 
                                  IFileHelper fileHelper)
         {
 
@@ -75,7 +77,7 @@ namespace DataAnalysisSystem.Controllers
             this._mimeTypeGuesser = mimeTypeGuesser;
             this._fileHelper = fileHelper;
 
-            this._customSerializer = CustomSerializer.GetInstance(_serializerStrategy);
+            this._customSerializer = customSerializer;
 
             this._autoMapper = autoMapper;
         }

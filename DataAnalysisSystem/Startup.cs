@@ -20,6 +20,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http.Features;
 using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
+using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
 
 namespace DataAnalysisSystem
 {
@@ -68,7 +69,7 @@ namespace DataAnalysisSystem
             services.AddTransient<IMimeTypeGuesser, MimeTypeGuesser>();
             services.AddTransient<IFileHelper, FileHelper>();
 
-            //services.AddTransient<CustomSerializer, CustomSerializer>();
+            services.AddTransient<CustomSerializer, CustomSerializer>();
             services.AddTransient<IRegexComparatorChainFacade, RegexComparatorChainFacade>();
     
             // Data Access Layer

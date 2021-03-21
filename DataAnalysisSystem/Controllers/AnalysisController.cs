@@ -30,13 +30,15 @@ namespace DataAnalysisSystem.Controllers
 
         private readonly RepositoryContext _context;
 
-        public AnalysisController(RepositoryContext context,
-                                 ICodeGenerator codeGenerator,
-                                 IEmailProvider emailProvider,
-                                 IMapper autoMapper,
-                                 IRegexComparatorChainFacade regexComparator,
-                                 IMimeTypeGuesser mimeTypeGuesser,
-                                 IFileHelper fileHelper)
+        public AnalysisController(
+                                  RepositoryContext context,
+                                  CustomSerializer customSerializer,
+                                  ICodeGenerator codeGenerator,
+                                  IEmailProvider emailProvider,
+                                  IMapper autoMapper,
+                                  IRegexComparatorChainFacade regexComparator,
+                                  IMimeTypeGuesser mimeTypeGuesser,
+                                  IFileHelper fileHelper)
         {
             this._context = context;
 
@@ -46,7 +48,7 @@ namespace DataAnalysisSystem.Controllers
             this._mimeTypeGuesser = mimeTypeGuesser;
             this._fileHelper = fileHelper;
 
-            this._customSerializer = CustomSerializer.GetInstance(_serializerStrategy);
+            this._customSerializer = customSerializer;
 
             this._autoMapper = autoMapper;
         }

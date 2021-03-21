@@ -16,7 +16,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
             _serializer = new XmlSerializer();
         }
 
-        public string ConvertFromObjectToSpecificFile(ICollection<DatasetColumnAbstract> dataSet)
+        public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
         {
             throw new NotImplementedException();
         }

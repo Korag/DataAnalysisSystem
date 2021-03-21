@@ -58,7 +58,7 @@ namespace DataAnalysisSystem.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
+        public IActionResult ContactWithAdministration(ContactWithAdministrationViewModel contactViewModel)
         {
             string notificationMessage = "Thank you for your message. Your message has been forwarded to the application administration.";
             string actionName = "";

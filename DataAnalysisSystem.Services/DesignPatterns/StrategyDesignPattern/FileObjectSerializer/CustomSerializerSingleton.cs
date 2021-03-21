@@ -5,18 +5,24 @@ using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
 {
-    public sealed class CustomSerializer
+    public sealed class CustomSerializerSingleton
     {
         private static ISerializerStrategy _serializerStrategy = null;
+        private static CustomSerializerSingleton serializer = null;
 
-        public CustomSerializer()
-        {
-
-        }
-
-        public CustomSerializer(ISerializerStrategy serializerStrategy)
+        private CustomSerializerSingleton(ISerializerStrategy serializerStrategy)
         {
             _serializerStrategy = serializerStrategy;
+        }
+
+        public static CustomSerializerSingleton GetInstance(ISerializerStrategy serializerStrategy)
+        {
+            if (serializer == null)
+            {
+                serializer = new CustomSerializerSingleton(serializerStrategy);
+            }
+
+            return serializer;
         }
 
         public void ChangeStrategy(ISerializerStrategy serializerStrategy)

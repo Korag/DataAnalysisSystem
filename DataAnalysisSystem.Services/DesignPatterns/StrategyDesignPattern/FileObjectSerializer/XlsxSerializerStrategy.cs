@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
 {
-    class XlsxSerializerStrategy : ISerializerStrategy
+    public class XlsxSerializerStrategy : ISerializerStrategy
     {
         private XlsxSerializer _serializer;
 
@@ -16,7 +16,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
             _serializer = new XlsxSerializer();
         }
 
-        public string ConvertFromObjectToSpecificFile(ICollection<DatasetColumnAbstract> dataSet)
+        public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
         {
             throw new NotImplementedException();
         }
