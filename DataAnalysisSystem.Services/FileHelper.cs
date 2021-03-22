@@ -120,7 +120,7 @@ namespace DataAnalysisSystem.Services
             string generatedUniqueFileName = fileName + _codeGenerator.GenerateNewUniqueXLengthCodeAsString(4) + extension;
             var filePath = Path.Combine(_environment.WebRootPath, folderName, generatedUniqueFileName);
 
-            File.WriteAllTextAsync(filePath, fileContent);
+            File.WriteAllTextAsync(filePath, fileContent).Wait();
             return filePath;
         }
 

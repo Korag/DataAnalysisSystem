@@ -94,17 +94,33 @@
 
 </div>
 
-<div id="displayCSV" class="col s12">
-    <div class="row" style="margin-bottom:0px">
+<div id="additionalTabs" style="display:none">
+    <div id="displayCSV" class="col s12">
+        <div class="row" style="margin-bottom:0px">
 
-        <div class="col s8 offset-s2" style="margin-top:10vh">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title center-align">Export Dataset</span>
-                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+            <div class="col s8 offset-s2" style="margin-top:10vh">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Export Dataset</span>
+                        <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
-                    <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatCSV" asp-route-formatType="csv" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        <div class="right-align" style="margin-top: 10px">
+                            <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="csv" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+
+                <div class="card" style="display:block; margin-bottom: 5vh">
+                    <div class="card-content">
+                        <span class="card-title center">Dataset content</span>
+                        <textarea asp-for="DatasetContentFormatCSV" class="materialize-textarea" readonly></textarea>
                     </div>
 
                 </div>
@@ -113,53 +129,38 @@
 
     </div>
 
-    <div class="row">
-        <div class="col s12">
+    <div id="displayJSON" class="col s12">
+        <div class="row" style="margin-bottom:0px">
 
-            <div class="card" style="display:block; margin-bottom: 5vh">
-                <div class="card-content">
-                    <span class="card-title center">Dataset content</span>
-                    <textarea asp-for="DatasetContentFormatCSV" class="materialize-textarea" readonly></textarea>
+            <div class="col s8 offset-s2" style="margin-top:10vh">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Export Dataset</span>
+                        <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+
+                        <div class="right-align" style="margin-top: 10px">
+                            <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="json" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        </div>
+
+                    </div>
                 </div>
-
             </div>
+
         </div>
-    </div>
 
-</div>
+        <div class="row">
+            <div class="col s12">
 
-<div id="displayJSON" class="col s12">
-    <div class="row" style="margin-bottom:0px">
-
-        <div class="col s8 offset-s2" style="margin-top:10vh">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title center-align">Export Dataset</span>
-                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
-
-                    <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatJSON" asp-route-formatType="json" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                <div class="card" style="display:block; margin-bottom: 5vh">
+                    <div class="card-content">
+                        <span class="card-title center">Dataset content</span>
+                        <textarea asp-for="DatasetContentFormatJSON" class="materialize-textarea" readonly></textarea>
                     </div>
 
                 </div>
             </div>
         </div>
-
     </div>
-
-    <div class="row">
-        <div class="col s12">
-
-            <div class="card" style="display:block; margin-bottom: 5vh">
-                <div class="card-content">
-                    <span class="card-title center">Dataset content</span>
-                    <textarea asp-for="DatasetContentFormatJSON" class="materialize-textarea" readonly></textarea>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
 </div>
 
 <div id="displayXLSX" class="col s12">
@@ -172,7 +173,7 @@
                     <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
                     <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatXLSX" asp-route-formatType="xlsx" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="xlsx" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
                     </div>
 
                 </div>
@@ -206,7 +207,7 @@
                     <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
                     <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-datasetContentFormat="@Model.DatasetContentFormatXML" asp-route-formatType="xml" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="xml" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
                     </div>
 
                 </div>
@@ -273,6 +274,8 @@
         $(document).ready(function () {
             $("#table-custom-elements").show();
             $('div#dt_loader').hide();
+
+            $("#additionalTabs").show();
 
             $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();

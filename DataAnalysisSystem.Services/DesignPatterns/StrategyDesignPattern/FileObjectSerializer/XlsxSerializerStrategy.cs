@@ -18,7 +18,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
 
         public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
         {
-            throw new NotImplementedException();
+            return "XLSX";
         }
 
         public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
