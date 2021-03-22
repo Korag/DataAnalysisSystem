@@ -1,10 +1,7 @@
 ﻿using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
-using DataAnalysisSystem.ServicesInterfaces;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
-using System;
-using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
 {
@@ -19,7 +16,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
 
         public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
         {
-            throw new NotImplementedException();
+            return _serializer.ConvertFromObjectToJsonString(datasetContent);
         }
 
         public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)
