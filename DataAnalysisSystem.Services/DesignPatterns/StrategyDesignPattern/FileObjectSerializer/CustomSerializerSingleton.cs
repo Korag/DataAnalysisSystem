@@ -1,7 +1,6 @@
 ﻿using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
-using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
 {
