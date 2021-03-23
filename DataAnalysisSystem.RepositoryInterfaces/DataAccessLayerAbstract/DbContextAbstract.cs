@@ -2,7 +2,7 @@
 {
     public interface DbContextAbstract
     {
-        string ReadConnectionString(string path);
-        void InitializeContext(string connectionString);
+        public string ReadConnectionString(string path);
+        public void InitializeContext(string connectionString);
     }
 }

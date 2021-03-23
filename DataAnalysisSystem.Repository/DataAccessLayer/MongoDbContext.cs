@@ -8,7 +8,8 @@ namespace DataAnalysisSystem.Repository.DataAccessLayer
 {
     public class MongoDbContext : DbContextAbstract
     {
-        private const string PATH_DATABASE_CREDENTIALS = "./wwwroot/DatabaseCredentials/dbCredentials.json";
+        private const string PATH_AZURE_DATABASE_CREDENTIALS = "../wwwroot/DatabaseCredentials/dbCredentials.json";
+        private const string PATH_LOCAL_DATABASE_CREDENTIALS = "./wwwroot/DatabaseCredentials/dbCredentials.json";
 
         private string _connectionString { get; set; }
         private string _databaseName { get; set; }
@@ -16,7 +17,7 @@ namespace DataAnalysisSystem.Repository.DataAccessLayer
 
         public IMongoDatabase databaseInfo{ get; private set; }
 
-        public MongoDbContext(string pathToDatabaseCredentialsFiles = PATH_DATABASE_CREDENTIALS)
+        public MongoDbContext(string pathToDatabaseCredentialsFiles = PATH_LOCAL_DATABASE_CREDENTIALS)
         {
             ReadConnectionString(pathToDatabaseCredentialsFiles);
             InitializeContext(_connectionString);
