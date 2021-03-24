@@ -1,5 +1,5 @@
 ﻿using DataAnalysisSystem.RepositoryInterfaces.DataAccessLayerAbstract;
-using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
+using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer;
 using MongoDB.Driver;
 using System;
 using System.IO;

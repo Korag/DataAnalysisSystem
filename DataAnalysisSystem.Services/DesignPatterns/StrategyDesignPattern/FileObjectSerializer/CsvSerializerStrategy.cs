@@ -1,11 +1,9 @@
 ﻿using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.DatasetDTO;
-using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
-using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
-using System;
-using System.Collections.Generic;
+using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 
-namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
+namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer
 {
     public class CsvSerializerStrategy : ISerializerStrategy
     {
@@ -18,7 +16,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
 
         public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
         {
-            return "CSV";
+            return _serializer.ConvertFromObjectToCsvFormat(datasetContent);
         }
 
         public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)

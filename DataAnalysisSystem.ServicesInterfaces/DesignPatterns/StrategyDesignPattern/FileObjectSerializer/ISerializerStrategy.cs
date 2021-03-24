@@ -1,8 +1,7 @@
 ﻿using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.DatasetDTO;
-using System.Collections.Generic;
 
-namespace DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer
+namespace DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer
 {
     public interface ISerializerStrategy
     {

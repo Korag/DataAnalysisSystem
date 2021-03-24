@@ -19,8 +19,8 @@ using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http.Features;
-using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
-using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer;
+using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 
 namespace DataAnalysisSystem
 {

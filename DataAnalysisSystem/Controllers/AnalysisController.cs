@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using DataAnalysisSystem.Repository.DataAccessLayer;
-using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
-using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

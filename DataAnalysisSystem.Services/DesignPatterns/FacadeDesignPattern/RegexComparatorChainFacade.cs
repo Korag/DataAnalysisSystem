@@ -1,7 +1,7 @@
 ﻿using DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.RegexComparator;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.ChainOfResponsibility.RegexComparator;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
-using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern
 {

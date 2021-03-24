@@ -1,11 +1,9 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer;
+using DataAnalysisSystem.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer;
 using DataAnalysisSystem.DTO.DatasetDTO;
-using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
-using System;
-using System.Collections.Generic;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 
-namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer
+namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer
 {
     public class XmlSerializerStrategy : ISerializerStrategy
     {

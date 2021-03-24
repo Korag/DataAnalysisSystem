@@ -1,6 +1,6 @@
-﻿using DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+﻿using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.ChainOfResponsibility.RegexComparator;
-using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StategyDesignPattern.FileObjectSerializer;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using System.Collections.Generic;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.ChainOfResponsibility.RegexComparator

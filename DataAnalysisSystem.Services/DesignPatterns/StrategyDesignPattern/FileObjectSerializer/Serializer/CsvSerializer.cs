@@ -3,12 +3,13 @@ using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.ServicesInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileObjectSerializer.Serializer
+namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer
 {
     public class CsvSerializer
     {
@@ -93,6 +94,22 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StategyDesignPattern.FileOb
                     }
 
                     return datasetContent;
+                }
+            }
+        }
+
+        public string ConvertFromObjectToCsvFormat(DatasetContent datasetContent, string delimiter = ",")
+        {
+            List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
+
+            using (var writer = new StringWriter())
+            {
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.Configuration.Delimiter = delimiter;
+                    csv.WriteRecords(dynamicCollection);
+
+                    return writer.ToString();
                 }
             }
         }
