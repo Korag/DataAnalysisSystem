@@ -22,8 +22,8 @@ namespace DataAnalysisSystem.Controllers
         
         public UserSystemInteractionController(IEmailProvider emailProvider,
                                                IEmailProviderConfigurationProfile emailProviderConfigurationProfile,
-                                               IFileHelper fileHelper){
-
+                                               IFileHelper fileHelper)
+        {
             this._emailProvider = emailProvider;
             this._emailProviderConfigurationProfile = emailProviderConfigurationProfile;
             this._fileHelper = fileHelper;
@@ -66,7 +66,8 @@ namespace DataAnalysisSystem.Controllers
             List<string> attachmentsPaths = _fileHelper.SaveFilesOnHardDrive(contactViewModel.Attachments, EMAIL_ATTACHMENTS_FOLDER_NAME).ToList();
 
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(_emailProviderConfigurationProfile.SmtpUsername, 
-                                                                                         _emailProviderConfigurationProfile.SenderName, 
+                                                                                         _emailProviderConfigurationProfile.SenderName,
+                                                                                         contactViewModel.SenderEmail,
                                                                                          contactViewModel.Topic, 
                                                                                          contactViewModel.EmailMessageContent,
                                                                                          attachmentsPaths);

@@ -19,7 +19,6 @@ using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http.Features;
-using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 
 namespace DataAnalysisSystem
@@ -71,7 +70,7 @@ namespace DataAnalysisSystem
 
             services.AddTransient<CustomSerializer, CustomSerializer>();
             services.AddTransient<IRegexComparatorChainFacade, RegexComparatorChainFacade>();
-    
+
             // Data Access Layer
             services.AddSingleton<RepositoryContext, RepositoryContext>();
             services.AddSingleton<DbContextAbstract, MongoDbContext>();
@@ -105,7 +104,7 @@ namespace DataAnalysisSystem
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

@@ -27,14 +27,19 @@ namespace DataAnalysisSystem.Services.EmailProvider
             if (string.IsNullOrWhiteSpace(emailMessageContent.EmailSenderAddress))
             {
                 message.From.Add(new MailboxAddress(_emailConfigurationProfile.SenderName, _emailConfigurationProfile.SmtpUsername));
+                message.To.Add(new MailboxAddress(emailMessageContent.EmailRecipientFullName, emailMessageContent.EmailRecipientAddress));
             }
             else
             {
-                message.From.Add(new MailboxAddress(emailMessageContent.EmailSenderAddress, _emailConfigurationProfile.SmtpUsername));
+                message.From.Add(new MailboxAddress(emailMessageContent.EmailSenderAddress, emailMessageContent.EmailSenderAddress));
+                message.To.Add(new MailboxAddress(_emailConfigurationProfile.SenderName, _emailConfigurationProfile.SmtpUsername));
                 message.To.Add(new MailboxAddress(emailMessageContent.EmailSenderAddress, emailMessageContent.EmailSenderAddress));
+
+                message.ReplyTo.Add(new MailboxAddress(emailMessageContent.EmailSenderAddress, emailMessageContent.EmailSenderAddress));
+
+                emailMessageContent.HeaderOfEmailContent = "Message from application user";
             }
 
-            message.To.Add(new MailboxAddress(emailMessageContent.EmailRecipientFullName, emailMessageContent.EmailRecipientAddress));
             message.Subject = emailMessageContent.EmailTopic;
 
             var builder = new BodyBuilder();
@@ -58,7 +63,7 @@ Data Analysis System Administration Team";
 
             builder.HtmlBody = html
                                   .Replace("{BrandLogo}", logo.ContentId)
-                                  .Replace("{Topic}", emailMessageContent.EmailTopic)
+                                  .Replace("{Topic}", emailMessageContent.HeaderOfEmailContent)
                                   .Replace("{PrimaryContent}", emailMessageContent.PrimaryContent)
                                   .Replace("{SecondaryContent}", emailMessageContent.SecondaryContent);
 
@@ -70,8 +75,6 @@ Data Analysis System Administration Team";
                                                  .Replace("{URLActionText}", emailMessageContent.URLActionText);
             };
 
-            message.Body = builder.ToMessageBody();
-
             if (emailMessageContent.AttachmentsPaths.Count != 0)
             {
                 foreach (var path in emailMessageContent.AttachmentsPaths)
@@ -79,6 +82,8 @@ Data Analysis System Administration Team";
                     builder.Attachments.Add(path);
                 }
             }
+
+            message.Body = builder.ToMessageBody();
 
             using (var client = new SmtpClient())
             {

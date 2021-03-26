@@ -35,7 +35,10 @@ namespace DataAnalysisSystem.Services
 
         public string GenerateNewUniqueXLengthCodeAsString(int length)
         {
-            return GenerateNewUniqueCode().ToString().Substring(length);
+            string code = GenerateNewUniqueCode().ToString();
+            code = code.Substring(0, length);
+
+            return code;
         }
 
         public string GenerateAccessKey(int length)
