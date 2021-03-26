@@ -19,9 +19,10 @@ namespace DataAnalysisSystem.Services
                      .ForMember(dest => dest.SharedDatasetsToUser, opts => opts.MapFrom(src => new List<string>()))
                      .ForMember(dest => dest.SharedAnalysesToUser, opts => opts.MapFrom(src => new List<string>()));
 
-            CreateMap<IdentityProviderUser, EditUserDataViewModel>()
+            CreateMap<IdentityProviderUser, EditUserDataAndPasswordViewModel>()
                          .ForMember(dest => dest.UserIdentificator, opts => opts.MapFrom(src => src.Id));
 
+            CreateMap<EditUserDataViewModel, EditUserDataAndPasswordViewModel>();
 
             CreateMap<EditUserDataViewModel, IdentityProviderUser>()
                          .ForMember(dest => dest.Id, opts => opts.Ignore())

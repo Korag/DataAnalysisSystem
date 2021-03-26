@@ -1,4 +1,4 @@
-﻿@model DataAnalysisSystem.DTO.UserDTO.EditUserDataViewModel
+﻿@model DataAnalysisSystem.DTO.UserDTO.EditUserDataAndPasswordViewModel
 
 @{
     ViewData["Title"] = "Edit User Data";
@@ -71,6 +71,7 @@
                     <form asp-route-returnUrl="ChangeUserPassword" method="post">
 
                         <input asp-for="UserIdentificator" hidden readonly />
+                        <input asp-for="UserDataSection" hidden readonly />
 
                         <div class="input-field">
 

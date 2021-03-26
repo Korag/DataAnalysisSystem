@@ -25,14 +25,13 @@ namespace DataAnalysisSystem.Controllers
 
         private readonly RepositoryContext _context;
 
-        public UserController(
-                              UserManager<IdentityProviderUser> userManager,
+        public UserController(UserManager<IdentityProviderUser> userManager,
                               SignInManager<IdentityProviderUser> signInManager,
                               RepositoryContext context,
                               ICodeGenerator codeGenerator,
                               IEmailProvider emailProvider,
-                              IMapper autoMapper){
-
+                              IMapper autoMapper)
+        {
             this._userManager = userManager;
             this._signInManager = signInManager;
 
@@ -87,7 +86,6 @@ namespace DataAnalysisSystem.Controllers
 
                     if (!isEmailConfirmed)
                     {
-                        //ModelState.AddModelError(string.Empty, "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.");
                         ViewData["Message"] = "Your email address has not been confirmed so far. Confirm your address for logging in. The link has been sent to your mailbox.";
 
                         var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(loggedUser);
@@ -252,8 +250,9 @@ namespace DataAnalysisSystem.Controllers
             if (ModelState.IsValid)
             {
                 var userWNotConfirmedEmail = await _userManager.FindByIdAsync(emailConfirmation.UserIdentificator);
+                var emailConfirmed = await _userManager.IsEmailConfirmedAsync(userWNotConfirmedEmail);
 
-                if (userWNotConfirmedEmail != null)
+                if (userWNotConfirmedEmail != null && emailConfirmed == false)
                 {
                     var result = await _userManager.ConfirmEmailAsync(userWNotConfirmedEmail, emailConfirmation.AuthorizationToken);
 
@@ -262,8 +261,6 @@ namespace DataAnalysisSystem.Controllers
                         notificationMessageText = "The email address has been confirmed.";
                     }
                 }
-
-                return RedirectToAction("UserLogin", "User", new { notificationMessage = notificationMessageText });
             }
 
             return RedirectToAction("UserLogin", "User", new { notificationMessage = notificationMessageText });
@@ -276,7 +273,7 @@ namespace DataAnalysisSystem.Controllers
             ViewData["Message"] = notificationMessage;
 
             var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
-            EditUserDataViewModel userData = _autoMapper.Map<EditUserDataViewModel>(user);
+            EditUserDataAndPasswordViewModel userData = _autoMapper.Map<EditUserDataAndPasswordViewModel>(user);
             userData.UserDataSection = userDataSection;
 
             return View(userData);
@@ -308,18 +305,23 @@ namespace DataAnalysisSystem.Controllers
                 return RedirectToAction("EditUserData", "User", new { notificationMessage = "User data has been updated." });
             }
 
-            return View(modifiedUserData);
+            EditUserDataAndPasswordViewModel userData = _autoMapper.Map<EditUserDataAndPasswordViewModel>(modifiedUserData);
+            ModelState.AddModelError(string.Empty, "Invalid values have been entered.");
+
+            return View(userData);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> ChangeUserPassword(EditUserDataViewModel modifiedUserData)
+        public async Task<IActionResult> ChangeUserPassword(ChangeUserPasswordViewModel modifiedUserPassword)
         {
+            IdentityProviderUser user = new IdentityProviderUser();
+
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByIdAsync(modifiedUserData.UserIdentificator.ToString());
-                var result = await _userManager.ChangePasswordAsync(user, modifiedUserData.CurrentPassword, modifiedUserData.NewPassword);
-                modifiedUserData.UserDataSection = false;
+                user = await _userManager.FindByIdAsync(modifiedUserPassword.UserIdentificator.ToString());
+                var result = await _userManager.ChangePasswordAsync(user, modifiedUserPassword.CurrentPassword, modifiedUserPassword.NewPassword);
+                modifiedUserPassword.UserDataSection = false;
 
                 if (result.Succeeded)
                 {
@@ -331,11 +333,14 @@ namespace DataAnalysisSystem.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "An incorrect password has been entered which is currently assigned to this user account.");
-                    return View(modifiedUserData);
+                    return View(modifiedUserPassword);
                 }
             }
 
-            return View("EditUserData", modifiedUserData);
+            EditUserDataAndPasswordViewModel userData = _autoMapper.Map<EditUserDataAndPasswordViewModel>(user);
+            userData.UserDataSection = modifiedUserPassword.UserDataSection;
+
+            return View("EditUserData", userData);
         }
     }
 }
