@@ -96,19 +96,6 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
             List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
             string result = "";
 
-            //var dictionary = new Dictionary<string, object>(dynamicCollection.FirstOrDefault());
-            //using (var writer = new StringWriter())
-            //{
-            //    Console.SetOut(writer);
-            //    Console.SetError(writer);
-
-            //    System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(dictionary.GetType());
-            //    x.Serialize(Console.Out, dictionary);
-
-
-            //    result = writer.ToString();
-            //}
-
             //string outputXml = "";
             //var list = dynamicCollection.Select(expando => (IDictionary<string, object>)expando).ToList();
 
@@ -119,7 +106,33 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
             //    outputXml = Encoding.UTF8.GetString(memoryStream.ToArray());
             //};
 
-            return result;
+            string outputXml = "";
+            var list = dynamicCollection.Select(expando => (IDictionary<string, object>)expando).ToList();
+
+            var dataContractSerializer = new DataContractSerializer(list.GetType());
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                dataContractSerializer.WriteObject(memoryStream, list);
+                outputXml = Encoding.UTF8.GetString(memoryStream.ToArray());
+            };
+
+            var wrapped = new SerializableWrapper(dynamicCollection.FirstOrDefault());
+
+            var ser = new DataContractSerializer(typeof(SerializableWrapper), new[] { typeof(SerializableWrapper[]), typeof(object[]) });
+            var mem = new MemoryStream();
+            ser.WriteObject(mem, wrapped);
+            var outputXml2 = Encoding.UTF8.GetString(mem.ToArray());
+
+            var str = @"<?xml version=""1.0"" encoding=""UTF-8""?><root>";
+            foreach (var item in dynamicCollection)
+            {
+                str += DynamicHelper.ToXmlString(dynamicCollection.FirstOrDefault());
+            }
+            str += @"</root>";
+
+            var abc = DynamicHelper.ConvertToXml(dynamicCollection).ToString();
+
+            return str;
         }
     }
 }
