@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer
@@ -17,6 +18,9 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
     {
         private const string REGEX_DOUBLE_PATTERN = @"^[0-9]*(?:\.[0-9]*)?$";
         private const string REGEX_INT_PATTERN = @"^\d$";
+
+        private const string XML_ELEMENT_NAME = "element";
+        private const string XML_ROOT_NAME = "root";
 
         public XmlSerializer()
         {
@@ -94,45 +98,45 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
         public string ConvertFromObjectToXmlString(DatasetContent datasetContent)
         {
             List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
-            string result = "";
 
-            //string outputXml = "";
-            //var list = dynamicCollection.Select(expando => (IDictionary<string, object>)expando).ToList();
+            XmlDocument xmlContent = new XmlDocument();
+            xmlContent.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XElement root = new XElement(XML_ROOT_NAME);
 
-            //var dataContractSerializer = new DataContractSerializer(list.GetType());
-            //using (MemoryStream memoryStream = new MemoryStream())
-            //{
-            //    dataContractSerializer.WriteObject(memoryStream, list);
-            //    outputXml = Encoding.UTF8.GetString(memoryStream.ToArray());
-            //};
-
-            string outputXml = "";
-            var list = dynamicCollection.Select(expando => (IDictionary<string, object>)expando).ToList();
-
-            var dataContractSerializer = new DataContractSerializer(list.GetType());
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                dataContractSerializer.WriteObject(memoryStream, list);
-                outputXml = Encoding.UTF8.GetString(memoryStream.ToArray());
-            };
-
-            var wrapped = new SerializableWrapper(dynamicCollection.FirstOrDefault());
-
-            var ser = new DataContractSerializer(typeof(SerializableWrapper), new[] { typeof(SerializableWrapper[]), typeof(object[]) });
-            var mem = new MemoryStream();
-            ser.WriteObject(mem, wrapped);
-            var outputXml2 = Encoding.UTF8.GetString(mem.ToArray());
-
-            var str = @"<?xml version=""1.0"" encoding=""UTF-8""?><root>";
+            var xmlString = @"<?xml version=""1.0"" encoding=""UTF-8""?><root>";
             foreach (var item in dynamicCollection)
             {
-                str += DynamicHelper.ToXmlString(dynamicCollection.FirstOrDefault());
+                xmlString += ConvertDynamicObjectToXMLString(dynamicCollection.FirstOrDefault());
             }
-            str += @"</root>";
+            xmlString += @"</root>";
 
-            var abc = DynamicHelper.ConvertToXml(dynamicCollection).ToString();
+            return xmlString;
+        }
 
-            return str;
+        private string ConvertDynamicObjectToXMLString(dynamic dynamicObject)
+        {
+            XElement xElement = new XElement(XML_ELEMENT_NAME);
+
+            Dictionary<string, object> dynamicObjectProps = new Dictionary<string, object>(dynamicObject);
+
+            IList<XElement> properties = new List<XElement>();
+
+            foreach (var prop in dynamicObjectProps)
+            {
+                var xmlPropName = XmlConvert.EncodeName(prop.Key);
+                var xmlPropValue = prop.Value;
+
+                if (xmlPropValue == null)
+                {
+                    xmlPropValue = "";
+                }
+
+                var propXElement = new XElement(xmlPropName, xmlPropValue);
+                properties.Add(propXElement);
+            }
+
+            xElement.Add(properties);
+            return xElement.ToString();
         }
     }
 }
