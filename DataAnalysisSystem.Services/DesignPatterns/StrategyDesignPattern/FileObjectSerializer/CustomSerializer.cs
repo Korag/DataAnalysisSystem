@@ -30,7 +30,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
 
         public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
         {
-            return _serializerStrategy.ConvertFromObjectToSpecificFile(datasetContent);
+            return _serializerStrategy.ConvertFromObjectToSpecificFileFormatString(datasetContent);
         }
     }
 }

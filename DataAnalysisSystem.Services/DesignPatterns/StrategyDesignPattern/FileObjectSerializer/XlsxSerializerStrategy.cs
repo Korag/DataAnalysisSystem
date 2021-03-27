@@ -14,9 +14,9 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
             _serializer = new XlsxSerializer();
         }
 
-        public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
+        public string ConvertFromObjectToSpecificFileFormatString(DatasetContent datasetContent)
         {
-            return _serializer.ConvertFromObjectToXlsxString(datasetContent);
+            return "Xlsx string";
         }
 
         public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)

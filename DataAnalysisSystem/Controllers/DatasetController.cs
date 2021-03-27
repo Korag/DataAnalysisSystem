@@ -4,9 +4,11 @@ using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services;
+using DataAnalysisSystem.Services.DesignPatterns.AdapterDesignPattern;
 using DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces;
+using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.AdapterDesignPattern;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.ChainOfResponsibility.RegexComparator;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
@@ -43,7 +45,7 @@ namespace DataAnalysisSystem.Controllers
         private readonly IMimeTypeGuesser _mimeTypeGuesser;
         private readonly IFileHelper _fileHelper;
 
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
 
         private readonly CustomSerializer _customSerializer;
 
@@ -53,7 +55,7 @@ namespace DataAnalysisSystem.Controllers
 
         public DatasetController(RepositoryContext context,
                                  CustomSerializer customSerializer,
-                                 IHostingEnvironment environment,
+                                 IWebHostEnvironment environment,
                                  ICodeGenerator codeGenerator,
                                  ICodeQRGenerator qrCodeGenerator,
                                  IEmailProvider emailProvider,
@@ -331,6 +333,7 @@ namespace DataAnalysisSystem.Controllers
             ExportDatasetViewModel exportDataset = _autoMapper.Map<ExportDatasetViewModel>(datasetToExport);
             exportDataset.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(datasetToExport.DatasetContent);
 
+            #region ToCheck
             //var interfaceType = typeof(ISerializerStrategy);
             //var subclasses = AppDomain.CurrentDomain.GetAssemblies()
             //    .SelectMany(s => s.GetTypes())
@@ -351,15 +354,13 @@ namespace DataAnalysisSystem.Controllers
             //exportDataset.DatasetContentFormatJSON = jsonSerializerTask.Result;
             //exportDataset.DatasetContentFormatXLSX = xlsxSerializerTask.Result;
             //exportDataset.DatasetContentFormatXML = xmlSerializerTask.Result;
+            #endregion
 
             _customSerializer.ChangeStrategy(new CsvSerializerStrategy());
             exportDataset.DatasetContentFormatCSV = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
 
             _customSerializer.ChangeStrategy(new JsonSerializerStrategy());
             exportDataset.DatasetContentFormatJSON = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
-
-            _customSerializer.ChangeStrategy(new XlsxSerializerStrategy());
-            exportDataset.DatasetContentFormatXLSX = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
 
             _customSerializer.ChangeStrategy(new XmlSerializerStrategy());
             exportDataset.DatasetContentFormatXML = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
@@ -399,8 +400,8 @@ namespace DataAnalysisSystem.Controllers
                     break;
                 case DATASET_XLSX_FORMAT_TYPE:
                     _customSerializer.ChangeStrategy(new XlsxSerializerStrategy());
-                    datasetContentFormat = _customSerializer.ConvertFromObjectToSpecificFile(dataset.DatasetContent);
-                    filePath = _fileHelper.SaveStringToFileLocatedOnHardDrive(datasetContentFormat, dataset.DatasetName, DATASET_XLSX_FILE_EXTENSION, DATASET_FOLDER_NAME);
+                    IXlsxSerializerAdapter xlsxAdapter = new XlsxSerializerAdapter(_codeGenerator, _environment);
+                    filePath = xlsxAdapter.SaveStringToFileLocatedOnHardDrive(dataset.DatasetContent, dataset.DatasetName, DATASET_XLSX_FILE_EXTENSION, DATASET_FOLDER_NAME);
                     fileDownloadName += DATASET_XLSX_FILE_EXTENSION;
                     break;
                 case DATASET_XML_FORMAT_TYPE:

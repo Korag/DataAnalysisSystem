@@ -14,7 +14,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
             _serializer = new CsvSerializer();
         }
 
-        public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
+        public string ConvertFromObjectToSpecificFileFormatString(DatasetContent datasetContent)
         {
             return _serializer.ConvertFromObjectToCsvFormat(datasetContent);
         }

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer
@@ -13,6 +12,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
     {
         private const string REGEX_DOUBLE_PATTERN = @"^[0-9]*(?:\.[0-9]*)?$";
         private const string REGEX_INT_PATTERN = @"^\d$";
+        private const string XLSX_SHEET_NAME = @"Dataset";
 
         public XlsxSerializer()
         {
@@ -24,7 +24,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
 
             try
             {
-                records = new ExcelMapper(filePath).Fetch(); // -> IEnumerable<dynamic>
+                records = new ExcelMapper(filePath).Fetch();
             }
             catch (Exception e)
             {
@@ -98,13 +98,11 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
             return datasetContent;
         }
 
-        public string ConvertFromObjectToXlsxString(DatasetContent datasetContent)
+        public void SaveXlsxFileWithDatasetContent(DatasetContent datasetContent, string fullPath)
         {
             List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
 
-            new ExcelMapper().Save("products.xlsx", dynamicCollection, "Dataset");
-      
-            return "";
+            new ExcelMapper().Save(fullPath, dynamicCollection, XLSX_SHEET_NAME);
         }
     }
 }

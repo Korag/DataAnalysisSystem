@@ -120,7 +120,7 @@
                 <div class="card" style="display:block; margin-bottom: 5vh">
                     <div class="card-content">
                         <span class="card-title center">Dataset content</span>
-                        <textarea asp-for="DatasetContentFormatCSV" class="materialize-textarea" readonly></textarea>
+                        <textarea asp-for="DatasetContentFormatCSV" class="materialize-textarea" style="max-height:600px; overflow-y: scroll;" readonly></textarea>
                     </div>
 
                 </div>
@@ -154,7 +154,7 @@
                 <div class="card" style="display:block; margin-bottom: 5vh">
                     <div class="card-content">
                         <span class="card-title center">Dataset content</span>
-                        <textarea asp-for="DatasetContentFormatJSON" class="materialize-textarea" readonly></textarea>
+                        <textarea asp-for="DatasetContentFormatJSON" class="materialize-textarea" style="max-height:600px; overflow-y: scroll;" readonly></textarea>
                     </div>
 
                 </div>
@@ -180,19 +180,6 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="row">
-        <div class="col s12">
-
-            <div class="card" style="display:block; margin-bottom: 5vh">
-                <div class="card-content">
-                    <span class="card-title center">Dataset content</span>
-                    <textarea asp-for="DatasetContentFormatXLSX" class="materialize-textarea" readonly></textarea>
-                </div>
-
-            </div>
-        </div>
     </div>
 
 </div>
@@ -222,7 +209,8 @@
             <div class="card" style="display:block; margin-bottom: 5vh">
                 <div class="card-content">
                     <span class="card-title center">Dataset content</span>
-                    <textarea asp-for="DatasetContentFormatXML" class="materialize-textarea" readonly></textarea>
+                    <textarea asp-for="DatasetContentFormatXML" class="materialize-textarea" style="max-height:600px; overflow-y: scroll;" readonly></textarea>
+                    <textarea class="materialize-textarea" readonly hidden>hiddendivCommonRemover</textarea>
                 </div>
 
             </div>

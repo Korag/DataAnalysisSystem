@@ -6,6 +6,6 @@ namespace DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPat
     public interface ISerializerStrategy
     {
         public DatasetContent MapFileContentToObject(string pathToFile, DatasetAdditionalParametersViewModel parameters);
-        public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent);
+        public string ConvertFromObjectToSpecificFileFormatString(DatasetContent datasetContent);
     }
 }

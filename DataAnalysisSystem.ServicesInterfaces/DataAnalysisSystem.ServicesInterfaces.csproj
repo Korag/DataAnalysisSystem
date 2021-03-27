@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DesignPatterns\AdapterDesignPattern\" />
     <Folder Include="DesignPatterns\BuilderDesignPattern\" />
     <Folder Include="DesignPatterns\CommandDesignPattern\" />
   </ItemGroup>

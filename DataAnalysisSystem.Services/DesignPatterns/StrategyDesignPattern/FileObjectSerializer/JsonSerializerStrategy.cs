@@ -14,7 +14,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
             _serializer = new JsonSerializer();
         }
 
-        public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
+        public string ConvertFromObjectToSpecificFileFormatString(DatasetContent datasetContent)
         {
             return _serializer.ConvertFromObjectToJsonString(datasetContent);
         }
