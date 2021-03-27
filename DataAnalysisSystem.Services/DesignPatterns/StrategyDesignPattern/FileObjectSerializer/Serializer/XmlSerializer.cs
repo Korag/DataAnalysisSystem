@@ -99,21 +99,20 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
         {
             List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
 
-            XmlDocument xmlContent = new XmlDocument();
-            xmlContent.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XDocument xmlContent = new XDocument(new XDeclaration("1.0", "UTF-8", null));
             XElement root = new XElement(XML_ROOT_NAME);
 
-            var xmlString = @"<?xml version=""1.0"" encoding=""UTF-8""?><root>";
             foreach (var item in dynamicCollection)
             {
-                xmlString += ConvertDynamicObjectToXMLString(dynamicCollection.FirstOrDefault());
+                root.Add(ConvertDynamicObjectToXMLString(item));
             }
-            xmlString += @"</root>";
+            xmlContent.Add(root);
 
+            string xmlString = xmlContent.Declaration.ToString() + "\r\n" + xmlContent.ToString();
             return xmlString;
         }
 
-        private string ConvertDynamicObjectToXMLString(dynamic dynamicObject)
+        private XElement ConvertDynamicObjectToXMLString(dynamic dynamicObject)
         {
             XElement xElement = new XElement(XML_ELEMENT_NAME);
 
@@ -136,7 +135,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
             }
 
             xElement.Add(properties);
-            return xElement.ToString();
+            return xElement;
         }
     }
 }

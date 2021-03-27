@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer
@@ -90,8 +91,9 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
         public string ConvertFromObjectToJsonString(DatasetContent datasetContent)
         {
             List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
+            var settings = new JsonSerializerSettings { Formatting = Formatting.Indented };
 
-            string jsonString = JsonConvert.SerializeObject(dynamicCollection);
+            string jsonString = JsonConvert.SerializeObject(dynamicCollection, settings);
             return jsonString;
         }
 
