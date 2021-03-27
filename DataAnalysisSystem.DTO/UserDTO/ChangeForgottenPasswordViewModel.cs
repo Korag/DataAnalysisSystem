@@ -4,6 +4,11 @@ namespace DataAnalysisSystem.DTO.UserDTO
 {
     public class ChangeForgottenPasswordViewModel
     {
+        public ChangeForgottenPasswordViewModel()
+        {
+                
+        }
+
         public ChangeForgottenPasswordViewModel(string userIdentificator, string authorizationToken)
         {
             this.UserIdentificator = userIdentificator;

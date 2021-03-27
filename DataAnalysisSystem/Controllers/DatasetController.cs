@@ -44,7 +44,6 @@ namespace DataAnalysisSystem.Controllers
         private readonly IFileHelper _fileHelper;
 
         private readonly IHostingEnvironment _environment;
-        private readonly ISerializerStrategy _serializerStrategy;
 
         private readonly CustomSerializer _customSerializer;
 
@@ -52,8 +51,7 @@ namespace DataAnalysisSystem.Controllers
 
         private readonly RepositoryContext _context;
 
-        public DatasetController(
-                                 RepositoryContext context,
+        public DatasetController(RepositoryContext context,
                                  CustomSerializer customSerializer,
                                  IHostingEnvironment environment,
                                  ICodeGenerator codeGenerator,
@@ -93,7 +91,6 @@ namespace DataAnalysisSystem.Controllers
         }
 
         [Authorize]
-        [DisableRequestSizeLimit]
         [HttpPost]
         public IActionResult AddNewDataset(AddNewDatasetViewModel newDataset)
         {
@@ -345,27 +342,27 @@ namespace DataAnalysisSystem.Controllers
             //    _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
             //}
 
-            Task<string> csvSerializerTask = Task<string>.Factory.StartNew(() => {return new CustomSerializer(new CsvSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
-            Task<string> jsonSerializerTask = Task<string>.Factory.StartNew(() => {return new CustomSerializer(new JsonSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
-            Task<string> xlsxSerializerTask = Task<string>.Factory.StartNew(() => { return new CustomSerializer(new XlsxSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
-            Task<string> xmlSerializerTask = Task<string>.Factory.StartNew(() => { return new CustomSerializer(new XmlSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
+            //Task<string> csvSerializerTask = Task<string>.Factory.StartNew(() => {return new CustomSerializer(new CsvSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
+            //Task<string> jsonSerializerTask = Task<string>.Factory.StartNew(() => {return new CustomSerializer(new JsonSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
+            //Task<string> xlsxSerializerTask = Task<string>.Factory.StartNew(() => { return new CustomSerializer(new XlsxSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
+            //Task<string> xmlSerializerTask = Task<string>.Factory.StartNew(() => { return new CustomSerializer(new XmlSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
 
-            exportDataset.DatasetContentFormatCSV = csvSerializerTask.Result;
-            exportDataset.DatasetContentFormatJSON = jsonSerializerTask.Result;
-            exportDataset.DatasetContentFormatXLSX = xlsxSerializerTask.Result;
-            exportDataset.DatasetContentFormatXML = xmlSerializerTask.Result;
+            //exportDataset.DatasetContentFormatCSV = csvSerializerTask.Result;
+            //exportDataset.DatasetContentFormatJSON = jsonSerializerTask.Result;
+            //exportDataset.DatasetContentFormatXLSX = xlsxSerializerTask.Result;
+            //exportDataset.DatasetContentFormatXML = xmlSerializerTask.Result;
 
-            //_customSerializer.ChangeStrategy(new CsvSerializerStrategy());
-            //exportDataset.DatasetContentFormatCSV = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
+            _customSerializer.ChangeStrategy(new CsvSerializerStrategy());
+            exportDataset.DatasetContentFormatCSV = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
 
-            //_customSerializer.ChangeStrategy(new JsonSerializerStrategy());
-            //exportDataset.DatasetContentFormatJSON = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
+            _customSerializer.ChangeStrategy(new JsonSerializerStrategy());
+            exportDataset.DatasetContentFormatJSON = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
 
-            //_customSerializer.ChangeStrategy(new XlsxSerializerStrategy());
-            //exportDataset.DatasetContentFormatXLSX = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
+            _customSerializer.ChangeStrategy(new XlsxSerializerStrategy());
+            exportDataset.DatasetContentFormatXLSX = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
 
-            //_customSerializer.ChangeStrategy(new XmlSerializerStrategy());
-            //exportDataset.DatasetContentFormatXML = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
+            _customSerializer.ChangeStrategy(new XmlSerializerStrategy());
+            exportDataset.DatasetContentFormatXML = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
 
             return View(exportDataset);
         }

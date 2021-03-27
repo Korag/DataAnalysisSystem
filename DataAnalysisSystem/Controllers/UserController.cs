@@ -92,7 +92,7 @@ namespace DataAnalysisSystem.Controllers
                         var callbackUrl = Url.GenerateEmailConfirmationLink(loggedUser.Id.ToString(), emailConfirmationToken, Request.Scheme);
 
                         var emailSenderTask = Task.Run(() => SendEmailMessageToUser(loggedUser, "emailConfirmation", callbackUrl));
-                        
+
                         return View();
                     }
                 }
@@ -144,7 +144,7 @@ namespace DataAnalysisSystem.Controllers
                     var callbackUrl = Url.GenerateEmailConfirmationLink(newUser.Id.ToString(), emailConfirmationToken, Request.Scheme);
 
                     var emailSenderTask = Task.Run(() => SendEmailMessageToUser(newUser, "emailConfirmation", callbackUrl));
-                    
+
                     return RedirectToAction("UserLogin", "User", new { notificationMessage = "A message has been sent to your email inbox to confirm the email address you entered during registration." });
                 }
 
@@ -172,16 +172,21 @@ namespace DataAnalysisSystem.Controllers
                 var user = await _userManager.FindByEmailAsync(forgottenpasswordViewModel.Email);
                 var callbackUrl = "";
 
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "No user account is associated with the email address that was entered.");
+                    return View(forgottenpasswordViewModel);
+                }
+                else if (!(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     callbackUrl = Url.GenerateEmailConfirmationLink(user.Id.ToString(), emailConfirmationToken, Request.Scheme);
-                   
+
                     var emailSenderTask1 = Task.Run(() => SendEmailMessageToUser(user, "emailConfirmation", callbackUrl));
 
                     return RedirectToAction("ForgotPassword", "UserSystemInteraction", new { notificationMessage = "To reset your password you must first confirm the email address that is associated with the account you wish to regain access to." });
                 }
- 
+
                 var passwordResetAuthorizationToken = await _userManager.GeneratePasswordResetTokenAsync(user);
                 callbackUrl = Url.GenerateResetForgottenPasswordLink(user.Id.ToString(), passwordResetAuthorizationToken, Request.Scheme);
 
@@ -226,15 +231,16 @@ namespace DataAnalysisSystem.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("UserLogin", "User", new { message = "Your password has been changed." });
+                    return RedirectToAction("UserLogin", "User", new { notificationMessage = "Your password has been changed." });
                 }
             }
 
+            ModelState.AddModelError(string.Empty, "The password entered is in a not valid format.");
             return View(changedPasswordViewModel);
         }
 
         public async Task<IActionResult> SendEmailMessageToUser(IdentityProviderUser user, string emailClassifierKey, string additionalURL = "")
-        {   
+        {
             EmailMessageContentViewModel emailMessage = new EmailMessageContentViewModel(user.Email, user.FirstName + " " + user.LastName, emailClassifierKey, additionalURL);
             await _emailProvider.SendEmailMessageAsync(emailMessage);
 
@@ -293,7 +299,7 @@ namespace DataAnalysisSystem.Controllers
                 if (user.Email != modifiedUserData.Email)
                 {
                     user.EmailConfirmed = false;
-                    
+
                     var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.GenerateEmailConfirmationLink(user.Id.ToString(), emailConfirmationToken, Request.Scheme);
 
@@ -337,10 +343,15 @@ namespace DataAnalysisSystem.Controllers
                 }
             }
 
-            EditUserDataAndPasswordViewModel userData = _autoMapper.Map<EditUserDataAndPasswordViewModel>(user);
-            userData.UserDataSection = modifiedUserPassword.UserDataSection;
+            if (user != null)
+            {
+                EditUserDataAndPasswordViewModel userData = _autoMapper.Map<EditUserDataAndPasswordViewModel>(user);
+                userData.UserDataSection = modifiedUserPassword.UserDataSection;
 
-            return View("EditUserData", userData);
+                return View("EditUserData", userData);
+            }
+
+            return RedirectToAction("MainAction", "UserSystemInteraction");
         }
     }
 }

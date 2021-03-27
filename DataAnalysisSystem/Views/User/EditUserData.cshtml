@@ -12,7 +12,7 @@
                 <div class="card-content">
                     <span class="card-title center-align">Edit User Personal Information</span>
 
-                    <form asp-route-returnUrl="EditUserData" method="post">
+                    <form asp-action="EditUserData" asp-controller="User" method="post">
 
                         <input asp-for="UserIdentificator" hidden readonly />
                         <input asp-for="UserDataSection" hidden readonly />
@@ -68,7 +68,7 @@
                 <div class="card-content">
                     <span class="card-title center-align">Change User Password</span>
 
-                    <form asp-route-returnUrl="ChangeUserPassword" method="post">
+                    <form asp-action="ChangeUserPassword" asp-controller="User" method="post">
 
                         <input asp-for="UserIdentificator" hidden readonly />
                         <input asp-for="UserDataSection" hidden readonly />
