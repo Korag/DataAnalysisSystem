@@ -1,6 +1,6 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer;
 using DataAnalysisSystem.DTO.DatasetDTO;
+using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer;
 using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 
 namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer
@@ -16,7 +16,7 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
 
         public string ConvertFromObjectToSpecificFile(DatasetContent datasetContent)
         {
-            return "XML";
+            return _serializer.ConvertFromObjectToXmlString(datasetContent);
         }
 
         public DatasetContent MapFileContentToObject(string filePath, DatasetAdditionalParametersViewModel parameters)

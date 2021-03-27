@@ -1,15 +1,17 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using DataAnalysisSystem.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace DataAnalysisSystem.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer
+namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer.Serializer
 {
     public class XmlSerializer
     {
@@ -87,6 +89,37 @@ namespace DataAnalysisSystem.DesignPatterns.StrategyDesignPattern.FileObjectSeri
             }
 
             return datasetContent;
+        }
+
+        public string ConvertFromObjectToXmlString(DatasetContent datasetContent)
+        {
+            List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
+            string result = "";
+
+            //var dictionary = new Dictionary<string, object>(dynamicCollection.FirstOrDefault());
+            //using (var writer = new StringWriter())
+            //{
+            //    Console.SetOut(writer);
+            //    Console.SetError(writer);
+
+            //    System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(dictionary.GetType());
+            //    x.Serialize(Console.Out, dictionary);
+
+
+            //    result = writer.ToString();
+            //}
+
+            //string outputXml = "";
+            //var list = dynamicCollection.Select(expando => (IDictionary<string, object>)expando).ToList();
+
+            //var dataContractSerializer = new DataContractSerializer(list.GetType());
+            //using (MemoryStream memoryStream = new MemoryStream())
+            //{
+            //    dataContractSerializer.WriteObject(memoryStream, list);
+            //    outputXml = Encoding.UTF8.GetString(memoryStream.ToArray());
+            //};
+
+            return result;
         }
     }
 }

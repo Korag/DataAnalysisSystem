@@ -97,5 +97,14 @@ namespace DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileO
 
             return datasetContent;
         }
+
+        public string ConvertFromObjectToXlsxString(DatasetContent datasetContent)
+        {
+            List<dynamic> dynamicCollection = SerializerHelper.MapDatasetContentObjectToDynamicObject(datasetContent).ToList();
+
+            new ExcelMapper().Save("products.xlsx", dynamicCollection, "Dataset");
+      
+            return "";
+        }
     }
 }
