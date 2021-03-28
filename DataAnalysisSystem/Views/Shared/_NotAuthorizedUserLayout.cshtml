@@ -1,6 +1,4 @@
-﻿@using DataAnalysisSystem.DTO.AdditionalFunctionalities
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,6 +12,7 @@
     <partial name="_CSSDependenciesPartial" />
     <partial name="_JSDependenciesPartial" />
 
+    <!-- #endregion -->
 </head>
 
 <body>
@@ -85,34 +84,8 @@
         </div>
     </footer>
 
+    @{await Html.RenderPartialAsync("_NotAuthorizedUserLayoutChangeNavbarScript");}
     @RenderSection("Scripts", required: false)
-
-    <script>
-        function ChangeNavbarContentDueToResize() {
-            var win = $(this);
-            if (win.width() < 620) {
-                $("#applicationName").text('');
-                $("#logo").css("display", "none");
-            }
-            if (win.width() > 620 && win.width() < 760) {
-                $("#applicationName").text(' D.A.S.');
-                $("#logo").css("display", "inline");
-
-            }
-            if (win.width() >= 760) {
-                $("#applicationName").text(' Data Analysis System');
-                $("#logo").css("display", "inline");
-            } 
-        }
-
-        $(document).ready(function () {
-            ChangeNavbarContentDueToResize();
-        });
-
-        $(window).on('resize', function () {
-            ChangeNavbarContentDueToResize;
-        });
-    </script>
 
 </body>
 </html>

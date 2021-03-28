@@ -1,0 +1,26 @@
+﻿<script>
+    function ChangeNavbarContentDueToResize() {
+        var win = $(this);
+        if (win.width() < 620) {
+            $("#applicationName").text('');
+            $("#logo").css("display", "none");
+        }
+        if (win.width() > 620 && win.width() < 760) {
+            $("#applicationName").text(' D.A.S.');
+            $("#logo").css("display", "inline");
+
+        }
+        if (win.width() >= 760) {
+            $("#applicationName").text(' Data Analysis System');
+            $("#logo").css("display", "inline");
+        }
+    }
+
+    $(document).ready(function () {
+        ChangeNavbarContentDueToResize();
+    });
+
+    $(window).on('resize', function () {
+        ChangeNavbarContentDueToResize();
+    });
+</script>

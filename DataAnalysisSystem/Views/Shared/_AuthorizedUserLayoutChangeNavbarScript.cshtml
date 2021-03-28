@@ -1,0 +1,19 @@
+﻿<script>
+    function ChangeNavbarContentDueToResize() {
+        var win = $(this);
+        if (win.width() < 520) {
+            $("#applicationName").text(' D.A.S.');
+        }
+        if (win.width() >= 520) {
+            $("#applicationName").text(' Data Analysis System');
+        }
+    }
+    
+    $(document).ready(function () {
+        ChangeNavbarContentDueToResize();
+    });
+    
+    $(window).on('resize', function () {
+        ChangeNavbarContentDueToResize();
+    });
+</script>

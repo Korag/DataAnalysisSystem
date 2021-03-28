@@ -9,8 +9,12 @@
 
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
 
+    <!-- #region Dependencies -->
+
     <partial name="_CSSDependenciesPartial" />
     <partial name="_JSDependenciesPartial" />
+
+    <!-- #endregion -->
 
 </head>
 
@@ -18,7 +22,6 @@
     <header>
 
         <!-- #region Top Navbar -->
-
         <div class="navbar-fixed">
             <nav id="navbar-top" class="navbar white">
                 <div class="nav-wrapper">
@@ -49,9 +52,9 @@
                     <a class="collapsible-header not-collapse">Datasets</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a asp-controller="Dataset" asp-action="AddNewDataset" class="waves-effect">Add new dataset<i class="material-icons">description</i></a></li>
-                            <li><a asp-controller="Dataset" asp-action="UserDatasets" class="waves-effect">List of datasets<i class="material-icons">view_list</i></a></li>
-                            <li><a asp-controller="Dataset" asp-action="UserSharedDatasets" class="waves-effect">Share the dataset<i class="material-icons">folder_shared</i></a></li>
+                            <li><a asp-controller="Dataset" asp-action="AddNewDataset" class="waves-effect waves-light">Add new dataset<i class="material-icons">description</i></a></li>
+                            <li><a asp-controller="Dataset" asp-action="UserDatasets" class="waves-effect waves-light">List of datasets<i class="material-icons">view_list</i></a></li>
+                            <li><a asp-controller="Dataset" asp-action="UserSharedDatasets" class="waves-effect waves-light">Share the dataset<i class="material-icons">folder_shared</i></a></li>
                         </ul>
                     </div>
                 </li>
@@ -59,10 +62,10 @@
                     <a class="collapsible-header not-collapse">Analysis of data</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a asp-controller="Analysis" asp-action="PerformNewAnalysis" class="waves-effect">Perform the analysis<i class="material-icons">format_shapes</i></a></li>
-                            <li><a asp-controller="Analysis" asp-action="UserAnalyses" class="waves-effect">History of performed analyses<i class="material-icons">history</i></a></li>
-                            <li><a asp-controller="..." asp-action="..." class="waves-effect">Available exploration methods<i class="material-icons">functions</i></a></li>
-                            <li><a asp-controller="Analysis" asp-action="UserSharedAnalysis" class="waves-effect">Share the analysis<i class="material-icons">screen_share</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="PerformNewAnalysis" class="waves-effect waves-light">Perform the analysis<i class="material-icons">format_shapes</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="UserAnalyses" class="waves-effect waves-light">History of performed analyses<i class="material-icons">history</i></a></li>
+                            <li><a asp-controller="..." asp-action="..." class="waves-effect waves-light">Available exploration methods<i class="material-icons">functions</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="UserSharedAnalysis" class="waves-effect waves-light">Share the analysis<i class="material-icons">screen_share</i></a></li>
                         </ul>
                     </div>
                 </li>
@@ -70,8 +73,8 @@
                     <a class="collapsible-header not-collapse">Resources made available</a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a asp-controller="Dataset" asp-action="SharedDatasetsBrowser" class="waves-effect">Dataset browser<i class="material-icons">sticky_note_2</i></a></li>
-                            <li><a asp-controller="Analysis" asp-action="SharedAnalysisBrowser" class="waves-effect">Analysis browser<i class="material-icons">leaderboard</i></a></li>
+                            <li><a asp-controller="Dataset" asp-action="SharedDatasetsBrowser" class="waves-effect waves-light">Dataset browser<i class="material-icons">sticky_note_2</i></a></li>
+                            <li><a asp-controller="Analysis" asp-action="SharedAnalysisBrowser" class="waves-effect waves-light">Analysis browser<i class="material-icons">leaderboard</i></a></li>
                         </ul>
                     </div>
                 </li>
@@ -83,7 +86,7 @@
             <div class="col s12">
                 <div class="options-container">
                     <div class="single-option">
-                        <a asp-controller="User" asp-action="EditUserData" class="waves-effect waves-light btn-large teal lighten-1 white-text" style="width:140px; height:54px"> Account</a>
+                        <a asp-controller="User" asp-action="EditUserData" class="waves-effect waves-light btn-large teal lighten-1 white-text" style="width:140px; height:54px">Account</a>
                     </div>
 
                     <partial name="_LogoutPartial" />
@@ -101,7 +104,7 @@
                                                         {
                                                          ModalIdentificator = "modalLogout",
                                                          ModalTitle = "Logout from application",
-                                                         ModalContent = "Are you sure you want to leave the application ?",
+                                                         ModalContent = "Are you sure you want to leave the application?",
 
                                                          ControllerName = "User",
                                                          ActionName = "UserLogout",
@@ -113,7 +116,6 @@
     }
     <!-- #endregion -->
     <!-- #region Children Containers -->
-
     <div class="container">
         <main role="main" style="margin-bottom: 3vh; margin-top: 3vh">
 
@@ -121,9 +123,8 @@
 
         </main>
     </div>
-
     <!-- #endregion -->
-
+    <!-- #region Footer -->
     <footer class="page-footer center-align" style="margin-bottom: 0px; margin-top:auto">
         <div class="container">
             <div class="row">
@@ -139,41 +140,12 @@
             </div>
         </div>
     </footer>
+    <!-- #endregion -->
+
+    @{await Html.RenderPartialAsync("_AuthorizedUserLayoutChangeNavbarScript");}
+    @{await Html.RenderPartialAsync("_AuthorizedUserLayoutElementsScript");}
 
     @RenderSection("Scripts", required: false)
-
-    <script>
-
-        $(".not-collapse").on("click", function (e) { e.stopPropagation(); });
-
-        var elem = document.querySelector('.collapsible.expandable');
-        var instance = M.Collapsible.init(elem, {
-            accordion: false
-        });
-        instance.open();
-
-        $(".dropdown-trigger").dropdown({ alignment: "right", constrainWidth: !1, coverTrigger: !1, closeOnClick: !1 });
-        $(".sidenav").sidenav({ edge: "left" });
-        $("#modalLogout").modal(), $(".scrollspy").scrollSpy();
-
-        function ChangeNavbarContentDueToResize() {
-            var win = $(this);
-            if (win.width() < 520) {
-                $("#applicationName").text(' D.A.S.');
-            }
-            if (win.width() >= 520) {
-                $("#applicationName").text(' Data Analysis System');
-            }
-        }
-
-        $(document).ready(function () {
-            ChangeNavbarContentDueToResize();
-        });
-
-        $(window).on('resize', function () {
-            ChangeNavbarContentDueToResize();
-        });
-    </script>
 
 </body>
 </html>
