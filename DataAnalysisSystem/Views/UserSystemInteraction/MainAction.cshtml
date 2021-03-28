@@ -2,18 +2,10 @@
     ViewData["Title"] = "Home";
 }
 
-<style>
-    .card-content {
-        opacity: 0.4;
-        background-image: url("../images/logo_fill_transparent.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-    }
-</style>
+@{await Html.RenderPartialAsync("_MainActionCardContentStyle");}
 
 <div class="row" style="margin-bottom: 0px">
-    <div class="col s8 offset-s2" style="margin-top: 5vh">
+    <div class="col s12 m10 l8 offset-m1 offset-l2" style="margin-top: 10vh">
         <div class="card" style="height: 50vh;">
             <div class="card-content">
             </div>
@@ -23,14 +15,5 @@
 
 @if (ViewData["Message"] != null)
 {
-    @section Notification
-    {
-        <div class="row">
-            <div class="col s8 offset-s2">
-
-                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
-
-            </div>
-        </div>
-    }
+    await Html.RenderPartialAsync("_NotificationMenuMessage");
 }
