@@ -5,7 +5,7 @@
 
 <div class="row" style="margin-bottom:0px">
 
-    <div class="col s8 offset-s2" style="margin-top: 10vh">
+    <div class="col s12 m10 l8 offset-m1 offset-l2" style="margin-top: 10vh">
         <div class="card">
             <div class="card-content">
                 <span class="card-title center-align">Register</span>
@@ -63,7 +63,9 @@
                     </div>
 
                     <div class="center-align" style="margin-top: 10px">
-                        <input class="btn" type="submit" value="Register">
+                        <button class="btn waves-effect waves-light" type="submit">
+                            Register
+                        </button>
                     </div>
 
                 </form>
@@ -76,11 +78,5 @@
 
 @section Notification
 {
-    <div class="row">
-        <div class="col s8 offset-s2">
-
-            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
-
-        </div>
-    </div>
+    @{await Html.RenderPartialAsync("_NotificationMenuValidation");}
 }

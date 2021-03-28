@@ -8,7 +8,7 @@
 
 <div class="row" style="margin-bottom:0px">
 
-    <div class="col s8 offset-s2" style="margin-top: 10vh">
+    <div class="col s12 m10 l8 offset-m1 offset-l2" style="margin-top: 10vh">
         <div class="card">
             <div class="card-content">
                 <span class="card-title center-align">Log In</span>
@@ -43,7 +43,9 @@
                     </p>
 
                     <div class="center-align" style="margin-top: 10px">
-                        <input class="btn" type="submit" value="Log In">
+                        <button class="btn waves-effect waves-light" type="submit">
+                            Log In
+                        </button>
                     </div>
 
                 </form>
@@ -56,24 +58,13 @@
 
 <div class="row">
 
-    <div class="col s8 offset-s2">
-        <a asp-action="ForgotPassword" class="waves-effect waves-teal btn-flat right">Forgot password?</a>
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
+        <a asp-action="ForgotPassword" asp-controller="User" class="waves-effect waves btn-flat right">Forgot password?</a>
     </div>
 
 </div>
 
 @section Notification
 {
-    <div class="row">
-        <div class="col s8 offset-s2">
-
-            @if (ViewData["Message"] != null)
-            {
-                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
-            }
-
-            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
-
-        </div>
-    </div>
+    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage");}
 }

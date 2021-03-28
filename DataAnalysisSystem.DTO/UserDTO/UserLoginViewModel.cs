@@ -10,6 +10,7 @@ namespace DataAnalysisSystem.DTO.UserDTO
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Field \"{0}\" is required.")]
+        [StringLength(100, ErrorMessage = "The password should be between 6 and 100 characters.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
