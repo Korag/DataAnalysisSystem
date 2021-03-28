@@ -61,7 +61,7 @@ namespace DataAnalysisSystem.Controllers
                                  IMapper autoMapper,
                                  IRegexComparatorChainFacade regexComparator,
                                  IMimeTypeGuesser mimeTypeGuesser,
-                                 
+
                                  IFileHelper fileHelper)
         {
 
@@ -415,7 +415,8 @@ namespace DataAnalysisSystem.Controllers
 
             var fs = new FileStream(filePath, FileMode.Open);
 
-            Response.OnCompleted(() => {
+            Response.OnCompleted(() =>
+            {
                 _fileHelper.RemoveFileFromHardDrive(filePath);
                 return Task.CompletedTask;
             });
@@ -441,7 +442,7 @@ namespace DataAnalysisSystem.Controllers
             List<Dataset> datasetShared = _context.datasetRepository.GetDatasetsById(loggedUser.SharedDatasetsToUser).ToList();
 
             SharedDatasetsBrowserViewModel datasetSharedVm = new SharedDatasetsBrowserViewModel();
-            
+
             datasetSharedVm.SharedDatasets = _autoMapper.Map<List<SharedDatasetByCollabViewModel>>(datasetShared).ToList();
             List<DatasetStatistics> datasetStatistics = datasetShared.Select(z => z.DatasetStatistics).ToList();
 
@@ -514,7 +515,7 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult GainAccessToSharedDataset(string datasetAccessKey)
         {
             Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetAccessKey);
-      
+
             if (datasetShared != null)
             {
                 var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
@@ -673,7 +674,7 @@ namespace DataAnalysisSystem.Controllers
                     {
                         if (n == numberColumnsAmount)
                         {
-                            dataset.DatasetContent.StringColumns[n].PositionInDataset = globalColumnPosition;
+                            dataset.DatasetContent.StringColumns[s].PositionInDataset = globalColumnPosition;
                             s++;
                         }
                         else if (s == stringColumnsAmount)
@@ -682,23 +683,15 @@ namespace DataAnalysisSystem.Controllers
                             n++;
                         }
 
-                        if (dataset.DatasetContent.NumberColumns[n].PositionInDataset < dataset.DatasetContent.StringColumns[s].PositionInDataset)
+                        if (n + 1 <= numberColumnsAmount && dataset.DatasetContent.NumberColumns[n].PositionInDataset < dataset.DatasetContent.StringColumns[s].PositionInDataset)
                         {
                             dataset.DatasetContent.NumberColumns[n].PositionInDataset = globalColumnPosition;
-
-                            if (n + 1 < numberColumnsAmount)
-                            {
-                                n++;
-                            }
+                            n++;
                         }
-                        else
+                        else if (s + 1 <= stringColumnsAmount && dataset.DatasetContent.StringColumns[s].PositionInDataset < dataset.DatasetContent.NumberColumns[n].PositionInDataset)
                         {
-                            dataset.DatasetContent.StringColumns[n].PositionInDataset = globalColumnPosition;
-
-                            if (s + 1 < stringColumnsAmount)
-                            {
-                                s++;
-                            }
+                            dataset.DatasetContent.StringColumns[s].PositionInDataset = globalColumnPosition;
+                            s++;
                         }
                     }
                 }
