@@ -5,256 +5,262 @@
     ViewData["Title"] = "Shared Datasets";
 }
 
-<div id="notSharedDatasets" class="col s12">
-    <div class="card" style="display:block; margin-bottom: 5vh; margin-top: 10vh">
-        <div class="card-content">
-            <span class="card-title center">My not shared datasets</span>
+<div id="notSharedDatasets" class="row" style="margin-top: 10vh; margin-bottom: 5vh;">
+    <div class="col s12">
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">My not shared datasets</span>
 
-            <div class="progress" id="dt_loader" style="margin-top:30px;">
-                <div class="indeterminate"></div>
-            </div>
+                <div class="progress" id="dataTableLoadingIndicator" style="margin-top:30px;">
+                    <div class="indeterminate"></div>
+                </div>
 
-            <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().DatasetName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfColumns)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfRows)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileFormat)
-                        </th>
-                        <th>
-                            Share
-                        </th>
-                        <th>
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{int i = 0;}
-                    @foreach (var dataset in Model.NotSharedDatasets)
-                    {
+                <table id="notSharedDatasetsInfoList" class="row-border" cellspacing="0" width="100%" style="display:none">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(model => dataset.DatasetName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.NumberOfColumns)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.NumberOfRows)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.InputFileName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.InputFileFormat)
-                            </td>
-                            <td>
-                                @{string modalDataTarget = "modalShareDataset" + i;}
-                                <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
-                                @{i++;}
-                            </td>
-                            <td>
-                                <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().DatasetName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfColumns)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().NumberOfRows)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedDatasets.FirstOrDefault().InputFileFormat)
+                            </th>
+                            <th>
+                                Share
+                            </th>
+                            <th>
+                                Details
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @{int i = 0;}
+                        @foreach (var dataset in Model.NotSharedDatasets)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.DatasetName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.NumberOfColumns)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.NumberOfRows)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.InputFileName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.InputFileFormat)
+                                </td>
+                                <td>
+                                    @{string modalDataTarget = "modalShareDataset" + i;}
+                                    <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
+                                    @{i++;}
+                                </td>
+                                <td>
+                                    <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="sharedDatasets" class="col 12">
-    <div class="card" style="display:block; margin-bottom: 5vh; margin-top: 10vh">
-        <div class="card-content">
-            <span class="card-title center">My shared datasets</span>
+<div id="sharedDatasets" class="row" style="margin-top: 10vh; margin-bottom: 5vh;">
+    <div class="col s12">
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">My shared datasets</span>
 
-            <div class="progress" id="dt_loader2" style="margin-top:30px;">
-                <div class="indeterminate"></div>
-            </div>
+                <div class="progress" id="dataTableLoadingIndicator2" style="margin-top:30px;">
+                    <div class="indeterminate"></div>
+                </div>
 
-            <table id="table-custom-elements2" class="row-border" cellspacing="0" width="100%" style="display:none">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DatasetName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfColumns)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfRows)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileFormat)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DateOfEdition)
-                        </th>
-                        <th style="white-space:nowrap;">
-                            Gain access
-                        </th>
-                        <th>
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{int t = 0;}
-                    @foreach (var dataset in Model.SharedDatasets)
-                    {
+                <table id="sharedDatasetsInfoList" class="row-border" cellspacing="0" width="100%" style="display:none">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(model => dataset.DatasetName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.NumberOfColumns)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.NumberOfRows)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.InputFileName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.InputFileFormat)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => dataset.DateOfEdition)
-                            </td>
-                            <td style="white-space: nowrap;">
-                                @{string modalDataTarget = "modalGainAccessToSharedDataset" + t;}
-                                <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Gain Access</a>
-                                @{modalDataTarget = "modalStopSharingDataset" + t;}
-                                <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
-                                @{t++;}
-                            </td>
-                            <td>
-                                <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DatasetName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfColumns)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().NumberOfRows)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().InputFileFormat)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedDatasets.FirstOrDefault().DateOfEdition)
+                            </th>
+                            <th style="white-space:nowrap;">
+                                Gain access
+                            </th>
+                            <th>
+                                Details
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @{int t = 0;}
+                        @foreach (var dataset in Model.SharedDatasets)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.DatasetName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.NumberOfColumns)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.NumberOfRows)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.InputFileName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.InputFileFormat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.DateOfEdition)
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @{string modalDataTarget = "modalGainAccessToSharedDataset" + t;}
+                                    <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Gain Access</a>
+                                    @{modalDataTarget = "modalStopSharingDataset" + t;}
+                                    <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
+                                    @{t++;}
+                                </td>
+                                <td>
+                                    <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="options-list2" class="dropdown-content">
-    <div class="col 12">
-        <div class="options-container">
-            <div class="single-option">
-                <a asp-controller="Dataset" asp-action="ExportDataset" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
-            </div>
-            <div class="single-option">
-                <a asp-controller="Dataset" asp-action="EditDataset" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
-            </div>
-            <div class="single-option">
-                <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
-            </div>
+    <div id="optionsList2" class="dropdown-content">
+        <div class="col 12">
+            <div class="options-container">
+                <div class="single-option">
+                    <a asp-controller="Dataset" asp-action="ExportDataset" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
+                </div>
+                <div class="single-option">
+                    <a asp-controller="Dataset" asp-action="EditDataset" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
+                </div>
+                <div class="single-option">
+                    <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
 
-@for (int z = 0; z < Model.NotSharedDatasets.Count; z++)
-{
-    string modalDataTarget = "modalShareDataset" + z;
-    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+    @for (int z = 0; z < Model.NotSharedDatasets.Count; z++)
     {
-        ModalIdentificator = modalDataTarget,
-        ModalTitle = "Share Dataset",
-        ModalContent = "Are you sure you want to make this dataset available to other users of the system?",
+        string modalDataTarget = "modalShareDataset" + z;
+        @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+        {
+            ModalIdentificator = modalDataTarget,
+            ModalTitle = "Share Dataset",
+            ModalContent = "Are you sure you want to make this dataset available to other users of the system?",
 
-        ControllerName = "Dataset",
-        ActionName = "ShareDataset",
-        RouteAdditionalArguments = new Dictionary<string, string>
-                                                    {
-                                                        { "datasetIdentificator", Model.NotSharedDatasets[z].DatasetIdentificator }
-                                                    },
-        ModalActAsForm = false,
-        LabelOnButton = "Share"
-    });
-}
+            ControllerName = "Dataset",
+            ActionName = "ShareDataset",
+            RouteAdditionalArguments = new Dictionary<string, string>
+                                                        {
+                                                            { "datasetIdentificator", Model.NotSharedDatasets[z].DatasetIdentificator }
+                                                        },
+            ModalActAsForm = false,
+            LabelOnButton = "Share"
+        });
+    }
 
-@for (int z = 0; z < Model.SharedDatasets.Count; z++)
-{
-    string modalDataTarget = "modalGainAccessToSharedDataset" + z;
-    @await Component.InvokeAsync("ModalGainAccessToSharedDatasetWindow", new ModalGainAccessToSharedDatasetWindowViewModel
+    @for (int z = 0; z < Model.SharedDatasets.Count; z++)
     {
-        ModalIdentificator = modalDataTarget,
-        AccessKey = Model.SharedDatasets[z].AccessKey,
-        UrlToAction = Model.SharedDatasets[z].UrlToAction,
-    });
+        string modalDataTarget = "modalGainAccessToSharedDataset" + z;
+        @await Component.InvokeAsync("ModalGainAccessToSharedDatasetWindow", new ModalGainAccessToSharedDatasetWindowViewModel
+        {
+            ModalIdentificator = modalDataTarget,
+            AccessKey = Model.SharedDatasets[z].AccessKey,
+            UrlToAction = Model.SharedDatasets[z].UrlToAction,
+        });
 
-    modalDataTarget = "modalStopSharingDataset" + z;
-    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
-    {
-        ModalIdentificator = modalDataTarget,
-        ModalTitle = "Stop sharing dataset",
-        ModalContent = "Are you sure you want to stop sharing access to your dataset?",
+        modalDataTarget = "modalStopSharingDataset" + z;
+        @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+        {
+            ModalIdentificator = modalDataTarget,
+            ModalTitle = "Stop sharing dataset",
+            ModalContent = "Are you sure you want to stop sharing access to your dataset?",
 
-        ControllerName = "Dataset",
-        ActionName = "StopSharingDataset",
-        RouteAdditionalArguments = new Dictionary<string, string>
-                                                    {
-                                                        { "datasetIdentificator", Model.SharedDatasets[z].DatasetIdentificator }
-                                                    },
-        ModalActAsForm = false,
-        LabelOnButton = "Stop sharing"
-    });
-}
+            ControllerName = "Dataset",
+            ActionName = "StopSharingDataset",
+            RouteAdditionalArguments = new Dictionary<string, string>
+                                                        {
+                                                            { "datasetIdentificator", Model.SharedDatasets[z].DatasetIdentificator }
+                                                        },
+            ModalActAsForm = false,
+            LabelOnButton = "Stop sharing"
+        });
+    }
 
-@section NavContent {
+    @section NavContent {
 
-    <div class="nav-content">
-        <ul class="tabs">
-            <li class="tab">
-                <a href="#sharedDatasets" class="active">Shared datasets</a>
-            </li>
-            <li class="tab">
-                <a href="#notSharedDatasets">Not shared datasets</a>
-            </li>
-        </ul>
-    </div>
-}
+        <div class="nav-content">
+            <ul class="tabs">
+                <li class="tab">
+                    <a href="#sharedDatasets" class="active">Shared datasets</a>
+                </li>
+                <li class="tab">
+                    <a href="#notSharedDatasets">Not shared datasets</a>
+                </li>
+            </ul>
+        </div>
+    }
 
-@section Scripts{
+    @section Scripts{
 
-    <script>
+        @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript");}
+
+        <script>
 
         $(document).ready(function () {
             $('.collapsible').collapsible();
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements").show();
-            $('div#dt_loader').hide();
+            $("#notSharedDatasetsInfoList").show();
+            $('div#dataTableLoadingIndicator').hide();
 
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#notSharedDatasetsInfoList").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements2").show();
-            $('div#dt_loader2').hide();
+            $("#sharedDatasetsInfoList").show();
+            $('div#dataTableLoadingIndicator2').hide();
 
-            $("#table-custom-elements2").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#sharedDatasetsInfoList").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
         });
 
@@ -278,41 +284,21 @@
                  $("@id").modal();
             </text>
         }
-    </script>
+        </script>
 
-    <script>
-        $(document).ready(function () {
-            $('.tabs').tabs()
-        });
-    </script>
-
-    <script>
-        $("#navbar-top").addClass("nav-extended");
-    </script>
-
-    <script>
-        function copyToClipboard(text) {
-            var dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = text;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-        }
-    </script>
-}
-
-@section Notification
-{
-    <div class="row">
-        <div class="col s8 offset-s2">
-
-            @if (ViewData["Message"] != null)
-            {
-
-                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
+        <script>
+            function copyToClipboard(text) {
+                var dummy = document.createElement("textarea");
+                document.body.appendChild(dummy);
+                dummy.value = text;
+                dummy.select();
+                document.execCommand("copy");
+                document.body.removeChild(dummy);
             }
+        </script>
+    }
 
-        </div>
-    </div>
-}
+    @section Notification
+{
+        @{await Html.RenderPartialAsync("_NotificationMenuMessage");}
+    }

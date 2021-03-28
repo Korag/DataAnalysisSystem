@@ -4,63 +4,68 @@
     ViewData["Title"] = "My datasets";
 }
 
-<div class="card" style="display:block; margin-bottom: 5vh">
-    <div class="card-content">
-        <span class="card-title center">My datasets</span>
+<div class="row" style="margin-top: 5vh; margin-bottom: 5vh">
+    <div class="col s12">
 
-        <div class="progress" id="dt_loader" style="margin-top:30px;">
-            <div class="indeterminate"></div>
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">My datasets</span>
+
+                <div class="progress" id="dataTableLoadingIndicator" style="margin-top:30px;">
+                    <div class="indeterminate"></div>
+                </div>
+
+                <table id="datasetsInfoList" class="row-border" cellspacing="0" width="100%" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DatasetName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NumberOfColumns)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NumberOfRows)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InputFileName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DateOfEdition)
+                            </th>
+                            <th>
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dataset in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.DatasetName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.NumberOfColumns)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.NumberOfRows)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.InputFileName)@Html.DisplayFor(model => dataset.InputFileFormat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => dataset.DateOfEdition)
+                                </td>
+                                <td>
+                                    <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DatasetName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NumberOfColumns)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NumberOfRows)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.InputFileName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DateOfEdition)
-                    </th>
-                    <th>
-                        Details
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var dataset in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => dataset.DatasetName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.NumberOfColumns)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.NumberOfRows)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.InputFileName)@Html.DisplayFor(model => dataset.InputFileFormat)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => dataset.DateOfEdition)
-                        </td>
-                        <td>
-                            <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
 </div>
 
@@ -76,10 +81,10 @@
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements").show();
-            $('div#dt_loader').hide();
+            $("#datasetsInfoList").show();
+            $('div#dataTableLoadingIndicator').hide();
 
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: "true", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#datasetsInfoList").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: "true", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
         });
     </script>
@@ -87,15 +92,5 @@
 
 @section Notification
 {
-    <div class="row">
-        <div class="col s8 offset-s2">
-
-            @if (ViewData["Message"] != null)
-            {
-
-                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
-            }
-
-        </div>
-    </div>
+    @{await Html.RenderPartialAsync("_NotificationMenuMessage");}
 }
