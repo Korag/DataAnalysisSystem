@@ -6,10 +6,10 @@
     ViewData["Title"] = "Edit Dataset";
 }
 
-<div class="row">
+<div class="row" style="margin-top: 5vh; margin-bottom: 5vh">
     <div class="col s12">
 
-        <div class="card" style="display:block; margin-bottom: 5vh">
+        <div class="card" style="display:block;">
             <div class="card-content">
                 <span class="card-title center">Edit dataset</span>
 
@@ -31,15 +31,17 @@
                     </div>
 
                     <div class="left-align" style="margin-top: 10px">
-                        <input class="btn modal-trigger" type="submit" id="submitButton" value="Edit">
+                        <button class="btn waves-effect waves-light" type="submit" id="submitButton">
+                            Edit
+                        </button>
                         <a asp-action="DatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
                     </div>
 
-                    <div class="progress" id="dt_loader" style="margin-top:30px;">
+                    <div class="progress" id="dataTableLoadingIndicator" style="margin-top:30px;">
                         <div class="indeterminate"></div>
                     </div>
 
-                    <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
+                    <table id="datasetContentTable" class="row-border" cellspacing="0" width="100%" style="display:none">
                         <thead>
 
                             <tr>
@@ -55,7 +57,6 @@
                                     {
                                         int index = Model.DatasetContent.NumberColumns.IndexOf(numberColumn);
 
-                                        @*<th>@numberColumn.AttributeName</th>*@
                                         <th>
                                             <input asp-for="DatasetContent.NumberColumns[index].AttributeName" value="@Model.DatasetContent.NumberColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" style="width:auto" />
                                             <span asp-validation-for="DatasetContent.NumberColumns[index].AttributeName" class="helper-text" style="color: #F44336" onclick="StopEventPropagation(event)"></span>
@@ -72,7 +73,6 @@
                                         var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
                                         int index = Model.DatasetContent.StringColumns.IndexOf(stringColumn);
 
-                                        @*<th>@stringColumn.AttributeName</th>*@
                                         <th>
                                             <input asp-for="DatasetContent.StringColumns[index].AttributeName" value="@Model.DatasetContent.StringColumns[index].AttributeName" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" style="width:auto" />
                                             <span asp-validation-for="DatasetContent.StringColumns[index].AttributeName" class="helper-text" style="color: #F44336" onclick="StopEventPropagation(event)"></span>
@@ -114,11 +114,9 @@
                                         if (numberColumn != null)
                                         {
                                             <td>
-                                                @*onload="auto_grow(this)" data-autoresize*@
                                                 <textarea asp-for="DatasetContent.NumberColumns[n].AttributeValue[i]" class="validate" oninput="auto_grow(this)"></textarea>
                                                 <span asp-validation-for="DatasetContent.NumberColumns[n].AttributeValue[i]" class="helper-text" style="color: #F44336"></span>
 
-                                                @*<input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />*@<input asp-for="DatasetContent.NumberColumns[n].AttributeName" value="@Model.DatasetContent.NumberColumns[n].AttributeName" readonly hidden />
                                                 <input asp-for="DatasetContent.NumberColumns[n].PositionInDataset" value="@Model.DatasetContent.NumberColumns[n].PositionInDataset" readonly hidden />
 
                                                 @{n++;}
@@ -129,11 +127,9 @@
                                             var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
 
                                             <td>
-                                                @*oninput="auto_grow(this)" data-autoresize*@
                                                 <textarea asp-for="DatasetContent.StringColumns[s].AttributeValue[i]" class="validate" oninput="auto_grow(this)"></textarea>
                                                 <span asp-validation-for="DatasetContent.StringColumns[s].AttributeValue[i]" class="helper-text" style="color: #F44336"></span>
 
-                                                @*<input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />*@<input asp-for="DatasetContent.StringColumns[s].AttributeName" value="@Model.DatasetContent.StringColumns[s].AttributeName" readonly hidden />
                                                 <input asp-for="DatasetContent.StringColumns[s].PositionInDataset" value="@Model.DatasetContent.StringColumns[s].PositionInDataset" readonly hidden />
 
                                                 @{s++;}
@@ -179,16 +175,6 @@
             element.style.height = (element.scrollHeight) + "px";
         }
 
-        //$.each($('textarea[data-autoresize]'), function () {
-        //    var offset = this.offsetHeight - this.clientHeight;
-        //    var resizeTextarea = function (el) {
-        //        $(el).css('height', 'auto').css('height', el.scrollHeight + offset);
-        //    };
-        //    $(this).each(function () {
-        //        resizeTextarea(this);
-        //    }).removeAttr('data-autoresize');
-        //});
-
         function openModalWaiter() {
             var form = $("#EditDatasetForm");
             form.validate();
@@ -199,10 +185,10 @@
         }
 
         $(document).ready(function () {
-            $("#table-custom-elements").show(); 
-            $('div#dt_loader').hide();
+            $("#datasetContentTable").show();
+            $('div#dataTableLoadingIndicator').hide();
 
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#datasetContentTable").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
         });
 
@@ -222,7 +208,7 @@
         }
 
         $('#submitButton').click(function () {
-                var oTable = $('#table-custom-elements').DataTable();
+                var oTable = $('#datasetContentTable').DataTable();
                 oTable.page.len(@rows).draw();
             });
 
@@ -231,11 +217,5 @@
 
 @section Notification
 {
-    <div class="row">
-        <div class="col s8 offset-s2">
-
-            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
-
-        </div>
-    </div>
+    @{await Html.RenderPartialAsync("_NotificationMenuValidation");}
 }

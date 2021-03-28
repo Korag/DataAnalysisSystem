@@ -6,9 +6,9 @@
     ViewData["Title"] = "Add new dataset";
 }
 
-<div class="row" style="margin-bottom:0px">
+<div class="row" style="margin-top: 5vh; margin-bottom: 2vh">
 
-    <div class="col s8 offset-s2" style="margin-top: 5vh">
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
         <div class="card">
             <div class="card-content">
                 <span class="card-title center-align">Add new Dataset</span>
@@ -54,7 +54,9 @@
                             </ul>
 
                             <div class="center-align" style="margin-top: 10px">
-                                <input class="btn modal-trigger" type="submit" value="Load">
+                                <button class="btn waves-effect waves-light" type="submit">
+                                    Load
+                                </button>
                             </div>
 
                         </fieldset>
@@ -105,8 +107,11 @@
                         </ul>
 
                         <div class="center-align" style="margin-top: 10px">
-                            <input class="btn" type="submit" value="Load">
+                            <button class="btn waves-effect waves-light" type="submit">
+                                Load
+                            </button>
                         </div>
+
 
                     </form>
                 }
@@ -124,22 +129,24 @@
         <input type="text" asp-for="InputFileName" hidden readonly>
         <input type="text" asp-for="InputFileFormat" hidden readonly>
 
-        <div class="row">
+        <div class="row" style="margin-top: 0vh; margin-bottom: 5vh">
             <div class="col s12">
 
                 <div class="card" style="display:block; margin-bottom: 5vh">
                     <div class="card-content">
                         <span class="card-title">Dataset</span>
                         <div class="left-align" style="margin-top: 10px">
-                            <input class="btn modal-trigger" type="submit" id="submitButton" value="Save">
+                            <button class="btn waves-effect waves-light" type="submit" id="submitButton">
+                                Save
+                            </button>
                             <a asp-action="AddNewDataset" asp-controller="Dataset" type="button" class="waves-effect waves-red btn-flat">Cancel</a>
                         </div>
 
-                        <div class="progress" id="dt_loader" style="margin-top:30px;">
+                        <div class="progress" id="dataTableLoadingIndicator" style="margin-top:30px;">
                             <div class="indeterminate"></div>
                         </div>
 
-                        <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
+                        <table id="datasetContentTable" class="row-border" cellspacing="0" width="100%" style="display:none">
                             <thead>
 
                                 <tr>
@@ -212,22 +219,6 @@
             </div>
         </div>
 
-        @*@for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
-            {
-                @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count(); j++)
-                {
-                    <input asp-for="DatasetContent.NumberColumns[j].AttributeValue[i]" value="@Model.DatasetContent.NumberColumns[j].AttributeValue[i]" readonly hidden />
-                    <input asp-for="DatasetContent.NumberColumns[j].AttributeName" value="@Model.DatasetContent.NumberColumns[j].AttributeName" readonly hidden />
-                    <input asp-for="DatasetContent.NumberColumns[j].PositionInDataset" value="@Model.DatasetContent.NumberColumns[j].PositionInDataset" readonly hidden />
-                }
-                @for (int j = 0; j < Model.DatasetContent.StringColumns.Count(); j++)
-                {
-                    <input asp-for="DatasetContent.StringColumns[j].AttributeValue[i]" value="@Model.DatasetContent.StringColumns[j].AttributeValue[i]" readonly hidden />
-                    <input asp-for="DatasetContent.StringColumns[j].AttributeName" value="@Model.DatasetContent.StringColumns[j].AttributeName" readonly hidden />
-                    <input asp-for="DatasetContent.StringColumns[j].PositionInDataset" value="@Model.DatasetContent.StringColumns[j].PositionInDataset" readonly hidden />
-                }
-            }*@
-
     </form>
 }
 
@@ -250,13 +241,6 @@ else
        })
 }
 
-@await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
-      {
-          ModalIdentificator = "modalLoadingPage",
-          ModalHeader = "Loading page.",
-          ModalPrimaryText = "This may take a while."
-      })
-
 @section Scripts{
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
@@ -272,19 +256,14 @@ else
         }
 
         $(document).ready(function () {
-            $('.tooltipped').tooltip();
-            });
+            $("#datasetContentTable").show();
+            $('div#dataTableLoadingIndicator').hide();
 
-        $(document).ready(function () {
-            $('.collapsible').collapsible();
-        });
-
-        $(document).ready(function () {
-            $("#table-custom-elements").show();
-            $('div#dt_loader').hide();
-
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#datasetContentTable").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
+
+            $('.tooltipped').tooltip();
+            $('.collapsible').collapsible();
         });
 
         @{var rows = 0;
@@ -303,47 +282,14 @@ else
         }
 
         $('#submitButton').click(function () {
-                var oTable = $('#table-custom-elements').DataTable();
+                var oTable = $('#datasetContentTable').DataTable();
                 oTable.page.len(@rows).draw();
             });
-
-        //$('#DatasetContentForm').on('submit', function (e) {
-        //    var form = this;
-
-        //    // Encode a set of form elements from all pages as an array of names and values
-        //    var params = table.$('input,select,textarea').serializeArray();
-
-        //    // Iterate over all form elements
-        //    $.each(params, function () {
-        //        // If element doesn't exist in DOM
-        //        if (!$.contains(document, form[this.name])) {
-        //            // Create a hidden element
-        //            $(form).append(
-        //                $('<input>')
-        //                    .attr('type', 'hidden')
-        //                    .attr('name', this.name)
-        //                    .val(this.value)
-        //            );
-        //        }
-        //    });
-        //});
 
     </script>
 }
 
 @section Notification
 {
-    <div class="row">
-        <div class="col s8 offset-s2">
-
-            <div asp-validation-summary="ModelOnly" class="row justify-content-center alert alert-danger validation-model"></div>
-
-            @if (ViewData["Message"] != null)
-            {
-
-                <h2 class="alert alert-info" role="alert">@ViewData["Message"]</h2>
-            }
-
-        </div>
-    </div>
+    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage");}
 }
