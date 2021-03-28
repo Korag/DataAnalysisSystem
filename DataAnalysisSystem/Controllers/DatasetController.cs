@@ -39,7 +39,6 @@ namespace DataAnalysisSystem.Controllers
         private const string DATASET_XML_FORMAT_TYPE = "xml";
 
         private readonly ICodeGenerator _codeGenerator;
-        private readonly ICodeQRGenerator _qrCodeGenerator;
         private readonly IEmailProvider _emailProvider;
         private readonly IRegexComparatorChainFacade _regexComparator;
         private readonly IMimeTypeGuesser _mimeTypeGuesser;
@@ -53,11 +52,11 @@ namespace DataAnalysisSystem.Controllers
 
         private readonly RepositoryContext _context;
 
+        //All actions OK
         public DatasetController(RepositoryContext context,
                                  CustomSerializer customSerializer,
                                  IWebHostEnvironment environment,
                                  ICodeGenerator codeGenerator,
-                                 ICodeQRGenerator qrCodeGenerator,
                                  IEmailProvider emailProvider,
                                  IMapper autoMapper,
                                  IRegexComparatorChainFacade regexComparator,
@@ -70,7 +69,6 @@ namespace DataAnalysisSystem.Controllers
             this._environment = environment;
 
             this._codeGenerator = codeGenerator;
-            this._qrCodeGenerator = qrCodeGenerator;
 
             this._emailProvider = emailProvider;
             this._regexComparator = regexComparator;
@@ -301,7 +299,7 @@ namespace DataAnalysisSystem.Controllers
 
             _context.datasetRepository.UpdateDataset(datasetToShare);
 
-            return RedirectToAction("SharedUserDatasets", "Dataset", new { notificationMessage = "A data set has been made available." });
+            return RedirectToAction("UserSharedDatasets", "Dataset", new { notificationMessage = "A data set has been made available." });
         }
 
         [Authorize]
@@ -311,11 +309,14 @@ namespace DataAnalysisSystem.Controllers
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
             _context.userRepository.RemoveSharedDatasetsFromUsers(datasetIdentificator);
 
+            List<string> dataAnalysesId = _context.analysisRepository.GetAnalysesByDatasetId(dataset.DatasetIdentificator).Select(z => z.AnalysisIdentificator).ToList();
+            _context.userRepository.RemoveSharedAnalysesFromUsers(dataAnalysesId);
+
             dataset.IsShared = false;
             dataset.AccessKey = "000";
             _context.datasetRepository.UpdateDataset(dataset);
 
-            return RedirectToAction("SharedUserDatasets", "Dataset", new { notificationMessage = "The selected dataset is no longer shared with other system users." });
+            return RedirectToAction("UserSharedDatasets", "Dataset", new { notificationMessage = "The selected dataset is no longer shared with other system users." });
         }
 
         [Authorize]
@@ -440,8 +441,14 @@ namespace DataAnalysisSystem.Controllers
             List<Dataset> datasetShared = _context.datasetRepository.GetDatasetsById(loggedUser.SharedDatasetsToUser).ToList();
 
             SharedDatasetsBrowserViewModel datasetSharedVm = new SharedDatasetsBrowserViewModel();
+            
             datasetSharedVm.SharedDatasets = _autoMapper.Map<List<SharedDatasetByCollabViewModel>>(datasetShared).ToList();
-            datasetSharedVm.SharedDatasets = _autoMapper.Map<List<DatasetStatistics>, List<SharedDatasetByCollabViewModel>>(datasetShared.Select(z => z.DatasetStatistics).ToList());
+            List<DatasetStatistics> datasetStatistics = datasetShared.Select(z => z.DatasetStatistics).ToList();
+
+            for (int i = 0; i < datasetSharedVm.SharedDatasets.Count; i++)
+            {
+                datasetSharedVm.SharedDatasets[i] = _autoMapper.Map<DatasetStatistics, SharedDatasetByCollabViewModel>(datasetStatistics[i], datasetSharedVm.SharedDatasets[i]);
+            }
             datasetSharedVm.SharedDatasets.ToList().ForEach(z => z.OwnerName = GetDatasetOwnerName(z.DatasetIdentificator));
 
             return datasetSharedVm;
@@ -461,7 +468,7 @@ namespace DataAnalysisSystem.Controllers
         [Authorize]
         [HttpPost]
         [ActionName("SharedDatasetsBrowser")]
-        public IActionResult SharedDatasetsBrowserPost(string datasetAccessKey)
+        public IActionResult SharedDatasetsBrowserPost(string newSharedDatasetAccessKey)
         {
             #region Legacy
             //Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetBrowser.NewSharedDatasetAccessKey);
@@ -499,7 +506,7 @@ namespace DataAnalysisSystem.Controllers
             //}
             #endregion
 
-            return RedirectToAction("GainAccessToSharedDataset", new { datasetAccessKey = datasetAccessKey });
+            return RedirectToAction("GainAccessToSharedDataset", new { datasetAccessKey = newSharedDatasetAccessKey });
         }
 
         [Authorize]
@@ -507,8 +514,7 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult GainAccessToSharedDataset(string datasetAccessKey)
         {
             Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetAccessKey);
-            SharedDatasetsBrowserViewModel datasetBrowser = GetDatasetsSharedToLoggedUser();
-
+      
             if (datasetShared != null)
             {
                 var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
@@ -516,26 +522,29 @@ namespace DataAnalysisSystem.Controllers
                 if (loggedUser.UserDatasets.Contains(datasetShared.DatasetIdentificator))
                 {
                     ModelState.AddModelError(string.Empty, "You are the owner of this data set.");
+                    SharedDatasetsBrowserViewModel datasetBrowser = GetDatasetsSharedToLoggedUser();
 
-                    return View("SharedDatasetBrowser", datasetBrowser);
+                    return View("SharedDatasetsBrowser", datasetBrowser);
                 }
                 if (loggedUser.SharedDatasetsToUser.Contains(datasetShared.DatasetIdentificator))
                 {
                     ModelState.AddModelError(string.Empty, "You already have access to this dataset.");
+                    SharedDatasetsBrowserViewModel datasetBrowser = GetDatasetsSharedToLoggedUser();
 
-                    return View("SharedDatasetBrowser", datasetBrowser);
+                    return View("SharedDatasetsBrowser", datasetBrowser);
                 }
 
                 loggedUser.SharedDatasetsToUser.Add(datasetShared.DatasetIdentificator);
                 _context.userRepository.UpdateUser(loggedUser);
 
-                return View("SharedDatasetBrowser", datasetBrowser);
+                return RedirectToAction("SharedDatasetsBrowser", "Dataset", new { notificationMessage = "Access was gained to a shared dataset." });
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Invalid access key.");
+                SharedDatasetsBrowserViewModel datasetBrowser = GetDatasetsSharedToLoggedUser();
 
-                return View("SharedDatasetBrowser", datasetBrowser);
+                return View("SharedDatasetsBrowser", datasetBrowser);
             }
         }
 
@@ -624,11 +633,19 @@ namespace DataAnalysisSystem.Controllers
 
                 var numberAttributePositionToDelete = datasetToEdit.DatasetContent.NumberColumns.Where(z => z.ColumnToDelete).Select(z => z.PositionInDataset).ToList();
                 var numberAttributeToDelete = dataset.DatasetContent.NumberColumns.Where(z => numberAttributePositionToDelete.Contains(z.PositionInDataset)).ToList();
-                numberAttributeToDelete.ForEach(z => dataset.DatasetContent.NumberColumns.ToList().Remove(z));
+
+                foreach (var numberAttribute in numberAttributeToDelete)
+                {
+                    dataset.DatasetContent.NumberColumns.Remove(numberAttribute);
+                }
 
                 var stringAttributePositionToDelete = datasetToEdit.DatasetContent.StringColumns.Where(z => z.ColumnToDelete).Select(z => z.PositionInDataset).ToList();
                 var stringAttributeToDelete = dataset.DatasetContent.StringColumns.Where(z => stringAttributePositionToDelete.Contains(z.PositionInDataset)).ToList();
-                stringAttributeToDelete.ForEach(z => dataset.DatasetContent.StringColumns.ToList().Remove(z));
+
+                foreach (var stringAttribute in stringAttributeToDelete)
+                {
+                    dataset.DatasetContent.StringColumns.Remove(stringAttribute);
+                }
 
                 dataset.DatasetStatistics.NumberOfColumns = dataset.DatasetContent.NumberColumns.Count + dataset.DatasetContent.StringColumns.Count;
                 dataset.DatasetStatistics.NumberOfRows = dataset.DatasetContent.NumberColumns.Count != 0

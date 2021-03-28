@@ -96,10 +96,18 @@ namespace DataAnalysisSystem.Repository.Repository
 
         public IList<IdentityProviderUser> RemoveSharedAnalysesFromUsers(IList<string> analysesIdentificators)
         {
-            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.SharedAnalysesToUser.ToList().Where(x => analysesIdentificators.Contains(x)).ToList().Count() != 0);
-            var update = Builders<IdentityProviderUser>.Update.PullAll(x => x.SharedAnalysesToUser, analysesIdentificators);
+            List<IdentityProviderUser> resultListOfUsers = new List<IdentityProviderUser>();
 
-            var resultListOfUsers = GetUsers().Find<IdentityProviderUser>(filter).ToList();
+            foreach (var analysisId in analysesIdentificators)
+            {
+                var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.SharedAnalysesToUser.Contains(analysisId));
+                var update = Builders<IdentityProviderUser>.Update.Pull(x => x.SharedAnalysesToUser, analysisId);
+
+                var result = _users.UpdateMany(filter, update);
+
+                resultListOfUsers.AddRange(GetUsers().Find<IdentityProviderUser>(filter).ToList());
+            }
+            resultListOfUsers = resultListOfUsers.Distinct().ToList();
 
             return resultListOfUsers;
         }
@@ -110,7 +118,7 @@ namespace DataAnalysisSystem.Repository.Repository
             var update = Builders<IdentityProviderUser>.Update.PullAll(x => x.UserAnalyses, analysesIdentificators);
 
             var resultUser = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
-            var result = _users.UpdateOne(filter, update);
+            var result = _users.UpdateMany(filter, update);
 
             return resultUser;
         }

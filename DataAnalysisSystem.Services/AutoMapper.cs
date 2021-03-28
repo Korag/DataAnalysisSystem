@@ -56,6 +56,8 @@ namespace DataAnalysisSystem.Services
 
             CreateMap<DatasetStatistics, SharedDatasetByCollabViewModel>();
 
+            CreateMap<Dataset, SharedDatasetByCollabViewModel>();
+
             CreateMap<Dataset, ExportDatasetViewModel>();
 
             CreateMap<Dataset, EditDatasetViewModel>()
