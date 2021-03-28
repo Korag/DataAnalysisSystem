@@ -4,32 +4,28 @@
     ViewData["Title"] = "Export Dataset";
 }
 
-<div id="displayTable" class="col s12">
-    <div class="row" style="margin-bottom:0px">
-
-        <div class="col s8 offset-s2" style="margin-top:10vh">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title center-align">Export Dataset</span>
-                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
-                </div>
+<div id="displayTable" class="row" style="margin-top: 10vh; margin-bottom:2vh">
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align">Export Dataset</span>
+                <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
             </div>
         </div>
-
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top: 0vh; margin-bottom:5vh">
         <div class="col s12">
 
-            <div class="card" style="display:block; margin-bottom: 5vh">
+            <div class="card" style="display:block;">
                 <div class="card-content">
                     <span class="card-title center">Dataset content</span>
 
-                    <div class="progress" id="dt_loader" style="margin-top:30px;">
+                    <div class="progress" id="dataTableLoadingIndicator" style="margin-top:30px;">
                         <div class="indeterminate"></div>
                     </div>
 
-                    <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
+                    <table id="datasetContentTable" class="row-border" cellspacing="0" width="100%" style="display:none">
                         <thead>
 
                             <tr>
@@ -95,29 +91,26 @@
 </div>
 
 <div id="additionalTabs" style="display:none">
-    <div id="displayCSV" class="col s12">
-        <div class="row" style="margin-bottom:0px">
 
-            <div class="col s8 offset-s2" style="margin-top:10vh">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title center-align">Export Dataset</span>
-                        <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+    <div id="displayCSV" class="row" style="margin-top: 10vh; margin-bottom: 2vh">
+        <div class="col s12 m10 l8 offset-m1 offset-l2">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align">Export Dataset</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
-                        <div class="right-align" style="margin-top: 10px">
-                            <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="csv" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
-                        </div>
-
+                    <div class="right-align" style="margin-top: 10px">
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="csv" class="btn waves-effect waves-light" style="margin-left:24px;">Download</a>
                     </div>
+
                 </div>
             </div>
-
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 0vh; margin-bottom: 5vh">
             <div class="col s12">
 
-                <div class="card" style="display:block; margin-bottom: 5vh">
+                <div class="card" style="display:block;">
                     <div class="card-content">
                         <span class="card-title center">Dataset content</span>
                         <textarea asp-for="DatasetContentFormatCSV" class="materialize-textarea" style="max-height:600px; overflow-y: scroll;" readonly></textarea>
@@ -129,29 +122,26 @@
 
     </div>
 
-    <div id="displayJSON" class="col s12">
-        <div class="row" style="margin-bottom:0px">
+    <div id="displayJSON" class="row" style="margin-top: 10vh; margin-bottom: 2vh">
+        <div class="col s12 m10 l8 offset-m1 offset-l2">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align">Export Dataset</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
-            <div class="col s8 offset-s2" style="margin-top:10vh">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title center-align">Export Dataset</span>
-                        <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
-
-                        <div class="right-align" style="margin-top: 10px">
-                            <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="json" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
-                        </div>
-
+                    <div class="right-align" style="margin-top: 10px">
+                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="json" class="btn waves-effect waves-light" style="margin-left:24px;">Download</a>
                     </div>
+
                 </div>
             </div>
 
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 0vh; margin-bottom: 5vh">
             <div class="col s12">
 
-                <div class="card" style="display:block; margin-bottom: 5vh">
+                <div class="card" style="display:block;">
                     <div class="card-content">
                         <span class="card-title center">Dataset content</span>
                         <textarea asp-for="DatasetContentFormatJSON" class="materialize-textarea" style="max-height:600px; overflow-y: scroll;" readonly></textarea>
@@ -163,50 +153,44 @@
     </div>
 </div>
 
-<div id="displayXLSX" class="col s12">
-    <div class="row" style="margin-bottom:0px">
+<div id="displayXLSX" class="row" style="margin-top: 10vh; margin-bottom: 5vh">
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align">Export Dataset</span>
+                <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
-        <div class="col s8 offset-s2" style="margin-top:10vh">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title center-align">Export Dataset</span>
-                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
-
-                    <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="xlsx" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
-                    </div>
-
+                <div class="right-align" style="margin-top: 10px">
+                    <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="xlsx" class="btn waves-effect waves-light" style="margin-left:24px;">Download</a>
                 </div>
+
             </div>
         </div>
-
     </div>
 
 </div>
 
-<div id="displayXML" class="col s12">
-    <div class="row" style="margin-bottom:0px">
+<div id="displayXML" class="row" style="margin-top: 10vh; margin-bottom: 2vh">
 
-        <div class="col s8 offset-s2" style="margin-top:10vh">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title center-align">Export Dataset</span>
-                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align">Export Dataset</span>
+                <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
-                    <div class="right-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="xml" class="btn waves-effect waves-teal" style="margin-left:24px;">Download</a>
-                    </div>
-
+                <div class="right-align" style="margin-top: 10px">
+                    <a asp-controller="Dataset" asp-action="DownloadDatasetInSpecificFormat" asp-route-datasetIdentificator="@Model.DatasetIdentificator" asp-route-formatType="xml" class="btn waves-effect waves-light" style="margin-left:24px;">Download</a>
                 </div>
+
             </div>
         </div>
 
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top: 10vh; margin-bottom: 5vh">
         <div class="col s12">
 
-            <div class="card" style="display:block; margin-bottom: 5vh">
+            <div class="card" style="display:block;">
                 <div class="card-content">
                     <span class="card-title center">Dataset content</span>
                     <textarea asp-for="DatasetContentFormatXML" class="materialize-textarea" style="max-height:600px; overflow-y: scroll;" readonly></textarea>
@@ -243,15 +227,8 @@
 }
 
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('.tabs').tabs()
-        });
-    </script>
 
-    <script>
-        $("#navbar-top").addClass("nav-extended");
-    </script>
+    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript");}
 
     <script>
 
@@ -260,12 +237,12 @@
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements").show();
-            $('div#dt_loader').hide();
+            $("#datasetContentTable").show();
+            $('div#dataTableLoadingIndicator').hide();
 
             $("#additionalTabs").show();
 
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("#datasetContentTable").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
         });
 
