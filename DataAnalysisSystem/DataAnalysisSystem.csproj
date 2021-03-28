@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\_NotAuthorizedUserLayoutChangeNavbarScript - Copy.cshtml" />
+    <Content Remove="Views\Shared\_NotAuthorizedUserLayoutChangeNavbarScript.cshtml" />
     <Content Remove="wwwroot\DatabaseCredentials\dbCredentials.json" />
   </ItemGroup>
 
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Shared\_NotAuthorizedUserLayoutChangeNavbarScript - Copy.cshtml" />
+    <None Include="Views\Shared\_NotAuthorizedUserLayoutChangeNavbarScript.cshtml" />
     <None Include="Views\Shared\_AuthorizedUserLayoutChangeNavbarScript.cshtml" />
     <None Include="Views\Shared\_AuthorizedUserLayoutElementsScript.cshtml" />
     <None Include="wwwroot\DatabaseCredentials\dbCredentials.json" />
