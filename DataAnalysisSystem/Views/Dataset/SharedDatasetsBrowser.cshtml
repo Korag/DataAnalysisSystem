@@ -136,5 +136,5 @@
 
 @section Notification
 {
-    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage");}
+    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
 }

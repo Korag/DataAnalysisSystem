@@ -277,5 +277,5 @@
 
 @section Notification
 {
-    @{await Html.RenderPartialAsync("_NotificationMenuMessage");}
+    @{await Html.RenderPartialAsync("_NotificationMenuMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
 }

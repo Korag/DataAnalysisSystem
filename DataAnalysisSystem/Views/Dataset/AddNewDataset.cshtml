@@ -244,16 +244,9 @@ else
 @section Scripts{
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
+    @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "AddNewDatasetForm", ModalId = "modalWaiter" });}
 
     <script>
-        function openModalWaiter() {
-            var form = $("#AddNewDatasetForm");
-            form.validate();
-
-            if (form.valid()) {
-                $('#modalWaiter').modal('open');
-            }
-        }
 
         $(document).ready(function () {
             $("#datasetContentTable").show();
@@ -291,5 +284,5 @@ else
 
 @section Notification
 {
-    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage");}
+    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
 }

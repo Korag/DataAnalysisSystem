@@ -119,11 +119,11 @@
             <div class="card-content">
                 <span class="card-title center">Dataset content</span>
 
-                <div class="progress" id="dt_loader" style="margin-top:30px;">
+                <div class="progress" id="dataTableLoadingIndicatordataTableLoadingIndicator" style="margin-top:30px;">
                     <div class="indeterminate"></div>
                 </div>
 
-                <table id="table-custom-elements" class="row-border" cellspacing="0" width="100%" style="display:none">
+                <table id="datasetContentTable" class="row-border" cellspacing="0" width="100%" style="display:none">
                     <thead>
 
                         <tr>
@@ -220,15 +220,15 @@
         });
 
         $(document).ready(function () {
-            $("#table-custom-elements").show();
-            $('div#dt_loader').hide();
+            $("#datasetContentTable").show();
+            $('div#dataTableLoadingIndicator').hide();
 
-            $("#table-custom-elements").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+            $("datasetContentTable").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
             jQuery("select").not(".disabled").formSelect();
 
         });
 
-        $("#modalDeleteDataset").modal(), $(".scrollspy").scrollSpy();
+        $("#modalDeleteDataset").modal();
 
         function openModalWaiter() {
             $('#modalWaiter').modal('open');
@@ -295,5 +295,5 @@
 
 @section Notification
 {
-    @{await Html.RenderPartialAsync("_NotificationMenuMessage");}
+    @{await Html.RenderPartialAsync("_NotificationMenuMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
 }

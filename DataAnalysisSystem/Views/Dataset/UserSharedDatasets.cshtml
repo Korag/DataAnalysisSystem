@@ -159,90 +159,90 @@
     </div>
 </div>
 
-    <div id="optionsList2" class="dropdown-content">
-        <div class="col 12">
-            <div class="options-container">
-                <div class="single-option">
-                    <a asp-controller="Dataset" asp-action="ExportDataset" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
-                </div>
-                <div class="single-option">
-                    <a asp-controller="Dataset" asp-action="EditDataset" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
-                </div>
-                <div class="single-option">
-                    <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
-                </div>
-
+<div id="optionsList2" class="dropdown-content">
+    <div class="col 12">
+        <div class="options-container">
+            <div class="single-option">
+                <a asp-controller="Dataset" asp-action="ExportDataset" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
             </div>
+            <div class="single-option">
+                <a asp-controller="Dataset" asp-action="EditDataset" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
+            </div>
+            <div class="single-option">
+                <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
+            </div>
+
         </div>
     </div>
+</div>
 
-    @for (int z = 0; z < Model.NotSharedDatasets.Count; z++)
+@for (int z = 0; z < Model.NotSharedDatasets.Count; z++)
+{
+    string modalDataTarget = "modalShareDataset" + z;
+    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
     {
-        string modalDataTarget = "modalShareDataset" + z;
-        @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
-        {
-            ModalIdentificator = modalDataTarget,
-            ModalTitle = "Share Dataset",
-            ModalContent = "Are you sure you want to make this dataset available to other users of the system?",
+        ModalIdentificator = modalDataTarget,
+        ModalTitle = "Share Dataset",
+        ModalContent = "Are you sure you want to make this dataset available to other users of the system?",
 
-            ControllerName = "Dataset",
-            ActionName = "ShareDataset",
-            RouteAdditionalArguments = new Dictionary<string, string>
-                                                        {
-                                                            { "datasetIdentificator", Model.NotSharedDatasets[z].DatasetIdentificator }
-                                                        },
-            ModalActAsForm = false,
-            LabelOnButton = "Share"
-        });
-    }
+        ControllerName = "Dataset",
+        ActionName = "ShareDataset",
+        RouteAdditionalArguments = new Dictionary<string, string>
+                                                    {
+                                                        { "datasetIdentificator", Model.NotSharedDatasets[z].DatasetIdentificator }
+                                                    },
+        ModalActAsForm = false,
+        LabelOnButton = "Share"
+    });
+}
 
-    @for (int z = 0; z < Model.SharedDatasets.Count; z++)
+@for (int z = 0; z < Model.SharedDatasets.Count; z++)
+{
+    string modalDataTarget = "modalGainAccessToSharedDataset" + z;
+    @await Component.InvokeAsync("ModalGainAccessToSharedDatasetWindow", new ModalGainAccessToSharedDatasetWindowViewModel
     {
-        string modalDataTarget = "modalGainAccessToSharedDataset" + z;
-        @await Component.InvokeAsync("ModalGainAccessToSharedDatasetWindow", new ModalGainAccessToSharedDatasetWindowViewModel
-        {
-            ModalIdentificator = modalDataTarget,
-            AccessKey = Model.SharedDatasets[z].AccessKey,
-            UrlToAction = Model.SharedDatasets[z].UrlToAction,
-        });
+        ModalIdentificator = modalDataTarget,
+        AccessKey = Model.SharedDatasets[z].AccessKey,
+        UrlToAction = Model.SharedDatasets[z].UrlToAction,
+    });
 
-        modalDataTarget = "modalStopSharingDataset" + z;
-        @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
-        {
-            ModalIdentificator = modalDataTarget,
-            ModalTitle = "Stop sharing dataset",
-            ModalContent = "Are you sure you want to stop sharing access to your dataset?",
+    modalDataTarget = "modalStopSharingDataset" + z;
+    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+    {
+        ModalIdentificator = modalDataTarget,
+        ModalTitle = "Stop sharing dataset",
+        ModalContent = "Are you sure you want to stop sharing access to your dataset?",
 
-            ControllerName = "Dataset",
-            ActionName = "StopSharingDataset",
-            RouteAdditionalArguments = new Dictionary<string, string>
-                                                        {
-                                                            { "datasetIdentificator", Model.SharedDatasets[z].DatasetIdentificator }
-                                                        },
-            ModalActAsForm = false,
-            LabelOnButton = "Stop sharing"
-        });
-    }
+        ControllerName = "Dataset",
+        ActionName = "StopSharingDataset",
+        RouteAdditionalArguments = new Dictionary<string, string>
+                                                    {
+                                                        { "datasetIdentificator", Model.SharedDatasets[z].DatasetIdentificator }
+                                                    },
+        ModalActAsForm = false,
+        LabelOnButton = "Stop sharing"
+    });
+}
 
-    @section NavContent {
+@section NavContent {
 
-        <div class="nav-content">
-            <ul class="tabs">
-                <li class="tab">
-                    <a href="#sharedDatasets" class="active">Shared datasets</a>
-                </li>
-                <li class="tab">
-                    <a href="#notSharedDatasets">Not shared datasets</a>
-                </li>
-            </ul>
-        </div>
-    }
+    <div class="nav-content">
+        <ul class="tabs">
+            <li class="tab">
+                <a href="#sharedDatasets" class="active">Shared datasets</a>
+            </li>
+            <li class="tab">
+                <a href="#notSharedDatasets">Not shared datasets</a>
+            </li>
+        </ul>
+    </div>
+}
 
-    @section Scripts{
+@section Scripts{
 
-        @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript");}
+    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript");}
 
-        <script>
+    <script>
 
         $(document).ready(function () {
             $('.collapsible').collapsible();
@@ -284,21 +284,21 @@
                  $("@id").modal();
             </text>
         }
-        </script>
+    </script>
 
-        <script>
-            function copyToClipboard(text) {
-                var dummy = document.createElement("textarea");
-                document.body.appendChild(dummy);
-                dummy.value = text;
-                dummy.select();
-                document.execCommand("copy");
-                document.body.removeChild(dummy);
-            }
-        </script>
-    }
+    @*<script>
+        function copyToClipboard(text) {
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+        }
+    </script>*@
+}
 
-    @section Notification
+@section Notification
 {
-        @{await Html.RenderPartialAsync("_NotificationMenuMessage");}
-    }
+    @{await Html.RenderPartialAsync("_NotificationMenuMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
+}

@@ -1,4 +1,6 @@
-﻿<div id="notificationContainer" class="row" style="margin-bottom: 0px;">
+﻿@model DataAnalysisSystem.DTO.AdditionalFunctionalities.NotificationMenuViewModel
+
+<div id="@Model.NotificationContainerId" class="row" style="margin-bottom: 0px;">
     <div class="col s8 offset-s2">
 
         @if (ViewData["Message"] != null)

@@ -1,11 +1,13 @@
-﻿<script>
+﻿@model DataAnalysisSystem.DTO.Scripts.NavExtendedWithTabsViewModel
+
+<script>
         $(document).ready(function () {
             $(".tabs").tabs();
-            $("#navbar-top").addClass("nav-extended");
+            $("#@Model.NavbarId").addClass("nav-extended");
 
             @if (ViewData["Message"] != null)
              {
-                 <text>$("#notificationContainer").css("margin-top", "50px");</text>
+                 <text>$("#@Model.NotificationContainerId").css("margin-top", "50px");</text>
              }
         });
 </script>

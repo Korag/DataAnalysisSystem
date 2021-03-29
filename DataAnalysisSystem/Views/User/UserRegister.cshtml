@@ -78,5 +78,5 @@
 
 @section Notification
 {
-    @{await Html.RenderPartialAsync("_NotificationMenuValidation");}
+    @{await Html.RenderPartialAsync("_NotificationMenuValidation", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
 }

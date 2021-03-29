@@ -21,7 +21,7 @@
         <!-- #region Top Navbar -->
 
         <div class="navbar-fixed">
-            <nav id="navbar-top" class="navbar white">
+            <nav id="navbarTop" class="navbar white">
                 <div class="nav-wrapper col-12">
 
                     <div class="m8 s6">
@@ -85,6 +85,7 @@
     </footer>
 
     @{await Html.RenderPartialAsync("_NotAuthorizedUserLayoutChangeNavbarScript");}
+
     @RenderSection("Scripts", required: false)
 
 </body>

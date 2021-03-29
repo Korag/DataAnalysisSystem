@@ -1,0 +1,12 @@
+﻿@model DataAnalysisSystem.DTO.Scripts.ValidateFormAndOpenModalScriptViewModel
+
+<script>
+      function openModalWaiter() {
+            var form = $("#@Model.FormId");
+            form.validate();
+
+            if (form.valid()) {
+                $('#@Model.ModalId').modal('open');
+            }
+        }
+</script>

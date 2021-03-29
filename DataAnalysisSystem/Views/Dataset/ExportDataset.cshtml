@@ -228,7 +228,7 @@
 
 @section Scripts {
 
-    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript");}
+    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
 
     <script>
 
