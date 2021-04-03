@@ -1,0 +1,23 @@
+﻿@model DataAnalysisSystem.DTO.Scripts.UnwrapDataTableScriptViewModel
+
+<script>
+    @{var rows = 0;
+
+        if (Model.DatasetContent != null)
+        {
+            if (Model.DatasetContent.NumberColumns.Count() != 0)
+            {
+                rows = Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count();
+            }
+            else
+            {
+                rows = Model.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count();
+            }
+        }
+    }
+
+    $('#@Model.ButtonId').click(function () {
+        var oTable = $('#@Model.DataTableId').DataTable();
+            oTable.page.len(@rows).draw();
+        });
+</script>

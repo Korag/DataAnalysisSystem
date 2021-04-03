@@ -120,11 +120,9 @@
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetsInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
 
     <script>
-
         $(document).ready(function () {
             $('.collapsible').collapsible();
         });
-
     </script>
 }
 

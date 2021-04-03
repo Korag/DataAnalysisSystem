@@ -215,17 +215,14 @@
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
 
     <script>
-
         $(document).ready(function () {
             $('.collapsible').collapsible();
+            $("#modalDeleteDataset").modal();
         });
-
-        $("#modalDeleteDataset").modal();
-
+      
         function openModalWaiter() {
             $('#modalWaiter').modal('open');
         }
-
     </script>
 
     <script>

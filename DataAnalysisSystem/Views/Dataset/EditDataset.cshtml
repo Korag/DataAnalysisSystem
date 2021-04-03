@@ -1,6 +1,4 @@
 ﻿@model DataAnalysisSystem.DTO.DatasetDTO.EditDatasetViewModel
-@using DataAnalysisSystem.DTO.AdditionalFunctionalities
-@using DataAnalysisSystem.DTO.Scripts
 
 @{
     ViewData["Title"] = "Edit Dataset";
@@ -159,6 +157,7 @@
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
     @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "EditDatasetForm", ModalId = "modalWaiter" });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_UnwrapEditDataTableScript", new UnwrapEditDataTableScriptViewModel { DatasetContent = Model.DatasetContent, DataTableId = "datasetContentTable", ButtonId = "submitButton" });}
 
     <script>
         function StopEventPropagation(event) {
@@ -169,34 +168,11 @@
                 window.event.cancelBubble = true;
             }
         }
-    </script>
 
-    <script>
         function auto_grow(element) {
             element.style.height = "5px";
             element.style.height = (element.scrollHeight) + "px";
         }
-
-        @{var rows = 0;
-
-            if (Model.DatasetContent != null)
-            {
-                if (Model.DatasetContent.NumberColumns.Count() != 0)
-                {
-                    rows = Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count();
-                }
-                else
-                {
-                    rows = Model.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count();
-                }
-            }
-        }
-
-        $('#submitButton').click(function () {
-                var oTable = $('#datasetContentTable').DataTable();
-                oTable.page.len(@rows).draw();
-            });
-
     </script>
 }
 

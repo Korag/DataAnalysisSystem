@@ -246,34 +246,13 @@ else
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
     @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "AddNewDatasetForm", ModalId = "modalWaiter" });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_UnwrapDataTableScript", new UnwrapDataTableScriptViewModel { DatasetContent = Model.DatasetContent, DataTableId = "datasetContentTable", ButtonId = "submitButton" });}
 
     <script>
-
         $(document).ready(function () {
             $('.tooltipped').tooltip();
             $('.collapsible').collapsible();
         });
-
-        @{var rows = 0;
-
-            if (Model.DatasetContent != null)
-            {
-                if (Model.DatasetContent.NumberColumns.Count() != 0)
-                {
-                    rows = Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count();
-                }
-                else
-                {
-                    rows = Model.DatasetContent.StringColumns.FirstOrDefault().AttributeValue.Count();
-                }
-            }
-        }
-
-        $('#submitButton').click(function () {
-                var oTable = $('#datasetContentTable').DataTable();
-                oTable.page.len(@rows).draw();
-            });
-
     </script>
 }
 
