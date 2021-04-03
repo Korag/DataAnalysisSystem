@@ -1,0 +1,11 @@
+﻿@model DataAnalysisSystem.DTO.Scripts.DataTableInitScriptWithLoadingIndicatorViewModel
+
+<script>
+    $(document).ready(function () {
+        $("#@Model.DataTableId").show();
+        $('div#@Model.LoadingIndicatorId').hide();
+
+        $("#@Model.DataTableId").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: "true", scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
+        jQuery("select").not(".disabled").formSelect();
+    });
+</script>

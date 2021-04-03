@@ -158,6 +158,7 @@
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
     @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "EditDatasetForm", ModalId = "modalWaiter" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
 
     <script>
         function StopEventPropagation(event) {
@@ -175,14 +176,6 @@
             element.style.height = "5px";
             element.style.height = (element.scrollHeight) + "px";
         }
-
-        $(document).ready(function () {
-            $("#datasetContentTable").show();
-            $('div#dataTableLoadingIndicator').hide();
-
-            $("#datasetContentTable").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
-            jQuery("select").not(".disabled").formSelect();
-        });
 
         @{var rows = 0;
 

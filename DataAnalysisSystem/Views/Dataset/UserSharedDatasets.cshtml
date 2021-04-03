@@ -241,27 +241,13 @@
 @section Scripts{
 
     @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript");}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "notSharedDatasetsInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "sharedDatasetsInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2" });}
 
     <script>
 
         $(document).ready(function () {
             $('.collapsible').collapsible();
-        });
-
-        $(document).ready(function () {
-            $("#notSharedDatasetsInfoList").show();
-            $('div#dataTableLoadingIndicator').hide();
-
-            $("#notSharedDatasetsInfoList").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
-            jQuery("select").not(".disabled").formSelect();
-        });
-
-        $(document).ready(function () {
-            $("#sharedDatasetsInfoList").show();
-            $('div#dataTableLoadingIndicator2').hide();
-
-            $("#sharedDatasetsInfoList").DataTable({ processing: true, language: { search: "", searchPlaceholder: "Enter search term" }, order: [0, "asc"], dom: 'ft<"footer-wrapper"l<"paging-info"ip>>', /*columnDefs: [{ "className": "dt-center", "targets": "_all" }],*/ scrollX: true, scrollCollapse: !0, pagingType: "full_numbers", drawCallback: function (t) { var e = this.api(); $(e.table().container()).find(".paginate_button").addClass("waves-effect"), e.table().columns.adjust() } });
-            jQuery("select").not(".disabled").formSelect();
         });
 
         @for (int j = 0; j < Model.NotSharedDatasets.Count; j++)
@@ -285,17 +271,6 @@
             </text>
         }
     </script>
-
-    @*<script>
-        function copyToClipboard(text) {
-            var dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = text;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-        }
-    </script>*@
 }
 
 @section Notification
