@@ -21,9 +21,7 @@
                 <div class="card-content">
                     <span class="card-title center">Dataset content</span>
 
-                    <div class="progress" id="dataTableLoadingIndicator" style="margin-top:30px;">
-                        <div class="indeterminate"></div>
-                    </div>
+                    @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator");}
 
                     <table id="datasetContentTable" class="row-border" cellspacing="0" width="100%" style="display:none">
                         <thead>
