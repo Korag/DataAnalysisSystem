@@ -223,40 +223,7 @@
     </script>
 
     @{await Html.RenderPartialAsync("_AttributeDistributionChart", new ChartUniversalViewModel { ChartCanvasId = "attributeDistributionChart", Data = Model.DatasetStatistics.AttributesDistribution });}
-
-    <script>
-        var btx = document.getElementById('percentageOfMissingValuesChart').getContext('2d');
-
-        var myBarChart = new Chart(btx, {
-            type: 'horizontalBar',
-            data: {
-                labels: ['Missing values percentage'],
-                datasets: [{
-                    label: 'Percentage',
-                    data: @Html.Raw(Model.DatasetStatistics.MissingValuePercentage),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        stacked: true,
-                        ticks: {
-                            min: 0,
-                            max: 100
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
+    @{await Html.RenderPartialAsync("_PercentageOfMissingValuesChart", new ChartUniversalViewModel { ChartCanvasId = "percentageOfMissingValuesChart", Data = Model.DatasetStatistics.MissingValuePercentage });}
 }
 
 @section Notification
