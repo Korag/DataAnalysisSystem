@@ -49,25 +49,24 @@
 </div>
 
 <div class="row" style="margin-top: 0vh; margin-bottom: 2vh">
-    @*??????????????????????????????*@
     <div class="col s10 offset-s1">
 
         <div class="card" style="display:block;">
             <div class="card-content">
                 <span class="card-title center">Dataset Statitstics</span>
 
-                <div class="row">
-                    <div class="col 8 center">
-                        <div class="col 6 center">
+                <div class="row valign-wrapper">
+                    <div class="col s12 l6">
+                        <div class="col s6">
                             <input type="text" asp-for="DatasetStatistics.NumberOfRows" style="text-align:center" readonly>
                             <label asp-for="DatasetStatistics.NumberOfRows"></label>
                         </div>
-                        <div class="col 6 center">
+                        <div class="col s6">
                             <input type="text" asp-for="DatasetStatistics.NumberOfColumns" style="text-align:center" readonly>
                             <label asp-for="DatasetStatistics.NumberOfColumns"></label>
                         </div>
                     </div>
-                    <div class="col 4 center">
+                    <div class="col s12 l6">
                         <div>
                             <canvas id="myChart"></canvas>
                         </div>
@@ -75,15 +74,15 @@
                 </div>
 
                 <div class="row">
-                    <div class="col 8 center">
-                        <div class="col 12 center">
+                    <div class="col s12 valign-wrapper">
+                        <div class="col s4 l6">
                             <input type="text" asp-for="DatasetStatistics.NumberOfMissingValues" style="text-align:center" readonly>
                             <label asp-for="DatasetStatistics.NumberOfMissingValues"></label>
                         </div>
-                    </div>
-                    <div class="col 4 center">
-                        <div>
-                            <canvas id="myChart2"></canvas>
+                        <div class="col s8 l6">
+                            <div>
+                                <canvas id="myChart2"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>

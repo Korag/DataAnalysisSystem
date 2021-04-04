@@ -157,10 +157,10 @@ nav {
         cursor: pointer;
     }
 
-    nav .sidenav-trigger i {
-        height: 64px;
-        line-height: 64px;
-    }
+        nav .sidenav-trigger i {
+            height: 64px;
+            line-height: 64px;
+        }
 
 .navbar-fixed nav.navbar {
     width: 100%;
@@ -537,4 +537,10 @@ div.dataTables_processing {
     background: rgba(0,0,0,0.05);
     border: 0;
     box-shadow: none
+}
+
+@media only screen and (max-width: 1000px) {
+    .row.valign-wrapper {
+        display: inherit;
+    }
 }
