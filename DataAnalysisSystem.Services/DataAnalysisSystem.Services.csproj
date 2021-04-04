@@ -27,9 +27,4 @@
     <ProjectReference Include="..\DataAnalysisSystem.ServicesInterfaces\DataAnalysisSystem.ServicesInterfaces.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DesignPatterns\CommandDesignPattern\" />
-    <Folder Include="DesignPatterns\BuilderDesignPattern\" />
-  </ItemGroup>
-
 </Project>
