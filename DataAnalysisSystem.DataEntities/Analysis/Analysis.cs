@@ -1,8 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DataAnalysisSystem.DataEntities
 {
@@ -23,9 +21,8 @@ namespace DataAnalysisSystem.DataEntities
         public bool IsShared { get; set; }
         public string AccessKey { get; set; }
 
-        //Podsumowanie danych -> podstawowe informacje z dziedziny statystyki
-        public DatasetSummary DatasetSummary { get; set; }
-        //Wyniki wybranych metod, które będą posiadały wspólny interfejs
-        public ICollection<string> Results { get; set; }
+        public IList<string> PerformedAnalysisTypes { get; set; }
+        public AnalysisParameters AnalysisParameters { get; set; }
+        public AnalysisResults AnalysisResults { get; set; }
     }
 }
