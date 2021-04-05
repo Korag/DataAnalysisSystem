@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces;
@@ -57,6 +58,27 @@ namespace DataAnalysisSystem.Controllers
         [HttpGet]
         public IActionResult PerformNewAnalysis()
         {
+            var test = _context.analysisRepository.GetAnalysisById("606b0a1c3305881f84bd122a");
+
+            Analysis analysisTest = new Analysis();
+            analysisTest.AnalysisIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
+            analysisTest.DatasetIdentificator = "TESTID";
+            analysisTest.DateOfCreation = DateTime.Now.ToString();
+            analysisTest.IsShared = false;
+            analysisTest.AccessKey = "000";
+
+            analysisTest.AnalysisResults = new AnalysisResults();
+            //analysisTest.AnalysisResults.AnalysisResultsIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
+            analysisTest.AnalysisResults.HistogramResult = new HistogramResult();
+            analysisTest.AnalysisResults.BasicStatisticsResult = new BasicStatisticsResult();
+
+            analysisTest.AnalysisParameters = new AnalysisParameters();
+            //analysisTest.AnalysisParameters.AnalysisParametersIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
+            analysisTest.AnalysisParameters.ApproximationParameters = new ApproximationParameters();
+            analysisTest.AnalysisParameters.KMeansClusteringParameters = new KMeansClusteringParameters();
+
+            _context.analysisRepository.AddAnalysis(analysisTest);
+
             return View();
         }
 

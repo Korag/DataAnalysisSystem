@@ -14,6 +14,8 @@ namespace DataAnalysisSystem.DataEntities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string AnalysisIdentificator { get; set; }
+
+        public string AnalysisIndexer { get; set; }
         public string DatasetIdentificator { get; set; }
 
         public string DateOfCreation { get; set; }

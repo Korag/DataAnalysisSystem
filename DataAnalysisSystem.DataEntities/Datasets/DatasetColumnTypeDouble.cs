@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataEntities
 {
-    public class DatasetColumnTypeDouble
+    public class DatasetColumnTypeDouble : IDatasetColumnType
     {
         public DatasetColumnTypeDouble()
         {

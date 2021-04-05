@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataEntities
 {
-    public class DatasetColumnTypeString
+    public class DatasetColumnTypeString : IDatasetColumnType
     {
         public DatasetColumnTypeString()
         {

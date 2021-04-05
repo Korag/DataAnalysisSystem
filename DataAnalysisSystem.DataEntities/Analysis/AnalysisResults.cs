@@ -11,10 +11,6 @@ namespace DataAnalysisSystem.DataEntities
 
         }
 
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string AnalysisResultsIdentificator { get; set; }
-
         public KMeansClusteringResult KMeansClusteringResult { get; set; }
         public RegressionResult RegressionResult { get; set; }
         public ApproximationResult ApproximationResult { get; set; }

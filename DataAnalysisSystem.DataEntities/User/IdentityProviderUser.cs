@@ -17,9 +17,9 @@ namespace DataAnalysisSystem.DataEntities
 
         public string LastName { get; set; }
 
-        public ICollection<string> UserDatasets { get; set; }
-        public ICollection<string> UserAnalyses { get; set; }
-        public ICollection<string> SharedDatasetsToUser { get; set; }
-        public ICollection<string> SharedAnalysesToUser { get; set; }
+        public IList<string> UserDatasets { get; set; }
+        public IList<string> UserAnalyses { get; set; }
+        public IList<string> SharedDatasetsToUser { get; set; }
+        public IList<string> SharedAnalysesToUser { get; set; }
     }
 }
