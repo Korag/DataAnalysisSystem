@@ -157,14 +157,34 @@ namespace DataAnalysisSystem.Controllers
         [HttpGet]
         public IActionResult ShareAnalysis(string analysisIdentificator)
         {
-            return View();
+            Analysis analysisToShare = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (analysisToShare == null || !loggedUser.UserAnalyses.Contains(analysisIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            analysisToShare.IsShared = true;
+            analysisToShare.AccessKey = _codeGenerator.GenerateAccessKey(8);
+
+            _context.analysisRepository.UpdateAnalysis(analysisToShare);
+
+            return RedirectToAction("UserSharedAnalysis", "Analysis", new { notificationMessage = "A analysis has been made available." });
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult StopSharingAnalysis(string analysisIdentificator)
         {
-            return View(); 
+            Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
+            _context.userRepository.RemoveSharedAnalysisFromUsers(analysisIdentificator);
+
+            analysis.IsShared = false;
+            analysis.AccessKey = "000";
+            _context.analysisRepository.UpdateAnalysis(analysis);
+
+            return RedirectToAction("UserSharedAnalysis", "Analysis", new { notificationMessage = "The selected analysis is no longer shared with other system users." });
         }
 
         [Authorize]
