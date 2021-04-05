@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.UserDTO;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace DataAnalysisSystem.Services
     {
         public MappingProfile()
         {
+            #region User
             CreateMap<UserRegisterViewModel, IdentityProviderUser>()
                      .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.Email))
                      .ForMember(dest => dest.NormalizedUserName, opts => opts.MapFrom(src => src.Email.ToUpper()))
@@ -29,7 +31,9 @@ namespace DataAnalysisSystem.Services
                          .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.Email))
                          .ForMember(dest => dest.NormalizedUserName, opts => opts.MapFrom(src => src.Email.ToUpper()))
                          .ForMember(dest => dest.NormalizedEmail, opts => opts.MapFrom(src => src.Email.ToUpper()));
+            #endregion
 
+            #region Dataset
             CreateMap<Dataset, DatasetOverallInformationViewModel>()
                             .ForMember(dest => dest.NumberOfColumns, opts => opts.MapFrom(src => src.DatasetStatistics.NumberOfColumns))
                             .ForMember(dest => dest.NumberOfRows, opts => opts.MapFrom(src => src.DatasetStatistics.NumberOfRows))
@@ -70,6 +74,15 @@ namespace DataAnalysisSystem.Services
             CreateMap<DatasetColumnTypeDouble, EditDatasetColumnTypeDoubleViewModel>();
             CreateMap<EditDatasetColumnTypeStringViewModel, DatasetColumnTypeString>();
             CreateMap<EditDatasetColumnTypeDoubleViewModel, DatasetColumnTypeDouble>();
+            #endregion
+
+            #region Analysis
+            CreateMap<Analysis, AnalysisOverallInformationViewModel>();
+
+            CreateMap<Dataset, AnalysisOverallInformationViewModel>()
+                            .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
+                            .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
+            #endregion
         }
     }
 }

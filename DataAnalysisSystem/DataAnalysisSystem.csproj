@@ -33,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Analysis\" />
     <Folder Include="wwwroot\resources\EmailAttachments\" />
     <Folder Include="wwwroot\resources\Datasets\" />
   </ItemGroup>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<DataAnalysisSystem.DTO.AnalysisDTO.AnalysisOverallInformationViewModel>
+
+@{
+    ViewData["Title"] = "My analyses";
+}
+
+<div class="row" style="margin-top: 5vh; margin-bottom: 5vh">
+    <div class="col s12">
+
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">My analyses</span>
+
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator");}
+
+                <table id="analysesInfoList" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AnalysisIndexer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PerformedAnalysisMethods)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DateOfCreation)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DatasetName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OriginalDatasetFileFullName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DatasetDateOfEdition)
+                            </th>
+                            <th>
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var analysis in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                </td>
+                                <td>
+                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                    {
+                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DateOfCreation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
+                                </td>
+                                <td>
+                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+}

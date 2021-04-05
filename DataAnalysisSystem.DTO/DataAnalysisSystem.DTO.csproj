@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AnalysisDTO\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DataAnalysisSystem.DataEntities\DataAnalysisSystem.DataEntities.csproj" />
   </ItemGroup>
 

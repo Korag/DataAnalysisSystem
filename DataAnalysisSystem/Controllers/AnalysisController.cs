@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DataAnalysisSystem.Controllers
 {
@@ -93,7 +93,18 @@ namespace DataAnalysisSystem.Controllers
         [HttpGet]
         public IActionResult UserAnalyses()
         {
-            return View();
+            var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            List<Analysis> userAnalyses = _context.analysisRepository.GetAnalysesById(currentUser.UserAnalyses).ToList();
+            List<Dataset> analysesRelatedDatasets = _context.datasetRepository.GetDatasetsById(userAnalyses.Select(z => z.DatasetIdentificator).ToList()).ToList();
+
+            List<AnalysisOverallInformationViewModel> userAnalysesDTO = _autoMapper.Map<List<AnalysisOverallInformationViewModel>>(userAnalyses);
+
+            for (int i = 0; i < analysesRelatedDatasets.Count; i++)
+            {
+                userAnalysesDTO[i] = _autoMapper.Map<Dataset, AnalysisOverallInformationViewModel>(analysesRelatedDatasets[i], userAnalysesDTO[i]);
+            }
+
+            return View(userAnalysesDTO);
         }
 
         [Authorize]
