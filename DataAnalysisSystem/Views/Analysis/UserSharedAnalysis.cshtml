@@ -1,0 +1,268 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.ShareAnalysisActionViewModel
+
+@{
+    ViewData["Title"] = "Shared Analyses";
+}
+
+<div id="notSharedAnalyses" class="row" style="margin-top: 10vh; margin-bottom: 5vh;">
+    <div class="col s12">
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">My not shared analyses</span>
+
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator");}
+
+                <table id="notSharedAnalysesInfoList" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().AnalysisIndexer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().PerformedAnalysisMethods)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().DateOfCreation)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().DatasetName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().OriginalDatasetFileFullName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().DatasetDateOfEdition)
+                            </th>
+                            <th>
+                                Share
+                            </th>
+                            <th>
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int i = 0;}
+                        @foreach (var analysis in Model.NotSharedAnalyses)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                </td>
+                                <td>
+                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                    {
+                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DateOfCreation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
+                                </td>
+                                <td>
+                                    @{string modalDataTarget = "modalShareAnalysis" + i;}
+                                    <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
+                                    @{i++;}
+                                </td>
+                                <td>
+                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sharedAnalyses" class="row" style="margin-top: 10vh; margin-bottom: 5vh;">
+    <div class="col s12">
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">My shared analyses</span>
+
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator2");}
+
+                <table id="sharedAnalysesInfoList" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().AnalysisIndexer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().PerformedAnalysisMethods)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().DateOfCreation)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().DatasetName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().OriginalDatasetFileFullName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().DatasetDateOfEdition)
+                            </th>
+                            <th style="white-space:nowrap;">
+                                Gain access
+                            </th>
+                            <th>
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int t = 0;}
+                        @foreach (var analysis in Model.SharedAnalyses)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                </td>
+                                <td>
+                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                    {
+                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DateOfCreation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
+                                </td>
+                                <td style="white-space: nowrap;">
+                                    @{string modalDataTarget = "modalGainAccessToSharedAnalysis" + t;}
+                                    <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Gain Access</a>
+                                    @{modalDataTarget = "modalStopSharingAnalysis" + t;}
+                                    <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
+                                    @{t++;}
+                                </td>
+                                <td>
+                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@for (int z = 0; z < Model.NotSharedAnalyses.Count; z++)
+{
+    string modalDataTarget = "modalShareAnalysis" + z;
+    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+    {
+        ModalIdentificator = modalDataTarget,
+        ModalTitle = "Share Analysis",
+        ModalContent = "Are you sure you want to make this analysis available to other users of the system?",
+
+        ControllerName = "Analysis",
+        ActionName = "ShareAnalysis",
+        RouteAdditionalArguments = new Dictionary<string, string>
+                                                    {
+                                                        { "analysisIdentificator", Model.NotSharedAnalyses[z].AnalysisIdentificator }
+                                                    },
+        ModalActAsForm = false,
+        LabelOnButton = "Share"
+    });
+}
+
+@for (int z = 0; z < Model.SharedAnalyses.Count; z++)
+{
+    string modalDataTarget = "modalGainAccessToSharedAnalysis" + z;
+    @await Component.InvokeAsync("ModalGainAccessToSharedAssetWindow", new ModalGainAccessToSharedAssetWindowViewModel
+{
+    ModalIdentificator = modalDataTarget,
+    AccessKey = Model.SharedAnalyses[z].AccessKey,
+    UrlToAction = Model.SharedAnalyses[z].UrlToAction,
+});
+
+    modalDataTarget = "modalStopSharingAnalysis" + z;
+    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+    {
+        ModalIdentificator = modalDataTarget,
+        ModalTitle = "Stop sharing analysis",
+        ModalContent = "Are you sure you want to stop sharing access to your analysis?",
+
+        ControllerName = "Analysis",
+        ActionName = "StopSharingAnalysis",
+        RouteAdditionalArguments = new Dictionary<string, string>
+                                                    {
+                                                        { "analysisIdentificator", Model.SharedAnalyses[z].AnalysisIdentificator }
+                                                    },
+        ModalActAsForm = false,
+        LabelOnButton = "Stop sharing"
+    });
+}
+
+@section NavContent {
+
+    <div class="nav-content">
+        <ul class="tabs">
+            <li class="tab">
+                <a href="#sharedAnalyses" class="active">Shared analyses</a>
+            </li>
+            <li class="tab">
+                <a href="#notSharedAnalyses">Not shared analyses</a>
+            </li>
+        </ul>
+    </div>
+}
+
+@section Notification
+{
+    @{await Html.RenderPartialAsync("_NotificationMenuMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
+}
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "notSharedAnalysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "sharedAnalysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2" });}
+
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
+
+        @for (int j = 0; j < Model.NotSharedAnalyses.Count; j++)
+        {
+            <text>
+                 @{string id = "#modalShareAnalysis" + j;}
+                 $("@id").modal();
+            </text>
+        }
+
+        @for (int f = 0; f < Model.SharedAnalyses.Count; f++)
+        {
+            <text>
+                 @{string id = "#modalGainAccessToSharedAnalysis" + f;}
+                 $("@id").modal();
+            </text>
+
+            <text>
+                 @{id = "#modalStopSharingAnalysis" + f;}
+                 $("@id").modal();
+            </text>
+        }
+    </script>
+}

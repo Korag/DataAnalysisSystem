@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
+using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces;
@@ -116,7 +117,59 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult UserSharedAnalysis()
+        public IActionResult UserSharedAnalysis(string notificationMessage = null)
+        {
+            ViewData["Message"] = notificationMessage;
+
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            List<Analysis> userAnalyses = _context.analysisRepository.GetAnalysesById(loggedUser.UserAnalyses).ToList();
+            List<Dataset> analysesRelatedDatasets = _context.datasetRepository.GetDatasetsById(userAnalyses.Select(z => z.DatasetIdentificator).ToList()).ToList();
+
+            ShareAnalysisActionViewModel sharedAnalysisInfo = new ShareAnalysisActionViewModel();
+
+            int i = 0;
+            foreach (var analysis in userAnalyses)
+            {
+                if (analysis.IsShared)
+                {
+                    SharedAnalysisByOwnerViewModel sharedAnalysis = _autoMapper.Map<SharedAnalysisByOwnerViewModel>(analysis);
+                    sharedAnalysis = _autoMapper.Map<Dataset, SharedAnalysisByOwnerViewModel>(analysesRelatedDatasets[i], sharedAnalysis);
+
+                    string urlToAction = Url.GenerateLinkToSharedAnalysis(sharedAnalysis.AccessKey, Request.Scheme);
+                    sharedAnalysis.UrlToAction = urlToAction;
+
+                    sharedAnalysisInfo.SharedAnalyses.Add(sharedAnalysis);
+                }
+                else
+                {
+                    NotSharedAnalysisViewModel notSharedAnalysis = _autoMapper.Map<NotSharedAnalysisViewModel>(analysis);
+                    notSharedAnalysis = _autoMapper.Map<Dataset, NotSharedAnalysisViewModel>(analysesRelatedDatasets[i], notSharedAnalysis);
+
+                    sharedAnalysisInfo.NotSharedAnalyses.Add(notSharedAnalysis);
+                }
+                i++;
+            }
+
+            return View(sharedAnalysisInfo);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ShareAnalysis(string analysisIdentificator)
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult StopSharingAnalysis(string analysisIdentificator)
+        {
+            return View(); 
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GainAccessToSharedAnalysis(string analysisIdentificator)
         {
             return View();
         }
@@ -138,20 +191,6 @@ namespace DataAnalysisSystem.Controllers
         [Authorize]
         [HttpGet]
         public IActionResult SharedAnalysisDetails()
-        {
-            return View();
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult EditAnalysis()
-        {
-            return View();
-        }
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult EditAnalysis(int a)
         {
             return View();
         }

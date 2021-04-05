@@ -31,5 +31,14 @@ namespace DataAnalysisSystem.Extensions
                 values: new { datasetAccessKey },
                 protocol: scheme);
         }
+
+        public static string GenerateLinkToSharedAnalysis(this IUrlHelper urlHelper, string analysisAccessKey, string scheme)
+        {
+            return urlHelper.Action(
+                action: nameof(AnalysisController.GainAccessToSharedAnalysis),
+                controller: "Analysis",
+                values: new { analysisAccessKey },
+                protocol: scheme);
+        }
     }
 }
