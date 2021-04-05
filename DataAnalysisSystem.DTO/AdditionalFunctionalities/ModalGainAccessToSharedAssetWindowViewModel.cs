@@ -1,6 +1,6 @@
 ﻿namespace DataAnalysisSystem.DTO.AdditionalFunctionalities
 {
-    public class ModalGainAccessToSharedDatasetWindowViewModel
+    public class ModalGainAccessToSharedAssetWindowViewModel
     {
         public string ModalIdentificator { get; set; }
 
