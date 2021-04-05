@@ -95,6 +95,11 @@ namespace DataAnalysisSystem.Services
                            .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                            .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 
+            CreateMap<Analysis, SharedAnalysisByCollabViewModel>();
+
+            CreateMap<Dataset, SharedAnalysisByCollabViewModel>()
+                          .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
+                          .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
             #endregion
         }
     }

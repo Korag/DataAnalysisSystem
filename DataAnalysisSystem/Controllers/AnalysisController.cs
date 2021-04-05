@@ -187,24 +187,60 @@ namespace DataAnalysisSystem.Controllers
             return RedirectToAction("UserSharedAnalysis", "Analysis", new { notificationMessage = "The selected analysis is no longer shared with other system users." });
         }
 
-        [Authorize]
-        [HttpGet]
-        public IActionResult GainAccessToSharedAnalysis(string analysisIdentificator)
+        public string GetAnalysisOwnerName(string analysisIdentificator)
         {
-            return View();
+            IdentityProviderUser analysisOwner = _context.userRepository.GetAnalysisOwnerByAnalysisId(analysisIdentificator);
+
+            if (analysisOwner == null)
+            {
+                return "not found";
+            }
+
+            return analysisOwner.FirstName + " " + analysisOwner.LastName;
+        }
+
+        public SharedAnalysesBrowserViewModel GetAnalysesSharedToLoggedUser()
+        {
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            List<Analysis> analysesShared = _context.analysisRepository.GetAnalysesById(loggedUser.SharedAnalysesToUser).ToList();
+            List<Dataset> analysesRelatedDatasets = _context.datasetRepository.GetDatasetsById(analysesShared.Select(z => z.DatasetIdentificator).ToList()).ToList();
+
+            SharedAnalysesBrowserViewModel analysesSharedVm = new SharedAnalysesBrowserViewModel();
+            analysesSharedVm.SharedAnalyses = _autoMapper.Map<List<SharedAnalysisByCollabViewModel>>(analysesShared).ToList();
+
+            for (int i = 0; i < analysesSharedVm.SharedAnalyses.Count; i++)
+            {
+                analysesSharedVm.SharedAnalyses[i] = _autoMapper.Map<Dataset, SharedAnalysisByCollabViewModel>(analysesRelatedDatasets[i], analysesSharedVm.SharedAnalyses[i]);
+                analysesSharedVm.SharedAnalyses[i].OwnerName = GetAnalysisOwnerName(analysesSharedVm.SharedAnalyses[i].AnalysisIdentificator);
+            }
+
+            return analysesSharedVm;
         }
 
         [Authorize]
         [HttpGet]
-        public IActionResult SharedAnalysisBrowser()
+        public IActionResult SharedAnalysesBrowser(string notificationMessage = null)
         {
-            return View();
+            ViewData["Message"] = notificationMessage;
+
+            SharedAnalysesBrowserViewModel analysisBrowser = GetAnalysesSharedToLoggedUser();
+
+            return View(analysisBrowser);
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult SharedAnalysisBrowser(int a)
+        [ActionName("SharedAnalysesBrowser")]
+        public IActionResult SharedDatasetsBrowserPost(string newSharedAnalysisAccessKey)
         {
+            return RedirectToAction("GainAccessToSharedAnalysis", new { analysisAccessKey = newSharedAnalysisAccessKey });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GainAccessToSharedAnalysis(string analysisAccessKey)
+        {
+            //TODO
             return View();
         }
 

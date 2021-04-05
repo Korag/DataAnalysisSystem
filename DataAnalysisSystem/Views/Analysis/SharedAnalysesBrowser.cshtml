@@ -1,0 +1,133 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.SharedAnalysesBrowserViewModel
+
+@{
+    ViewData["Title"] = "Datasets Browser";
+}
+
+<div class="row" style="margin-top: 5vh; margin-bottom: 2vh">
+
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align">Analyses Browser</span>
+
+                <div class="center-align" style="margin-top: 10px">
+
+                    <form id="AddNewDatasetSharedToForm" method="post" asp-action="SharedAnalysesBrowser" asp-controller="Analysis">
+
+                        <div class="input-field" style="width:70%; margin:auto;">
+
+                            <i class="material-icons prefix">vpn_key</i>
+                            <input type="text" asp-for="NewSharedAnalysisAccessKey" required="" aria-required="true" class="validate">
+                            <label asp-for="NewSharedAnalysisAccessKey"></label>
+
+                        </div>
+
+                        <div class="center-align" style="margin-top: 10px">
+                            <button class="btn waves-effect waves-light" type="submit">
+                                Add
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row" style="margin-bottom: 5vh">
+    <div class="col s12">
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">Analyses shared to me</span>
+
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator");}
+
+                <table id="analysesInfoList" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().AnalysisIndexer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().PerformedAnalysisMethods)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().DateOfCreation)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().DatasetName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().OriginalDatasetFileFullName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().DatasetDateOfEdition)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().OwnerName)
+                            </th>
+                            <th>
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var analysis in Model.SharedAnalyses)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                            </td>
+                            <td>
+                                @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                {
+                                    <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DateOfCreation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DatasetName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.OwnerName)
+                            </td>
+                            <td>
+                                <a asp-action="SharedAnalysisDetails" asp-controller="Dataset" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
+    </script>
+}
+
+@section Notification
+{
+    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
+}
