@@ -117,7 +117,7 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult UserSharedAnalysis(string notificationMessage = null)
+        public IActionResult UserSharedAnalyses(string notificationMessage = null)
         {
             ViewData["Message"] = notificationMessage;
 
@@ -231,7 +231,7 @@ namespace DataAnalysisSystem.Controllers
         [Authorize]
         [HttpPost]
         [ActionName("SharedAnalysesBrowser")]
-        public IActionResult SharedDatasetsBrowserPost(string newSharedAnalysisAccessKey)
+        public IActionResult SharedAnalysesBrowserPost(string newSharedAnalysisAccessKey)
         {
             return RedirectToAction("GainAccessToSharedAnalysis", new { analysisAccessKey = newSharedAnalysisAccessKey });
         }
