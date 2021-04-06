@@ -312,5 +312,34 @@ namespace DataAnalysisSystem.Controllers
 
             return View(analysisDetails);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult SharedAnalysisDetails(string analysisIdentificator)
+        {
+            Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (loggedUser.UserAnalyses.Contains(analysisIdentificator))
+            {
+                return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = analysisIdentificator });
+            }
+            else if (!loggedUser.SharedAnalysesToUser.Contains(analysisIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            //TO DO:
+            SharedAnalysisDetailsViewModel analysisDetails = _autoMapper.Map<SharedAnalysisDetailsViewModel>(analysis);
+            analysisDetails.AnalysisResults = _autoMapper.Map<AnalysisResultsDetailsViewModel>(analysis.AnalysisResults);
+            analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);
+
+            if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator))
+            {
+                analysisDetails.UserHasAccessToDataset = true;
+            }
+
+            return View(analysisDetails);
+        }
     }
 }
