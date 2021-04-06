@@ -110,9 +110,21 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult DeleteAnalysis()
+        public IActionResult DeleteAnalysis(string analysisIdentificator)
         {
-            return View();
+            Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (analysis == null || !loggedUser.UserAnalyses.Contains(analysisIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            _context.analysisRepository.DeleteAnalysis(analysisIdentificator);
+            _context.userRepository.RemoveAnalysisFromOwner(loggedUser.Id.ToString(), analysisIdentificator);
+            _context.userRepository.RemoveSharedAnalysisFromUsers(analysisIdentificator);
+
+            return RedirectToAction("MainAction", "UserSystemInteraction", new { notificationMessage = "The analysis was successfully removed from the system." });
         }
 
         [Authorize]
