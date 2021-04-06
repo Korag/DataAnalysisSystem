@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
+using DataAnalysisSystem.DTO.AnalysisParametersDTO;
+using DataAnalysisSystem.DTO.AnalysisResultsDTO;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.UserDTO;
 using System.Collections.Generic;
@@ -100,6 +102,14 @@ namespace DataAnalysisSystem.Services
             CreateMap<Dataset, SharedAnalysisByCollabViewModel>()
                           .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                           .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
+
+            CreateMap<Analysis, AnalysisDetailsViewModel>();
+
+            CreateMap<Analysis, SharedAnalysisDetailsViewModel>();
+
+            CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>();
+
+            CreateMap<AnalysisParameters, AnalysisParametersDetailsViewModel>();
             #endregion
         }
     }

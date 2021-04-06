@@ -203,7 +203,7 @@ namespace DataAnalysisSystem.Controllers
 
             if (loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator))
             {
-                return RedirectToAction("SharedDatasetDetails", "Dataset");
+                return RedirectToAction("SharedDatasetDetails", "Dataset", new { datasetIdentificator = datasetIdentificator });
             }
             else if (!loggedUser.UserDatasets.Contains(datasetIdentificator))
             {

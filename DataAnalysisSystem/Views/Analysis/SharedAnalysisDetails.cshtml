@@ -1,0 +1,38 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.SharedAnalysisDetailsViewModel
+
+@{
+    ViewData["Title"] = "Analysis Details";
+}
+
+<div class="row" style="margin-top: 5vh; margin-bottom: 2vh">
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
+
+        <div class="card" style="display:block;">
+            <div class="card-content">
+                <span class="card-title center">Analysis Details</span>
+                <span class="card-title center teal-text text-lighten-1">@Model.AnalysisIndexer</span>
+
+                <div class="row">
+                    <div class="col s6 center offset-s3">
+                        Created at: @Model.DateOfCreation
+                    </div>
+                </div>
+
+                @if (Model.UserHasAccessToDataset)
+                {
+                    <div class="center-align" style="margin-top: 10px">
+                        <a asp-controller="Dataset" asp-action="SharedDatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal right">Dataset details</a>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="fixed-action-btn" style="margin-bottom:10px">
+    <a asp-controller="Dataset" asp-action="SharedDatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn-floating btn-large waves-effect waves-teal">
+        <i class="large material-icons">print</i>
+    </a>
+</div>

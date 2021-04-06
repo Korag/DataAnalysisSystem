@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
+using DataAnalysisSystem.DTO.AnalysisParametersDTO;
+using DataAnalysisSystem.DTO.AnalysisResultsDTO;
 using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
@@ -289,9 +291,26 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult SharedAnalysisDetails()
+        public IActionResult AnalysisDetails(string analysisIdentificator)
         {
-            return View();
+            Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (loggedUser.SharedAnalysesToUser.Contains(analysisIdentificator))
+            {
+                return RedirectToAction("SharedAnalysisDetails", "Analysis", new { analysisIdentificator = analysisIdentificator });
+            }
+            else if (!loggedUser.UserAnalyses.Contains(analysisIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            //TO DO:
+            AnalysisDetailsViewModel analysisDetails = _autoMapper.Map<AnalysisDetailsViewModel>(analysis);
+            analysisDetails.AnalysisResults = _autoMapper.Map<AnalysisResultsDetailsViewModel>(analysis.AnalysisResults);
+            analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);
+
+            return View(analysisDetails);
         }
     }
 }
