@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAnalysisSystem.DataEntities;
+using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
@@ -214,6 +215,9 @@ namespace DataAnalysisSystem.Controllers
             datasetDetails.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(dataset.DatasetContent);
             datasetDetails.DatasetStatistics = _autoMapper.Map<DatasetDetailsStatisticsViewModel>(dataset.DatasetStatistics);
 
+            List<Analysis> relatedAnalyses = _context.analysisRepository.GetAnalysesByDatasetId(datasetIdentificator).ToList();
+            datasetDetails.RelatedAnalyses = _autoMapper.Map<List<DatasetDetailsAnalysisInformationViewModel>>(relatedAnalyses);
+
             datasetDetails.DatasetStatistics.AttributesDistribution = JsonConvert.SerializeObject(new int[] { datasetDetails.DatasetContent.NumberColumns.Count, datasetDetails.DatasetContent.StringColumns.Count });
             datasetDetails.DatasetStatistics.MissingValuePercentage = JsonConvert.SerializeObject(dataset.DatasetStatistics.NumberOfMissingValues / ((dataset.DatasetStatistics.NumberOfColumns * dataset.DatasetStatistics.NumberOfRows) - dataset.DatasetStatistics.NumberOfMissingValues));
 
@@ -265,8 +269,6 @@ namespace DataAnalysisSystem.Controllers
 
                     string urlToAction = Url.GenerateLinkToSharedDataset(sharedDataset.AccessKey, Request.Scheme);
                     sharedDataset.UrlToAction = urlToAction;
-                    //string iconURL = Path.Combine(_environment.WebRootPath, "Images") + $@"\qrCodeIcon.bmp";
-                    //sharedDataset.AccessQRCode = _qrCodeGenerator.GenerateQRCode(payload, iconURL);
 
                     sharedDatasetInfo.SharedDatasets.Add(sharedDataset);
                 }
@@ -568,6 +570,9 @@ namespace DataAnalysisSystem.Controllers
             DatasetDetailsViewModel datasetDetails = _autoMapper.Map<DatasetDetailsViewModel>(dataset);
             datasetDetails.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(dataset.DatasetContent);
             datasetDetails.DatasetStatistics = _autoMapper.Map<DatasetDetailsStatisticsViewModel>(dataset.DatasetStatistics);
+
+            List<Analysis> relatedAnalyses = _context.analysisRepository.GetAnalysesByDatasetId(datasetIdentificator).ToList();
+            datasetDetails.RelatedAnalyses = _autoMapper.Map<List<DatasetDetailsAnalysisInformationViewModel>>(relatedAnalyses);
 
             datasetDetails.DatasetStatistics.AttributesDistribution = JsonConvert.SerializeObject(new int[] { datasetDetails.DatasetContent.NumberColumns.Count, datasetDetails.DatasetContent.StringColumns.Count });
             datasetDetails.DatasetStatistics.MissingValuePercentage = JsonConvert.SerializeObject(dataset.DatasetStatistics.NumberOfMissingValues / ((dataset.DatasetStatistics.NumberOfColumns * dataset.DatasetStatistics.NumberOfRows) - dataset.DatasetStatistics.NumberOfMissingValues));

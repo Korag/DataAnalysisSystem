@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DataAnalysisSystem.DTO.AnalysisDTO;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAnalysisSystem.DTO.DatasetDTO
 {
@@ -16,5 +18,7 @@ namespace DataAnalysisSystem.DTO.DatasetDTO
 
         public DatasetContentViewModel DatasetContent { get; set; }
         public DatasetDetailsStatisticsViewModel DatasetStatistics { get; set; }
+
+        public IList<DatasetDetailsAnalysisInformationViewModel> RelatedAnalyses { get; set; }
     }
 }

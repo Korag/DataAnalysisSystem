@@ -6,180 +6,237 @@
     ViewData["Title"] = "Dataset Details";
 }
 
-<div class="row" style="margin-top: 5vh; margin-bottom: 2vh">
-    <div class="col s12 m10 l8 offset-m1 offset-l2">
+<div id="datasetDetails">
+    <div class="row" style="margin-top: 10vh; margin-bottom: 2vh">
+        <div class="col s12 m10 l8 offset-m1 offset-l2">
 
-        <div class="card" style="display:block;">
-            <div class="card-content">
-                <span class="card-title center">Dataset Details</span>
-                <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
+            <div class="card" style="display:block;">
+                <div class="card-content">
+                    <span class="card-title center">Dataset Details</span>
+                    <span class="card-title center teal-text text-lighten-1">@Model.DatasetName</span>
 
-                <div class="row">
-                    <div class="col s6 center">
-                        Created at: @Model.DateOfCreation
+                    <div class="row">
+                        <div class="col s6 center">
+                            Created at: @Model.DateOfCreation
+                        </div>
+                        <div class="col s6 center">
+                            Edited at: @Model.DateOfEdition
+                        </div>
                     </div>
-                    <div class="col s6 center">
-                        Edited at: @Model.DateOfEdition
-                    </div>
-                </div>
 
-                <div class="center-align" style="margin-top: 10px">
-                    <a asp-controller="Analysis" asp-action="AnalyseDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Analyze</a>
+                    <div class="center-align" style="margin-top: 10px">
+                        <a asp-controller="Analysis" asp-action="AnalyseDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Analyze</a>
 
-                    <a href="#!" data-target="options-list2" class="dropdown-trigger waves-effect right"><i class="material-icons" style="color:black">more_horiz</i></a>
+                        <a href="#!" data-target="options-list2" class="dropdown-trigger waves-effect right"><i class="material-icons" style="color:black">more_horiz</i></a>
 
-                    <div id="options-list2" class="dropdown-content">
-                        <div class="col s12">
-                            <div class="options-container">
-                                <div class="single-option">
-                                    <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
+                        <div id="options-list2" class="dropdown-content">
+                            <div class="col s12">
+                                <div class="options-container">
+                                    <div class="single-option">
+                                        <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
+                                    </div>
+                                    <div class="single-option">
+                                        <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px" onclick="openModalWaiter()">Edit</a>
+                                    </div>
+                                    <div class="single-option">
+                                        <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
+                                    </div>
+
                                 </div>
-                                <div class="single-option">
-                                    <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px" onclick="openModalWaiter()">Edit</a>
-                                </div>
-                                <div class="single-option">
-                                    <a class="waves-effect waves-dark btn red darken-4 white-text modal-trigger" data-target="modalDeleteDataset" style="width:140px">Delete</a>
-                                </div>
-
                             </div>
                         </div>
+
                     </div>
 
                 </div>
 
             </div>
-
         </div>
     </div>
-</div>
 
-<div class="row" style="margin-top: 0vh; margin-bottom: 2vh">
-    <div class="col s10 offset-s1">
+    <div class="row" style="margin-top: 0vh; margin-bottom: 2vh">
+        <div class="col s10 offset-s1">
 
-        <div class="card" style="display:block;">
-            <div class="card-content">
-                <span class="card-title center">Dataset Statitstics</span>
+            <div class="card" style="display:block;">
+                <div class="card-content">
+                    <span class="card-title center">Dataset Statitstics</span>
 
-                <div class="row valign-wrapper">
-                    <div class="col s12 l6">
-                        <div class="col s6">
-                            <input type="text" asp-for="DatasetStatistics.NumberOfRows" style="text-align:center" readonly>
-                            <label asp-for="DatasetStatistics.NumberOfRows"></label>
+                    <div class="row valign-wrapper">
+                        <div class="col s12 l6">
+                            <div class="col s6">
+                                <input type="text" asp-for="DatasetStatistics.NumberOfRows" style="text-align:center" readonly>
+                                <label asp-for="DatasetStatistics.NumberOfRows"></label>
+                            </div>
+                            <div class="col s6">
+                                <input type="text" asp-for="DatasetStatistics.NumberOfColumns" style="text-align:center" readonly>
+                                <label asp-for="DatasetStatistics.NumberOfColumns"></label>
+                            </div>
                         </div>
-                        <div class="col s6">
-                            <input type="text" asp-for="DatasetStatistics.NumberOfColumns" style="text-align:center" readonly>
-                            <label asp-for="DatasetStatistics.NumberOfColumns"></label>
-                        </div>
-                    </div>
-                    <div class="col s12 l6">
-                        <div>
-                            <canvas id="attributeDistributionChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12 valign-wrapper">
-                        <div class="col s4 l6">
-                            <input type="text" asp-for="DatasetStatistics.NumberOfMissingValues" style="text-align:center" readonly>
-                            <label asp-for="DatasetStatistics.NumberOfMissingValues"></label>
-                        </div>
-                        <div class="col s8 l6">
+                        <div class="col s12 l6">
                             <div>
-                                <canvas id="percentageOfMissingValuesChart"></canvas>
+                                <canvas id="attributeDistributionChart"></canvas>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col s12 center">
-                        <div class="col s6 center">
-                            <input type="text" asp-for="DatasetStatistics.InputFileName" style="text-align:center" readonly>
-                            <label asp-for="DatasetStatistics.InputFileName"></label>
-                        </div>
-                        <div class="col s6 center">
-                            <input type="text" asp-for="DatasetStatistics.InputFileFormat" style="text-align:center" readonly>
-                            <label asp-for="DatasetStatistics.InputFileFormat"></label>
+                    <div class="row">
+                        <div class="col s12 valign-wrapper">
+                            <div class="col s4 l6">
+                                <input type="text" asp-for="DatasetStatistics.NumberOfMissingValues" style="text-align:center" readonly>
+                                <label asp-for="DatasetStatistics.NumberOfMissingValues"></label>
+                            </div>
+                            <div class="col s8 l6">
+                                <div>
+                                    <canvas id="percentageOfMissingValuesChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col s12 center">
+                            <div class="col s6 center">
+                                <input type="text" asp-for="DatasetStatistics.InputFileName" style="text-align:center" readonly>
+                                <label asp-for="DatasetStatistics.InputFileName"></label>
+                            </div>
+                            <div class="col s6 center">
+                                <input type="text" asp-for="DatasetStatistics.InputFileFormat" style="text-align:center" readonly>
+                                <label asp-for="DatasetStatistics.InputFileFormat"></label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
+        </div>
+    </div>
 
+    <div class="row" style="margin-top: 0vh; margin-bottom: 5vh;">
+        <div class="col s12">
+
+            <div class="card" style="display:block;">
+                <div class="card-content">
+                    <span class="card-title center">Dataset content</span>
+
+                    @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator");}
+
+                    <table id="datasetContentTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                        <thead>
+
+                            <tr>
+                                @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
+                                {
+                                    var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+
+                                    if (numberColumn != null)
+                                    {
+                                        <th>@numberColumn.AttributeName</th>
+                                    }
+                                    else
+                                    {
+                                        var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                                        <th>@stringColumn.AttributeName</th>
+                                    }
+                                }
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                            {
+                                var n = 0;
+                                var s = 0;
+
+                                <tr>
+                                    @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
+                                    {
+                                        var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+                                        var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                        if (numberColumn != null)
+                                        {
+                                            <td>
+                                                @numberColumn.AttributeValue[i]
+                                                @{n++;}
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
+
+                                            <td>
+                                                @stringColumn.AttributeValue[i]
+                                                @{s++;}
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="row" style="margin-top: 0vh; margin-bottom: 5vh;">
+<div id="relatedAnalysesInfoList" class="row" style="margin-top: 10vh; margin-bottom: 5vh">
     <div class="col s12">
 
         <div class="card" style="display:block;">
             <div class="card-content">
-                <span class="card-title center">Dataset content</span>
+                <span class="card-title center">Related analyses</span>
 
-                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator");}
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "dataTableLoadingIndicator2");}
 
-                <table id="datasetContentTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                <table id="analysesInfoList" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
                     <thead>
-
                         <tr>
-                            @for (int i = 0; i < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); i++)
-                            {
-                                var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-
-                                if (numberColumn != null)
-                                {
-                                    <th>@numberColumn.AttributeName</th>
-                                }
-                                else
-                                {
-                                    var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-                                    <th>@stringColumn.AttributeName</th>
-                                }
-                            }
+                            <th>
+                                @Html.DisplayNameFor(model => model.RelatedAnalyses.FirstOrDefault().AnalysisIndexer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RelatedAnalyses.FirstOrDefault().PerformedAnalysisMethods)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.RelatedAnalyses.FirstOrDefault().DateOfCreation)
+                            </th>
+                            <th>
+                                Details
+                            </th>
                         </tr>
-
                     </thead>
                     <tbody>
-
-                        @for (int i = 0; i < Model.DatasetContent.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
+                        @foreach (var analysis in Model.RelatedAnalyses)
                         {
-                            var n = 0;
-                            var s = 0;
-
                             <tr>
-                                @for (int j = 0; j < Model.DatasetContent.NumberColumns.Count() + Model.DatasetContent.StringColumns.Count(); j++)
-                                {
-                                    var numberColumn = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-                                    var position = Model.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-
-                                    if (numberColumn != null)
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                </td>
+                                <td>
+                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
                                     {
-                                        <td>
-                                            @numberColumn.AttributeValue[i]
-                                            @{n++;}
-                                        </td>
+                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
                                     }
-                                    else
-                                    {
-                                        var stringColumn = Model.DatasetContent.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-
-                                        <td>
-                                            @stringColumn.AttributeValue[i]
-                                            @{s++;}
-                                        </td>
-                                    }
-                                }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DateOfCreation)
+                                </td>
+                                <td>
+                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Analyses List with action -->
 <!-- #region Logout Modal -->
@@ -206,10 +263,28 @@
            ModalPrimaryText = "This may take a while."
        })
 
+@section NavContent {
+
+    <div class="nav-content">
+        <ul class="tabs" style="display:none">
+            <li class="tab">
+                <a href="#datasetDetails" class="active">Dataset</a>
+            </li>
+            <li class="tab">
+                <a href="#relatedAnalysesInfoList">Related analyses</a>
+            </li>
+        </ul>
+    </div>
+}
+
 @section Scripts{
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
-    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+
+    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingAndTabsInitScript", new DataTableInitScriptWithLoadingAndTabsViewModel { TabsContentDivsId = new List<string> { "datasetDetails", "relatedAnalysesInfoList" }, DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2" });}
 
     <script>
         $(document).ready(function () {

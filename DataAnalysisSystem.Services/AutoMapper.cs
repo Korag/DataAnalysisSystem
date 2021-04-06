@@ -110,6 +110,8 @@ namespace DataAnalysisSystem.Services
             CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>();
 
             CreateMap<AnalysisParameters, AnalysisParametersDetailsViewModel>();
+           
+            CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>();
             #endregion
         }
     }
