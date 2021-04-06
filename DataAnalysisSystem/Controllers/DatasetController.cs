@@ -522,7 +522,7 @@ namespace DataAnalysisSystem.Controllers
 
                 if (loggedUser.UserDatasets.Contains(datasetShared.DatasetIdentificator))
                 {
-                    ModelState.AddModelError(string.Empty, "You are the owner of this data set.");
+                    ModelState.AddModelError(string.Empty, "You are the owner of this dataset.");
                     SharedDatasetsBrowserViewModel datasetBrowser = GetDatasetsSharedToLoggedUser();
 
                     return View("SharedDatasetsBrowser", datasetBrowser);

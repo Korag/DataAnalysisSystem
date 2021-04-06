@@ -13,5 +13,6 @@ namespace DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract
         public void AddAnalysis(Analysis analysis);
         public void DeleteAnalysis(string analysisIdentificator);
         public void DeleteAnalyses(IList<string> analysesIdentificators);
+        public Analysis GetAnalysisByAccessKey(string accessKey);
     }
 }

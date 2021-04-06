@@ -240,8 +240,39 @@ namespace DataAnalysisSystem.Controllers
         [HttpGet]
         public IActionResult GainAccessToSharedAnalysis(string analysisAccessKey)
         {
-            //TODO
-            return View();
+            Analysis analysisShared = _context.analysisRepository.GetAnalysisByAccessKey(analysisAccessKey);
+
+            if (analysisShared != null)
+            {
+                var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+                if (loggedUser.UserAnalyses.Contains(analysisShared.AnalysisIdentificator))
+                {
+                    ModelState.AddModelError(string.Empty, "You are the owner of this analysis.");
+                    SharedAnalysesBrowserViewModel analysesBrowser = GetAnalysesSharedToLoggedUser();
+
+                    return View("SharedAnalysesBrowser", analysesBrowser);
+                }
+                if (loggedUser.SharedAnalysesToUser.Contains(analysisShared.AnalysisIdentificator))
+                {
+                    ModelState.AddModelError(string.Empty, "You already have access to this analysis.");
+                    SharedAnalysesBrowserViewModel analysesBrowser = GetAnalysesSharedToLoggedUser();
+
+                    return View("SharedAnalysesBrowser", analysesBrowser);
+                }
+
+                loggedUser.SharedAnalysesToUser.Add(analysisShared.AnalysisIdentificator);
+                _context.userRepository.UpdateUser(loggedUser);
+
+                return RedirectToAction("SharedAnalysesBrowser", "Analysis", new { notificationMessage = "Access was gained to a shared analysis." });
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid access key.");
+                SharedAnalysesBrowserViewModel analysesBrowser = GetAnalysesSharedToLoggedUser();
+
+                return View("SharedAnalysesBrowser", analysesBrowser);
+            }
         }
 
         [Authorize]

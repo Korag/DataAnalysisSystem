@@ -68,5 +68,15 @@ namespace DataAnalysisSystem.Repository.Repository
             var filter = Builders<Analysis>.Filter.Where(z => analysesIdentificators.Contains(z.AnalysisIdentificator));
             var result = GetAnalyses().DeleteMany(filter);
         }
+
+        public Analysis GetAnalysisByAccessKey(string accessKey)
+        {
+            var filter = Builders<Analysis>.Filter.Eq(x => x.AccessKey, accessKey);
+            var filter2 = Builders<Analysis>.Filter.Eq(x => x.IsShared, true);
+
+            var analysis = GetAnalyses().Find<Analysis>(filter & filter2).FirstOrDefault();
+
+            return analysis;
+        }
     }
 }
