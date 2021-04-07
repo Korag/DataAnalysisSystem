@@ -40,7 +40,6 @@ namespace DataAnalysisSystem.Controllers
             return View();
         }
 
-        //Empty action
         [AllowAnonymous]
         [HttpGet]
         public IActionResult AboutTheProject()
