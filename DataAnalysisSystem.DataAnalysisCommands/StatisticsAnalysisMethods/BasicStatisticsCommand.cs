@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {
-    public class BasicStatisticsCommand : AAnalysisCommand
+    public class BasicStatisticsCommand
     {
     }
 }

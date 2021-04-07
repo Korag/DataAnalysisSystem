@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {
-    public class RegressionCommand : AAnalysisCommand
+    public class RegressionCommand
     {
     }
 }

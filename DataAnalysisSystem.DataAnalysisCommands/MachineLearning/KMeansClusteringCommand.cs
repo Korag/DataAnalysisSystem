@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {
-    public class KMeansClusteringCommand : AAnalysisCommand
+    public class KMeansClusteringCommand
     {
     }
 }

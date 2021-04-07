@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {
-    public class ApproximationCommand : AAnalysisCommand
+    public class ApproximationCommand
     {
     }
 }

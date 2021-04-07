@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataAnalysisSystem.DataAnalysisMethods\DataAnalysisSystem.DataAnalysisMethods.csproj" />
+    <ProjectReference Include="..\DataAnalysisSystem.DataEntities\DataAnalysisSystem.DataEntities.csproj" />
+    <ProjectReference Include="..\DataAnalysisSystem.DTO\DataAnalysisSystem.DTO.csproj" />
+  </ItemGroup>
+
 </Project>
