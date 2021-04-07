@@ -94,6 +94,13 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult AvailableAnalysisMethodsOverview()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult UserAnalyses()
         {
             var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);

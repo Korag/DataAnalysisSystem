@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Available Analysis Methods";
+}
+
+<div class="row" style="margin-top: 5vh; margin-bottom:5vh">
+
+    <div class="col s12 m10 l8 offset-m1 offset-l2">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title center-align" style="margin-bottom:30px">Available analysis methods</span>
+
+                @{await Html.RenderPartialAsync("_AvailableAnalysisMethodsCollapsiblePartial");}
+
+                @*<ul class="collapsible popout">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons">travel_explore</i>Additional parameters</div>
+                            <div class="collapsible-body">
+                                <p>TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST</p>
+                            </div>
+                        </li>
+                    </ul>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
+    </script>
+}
