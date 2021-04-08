@@ -1,4 +1,5 @@
-﻿using DataAnalysisSystem.DataAnalysisMethods;
+﻿using DataAnalysisSystem.AkkaNet;
+using DataAnalysisSystem.DataAnalysisMethods;
 using DataAnalysisSystem.DataEntities;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,29 @@ namespace DataAnalysisSystem.DataAnalysisCommands
     public class DataAnalysisService : IDataAnalysisService
     {
         public IAnalysisMethod currentAnalysisMethod = null;
+      
         protected DatasetContent _datasetContent = null;
         protected AnalysisParameters _analysisParameters = null;
+
+        protected ActorModelHub _actorModelHub = null;
+
+        public DataAnalysisService()
+        {
+
+        }
 
         public void InitService(DatasetContent datasetContent,
                                 AnalysisParameters analysisParameters)
         {
             this._datasetContent = datasetContent;
             this._analysisParameters = analysisParameters;
+
+            _actorModelHub = new ActorModelHub();
+        }
+
+        public void Dispose()
+        {
+            _actorModelHub.Dispose();
         }
 
         public void SetAnalysisType(IAnalysisMethod method)
@@ -25,12 +41,12 @@ namespace DataAnalysisSystem.DataAnalysisCommands
 
         public void RunAnalysis()
         {
-            throw new NotImplementedException();
+            _actorModelHub.ExecuteAnalysisMethodCommandOnActor(_datasetContent, _analysisParameters, currentAnalysisMethod);
         }
 
-        public List<AnalysisResults> GetResultsOfAllAnalyses()
+        public AnalysisResults GetResults()
         {
-            throw new NotImplementedException();
+            return _actorModelHub.ReceiveObtainedSignalsFromActorModelSystem(currentAnalysisMethod);
         }
     }
 }

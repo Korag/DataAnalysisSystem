@@ -1,13 +1,14 @@
 ﻿using DataAnalysisSystem.DataAnalysisMethods;
 using DataAnalysisSystem.DataEntities;
-using System.Collections.Generic;
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {
     public interface IDataAnalysisService
     {
-        void SetAnalysisType(IAnalysisMethod method);
-        void RunAnalysis();
-        List<AnalysisResults> GetResultsOfAllAnalyses();
+        public void InitService(DatasetContent datasetContent, AnalysisParameters analysisParameters);
+        public void SetAnalysisType(IAnalysisMethod method);
+        public void RunAnalysis();
+        public AnalysisResults GetResults();
+        public void Dispose();
     }
 }
