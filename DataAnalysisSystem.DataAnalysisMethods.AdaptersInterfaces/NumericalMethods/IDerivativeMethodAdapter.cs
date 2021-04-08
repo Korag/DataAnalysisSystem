@@ -1,6 +1,6 @@
 ﻿namespace DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces
 {
-    public interface IDerivativeMethodAdapter
+    public interface IDeriverativeMethodAdapter
     {
     }
 }

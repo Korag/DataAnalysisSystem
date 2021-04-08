@@ -9,7 +9,7 @@ namespace DataAnalysisSystem.DTO.Dictionaries
            {"KMeansClusteringMethod", "K-Means Clustering"},
            {"RegressionMethod", "Linear Regression"},
            {"ApproximationMethod", "..."},
-           {"DerivativeMethod", "..."},
+           {"DeriverativeMethod", "..."},
            {"BasicStatisticsMethod", "Basic Set of Statistics Indicators"},
            {"HistogramMethod", "Histogram"},
         };

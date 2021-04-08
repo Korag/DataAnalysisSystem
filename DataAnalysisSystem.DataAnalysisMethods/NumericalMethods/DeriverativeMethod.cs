@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataAnalysisMethods
 {
-    public class RegressionMethod : IAnalysisMethod
+    public class DeriverativeMethod : IAnalysisMethod
     {
         public AnalysisResults GetDataAnalysisMethodResult(DatasetContent datasetContent, AnalysisParameters parameters)
         {

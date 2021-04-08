@@ -2,7 +2,7 @@
 
 namespace DataAnalysisSystem.DataAnalysisMethods.Adapters
 {
-    public class DerivativeMethodAdapter : IDerivativeMethodAdapter
+    public class DeriverativeMethodAdapter : IDeriverativeMethodAdapter
     {
     }
 }
