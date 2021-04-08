@@ -5,6 +5,7 @@ using DataAnalysisSystem.DataAnalysisCommands.Abstract;
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
+using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
 using DataAnalysisSystem.DTO.Dictionaries;
 using DataAnalysisSystem.Extensions;
@@ -99,8 +100,19 @@ namespace DataAnalysisSystem.Controllers
             //_context.analysisRepository.AddAnalysis(analysisTest);
 
             PerformNewAnalysisViewModel vm = new PerformNewAnalysisViewModel();
-            vm.AnalysisParameters = new AddAnalysisParametersViewModel();
             vm.DatasetIdentificator = datasetIdentificator;
+
+            AddAnalysisParametersViewModel paramsa = new AddAnalysisParametersViewModel()
+            {
+                ApproximationParameters = new AddApproximationParametersViewModel(),
+                BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel(),
+                DeriverativeParameters = new AddDeriverativeParametersViewModel(),
+                HistogramParameters = new AddHistogramParametersViewModel(),
+                RegressionParameters = new AddRegressionParametersViewModel(),
+                KMeansClusteringParameters = new AddKMeansClusteringParametersViewModel()
+            };
+
+            vm.AnalysisParameters = paramsa;
 
             return View(vm);
         }

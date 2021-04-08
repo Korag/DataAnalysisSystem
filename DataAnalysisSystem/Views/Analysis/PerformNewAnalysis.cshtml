@@ -30,7 +30,7 @@
 
     <div class="row" style="margin-top: 0vh; margin-bottom:2vh">
 
-        <div class="col s12 m10 l8 offset-m1 offset-l2">
+        <div id="analysisMethodOverview" class="col s12 m10 l8 offset-m1 offset-l2">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title center-align" style="margin-bottom:30px">Available analysis methods</span>
@@ -43,6 +43,13 @@
     </div>
 
     <input type="text" asp-for="DatasetIdentificator" hidden readonly>
+
+    @await Component.InvokeAsync("AddApproximationMethodParameters", Model.AnalysisParameters.ApproximationParameters)
+    @await Component.InvokeAsync("AddBasicStatisticsMethodParameters", Model.AnalysisParameters.BasicStatisticsParameters)
+    @await Component.InvokeAsync("AddDeriverativeMethodParameters", Model.AnalysisParameters.DeriverativeParameters)
+    @await Component.InvokeAsync("AddHistogramMethodParameters", Model.AnalysisParameters.HistogramParameters)
+    @await Component.InvokeAsync("AddKMeansClusteringMethodParameters", Model.AnalysisParameters.KMeansClusteringParameters)
+    @await Component.InvokeAsync("AddRegressionMethodParameters", Model.AnalysisParameters.RegressionParameters)
 
 </form>
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Components
 {
-    public class AddKMeansClusteringParametersViewComponent : ViewComponent
+    public class AddKMeansClusteringMethodParametersViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(AddKMeansClusteringParametersViewModel parameters)
         {

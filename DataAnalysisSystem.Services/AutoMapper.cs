@@ -108,10 +108,12 @@ namespace DataAnalysisSystem.Services
                           .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                           .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 
-            CreateMap<Analysis, AnalysisDetailsViewModel>();
+            CreateMap<Analysis, AnalysisDetailsViewModel>()
+                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
 
-            CreateMap<Analysis, SharedAnalysisDetailsViewModel>();
-           
+            CreateMap<Analysis, SharedAnalysisDetailsViewModel>()
+                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
+
             CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>()
                  .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
 
@@ -131,7 +133,7 @@ namespace DataAnalysisSystem.Services
 
             #region AnalysisParameters
             CreateMap<AddAnalysisParametersViewModel, AnalysisParameters>();
-            
+
             CreateMap<AnalysisParameters, AnalysisParametersDetailsViewModel>();
 
             CreateMap<AddApproximationParametersViewModel, ApproximationParameters>();
