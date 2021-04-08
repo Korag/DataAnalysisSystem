@@ -72,30 +72,35 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult PerformNewAnalysis()
+        public IActionResult PerformNewAnalysis(string datasetIdentificator, string notificationMessage)
         {
-            var test = _context.analysisRepository.GetAnalysisById("606b0a1c3305881f84bd122a");
+            ViewData["Message"] = notificationMessage;
 
-            Analysis analysisTest = new Analysis();
-            analysisTest.AnalysisIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
-            analysisTest.DatasetIdentificator = "TESTID";
-            analysisTest.DateOfCreation = DateTime.Now.ToString();
-            analysisTest.IsShared = false;
-            analysisTest.AccessKey = "000";
+            //var test = _context.analysisRepository.GetAnalysisById("606b0a1c3305881f84bd122a");
 
-            analysisTest.AnalysisResults = new AnalysisResults();
-            //analysisTest.AnalysisResults.AnalysisResultsIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
-            analysisTest.AnalysisResults.HistogramResult = new HistogramResult();
-            analysisTest.AnalysisResults.BasicStatisticsResult = new BasicStatisticsResult();
+            //Analysis analysisTest = new Analysis();
+            //analysisTest.AnalysisIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
+            //analysisTest.DatasetIdentificator = "TESTID";
+            //analysisTest.DateOfCreation = DateTime.Now.ToString();
+            //analysisTest.IsShared = false;
+            //analysisTest.AccessKey = "000";
 
-            analysisTest.AnalysisParameters = new AnalysisParameters();
-            //analysisTest.AnalysisParameters.AnalysisParametersIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
-            analysisTest.AnalysisParameters.ApproximationParameters = new ApproximationParameters();
-            analysisTest.AnalysisParameters.KMeansClusteringParameters = new KMeansClusteringParameters();
+            //analysisTest.AnalysisResults = new AnalysisResults();
+            ////analysisTest.AnalysisResults.AnalysisResultsIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
+            //analysisTest.AnalysisResults.HistogramResult = new HistogramResult();
+            //analysisTest.AnalysisResults.BasicStatisticsResult = new BasicStatisticsResult();
 
-            _context.analysisRepository.AddAnalysis(analysisTest);
+            //analysisTest.AnalysisParameters = new AnalysisParameters();
+            ////analysisTest.AnalysisParameters.AnalysisParametersIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
+            //analysisTest.AnalysisParameters.ApproximationParameters = new ApproximationParameters();
+            //analysisTest.AnalysisParameters.KMeansClusteringParameters = new KMeansClusteringParameters();
 
-            return View();
+            //_context.analysisRepository.AddAnalysis(analysisTest);
+
+            PerformNewAnalysisViewModel vm = new PerformNewAnalysisViewModel();
+            vm.DatasetIdentificator = datasetIdentificator;
+
+            return View(vm);
         }
 
         [Authorize]

@@ -1,0 +1,69 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.PerformNewAnalysisViewModel
+
+@{
+    ViewData["Title"] = "Perform Analysis";
+}
+
+<form id="PerformNewAnalysis" method="post" asp-action="PerformNewAnalysis" asp-controller="Analysis" enctype="multipart/form-data" onsubmit="openModalWaiter()">
+
+    <div class="row" style="margin-top: 5vh; margin-bottom: 2vh">
+        <div class="col s12 m10 l8 offset-m1 offset-l2">
+
+            <div class="card" style="display:block;">
+                <div class="card-content">
+                    <span class="card-title center">Perform analysis</span>
+
+                    <div class="center-align" style="margin-top: 30px">
+                        <button class="btn waves-effect waves-light" type="submit" id="submitButton" style="margin-left:24px;">
+                            Analyze
+                        </button>
+
+                        <a asp-controller="Dataset" asp-action="DatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect right"><i class="material-icons teal-text" style="margin-top: 10px">table_view</i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="margin-top: 0vh; margin-bottom:2vh">
+
+        <div class="col s12 m10 l8 offset-m1 offset-l2">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title center-align" style="margin-bottom:30px">Available analysis methods</span>
+
+                    @{await Html.RenderPartialAsync("_AvailableAnalysisMethodsCollapsiblePartial");}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
+   {
+       ModalIdentificator = "modalWaiter",
+       ModalHeader = "Performing analysis.",
+       ModalPrimaryText = "This may take a while."
+   })
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
+    @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "PerformNewAnalysis", ModalId = "modalWaiter" });}
+
+    <script>
+        $(document).ready(function () {
+            $('.methodSwitch').show();
+        });
+    </script>
+}
+
+@section Notification
+{
+    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
+}

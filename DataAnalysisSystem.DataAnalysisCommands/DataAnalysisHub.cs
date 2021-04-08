@@ -60,15 +60,15 @@ namespace DataAnalysisSystem.DataAnalysisCommands
                 switch (methodName)
                 {
                     case "approximationMethod":
-                        //commandsToPerform.Add(new ApproximationCommand(analysisService));
+                        commandsToPerform.Add(new ApproximationCommand(analysisService));
                         break;
 
                     case "basicStatisticsMethod":
-                        //commandsToPerform.Add(new BasicStatisticsCommand(analysisService));
+                        commandsToPerform.Add(new BasicStatisticsCommand(analysisService));
                         break;
 
                     case "deriverativeMethod":
-                        //commandsToPerform.Add(new DeriverativeCommand(analysisService));
+                        commandsToPerform.Add(new DeriverativeCommand(analysisService));
                         break;
 
                     case "histogramMethod":
@@ -76,11 +76,11 @@ namespace DataAnalysisSystem.DataAnalysisCommands
                         break;
 
                     case "kMeansClusteringMethod":
-                        //commandsToPerform.Add(new KMeansClusteringCommand(analysisService));
+                        commandsToPerform.Add(new KMeansClusteringCommand(analysisService));
                         break;
 
                     case "regressionMethod":
-                        //commandsToPerform.Add(new RegressionCommand(analysisService));
+                        commandsToPerform.Add(new RegressionCommand(analysisService));
                         break;
                 }
             }

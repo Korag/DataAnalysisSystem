@@ -4,9 +4,9 @@ using DataAnalysisSystem.DataEntities;
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {
-    public class DeriveretiveCommand : AAnalysisCommand
+    public class DeriverativeCommand : AAnalysisCommand
     {
-        public DeriveretiveCommand(IDataAnalysisService analysisService) : base(analysisService)
+        public DeriverativeCommand(IDataAnalysisService analysisService) : base(analysisService)
         {
 
         }
