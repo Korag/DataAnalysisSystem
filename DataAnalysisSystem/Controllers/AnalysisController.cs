@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using DataAnalysisSystem.DataAnalysisCommands;
+using DataAnalysisSystem.DataAnalysisCommands.Abstract;
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
@@ -26,23 +28,25 @@ namespace DataAnalysisSystem.Controllers
         private readonly IMimeTypeGuesser _mimeTypeGuesser;
         private readonly IFileHelper _fileHelper;
 
-        private readonly ISerializerStrategy _serializerStrategy;
-
         private readonly CustomSerializer _customSerializer;
 
         private readonly IMapper _autoMapper;
 
         private readonly RepositoryContext _context;
 
-        public AnalysisController(
-                                  RepositoryContext context,
+        private readonly IDataAnalysisHub _analysisHub;
+        private readonly IDataAnalysisService _analysisService;
+        
+        public AnalysisController(RepositoryContext context,
                                   CustomSerializer customSerializer,
                                   ICodeGenerator codeGenerator,
                                   IEmailProvider emailProvider,
                                   IMapper autoMapper,
                                   IRegexComparatorChainFacade regexComparator,
                                   IMimeTypeGuesser mimeTypeGuesser,
-                                  IFileHelper fileHelper)
+                                  IFileHelper fileHelper,
+                                  IDataAnalysisHub analysisHub,
+                                  IDataAnalysisService analysisService)
         {
             this._context = context;
 
@@ -55,6 +59,9 @@ namespace DataAnalysisSystem.Controllers
             this._customSerializer = customSerializer;
 
             this._autoMapper = autoMapper;
+
+            this._analysisHub = analysisHub;
+            this._analysisService = analysisService;
         }
 
         [Authorize]
@@ -89,6 +96,25 @@ namespace DataAnalysisSystem.Controllers
         [HttpPost]
         public IActionResult PerformNewAnalysis(int a)
         {
+            //validation problem???? -> when some methods are not selected and stay display:hidden
+
+            DatasetContent datasetContent = new DatasetContent();
+            AnalysisParameters parameters = new AnalysisParameters();
+            string[] selectedAnalysisMethods = { "approximationMethod" };
+
+            parameters = _analysisHub.SelectAnalysisParameters(selectedAnalysisMethods, parameters);
+
+            _analysisService.InitService(datasetContent, parameters);
+            List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(selectedAnalysisMethods, _analysisService);
+            
+            _analysisHub.ExecuteCommandsToPerformAnalysis(commands);
+            AnalysisResults analysisResults = _analysisHub.GetAnalysisResultsFromExecutedCommands(commands);
+
+            //return AnalysisResults object
+            //Later in controller save analysis results / analysis parameters and analysis data to DB
+
+            _analysisService.Dispose();
+
             return View();
         }
 

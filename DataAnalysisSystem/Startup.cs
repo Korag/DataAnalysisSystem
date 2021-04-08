@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Http.Features;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces;
 using DataAnalysisSystem.DataAnalysisMethods.Adapters;
+using DataAnalysisSystem.DataAnalysisCommands;
+using DataAnalysisSystem.AkkaNet;
 
 namespace DataAnalysisSystem
 {
@@ -82,7 +84,7 @@ namespace DataAnalysisSystem
             services.AddTransient<IKMeansClusteringAdapter, KMeansClusteringAdapter>();
             services.AddTransient<IRegressionMethodAdapter, RegressionMethodAdapter>();
             services.AddTransient<IApproximationMethodAdapter, ApproximationMethodAdapter>();
-            services.AddTransient<IDerivativeMethodAdapter, DerivativeMethodAdapter>();
+            services.AddTransient<IDeriverativeMethodAdapter, DeriverativeMethodAdapter>();
             services.AddTransient<IBasicStatisticsMethodAdapter, BasicStatisticsMethodAdapter>();
             services.AddTransient<IHistogramMethodAdapter, HistogramMethodAdapter>();
 
@@ -90,6 +92,10 @@ namespace DataAnalysisSystem
             services.AddTransient<IUserRepository, MongoUserRepository>();
             services.AddTransient<IDatasetRepository, MongoDatasetRepository>();
             services.AddTransient<IAnalysisRepository, MongoAnalysisRepository>();
+
+            services.AddTransient<IDataAnalysisHub, DataAnalysisHub>();
+            services.AddTransient<IDataAnalysisService, DataAnalysisService>();
+            services.AddTransient<IActorModelHub, ActorModelHub>();
 
             services.Configure<FormOptions>(x => x.ValueCountLimit = 1000000);
 
