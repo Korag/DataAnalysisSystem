@@ -142,8 +142,8 @@ namespace DataAnalysisSystem.Controllers
                 DatasetIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString(),
                 DatasetName = datasetToSave.DatasetName,
 
-                DateOfCreation = DateTime.UtcNow.ToString(),
-                DateOfEdition = DateTime.UtcNow.ToString(),
+                DateOfCreation = DateTime.Now.ToString(),
+                DateOfEdition = DateTime.Now.ToString(),
 
                 IsShared = false,
                 AccessKey = "000",
@@ -620,7 +620,7 @@ namespace DataAnalysisSystem.Controllers
                     return RedirectToAction("MainAction", "UserSystemInteraction");
                 }
 
-                dataset.DateOfEdition = DateTime.UtcNow.ToString();
+                dataset.DateOfEdition = DateTime.Now.ToString();
                 dataset.DatasetContent = _autoMapper.Map<DatasetContent>(datasetToEdit.DatasetContent);
 
                 int i = 0;

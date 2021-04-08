@@ -215,12 +215,12 @@
                                     <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisIndexer)</span>
                                 </td>
                                 <td>
-                                    <ul>
-                                        @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
-                                        {
-                                            <li><span class="new badge" data-badge-caption="" style="margin: 1px 1px 1px 1px">@Html.DisplayFor(model => analysisMethod)</span></li>
-                                        }
-                                    </ul>
+                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                    {
+                                        <div class="chip" style="width:200px">
+                                            @analysisMethod
+                                        </div>
+                                    }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => analysis.DateOfCreation)

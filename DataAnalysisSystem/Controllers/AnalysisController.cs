@@ -149,7 +149,7 @@ namespace DataAnalysisSystem.Controllers
                     AnalysisResults = analysisResults,
 
                     DatasetIdentificator = dataset.DatasetIdentificator,
-                    DateOfCreation = DateTime.UtcNow.ToString(),
+                    DateOfCreation = DateTime.Now.ToString(),
                     IsShared = false,
                     PerformedAnalysisTypes = newAnalysis.SelectedAnalysisMethods.ToList()
                 };
