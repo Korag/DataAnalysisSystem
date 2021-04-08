@@ -18,9 +18,10 @@ namespace DataAnalysisSystem.DataAnalysisCommands
             _analysisService.RunAnalysis();
         }
 
-        public override List<AnalysisResults> GetAllAnalysesResults()
+        public override AnalysisResults GetResults()
         {
-            return _analysisService.GetResultsOfAllAnalyses();
+            _analysisService.SetAnalysisType(new HistogramMethod());
+            return _analysisService.GetResults();
         }
     }
 }

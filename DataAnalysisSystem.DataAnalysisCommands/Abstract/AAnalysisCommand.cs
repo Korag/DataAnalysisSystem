@@ -14,6 +14,6 @@ namespace DataAnalysisSystem.DataAnalysisCommands.Abstract
         }
 
         public abstract void RunAnalysis();
-        public abstract List<AnalysisResults> GetAllAnalysesResults();
+        public abstract AnalysisResults GetResults();
     }
 }
