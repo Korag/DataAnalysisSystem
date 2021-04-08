@@ -1,14 +1,14 @@
-﻿using DataAnalysisSystem.DataEntities;
+﻿using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
 
 namespace DataAnalysisSystem.DTO.AnalysisResultsDTO
 {
     public class AnalysisResultsDetailsViewModel
     {
-        public KMeansClusteringResult KMeansClusteringResult { get; set; }
-        public RegressionResult RegressionResult { get; set; }
-        public ApproximationResult ApproximationResult { get; set; }
-        public DeriverativeResult DeriverativeResult { get; set; }
-        public BasicStatisticsResult BasicStatisticsResult { get; set; }
-        public HistogramResult HistogramResult { get; set; }
+        public KMeansClusteringResultDetailsViewModel KMeansClusteringResult { get; set; }
+        public RegressionResultDetailsViewModel RegressionResult { get; set; }
+        public ApproximationResultDetailsViewModel ApproximationResult { get; set; }
+        public DeriverativeResultDetailsViewModel DeriverativeResult { get; set; }
+        public BasicStatisticsResultDetailsViewModel BasicStatisticsResult { get; set; }
+        public HistogramResultDetailsViewModel HistogramResult { get; set; }
     }
 }

@@ -100,25 +100,26 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult PerformNewAnalysis(int a)
+        public IActionResult PerformNewAnalysis(PerformNewAnalysisViewModel newAnalysis)
         {
             //validation problem???? -> when some methods are not selected and stay display:hidden
 
-            DatasetContent datasetContent = new DatasetContent();
-            AnalysisParameters parameters = new AnalysisParameters();
+            Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
+
+            AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
             string[] selectedAnalysisMethods = { "approximationMethod" };
+            newAnalysis.SelectedAnalysisMethods = selectedAnalysisMethods;
 
             parameters = _analysisHub.SelectAnalysisParameters(selectedAnalysisMethods, parameters);
 
-            _analysisService.InitService(datasetContent, parameters, _akkaSystem);
+            _analysisService.InitService(dataset.DatasetContent, parameters, _akkaSystem);
             List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(selectedAnalysisMethods, _analysisService);
             
             _analysisHub.ExecuteCommandsToPerformAnalysis(commands);
             AnalysisResults analysisResults = _analysisHub.GetAnalysisResultsFromExecutedCommands(commands);
 
-            //return AnalysisResults object
-            //Later in controller save analysis results / analysis parameters and analysis data to DB
-
+           
+            
             return View();
         }
 

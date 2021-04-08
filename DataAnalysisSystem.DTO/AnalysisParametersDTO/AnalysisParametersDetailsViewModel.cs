@@ -1,15 +1,14 @@
-﻿using DataAnalysisSystem.DataEntities;
+﻿using DataAnalysisSystem.DTO.AnalysisParametersDTO.ParametersDetails;
 
 namespace DataAnalysisSystem.DTO.AnalysisParametersDTO
 {
     public class AnalysisParametersDetailsViewModel
     {
-        public KMeansClusteringParameters KMeansClusteringParameters { get; set; }
-        public RegressionParameters RegressionParameters { get; set; }
-        public ApproximationParameters ApproximationParameters { get; set; }
-        public DeriverativeParameters DeriverativeParameters { get; set; }
-        public BasicStatisticsParameters BasicStatisticsParameters { get; set; }
-        public HistogramParameters HistogramParameters { get; set; }
-
+        public KMeansClusteringParametersDetailsViewModel KMeansClusteringParameters { get; set; }
+        public RegressionParametersDetailsViewModel RegressionParameters { get; set; }
+        public ApproximationParametersDetailsViewModel ApproximationParameters { get; set; }
+        public DeriverativeParametersDetailsViewModel DeriverativeParameters { get; set; }
+        public BasicStatisticsParametersDetailsViewModel BasicStatisticsParameters { get; set; }
+        public HistogramParametersDetailsViewModel HistogramParameters { get; set; }
     }
 }

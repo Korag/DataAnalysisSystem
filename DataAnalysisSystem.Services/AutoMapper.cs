@@ -2,7 +2,10 @@
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
+using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
+using DataAnalysisSystem.DTO.AnalysisParametersDTO.ParametersDetails;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
+using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.UserDTO;
 using System.Collections.Generic;
@@ -106,12 +109,43 @@ namespace DataAnalysisSystem.Services
             CreateMap<Analysis, AnalysisDetailsViewModel>();
 
             CreateMap<Analysis, SharedAnalysisDetailsViewModel>();
-
-            CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>();
-
-            CreateMap<AnalysisParameters, AnalysisParametersDetailsViewModel>();
            
             CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>();
+
+
+            #endregion
+
+            #region AnalysisResults
+            CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>();
+
+            CreateMap<ApproximationResult, ApproximationResultDetailsViewModel>();
+            CreateMap<BasicStatisticsResult, BasicStatisticsResultDetailsViewModel>();
+            CreateMap<DeriverativeResult, DeriverativeResultDetailsViewModel>();
+            CreateMap<HistogramResult, HistogramResultDetailsViewModel>();
+            CreateMap<KMeansClusteringResult, KMeansClusteringResultDetailsViewModel>();
+            CreateMap<RegressionResult, RegressionResultDetailsViewModel>();
+
+            #endregion
+
+            #region AnalysisParameters
+            CreateMap<AddAnalysisParametersViewModel, AnalysisParameters>();
+            
+            CreateMap<AnalysisParameters, AnalysisParametersDetailsViewModel>();
+
+            CreateMap<AddApproximationParametersViewModel, ApproximationParameters>();
+            CreateMap<AddBasicStatisticsParametersViewModel, BasicStatisticsParameters>();
+            CreateMap<AddDeriverativeParametersViewModel, DeriverativeParameters>();
+            CreateMap<AddHistogramParametersViewModel, HistogramParameters>();
+            CreateMap<AddKMeansClusteringParametersViewModel, KMeansClusteringParameters>();
+            CreateMap<AddRegressionParametersViewModel, RegressionParameters>();
+
+            CreateMap<ApproximationParameters, ApproximationParametersDetailsViewModel>();
+            CreateMap<BasicStatisticsParameters, BasicStatisticsParametersDetailsViewModel>();
+            CreateMap<DeriverativeParameters, DeriverativeParametersDetailsViewModel>();
+            CreateMap<HistogramParameters, HistogramParametersDetailsViewModel>();
+            CreateMap<KMeansClusteringParameters, KMeansClusteringParametersDetailsViewModel>();
+            CreateMap<RegressionParameters, RegressionParametersDetailsViewModel>();
+
             #endregion
         }
     }
