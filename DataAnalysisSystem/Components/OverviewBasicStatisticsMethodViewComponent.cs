@@ -2,11 +2,11 @@
 
 namespace DataAnalysisSystem.Components
 {
-    public class ApproximationMethodViewComponent : ViewComponent
+    public class OverviewBasicStatisticsMethodViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
-            return View("_ApproximationMethodView");
+            return View("_OverviewBasicStatisticsMethodView");
         }
     }
 }

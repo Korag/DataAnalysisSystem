@@ -2,11 +2,11 @@
 
 namespace DataAnalysisSystem.Components
 {
-    public class RegressionMethodViewComponent : ViewComponent
+    public class OverviewHistogramMethodViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
-            return View("_RegressionMethodView");
+            return View("_OverviewHistogramMethodView");
         }
     }
 }

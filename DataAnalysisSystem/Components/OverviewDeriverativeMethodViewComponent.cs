@@ -2,11 +2,11 @@
 
 namespace DataAnalysisSystem.Components
 {
-    public class DeriverativeMethodViewComponent : ViewComponent
+    public class OverviewDeriverativeMethodViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
-            return View("_DeriverativeMethodView");
+            return View("_OverviewDeriverativeMethodView");
         }
     }
 }

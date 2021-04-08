@@ -2,11 +2,11 @@
 
 namespace DataAnalysisSystem.Components
 {
-    public class KMeansClusteringMethodViewComponent : ViewComponent
+    public class OverviewKMeansClusteringMethodViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke()
         {
-            return View("_KMeansClusteringMethodView");
+            return View("_OverviewKMeansClusteringMethodView");
         }
     }
 }
