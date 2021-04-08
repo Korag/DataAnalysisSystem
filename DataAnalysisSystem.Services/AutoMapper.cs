@@ -9,6 +9,7 @@ using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.UserDTO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalysisSystem.Services
 {
@@ -82,7 +83,8 @@ namespace DataAnalysisSystem.Services
             #endregion
 
             #region Analysis
-            CreateMap<Analysis, AnalysisOverallInformationViewModel>();
+            CreateMap<Analysis, AnalysisOverallInformationViewModel>()
+                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
 
             CreateMap<Dataset, AnalysisOverallInformationViewModel>()
                             .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
@@ -110,8 +112,8 @@ namespace DataAnalysisSystem.Services
 
             CreateMap<Analysis, SharedAnalysisDetailsViewModel>();
            
-            CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>();
-
+            CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>()
+                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
 
             #endregion
 

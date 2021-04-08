@@ -12,11 +12,11 @@ namespace DataAnalysisSystem.AkkaNet
     public class ActorModelHub : IActorModelHub
     {
         private ActorSystem _localAkkaSystem { get; set; }
-        private Dictionary<IAnalysisMethod, IActorRef> _commandMethodActorsByAnalysisMethod { get; set; }
+        private Dictionary<string, IActorRef> _commandMethodActorsByAnalysisMethod { get; set; }
 
         public ActorModelHub()
         {
-            _commandMethodActorsByAnalysisMethod = new Dictionary<IAnalysisMethod, IActorRef>();
+            _commandMethodActorsByAnalysisMethod = new Dictionary<string, IActorRef>();
         }
 
         public void InitActorModelHub(ActorSystem akkaSystem)
@@ -28,14 +28,14 @@ namespace DataAnalysisSystem.AkkaNet
                                                         AnalysisParameters parameters,
                                                         IAnalysisMethod analysisMethod)
         {
-            _commandMethodActorsByAnalysisMethod.TryGetValue(analysisMethod, out IActorRef commandActor);
+            _commandMethodActorsByAnalysisMethod.TryGetValue(analysisMethod.ToString(), out IActorRef commandActor);
             object message = new object();
 
             if (commandActor == null)
             {
                 commandActor = _localAkkaSystem.ActorOf<CommandExecutorActor>("cea" + Guid.NewGuid());
 
-                _commandMethodActorsByAnalysisMethod.Add(analysisMethod, commandActor);
+                _commandMethodActorsByAnalysisMethod.Add(analysisMethod.ToString(), commandActor);
             }
 
             message = new CommandExecutionRequestViewModel()
@@ -50,7 +50,7 @@ namespace DataAnalysisSystem.AkkaNet
 
         public AnalysisResults ReceiveObtainedSignalsFromActorModelSystem(IAnalysisMethod analysisMethod)
         {
-            _commandMethodActorsByAnalysisMethod.TryGetValue(analysisMethod, out IActorRef commandActor);
+            _commandMethodActorsByAnalysisMethod.TryGetValue(analysisMethod.ToString(), out IActorRef commandActor);
 
             if (commandActor == null)
             {
@@ -58,16 +58,18 @@ namespace DataAnalysisSystem.AkkaNet
             }
 
             AnalysisResults results = null;
+            CommandExecutionResponseViewModel response = null;
 
             do
             {
-                results = commandActor.Ask<AnalysisResults>("GetAnalysisResults").GetAwaiter().GetResult();
+                response = commandActor.Ask<CommandExecutionResponseViewModel>("GetAnalysisResults").GetAwaiter().GetResult();
 
-            } while (results == null);
+            } while (response == null);
 
+            results = response.AnalysisResult;
             commandActor.Tell("TerminateActor");
 
-            _commandMethodActorsByAnalysisMethod.Remove(analysisMethod);
+            _commandMethodActorsByAnalysisMethod.Remove(analysisMethod.ToString());
 
             return results;
         }

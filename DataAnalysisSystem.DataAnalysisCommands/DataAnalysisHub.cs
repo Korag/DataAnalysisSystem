@@ -31,7 +31,7 @@ namespace DataAnalysisSystem.DataAnalysisCommands
                         normalizedParameters.BasicStatisticsParameters = parameters.BasicStatisticsParameters;
                         break;
 
-                    case "derivetiveMethod":
+                    case "deriverativeMethod":
                         normalizedParameters.DeriverativeParameters = parameters.DeriverativeParameters;
                         break;
 
@@ -105,10 +105,10 @@ namespace DataAnalysisSystem.DataAnalysisCommands
 
                 foreach (var property in partResult.GetType().GetProperties())
                 {
-                    if (property.GetValue(property) != null)
+                    if (property.GetValue(partResult) != null)
                     {
-                        PropertyInfo tmpProp = result.GetType().GetProperties().Where(z => z.Name == property.Name).FirstOrDefault();
-                        tmpProp.SetValue(result.GetType().GetProperties().Where(z => z.Name == property.Name).FirstOrDefault(), Convert.ChangeType(property.GetValue(property), property.PropertyType), null);
+                        PropertyInfo piInstance = partResult.GetType().GetProperty(property.Name);
+                        piInstance.SetValue(result, property.GetValue(partResult));
                         
                         break;
                     }

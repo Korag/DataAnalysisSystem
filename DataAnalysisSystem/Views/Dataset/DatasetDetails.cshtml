@@ -212,13 +212,15 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                    <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisIndexer)</span>
                                 </td>
                                 <td>
-                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
-                                    {
-                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
-                                    }
+                                    <ul>
+                                        @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                        {
+                                            <li><span class="new badge" data-badge-caption="" style="margin: 1px 1px 1px 1px">@Html.DisplayFor(model => analysisMethod)</span></li>
+                                        }
+                                    </ul>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => analysis.DateOfCreation)
@@ -280,7 +282,7 @@
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
 
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2" });}
-    
+
     @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingAndTabsInitScript", new DataTableInitScriptWithLoadingAndTabsViewModel { TabsContentDivsId = new List<string> { "datasetDetails", "relatedAnalysesInfoList" }, DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
 

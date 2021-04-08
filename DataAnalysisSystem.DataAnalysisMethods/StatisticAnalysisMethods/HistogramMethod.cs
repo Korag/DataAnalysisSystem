@@ -6,7 +6,10 @@ namespace DataAnalysisSystem.DataAnalysisMethods
     {
         public AnalysisResults GetDataAnalysisMethodResult(DatasetContent datasetContent, AnalysisParameters parameters)
         {
-            throw new System.NotImplementedException();
+            var b = 0;
+            AnalysisResults ar = new AnalysisResults();
+            ar.HistogramResult = new HistogramResult();
+            return ar;
         }
     }
 }

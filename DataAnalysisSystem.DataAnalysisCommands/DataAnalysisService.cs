@@ -32,11 +32,6 @@ namespace DataAnalysisSystem.DataAnalysisCommands
             _actorModelHub.InitActorModelHub(akkaSystem);
         }
 
-        public void Dispose()
-        {
-            //_actorModelHub.Dispose();
-        }
-
         public void SetAnalysisType(IAnalysisMethod method)
         {
             this.currentAnalysisMethod = method;

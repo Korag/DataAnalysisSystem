@@ -6,12 +6,12 @@ namespace DataAnalysisSystem.DTO.Dictionaries
     {
          public static readonly Dictionary<string, string> AnalysisType = new Dictionary<string, string>
          {
-           {"KMeansClusteringMethod", "K-Means Clustering"},
-           {"RegressionMethod", "Linear Regression"},
-           {"ApproximationMethod", "..."},
-           {"DeriverativeMethod", "..."},
-           {"BasicStatisticsMethod", "Basic Set of Statistics Indicators"},
-           {"HistogramMethod", "Histogram"},
+           {"approximationMethod", "K-Means Clustering"},
+           {"basicStatisticsMethod", "Basic Set of Statistics Indicators"},
+           {"deriverativeMethod", "Deriverative"},
+           {"histogramMethod", "Histogram"},
+           {"kMeansClusteringMethod", "K-Means Clustering"},
+           {"regressionMethod", "Linear Regression"},
         };
     }
 }

@@ -2,6 +2,7 @@
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.DatasetDTO;
+using DataAnalysisSystem.DTO.Dictionaries;
 using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services;
@@ -207,6 +208,14 @@ namespace DataAnalysisSystem.Controllers
 
             List<Analysis> relatedAnalyses = _context.analysisRepository.GetAnalysesByDatasetId(datasetIdentificator).ToList();
             datasetDetails.RelatedAnalyses = _autoMapper.Map<List<DatasetDetailsAnalysisInformationViewModel>>(relatedAnalyses);
+
+            for (int i = 0; i < datasetDetails.RelatedAnalyses.Count; i++)
+            {
+                for (int j = 0; j < datasetDetails.RelatedAnalyses[i].PerformedAnalysisMethods.Count; j++)
+                {
+                    datasetDetails.RelatedAnalyses[i].PerformedAnalysisMethods[j] = AnalysisTypeDictionary.AnalysisType.GetValueOrDefault(datasetDetails.RelatedAnalyses[i].PerformedAnalysisMethods[j]);
+                }
+            }
 
             datasetDetails.DatasetStatistics.AttributesDistribution = JsonConvert.SerializeObject(new int[] { datasetDetails.DatasetContent.NumberColumns.Count, datasetDetails.DatasetContent.StringColumns.Count });
             datasetDetails.DatasetStatistics.MissingValuePercentage = JsonConvert.SerializeObject(dataset.DatasetStatistics.NumberOfMissingValues / ((dataset.DatasetStatistics.NumberOfColumns * dataset.DatasetStatistics.NumberOfRows) - dataset.DatasetStatistics.NumberOfMissingValues));

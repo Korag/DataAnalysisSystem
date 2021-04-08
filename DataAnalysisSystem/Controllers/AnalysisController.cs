@@ -6,6 +6,7 @@ using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
+using DataAnalysisSystem.DTO.Dictionaries;
 using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
@@ -98,6 +99,7 @@ namespace DataAnalysisSystem.Controllers
             //_context.analysisRepository.AddAnalysis(analysisTest);
 
             PerformNewAnalysisViewModel vm = new PerformNewAnalysisViewModel();
+            vm.AnalysisParameters = new AddAnalysisParametersViewModel();
             vm.DatasetIdentificator = datasetIdentificator;
 
             return View(vm);
@@ -111,9 +113,21 @@ namespace DataAnalysisSystem.Controllers
 
             if (ModelState.IsValid)
             {
+                var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
                 Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
 
-                AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
+                //AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
+
+                AnalysisParameters parameters = new AnalysisParameters()
+                {
+                    ApproximationParameters = new ApproximationParameters(),
+                    BasicStatisticsParameters = new BasicStatisticsParameters(),
+                    DeriverativeParameters = new DeriverativeParameters(),
+                    HistogramParameters = new HistogramParameters(),
+                    RegressionParameters = new RegressionParameters(),
+                    KMeansClusteringParameters = new KMeansClusteringParameters()
+                };
+
                 //string[] selectedAnalysisMethods = { "approximationMethod" };
                 //newAnalysis.SelectedAnalysisMethods = selectedAnalysisMethods;
 
@@ -140,11 +154,14 @@ namespace DataAnalysisSystem.Controllers
                     PerformedAnalysisTypes = newAnalysis.SelectedAnalysisMethods.ToList()
                 };
 
-                _context.analysisRepository.AddAnalysis(performedAnalysis);
+                currentUser.UserAnalyses.Add(performedAnalysis.AnalysisIdentificator);
 
-                return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = performedAnalysis.AnalysisIdentificator, notificationMessage = "" });
+                _context.analysisRepository.AddAnalysis(performedAnalysis);
+                _context.userRepository.UpdateUser(currentUser);
+
+                return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = performedAnalysis.AnalysisIdentificator, notificationMessage = "The data analysis has been completed." });
             }
-           
+
             //?????????????
             return View();
         }
@@ -169,6 +186,11 @@ namespace DataAnalysisSystem.Controllers
             for (int i = 0; i < analysesRelatedDatasets.Count; i++)
             {
                 userAnalysesDTO[i] = _autoMapper.Map<Dataset, AnalysisOverallInformationViewModel>(analysesRelatedDatasets[i], userAnalysesDTO[i]);
+
+                for (int j = 0; j < userAnalysesDTO[i].PerformedAnalysisMethods.Count; j++)
+                {
+                    userAnalysesDTO[i].PerformedAnalysisMethods[j] = AnalysisTypeDictionary.AnalysisType.GetValueOrDefault(userAnalysesDTO[i].PerformedAnalysisMethods[j]);
+                }
             }
 
             return View(userAnalysesDTO);

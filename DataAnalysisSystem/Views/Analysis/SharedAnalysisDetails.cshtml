@@ -20,8 +20,8 @@
 
                 @if (Model.UserHasAccessToDataset)
                 {
-                    <div class="center-align" style="margin-top: 10px">
-                        <a asp-controller="Dataset" asp-action="SharedDatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal right">Dataset details</a>
+                    <div class="center-align" style="margin-top: 30px">
+                        <a asp-controller="Dataset" asp-action="DatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect right"><i class="material-icons teal-text" style="margin-top: 10px">table_view</i></a>
                     </div>
                 }
 
