@@ -41,7 +41,7 @@ namespace DataAnalysisSystem.Services
             return code;
         }
 
-        public string GenerateAccessKey(int length)
+        public string GenerateRandomKey(int length)
         {
             var randomizerText = RandomizerFactory.GetRandomizer(new FieldOptionsText { UseNumber = true, UseSpecial = false, Max = length, Min = length});
             return randomizerText.Generate();

@@ -104,22 +104,43 @@ namespace DataAnalysisSystem.Controllers
         {
             //validation problem???? -> when some methods are not selected and stay display:hidden
 
-            Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
+            if (ModelState.IsValid)
+            {
+                Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
 
-            AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
-            string[] selectedAnalysisMethods = { "approximationMethod" };
-            newAnalysis.SelectedAnalysisMethods = selectedAnalysisMethods;
+                AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
+                //string[] selectedAnalysisMethods = { "approximationMethod" };
+                //newAnalysis.SelectedAnalysisMethods = selectedAnalysisMethods;
 
-            parameters = _analysisHub.SelectAnalysisParameters(selectedAnalysisMethods, parameters);
+                parameters = _analysisHub.SelectAnalysisParameters(newAnalysis.SelectedAnalysisMethods, parameters);
 
-            _analysisService.InitService(dataset.DatasetContent, parameters, _akkaSystem);
-            List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(selectedAnalysisMethods, _analysisService);
-            
-            _analysisHub.ExecuteCommandsToPerformAnalysis(commands);
-            AnalysisResults analysisResults = _analysisHub.GetAnalysisResultsFromExecutedCommands(commands);
+                _analysisService.InitService(dataset.DatasetContent, parameters, _akkaSystem);
+                List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(newAnalysis.SelectedAnalysisMethods, _analysisService);
 
+                _analysisHub.ExecuteCommandsToPerformAnalysis(commands);
+                AnalysisResults analysisResults = _analysisHub.GetAnalysisResultsFromExecutedCommands(commands);
+
+                Analysis performedAnalysis = new Analysis()
+                {
+                    AnalysisIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString(),
+                    AnalysisIndexer = _codeGenerator.GenerateRandomKey(4),
+                    AccessKey = "000",
+
+                    AnalysisParameters = parameters,
+                    AnalysisResults = analysisResults,
+
+                    DatasetIdentificator = dataset.DatasetIdentificator,
+                    DateOfCreation = DateTime.UtcNow.ToString(),
+                    IsShared = false,
+                    PerformedAnalysisTypes = newAnalysis.SelectedAnalysisMethods.ToList()
+                };
+
+                _context.analysisRepository.AddAnalysis(performedAnalysis);
+
+                return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = performedAnalysis.AnalysisIdentificator, notificationMessage = "" });
+            }
            
-            
+            //?????????????
             return View();
         }
 
@@ -218,7 +239,7 @@ namespace DataAnalysisSystem.Controllers
             }
 
             analysisToShare.IsShared = true;
-            analysisToShare.AccessKey = _codeGenerator.GenerateAccessKey(8);
+            analysisToShare.AccessKey = _codeGenerator.GenerateRandomKey(8);
 
             _context.analysisRepository.UpdateAnalysis(analysisToShare);
 

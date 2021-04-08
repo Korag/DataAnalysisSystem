@@ -40,17 +40,13 @@ namespace DataAnalysisSystem.Controllers
         private const string DATASET_XML_FORMAT_TYPE = "xml";
 
         private readonly ICodeGenerator _codeGenerator;
-        private readonly IEmailProvider _emailProvider;
-        private readonly IRegexComparatorChainFacade _regexComparator;
         private readonly IMimeTypeGuesser _mimeTypeGuesser;
         private readonly IFileHelper _fileHelper;
+        private readonly IMapper _autoMapper;
 
         private readonly IWebHostEnvironment _environment;
 
         private readonly CustomSerializer _customSerializer;
-
-        private readonly IMapper _autoMapper;
-
         private readonly RepositoryContext _context;
 
         //All actions OK
@@ -58,21 +54,15 @@ namespace DataAnalysisSystem.Controllers
                                  CustomSerializer customSerializer,
                                  IWebHostEnvironment environment,
                                  ICodeGenerator codeGenerator,
-                                 IEmailProvider emailProvider,
                                  IMapper autoMapper,
-                                 IRegexComparatorChainFacade regexComparator,
                                  IMimeTypeGuesser mimeTypeGuesser,
-
                                  IFileHelper fileHelper)
         {
-
             this._context = context;
             this._environment = environment;
 
             this._codeGenerator = codeGenerator;
 
-            this._emailProvider = emailProvider;
-            this._regexComparator = regexComparator;
             this._mimeTypeGuesser = mimeTypeGuesser;
             this._fileHelper = fileHelper;
 
@@ -297,7 +287,7 @@ namespace DataAnalysisSystem.Controllers
             }
 
             datasetToShare.IsShared = true;
-            datasetToShare.AccessKey = _codeGenerator.GenerateAccessKey(8);
+            datasetToShare.AccessKey = _codeGenerator.GenerateRandomKey(8);
 
             _context.datasetRepository.UpdateDataset(datasetToShare);
 
