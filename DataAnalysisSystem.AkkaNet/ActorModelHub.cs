@@ -16,21 +16,12 @@ namespace DataAnalysisSystem.AkkaNet
 
         public ActorModelHub()
         {
-            var config = ConfigurationFactory.ParseString(@"
-                             akka.remote.dot-netty.tcp {
-                             transport-class = ""Akka.Remote.Transport.DotNetty.DotNettyTransport, Akka.Remote""
-                             transport-protocol = tcp
-                             port = 8091
-                             hostname = ""127.0.0.1""
-                         }");
-
-            _localAkkaSystem = ActorSystem.Create("local-akka-server", config);
             _commandMethodActorsByAnalysisMethod = new Dictionary<IAnalysisMethod, IActorRef>();
         }
 
-        public void Dispose()
+        public void InitActorModelHub(ActorSystem akkaSystem)
         {
-            _localAkkaSystem.Dispose();
+            this._localAkkaSystem = akkaSystem;
         }
 
         public void ExecuteAnalysisMethodCommandOnActor(DatasetContent datasetContent,

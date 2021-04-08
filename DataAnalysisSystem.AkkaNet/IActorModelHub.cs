@@ -1,4 +1,5 @@
-﻿using DataAnalysisSystem.DataAnalysisMethods;
+﻿using Akka.Actor;
+using DataAnalysisSystem.DataAnalysisMethods;
 using DataAnalysisSystem.DataEntities;
 
 namespace DataAnalysisSystem.AkkaNet
@@ -7,6 +8,6 @@ namespace DataAnalysisSystem.AkkaNet
     {
         public void ExecuteAnalysisMethodCommandOnActor(DatasetContent datasetContent, AnalysisParameters parameters, IAnalysisMethod analysisMethod);
         public AnalysisResults ReceiveObtainedSignalsFromActorModelSystem(IAnalysisMethod analysisMethod);
-        public void Dispose();
+        void InitActorModelHub(ActorSystem akkaSystem);
     }
 }

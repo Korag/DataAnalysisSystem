@@ -1,4 +1,5 @@
-﻿using DataAnalysisSystem.AkkaNet;
+﻿using Akka.Actor;
+using DataAnalysisSystem.AkkaNet;
 using DataAnalysisSystem.DataAnalysisMethods;
 using DataAnalysisSystem.DataEntities;
 using System;
@@ -21,17 +22,19 @@ namespace DataAnalysisSystem.DataAnalysisCommands
         }
 
         public void InitService(DatasetContent datasetContent,
-                                AnalysisParameters analysisParameters)
+                                AnalysisParameters analysisParameters,
+                                ActorSystem akkaSystem)
         {
             this._datasetContent = datasetContent;
             this._analysisParameters = analysisParameters;
 
             _actorModelHub = new ActorModelHub();
+            _actorModelHub.InitActorModelHub(akkaSystem);
         }
 
         public void Dispose()
         {
-            _actorModelHub.Dispose();
+            //_actorModelHub.Dispose();
         }
 
         public void SetAnalysisType(IAnalysisMethod method)

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Akka.Actor;
+using AutoMapper;
 using DataAnalysisSystem.DataAnalysisCommands;
 using DataAnalysisSystem.DataAnalysisCommands.Abstract;
 using DataAnalysisSystem.DataEntities;
@@ -36,7 +37,9 @@ namespace DataAnalysisSystem.Controllers
 
         private readonly IDataAnalysisHub _analysisHub;
         private readonly IDataAnalysisService _analysisService;
-        
+
+        private readonly ActorSystem _akkaSystem;
+
         public AnalysisController(RepositoryContext context,
                                   CustomSerializer customSerializer,
                                   ICodeGenerator codeGenerator,
@@ -46,7 +49,8 @@ namespace DataAnalysisSystem.Controllers
                                   IMimeTypeGuesser mimeTypeGuesser,
                                   IFileHelper fileHelper,
                                   IDataAnalysisHub analysisHub,
-                                  IDataAnalysisService analysisService)
+                                  IDataAnalysisService analysisService,
+                                  ActorSystem akkaSystem)
         {
             this._context = context;
 
@@ -62,6 +66,8 @@ namespace DataAnalysisSystem.Controllers
 
             this._analysisHub = analysisHub;
             this._analysisService = analysisService;
+
+            this._akkaSystem = akkaSystem;
         }
 
         [Authorize]
@@ -104,7 +110,7 @@ namespace DataAnalysisSystem.Controllers
 
             parameters = _analysisHub.SelectAnalysisParameters(selectedAnalysisMethods, parameters);
 
-            _analysisService.InitService(datasetContent, parameters);
+            _analysisService.InitService(datasetContent, parameters, _akkaSystem);
             List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(selectedAnalysisMethods, _analysisService);
             
             _analysisHub.ExecuteCommandsToPerformAnalysis(commands);
@@ -112,8 +118,6 @@ namespace DataAnalysisSystem.Controllers
 
             //return AnalysisResults object
             //Later in controller save analysis results / analysis parameters and analysis data to DB
-
-            _analysisService.Dispose();
 
             return View();
         }

@@ -24,6 +24,9 @@ using DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces;
 using DataAnalysisSystem.DataAnalysisMethods.Adapters;
 using DataAnalysisSystem.DataAnalysisCommands;
 using DataAnalysisSystem.AkkaNet;
+using Akka.Actor;
+using Akka.Configuration;
+using DataAnalysisSystem.AkkaNet.Actors;
 
 namespace DataAnalysisSystem
 {
@@ -93,10 +96,23 @@ namespace DataAnalysisSystem
             services.AddTransient<IDatasetRepository, MongoDatasetRepository>();
             services.AddTransient<IAnalysisRepository, MongoAnalysisRepository>();
 
+            // Command and Akka.Net Layer
             services.AddTransient<IDataAnalysisHub, DataAnalysisHub>();
             services.AddTransient<IDataAnalysisService, DataAnalysisService>();
             services.AddTransient<IActorModelHub, ActorModelHub>();
 
+            // Actor-Model environment
+            var config = ConfigurationFactory.ParseString(@"
+                             akka.remote.dot-netty.tcp {
+                             transport-class = ""Akka.Remote.Transport.DotNetty.DotNettyTransport, Akka.Remote""
+                             transport-protocol = tcp
+                             port = 8091
+                             hostname = ""127.0.0.1""
+                         }");
+
+            services.AddSingleton(_ => ActorSystem.Create("local-akka-server", config));
+            
+            // Max form size
             services.Configure<FormOptions>(x => x.ValueCountLimit = 1000000);
 
             services.ConfigureApplicationCookie(options =>
@@ -110,7 +126,7 @@ namespace DataAnalysisSystem
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -136,6 +152,15 @@ namespace DataAnalysisSystem
                 DefaultRequestCulture = new RequestCulture("en-GB"),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
+            });
+
+            lifetime.ApplicationStarted.Register(() =>
+            {
+                app.ApplicationServices.GetService<ActorSystem>();
+            });
+            lifetime.ApplicationStopping.Register(() =>
+            {
+                app.ApplicationServices.GetService<ActorSystem>().Terminate().Wait();
             });
 
             app.UseEndpoints(endpoints =>
