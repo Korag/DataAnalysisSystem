@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.ParametersDetails
 {
-    public class BasicStatisticsParametersDetailsViewModel
+    public class DetailsBasicStatisticsParametersViewModel
     {
     }
 }

@@ -4,11 +4,11 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO
 {
     public class AnalysisParametersDetailsViewModel
     {
-        public KMeansClusteringParametersDetailsViewModel KMeansClusteringParameters { get; set; }
-        public RegressionParametersDetailsViewModel RegressionParameters { get; set; }
-        public ApproximationParametersDetailsViewModel ApproximationParameters { get; set; }
-        public DeriverativeParametersDetailsViewModel DeriverativeParameters { get; set; }
-        public BasicStatisticsParametersDetailsViewModel BasicStatisticsParameters { get; set; }
-        public HistogramParametersDetailsViewModel HistogramParameters { get; set; }
+        public DetailsKMeansClusteringParametersViewModel KMeansClusteringParameters { get; set; }
+        public DetailsRegressionParametersViewModel RegressionParameters { get; set; }
+        public DetailsApproximationParametersViewModel ApproximationParameters { get; set; }
+        public DetailsDeriverativeParametersViewModel DeriverativeParameters { get; set; }
+        public DetailsBasicStatisticsParametersViewModel BasicStatisticsParameters { get; set; }
+        public DetailsHistogramParametersViewModel HistogramParameters { get; set; }
     }
 }

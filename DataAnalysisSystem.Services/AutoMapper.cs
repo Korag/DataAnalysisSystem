@@ -141,12 +141,12 @@ namespace DataAnalysisSystem.Services
             CreateMap<AddKMeansClusteringParametersViewModel, KMeansClusteringParameters>();
             CreateMap<AddRegressionParametersViewModel, RegressionParameters>();
 
-            CreateMap<ApproximationParameters, ApproximationParametersDetailsViewModel>();
-            CreateMap<BasicStatisticsParameters, BasicStatisticsParametersDetailsViewModel>();
-            CreateMap<DeriverativeParameters, DeriverativeParametersDetailsViewModel>();
-            CreateMap<HistogramParameters, HistogramParametersDetailsViewModel>();
-            CreateMap<KMeansClusteringParameters, KMeansClusteringParametersDetailsViewModel>();
-            CreateMap<RegressionParameters, RegressionParametersDetailsViewModel>();
+            CreateMap<ApproximationParameters, DetailsApproximationParametersViewModel>();
+            CreateMap<BasicStatisticsParameters, DetailsBasicStatisticsParametersViewModel>();
+            CreateMap<DeriverativeParameters, DetailsDeriverativeParametersViewModel>();
+            CreateMap<HistogramParameters, DetailsHistogramParametersViewModel>();
+            CreateMap<KMeansClusteringParameters, DetailsKMeansClusteringParametersViewModel>();
+            CreateMap<RegressionParameters, DetailsRegressionParametersViewModel>();
 
             #endregion
         }
