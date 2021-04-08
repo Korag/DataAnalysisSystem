@@ -120,12 +120,12 @@ namespace DataAnalysisSystem.Services
             #region AnalysisResults
             CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>();
 
-            CreateMap<ApproximationResult, ApproximationResultDetailsViewModel>();
-            CreateMap<BasicStatisticsResult, BasicStatisticsResultDetailsViewModel>();
-            CreateMap<DeriverativeResult, DeriverativeResultDetailsViewModel>();
-            CreateMap<HistogramResult, HistogramResultDetailsViewModel>();
-            CreateMap<KMeansClusteringResult, KMeansClusteringResultDetailsViewModel>();
-            CreateMap<RegressionResult, RegressionResultDetailsViewModel>();
+            CreateMap<ApproximationResult, DetailsApproximationResultViewModel>();
+            CreateMap<BasicStatisticsResult, DetailsBasicStatisticsResultViewModel>();
+            CreateMap<DeriverativeResult, DetailsDeriverativeResultViewModel>();
+            CreateMap<HistogramResult, DetailsHistogramResultViewModel>();
+            CreateMap<KMeansClusteringResult, DetailsKMeansClusteringResultViewModel>();
+            CreateMap<RegressionResult, DetailsRegressionResultViewModel>();
 
             #endregion
 

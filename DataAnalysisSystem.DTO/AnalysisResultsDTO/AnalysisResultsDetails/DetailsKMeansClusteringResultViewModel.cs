@@ -1,6 +1,6 @@
 ﻿namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 {
-    public class HistogramResultDetailsViewModel
+    public class DetailsKMeansClusteringResultViewModel
     {
     }
 }

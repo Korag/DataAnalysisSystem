@@ -1,6 +1,6 @@
 ﻿namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 {
-    public class KMeansClusteringResultDetailsViewModel
+    public class DetailsDeriverativeResultViewModel
     {
     }
 }
