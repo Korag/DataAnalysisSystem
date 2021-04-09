@@ -23,7 +23,7 @@
                     <div style="margin-top: 30px">
                         @if (Model.UserIsOwnerOfAnalysis)
                         {
-                            <a asp-controller="Analysis" asp-action="DeleteAnalysis" asp-route-analysisIdentificator="@Model.AnalysisIdentificator" class="waves-effect right" style="bottom: 30px"><i class="material-icons" style="color:#b71c1c; margin-top: 10px;">clear</i></a>
+                            <a class="waves-effect right modal-trigger" data-target="modalDeleteAnalysis" style="bottom: 30px"><i class="material-icons" style="color:#b71c1c; margin-top: 10px;">clear</i></a>
                         }
                         <a asp-controller="Dataset" asp-action="DatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect right" style="bottom: 30px"><i class="material-icons teal-text" style="margin-top: 10px;">table_view</i></a>
                     </div>
@@ -91,10 +91,27 @@
     </a>
 </div>
 
+@await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+                                                {
+                                                 ModalIdentificator = "modalDeleteAnalysis",
+                                                 ModalTitle = "Delete Analysis",
+                                                 ModalContent = "Are you sure you want to delete this analysis?",
+
+                                                 ControllerName = "Analysis",
+                                                 ActionName = "DeleteAnalysis",
+                                                 RouteAdditionalArguments = new Dictionary<string, string>
+                                                                                    {
+                                                                                        { "analysisIdentificator", Model.AnalysisIdentificator }
+                                                                                    },
+                                                 ModalActAsForm = false,
+                                                 LabelOnButton = "Delete"
+                                                })
+
 @section Scripts{
 
     <script>
         $(document).ready(function () {
+            $("#modalDeleteAnalysis").modal();
             $('.methodSwitch').show();
             $('#analysisMethodOverview input[type=checkbox]').attr('disabled', true);
 

@@ -182,13 +182,13 @@ namespace DataAnalysisSystem.Controllers
         {
             var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
             List<Analysis> userAnalyses = _context.analysisRepository.GetAnalysesById(currentUser.UserAnalyses).ToList();
-            List<Dataset> analysesRelatedDatasets = _context.datasetRepository.GetDatasetsById(userAnalyses.Select(z => z.DatasetIdentificator).ToList()).ToList();
 
             List<AnalysisOverallInformationViewModel> userAnalysesDTO = _autoMapper.Map<List<AnalysisOverallInformationViewModel>>(userAnalyses);
 
-            for (int i = 0; i < analysesRelatedDatasets.Count; i++)
+            for (int i = 0; i < userAnalyses.Count; i++)
             {
-                userAnalysesDTO[i] = _autoMapper.Map<Dataset, AnalysisOverallInformationViewModel>(analysesRelatedDatasets[i], userAnalysesDTO[i]);
+                Dataset relatedDataset = _context.datasetRepository.GetDatasetById(userAnalyses[i].DatasetIdentificator);
+                userAnalysesDTO[i] = _autoMapper.Map<Dataset, AnalysisOverallInformationViewModel>(relatedDataset, userAnalysesDTO[i]);
 
                 for (int j = 0; j < userAnalysesDTO[i].PerformedAnalysisMethods.Count; j++)
                 {
@@ -380,8 +380,10 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult AnalysisDetails(string analysisIdentificator)
+        public IActionResult AnalysisDetails(string analysisIdentificator, string notificationMessage = null)
         {
+            ViewData["Message"] = notificationMessage;
+
             Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
 
