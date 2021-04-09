@@ -23,7 +23,7 @@ namespace DataAnalysisSystem.DataEntities
         public bool IsShared { get; set; }
         public string AccessKey { get; set; }
 
-        public IList<string> PerformedAnalysisTypes { get; set; }
+        public IList<string> PerformedAnalysisMethods { get; set; }
         public AnalysisParameters AnalysisParameters { get; set; }
         public AnalysisResults AnalysisResults { get; set; }
     }

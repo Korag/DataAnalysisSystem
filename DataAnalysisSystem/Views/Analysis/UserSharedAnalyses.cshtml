@@ -47,12 +47,14 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                    <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisIndexer)</span>
                                 </td>
                                 <td>
                                     @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
                                     {
-                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
+                                        <div class="chip" style="width:200px">
+                                            @analysisMethod
+                                        </div>
                                     }
                                 </td>
                                 <td>
@@ -127,12 +129,14 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                    <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisIndexer)</span>
                                 </td>
                                 <td>
                                     @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
                                     {
-                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
+                                        <div class="chip" style="width:200px">
+                                            @analysisMethod
+                                        </div>
                                     }
                                 </td>
                                 <td>
@@ -235,8 +239,8 @@
 
 @section Scripts{
 
-    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "notSharedAnalysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "sharedAnalysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2" });}
 
     <script>

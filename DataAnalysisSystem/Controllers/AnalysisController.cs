@@ -156,7 +156,7 @@ namespace DataAnalysisSystem.Controllers
                     DatasetIdentificator = dataset.DatasetIdentificator,
                     DateOfCreation = DateTime.Now.ToString(),
                     IsShared = false,
-                    PerformedAnalysisTypes = newAnalysis.SelectedAnalysisMethods.ToList()
+                    PerformedAnalysisMethods = newAnalysis.SelectedAnalysisMethods.ToList()
                 };
 
                 loggedUser.UserAnalyses.Add(performedAnalysis.AnalysisIdentificator);
@@ -227,17 +227,23 @@ namespace DataAnalysisSystem.Controllers
 
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
             List<Analysis> userAnalyses = _context.analysisRepository.GetAnalysesById(loggedUser.UserAnalyses).ToList();
-            List<Dataset> analysesRelatedDatasets = _context.datasetRepository.GetDatasetsById(userAnalyses.Select(z => z.DatasetIdentificator).ToList()).ToList();
 
             ShareAnalysisActionViewModel sharedAnalysisInfo = new ShareAnalysisActionViewModel();
 
             int i = 0;
             foreach (var analysis in userAnalyses)
             {
+                Dataset relatedDataset = _context.datasetRepository.GetDatasetById(analysis.DatasetIdentificator);
+
+                for (int j = 0; j < analysis.PerformedAnalysisMethods.Count; j++)
+                {
+                    analysis.PerformedAnalysisMethods[j] = AnalysisTypeDictionary.AnalysisType.GetValueOrDefault(analysis.PerformedAnalysisMethods[j]);
+                }
+
                 if (analysis.IsShared)
                 {
                     SharedAnalysisByOwnerViewModel sharedAnalysis = _autoMapper.Map<SharedAnalysisByOwnerViewModel>(analysis);
-                    sharedAnalysis = _autoMapper.Map<Dataset, SharedAnalysisByOwnerViewModel>(analysesRelatedDatasets[i], sharedAnalysis);
+                    sharedAnalysis = _autoMapper.Map<Dataset, SharedAnalysisByOwnerViewModel>(relatedDataset, sharedAnalysis);
 
                     string urlToAction = Url.GenerateLinkToSharedAnalysis(sharedAnalysis.AccessKey, Request.Scheme);
                     sharedAnalysis.UrlToAction = urlToAction;
@@ -247,7 +253,7 @@ namespace DataAnalysisSystem.Controllers
                 else
                 {
                     NotSharedAnalysisViewModel notSharedAnalysis = _autoMapper.Map<NotSharedAnalysisViewModel>(analysis);
-                    notSharedAnalysis = _autoMapper.Map<Dataset, NotSharedAnalysisViewModel>(analysesRelatedDatasets[i], notSharedAnalysis);
+                    notSharedAnalysis = _autoMapper.Map<Dataset, NotSharedAnalysisViewModel>(relatedDataset, notSharedAnalysis);
 
                     sharedAnalysisInfo.NotSharedAnalyses.Add(notSharedAnalysis);
                 }
@@ -314,15 +320,21 @@ namespace DataAnalysisSystem.Controllers
         {
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
             List<Analysis> analysesShared = _context.analysisRepository.GetAnalysesById(loggedUser.SharedAnalysesToUser).ToList();
-            List<Dataset> analysesRelatedDatasets = _context.datasetRepository.GetDatasetsById(analysesShared.Select(z => z.DatasetIdentificator).ToList()).ToList();
 
             SharedAnalysesBrowserViewModel analysesSharedVm = new SharedAnalysesBrowserViewModel();
             analysesSharedVm.SharedAnalyses = _autoMapper.Map<List<SharedAnalysisByCollabViewModel>>(analysesShared).ToList();
 
             for (int i = 0; i < analysesSharedVm.SharedAnalyses.Count; i++)
             {
-                analysesSharedVm.SharedAnalyses[i] = _autoMapper.Map<Dataset, SharedAnalysisByCollabViewModel>(analysesRelatedDatasets[i], analysesSharedVm.SharedAnalyses[i]);
+                Dataset relatedDataset = _context.datasetRepository.GetDatasetById(analysesShared[i].DatasetIdentificator);
+
+                analysesSharedVm.SharedAnalyses[i] = _autoMapper.Map<Dataset, SharedAnalysisByCollabViewModel>(relatedDataset, analysesSharedVm.SharedAnalyses[i]);
                 analysesSharedVm.SharedAnalyses[i].OwnerName = GetAnalysisOwnerName(analysesSharedVm.SharedAnalyses[i].AnalysisIdentificator);
+
+                for (int j = 0; j < analysesSharedVm.SharedAnalyses[i].PerformedAnalysisMethods.Count; j++)
+                {
+                    analysesSharedVm.SharedAnalyses[i].PerformedAnalysisMethods[j] = AnalysisTypeDictionary.AnalysisType.GetValueOrDefault(analysesSharedVm.SharedAnalyses[i].PerformedAnalysisMethods[j]);
+                }
             }
 
             return analysesSharedVm;

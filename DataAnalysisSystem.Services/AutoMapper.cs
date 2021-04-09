@@ -83,8 +83,7 @@ namespace DataAnalysisSystem.Services
             #endregion
 
             #region Analysis
-            CreateMap<Analysis, AnalysisOverallInformationViewModel>()
-                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
+            CreateMap<Analysis, AnalysisOverallInformationViewModel>();
 
             CreateMap<Dataset, AnalysisOverallInformationViewModel>()
                             .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
@@ -108,11 +107,9 @@ namespace DataAnalysisSystem.Services
                           .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                           .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 
-            CreateMap<Analysis, AnalysisDetailsViewModel>()
-                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
+            CreateMap<Analysis, AnalysisDetailsViewModel>();
 
-            CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>()
-                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
+            CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>();
 
             #endregion
 
