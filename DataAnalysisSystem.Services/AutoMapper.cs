@@ -111,9 +111,6 @@ namespace DataAnalysisSystem.Services
             CreateMap<Analysis, AnalysisDetailsViewModel>()
                  .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
 
-            CreateMap<Analysis, SharedAnalysisDetailsViewModel>()
-                 .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
-
             CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>()
                  .ForMember(dest => dest.PerformedAnalysisMethods, opts => opts.MapFrom(src => src.PerformedAnalysisTypes.ToList()));
 

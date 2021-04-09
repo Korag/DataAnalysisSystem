@@ -19,6 +19,10 @@ namespace DataAnalysisSystem.DTO.AnalysisDTO
         [Display(Name = "Creation at")]
         public string DateOfCreation { get; set; }
 
+        public bool UserHasAccessToDataset { get; set; }
+
+        public bool UserIsOwnerOfAnalysis { get; set; }
+
         [Display(Name = "Analysis results")]
         public AnalysisResultsDetailsViewModel AnalysisResults { get; set; }
 

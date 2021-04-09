@@ -18,9 +18,16 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 30px">
-                    <a asp-controller="Dataset" asp-action="DatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect right" style="bottom: 30px"><i class="material-icons teal-text" style="margin-top: 10px;">table_view</i></a>
-                </div>
+                @if (Model.UserHasAccessToDataset)
+                {
+                    <div style="margin-top: 30px">
+                        @if (Model.UserIsOwnerOfAnalysis)
+                        {
+                            <a asp-controller="Analysis" asp-action="DeleteAnalysis" asp-route-analysisIdentificator="@Model.AnalysisIdentificator" class="waves-effect right" style="bottom: 30px"><i class="material-icons" style="color:#b71c1c; margin-top: 10px;">clear</i></a>
+                        }
+                        <a asp-controller="Dataset" asp-action="DatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect right" style="bottom: 30px"><i class="material-icons teal-text" style="margin-top: 10px;">table_view</i></a>
+                    </div>
+                }
 
             </div>
 
@@ -90,7 +97,7 @@
         $(document).ready(function () {
             $('.methodSwitch').show();
             $('#analysisMethodOverview input[type=checkbox]').attr('disabled', true);
-     
+
             @foreach (var methodName in Model.PerformedAnalysisMethods)
             {
                 <text>$('input[value="@methodName"]').attr("checked", true);</text>
