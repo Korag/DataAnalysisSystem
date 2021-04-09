@@ -1,13 +1,13 @@
-﻿using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
+﻿using DataAnalysisSystem.DTO.AnalysisDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Components
 {
     public class AddRegressionMethodParametersViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(AddRegressionParametersViewModel parameters)
+        public IViewComponentResult Invoke(PerformNewAnalysisViewModel model)
         {
-            return View("_AddRegressionMethodParametersView", parameters);
+            return View("_AddRegressionMethodParametersView", model);
         }
     }
 }

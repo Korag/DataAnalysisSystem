@@ -1,6 +1,4 @@
 ﻿using DataAnalysisSystem.DTO.AnalysisDTO;
-using DataAnalysisSystem.DTO.AnalysisParametersDTO;
-using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Components

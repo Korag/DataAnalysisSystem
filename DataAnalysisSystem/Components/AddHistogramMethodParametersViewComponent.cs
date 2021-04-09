@@ -1,13 +1,13 @@
-﻿using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
+﻿using DataAnalysisSystem.DTO.AnalysisDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Components
 {
     public class AddHistogramMethodParametersViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(AddHistogramParametersViewModel parameters)
+        public IViewComponentResult Invoke(PerformNewAnalysisViewModel model)
         {
-            return View("_AddHistogramMethodParametersView", parameters);
+            return View("_AddHistogramMethodParametersView", model);
         }
     }
 }
