@@ -121,30 +121,22 @@ namespace DataAnalysisSystem.Controllers
         [HttpPost]
         public IActionResult PerformNewAnalysis(PerformNewAnalysisViewModel newAnalysis)
         {
-            //validation problem???? -> when some methods are not selected and stay display:hidden
+            ModelState.Clear();
 
-            if (ModelState.IsValid)
+            var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
+
+            AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
+            parameters = _analysisHub.SelectAnalysisParameters(newAnalysis.SelectedAnalysisMethods, parameters);
+
+            AddAnalysisParametersViewModel modelToValidate = _autoMapper.Map<AddAnalysisParametersViewModel>(parameters);
+            //modelToValidate.BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel()
+            //{
+            //    LastName = "a"
+            //};
+
+            if (TryValidateModel(modelToValidate))
             {
-                var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-                Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
-
-                //AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
-
-                AnalysisParameters parameters = new AnalysisParameters()
-                {
-                    ApproximationParameters = new ApproximationParameters(),
-                    BasicStatisticsParameters = new BasicStatisticsParameters(),
-                    DeriverativeParameters = new DeriverativeParameters(),
-                    HistogramParameters = new HistogramParameters(),
-                    RegressionParameters = new RegressionParameters(),
-                    KMeansClusteringParameters = new KMeansClusteringParameters()
-                };
-
-                //string[] selectedAnalysisMethods = { "approximationMethod" };
-                //newAnalysis.SelectedAnalysisMethods = selectedAnalysisMethods;
-
-                parameters = _analysisHub.SelectAnalysisParameters(newAnalysis.SelectedAnalysisMethods, parameters);
-
                 _analysisService.InitService(dataset.DatasetContent, parameters, _akkaSystem);
                 List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(newAnalysis.SelectedAnalysisMethods, _analysisService);
 
@@ -174,8 +166,7 @@ namespace DataAnalysisSystem.Controllers
                 return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = performedAnalysis.AnalysisIdentificator, notificationMessage = "The data analysis has been completed." });
             }
 
-            //?????????????
-            return View();
+            return View(newAnalysis);
         }
 
         [Authorize]

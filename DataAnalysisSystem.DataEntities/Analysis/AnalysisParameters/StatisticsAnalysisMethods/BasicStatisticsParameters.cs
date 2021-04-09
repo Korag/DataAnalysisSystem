@@ -2,5 +2,6 @@
 {
     public class BasicStatisticsParameters
     {
+        public string LastName { get; set; }
     }
 }

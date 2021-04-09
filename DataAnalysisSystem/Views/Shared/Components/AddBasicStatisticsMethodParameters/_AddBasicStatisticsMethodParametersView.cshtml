@@ -1,1 +1,13 @@
-﻿<h1>AddBasicStatisticsMethodParameters</h1>
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.PerformNewAnalysisViewModel
+
+<h1>AddBasicStatisticsMethodParameters</h1>
+
+<div class="input-field">
+
+    <i class="material-icons prefix">contact_page</i>
+    <input type="text" asp-for="AnalysisParameters.BasicStatisticsParameters.LastName" required="" aria-required="true" class="validate">
+    <label asp-for="AnalysisParameters.BasicStatisticsParameters.LastName"></label>
+
+    <span asp-validation-for="AnalysisParameters.BasicStatisticsParameters.LastName" class="helper-text" style="color: #F44336"></span>
+
+</div>

@@ -133,6 +133,7 @@ namespace DataAnalysisSystem.Services
 
             #region AnalysisParameters
             CreateMap<AddAnalysisParametersViewModel, AnalysisParameters>();
+            CreateMap<AnalysisParameters, AddAnalysisParametersViewModel>();
 
             CreateMap<AnalysisParameters, AnalysisParametersDetailsViewModel>();
 
@@ -142,6 +143,13 @@ namespace DataAnalysisSystem.Services
             CreateMap<AddHistogramParametersViewModel, HistogramParameters>();
             CreateMap<AddKMeansClusteringParametersViewModel, KMeansClusteringParameters>();
             CreateMap<AddRegressionParametersViewModel, RegressionParameters>();
+
+            CreateMap<ApproximationParameters, AddApproximationParametersViewModel>();
+            CreateMap<BasicStatisticsParameters, AddBasicStatisticsParametersViewModel>();
+            CreateMap<DeriverativeParameters, AddDeriverativeParametersViewModel>();
+            CreateMap<HistogramParameters, AddHistogramParametersViewModel>();
+            CreateMap<KMeansClusteringParameters, AddKMeansClusteringParametersViewModel>();
+            CreateMap<RegressionParameters, AddRegressionParametersViewModel>();
 
             CreateMap<ApproximationParameters, DetailsApproximationParametersViewModel>();
             CreateMap<BasicStatisticsParameters, DetailsBasicStatisticsParametersViewModel>();

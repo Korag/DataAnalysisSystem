@@ -45,11 +45,11 @@
     <input type="text" asp-for="DatasetIdentificator" hidden readonly>
 
     <div id="divApproximationMethodParameters" style="display: none">
-        @await Component.InvokeAsync("AddApproximationMethodParameters", Model.AnalysisParameters.ApproximationParameters)
+        @await Component.InvokeAsync("AddApproximationMethodParameters", Model)
     </div>
 
     <div id="divBasicStatisticsMethodParameters" style="display: none">
-        @await Component.InvokeAsync("AddBasicStatisticsMethodParameters", Model.AnalysisParameters.BasicStatisticsParameters)
+        @await Component.InvokeAsync("AddBasicStatisticsMethodParameters", Model)
     </div>
 
     <div id="divDeriverativeMethodParameters" style="display: none">
@@ -67,6 +67,7 @@
     <div id="divRegressionMethodParameters" style="display: none">
         @await Component.InvokeAsync("AddRegressionMethodParameters", Model.AnalysisParameters.RegressionParameters)
     </div>
+
 </form>
 
 @await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
