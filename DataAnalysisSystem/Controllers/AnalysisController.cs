@@ -123,17 +123,18 @@ namespace DataAnalysisSystem.Controllers
         {
             ModelState.Clear();
 
-            var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
             Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
+
+            if (dataset == null || !loggedUser.UserDatasets.Contains(dataset.DatasetIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
 
             AnalysisParameters parameters = _autoMapper.Map<AnalysisParameters>(newAnalysis.AnalysisParameters);
             parameters = _analysisHub.SelectAnalysisParameters(newAnalysis.SelectedAnalysisMethods, parameters);
 
             AddAnalysisParametersViewModel modelToValidate = _autoMapper.Map<AddAnalysisParametersViewModel>(parameters);
-            //modelToValidate.BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel()
-            //{
-            //    LastName = "a"
-            //};
 
             if (TryValidateModel(modelToValidate))
             {
@@ -158,10 +159,10 @@ namespace DataAnalysisSystem.Controllers
                     PerformedAnalysisTypes = newAnalysis.SelectedAnalysisMethods.ToList()
                 };
 
-                currentUser.UserAnalyses.Add(performedAnalysis.AnalysisIdentificator);
+                loggedUser.UserAnalyses.Add(performedAnalysis.AnalysisIdentificator);
 
                 _context.analysisRepository.AddAnalysis(performedAnalysis);
-                _context.userRepository.UpdateUser(currentUser);
+                _context.userRepository.UpdateUser(loggedUser);
 
                 return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = performedAnalysis.AnalysisIdentificator, notificationMessage = "The data analysis has been completed." });
             }
@@ -180,8 +181,8 @@ namespace DataAnalysisSystem.Controllers
         [HttpGet]
         public IActionResult UserAnalyses()
         {
-            var currentUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-            List<Analysis> userAnalyses = _context.analysisRepository.GetAnalysesById(currentUser.UserAnalyses).ToList();
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            List<Analysis> userAnalyses = _context.analysisRepository.GetAnalysesById(loggedUser.UserAnalyses).ToList();
 
             List<AnalysisOverallInformationViewModel> userAnalysesDTO = _autoMapper.Map<List<AnalysisOverallInformationViewModel>>(userAnalyses);
 
@@ -281,6 +282,13 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult StopSharingAnalysis(string analysisIdentificator)
         {
             Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (analysis == null || !loggedUser.UserAnalyses.Contains(analysisIdentificator) || !analysis.IsShared)
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
             _context.userRepository.RemoveSharedAnalysisFromUsers(analysisIdentificator);
 
             analysis.IsShared = false;

@@ -308,6 +308,13 @@ namespace DataAnalysisSystem.Controllers
         public IActionResult StopSharingDataset(string datasetIdentificator)
         {
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (dataset == null || !loggedUser.UserDatasets.Contains(datasetIdentificator) || !dataset.IsShared)
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
             _context.userRepository.RemoveSharedDatasetsFromUsers(datasetIdentificator);
 
             List<string> dataAnalysesId = _context.analysisRepository.GetAnalysesByDatasetId(dataset.DatasetIdentificator).Select(z => z.AnalysisIdentificator).ToList();
