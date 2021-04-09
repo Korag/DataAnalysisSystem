@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Components
 {
-    public class DetailsApproximationMethodParametersViewComponent : ViewComponent
+    public class DetailsRegressionMethodParametersViewComponent : ViewComponent
     {
         public IViewComponentResult Invoke(AnalysisDetailsViewModel modal)
         {
-            return View("_DetailsApproximationMethodParametersView", modal);
+            return View("_DetailsRegressionMethodParametersView", modal);
         }
     }
 }

@@ -1,13 +1,13 @@
-﻿using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
+﻿using DataAnalysisSystem.DTO.AnalysisDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataAnalysisSystem.Components
 {
     public class DetailsApproximationMethodResultsViewComponent : ViewComponent
     {
-        public IViewComponentResult Invoke(DetailsApproximationResultViewModel result)
+        public IViewComponentResult Invoke(AnalysisDetailsViewModel modal)
         {
-            return View("_DetailsApproximationMethodResultsView", result);
+            return View("_DetailsApproximationMethodResultsView", modal);
         }
     }
 }
