@@ -85,12 +85,6 @@
     @await Component.InvokeAsync("DetailsRegressionMethodResults", Model.AnalysisResults.RegressionResult)
 }
 
-<div class="fixed-action-btn" style="margin-bottom:10px">
-    <a asp-controller="Dataset" asp-action="SharedDatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn-floating btn-large waves-effect waves-teal">
-        <i class="large material-icons">print</i>
-    </a>
-</div>
-
 @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
                                                 {
                                                  ModalIdentificator = "modalDeleteAnalysis",

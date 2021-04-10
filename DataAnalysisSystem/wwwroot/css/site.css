@@ -286,6 +286,12 @@ nav.navbar {
     }
 }
 
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+
 /*#endregion */
 
 /*#region Bootstrap Alerts */
