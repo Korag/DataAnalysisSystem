@@ -1,13 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DataAnalysisSystem.DTO.DatasetDTO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 {
     public class AddBasicStatisticsParametersViewModel
     {
-        [Required(ErrorMessage = "Field \"{0}\" is required.")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "The first name should be between 3 and 100 characters")]
-        [DataType(DataType.Text)]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
+        public AddBasicStatisticsParametersViewModel(DatasetContentViewModel datasestContent)
+        {
+            this.ColumnInfo = new List<BasicStatisticsColumnSelectedViewModel>();
+
+            for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
+            {
+                BasicStatisticsColumnSelectedViewModel histColumn = new BasicStatisticsColumnSelectedViewModel();
+                var numberColumn = datasestContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+
+                if (numberColumn != null)
+                {
+                    histColumn.AttributeName = numberColumn.AttributeName;
+
+                }
+                else
+                {
+                    var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                    histColumn.AttributeName = stringColumn.AttributeName;
+                }
+
+                this.ColumnInfo.Add(histColumn);
+            }
+        }
+
+        public IList<BasicStatisticsColumnSelectedViewModel> ColumnInfo { get; set; }
     }
 }

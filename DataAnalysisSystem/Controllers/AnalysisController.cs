@@ -7,6 +7,7 @@ using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
+using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.Dictionaries;
 using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
@@ -78,22 +79,22 @@ namespace DataAnalysisSystem.Controllers
         {
             ViewData["Message"] = notificationMessage;
 
-            PerformNewAnalysisViewModel vm = new PerformNewAnalysisViewModel();
-            vm.DatasetIdentificator = datasetIdentificator;
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+            Dataset relatedDataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            DatasetContentViewModel relatedDatasetContent = _autoMapper.Map<DatasetContentViewModel>(relatedDataset.DatasetContent);
 
-            AddAnalysisParametersViewModel paramsa = new AddAnalysisParametersViewModel()
+            if (relatedDataset == null || (!loggedUser.UserDatasets.Contains(relatedDataset.DatasetIdentificator) && !loggedUser.SharedDatasetsToUser.Contains(relatedDataset.DatasetIdentificator)))
             {
-                ApproximationParameters = new AddApproximationParametersViewModel(),
-                BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel(),
-                DeriverativeParameters = new AddDeriverativeParametersViewModel(),
-                HistogramParameters = new AddHistogramParametersViewModel(),
-                RegressionParameters = new AddRegressionParametersViewModel(),
-                KMeansClusteringParameters = new AddKMeansClusteringParametersViewModel()
-            };
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
 
-            vm.AnalysisParameters = paramsa;
+            PerformNewAnalysisViewModel performAnalysisViewModel = _autoMapper.Map<PerformNewAnalysisViewModel>(relatedDataset);
+           
+            performAnalysisViewModel.AnalysisParameters = new AddAnalysisParametersViewModel();
+            performAnalysisViewModel.AnalysisParameters.HistogramParameters = new AddHistogramParametersViewModel(relatedDatasetContent);
+            performAnalysisViewModel.AnalysisParameters.BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel(relatedDatasetContent);
 
-            return View(vm);
+            return View(performAnalysisViewModel);
         }
 
         [Authorize]
@@ -103,9 +104,9 @@ namespace DataAnalysisSystem.Controllers
             ModelState.Clear();
 
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-            Dataset dataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
+            Dataset relatedDataset = _context.datasetRepository.GetDatasetById(newAnalysis.DatasetIdentificator);
 
-            if (dataset == null || !loggedUser.UserDatasets.Contains(dataset.DatasetIdentificator))
+            if (relatedDataset == null || (!loggedUser.UserDatasets.Contains(relatedDataset.DatasetIdentificator) && !loggedUser.SharedDatasetsToUser.Contains(relatedDataset.DatasetIdentificator)))
             {
                 return RedirectToAction("MainAction", "UserSystemInteraction");
             }
@@ -117,7 +118,7 @@ namespace DataAnalysisSystem.Controllers
 
             if (TryValidateModel(modelToValidate) && TryValidateModel(newAnalysis.AnalysisName))
             {
-                _analysisService.InitService(dataset.DatasetContent, parameters, _akkaSystem);
+                _analysisService.InitService(relatedDataset.DatasetContent, parameters, _akkaSystem);
                 List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(newAnalysis.SelectedAnalysisMethods, _analysisService);
 
                 _analysisHub.ExecuteCommandsToPerformAnalysis(commands);
@@ -133,7 +134,7 @@ namespace DataAnalysisSystem.Controllers
                     AnalysisParameters = parameters,
                     AnalysisResults = analysisResults,
 
-                    DatasetIdentificator = dataset.DatasetIdentificator,
+                    DatasetIdentificator = relatedDataset.DatasetIdentificator,
                     DateOfCreation = DateTime.Now.ToString(),
                     IsShared = false,
                     PerformedAnalysisMethods = newAnalysis.SelectedAnalysisMethods.ToList()
