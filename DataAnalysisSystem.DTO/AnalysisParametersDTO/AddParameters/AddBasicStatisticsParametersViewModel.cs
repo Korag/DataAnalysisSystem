@@ -6,6 +6,12 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 {
     public class AddBasicStatisticsParametersViewModel
     {
+        public AddBasicStatisticsParametersViewModel()
+        {
+            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
+        }
+
         public AddBasicStatisticsParametersViewModel(DatasetContentViewModel datasestContent)
         {
             this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
