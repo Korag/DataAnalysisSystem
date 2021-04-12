@@ -8,28 +8,29 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
     {
         public AddBasicStatisticsParametersViewModel(DatasetContentViewModel datasestContent)
         {
-            this.ColumnInfo = new List<BasicStatisticsColumnSelectedViewModel>();
+            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
 
             for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
             {
-                BasicStatisticsColumnSelectedViewModel histColumn = new BasicStatisticsColumnSelectedViewModel();
                 var numberColumn = datasestContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                 if (numberColumn != null)
                 {
-                    histColumn.AttributeName = numberColumn.AttributeName;
-
+                    this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDouble(
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, numberColumn.AttributeValue.Take(0).ToList()));
                 }
                 else
                 {
                     var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-                    histColumn.AttributeName = stringColumn.AttributeName;
-                }
 
-                this.ColumnInfo.Add(histColumn);
+                    this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, stringColumn.AttributeValue.Take(0).ToList()));
+                }
             }
         }
 
-        public IList<BasicStatisticsColumnSelectedViewModel> ColumnInfo { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeDouble> NumberColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
     }
 }

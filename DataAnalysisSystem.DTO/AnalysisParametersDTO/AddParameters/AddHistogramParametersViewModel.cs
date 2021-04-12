@@ -16,34 +16,32 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
         public AddHistogramParametersViewModel(DatasetContentViewModel datasestContent)
         {
-            this.DatasetContent = new DatasetContentViewModel();
-            this.DatasetContent.NumberColumns = datasestContent.NumberColumns.Take(DATASET_CONTENT_ELEMENTS_NEEDED).ToList();
-            this.DatasetContent.StringColumns = datasestContent.StringColumns.Take(DATASET_CONTENT_ELEMENTS_NEEDED).ToList();
+            this.NumberColumns = new List<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
 
-            this.ColumnInfo = new List<HistogramColumnRangeViewModel>();
-
-            for (int i = 0; i < this.DatasetContent.NumberColumns.Count() + this.DatasetContent.StringColumns.Count(); i++)
+            for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
             {
-                HistogramColumnRangeViewModel histColumn = new HistogramColumnRangeViewModel();
-                var numberColumn = this.DatasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                var numberColumn = datasestContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                 if (numberColumn != null)
                 {
-                    histColumn.AttributeName = numberColumn.AttributeName;
+                    DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel singleColumn = new DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel(
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, numberColumn.AttributeValue.Take(DATASET_CONTENT_ELEMENTS_NEEDED).ToList());
+                    singleColumn.Range = DEFAULT_RANGE;
 
+                    this.NumberColumns.Add(singleColumn);
                 }
                 else
                 {
-                    var stringColumn = this.DatasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-                    histColumn.AttributeName = stringColumn.AttributeName;
-                }
+                    var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
-                histColumn.Range = DEFAULT_RANGE;
-                this.ColumnInfo.Add(histColumn);
+                    this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, stringColumn.AttributeValue.Take(DATASET_CONTENT_ELEMENTS_NEEDED).ToList()));
+                }
             }
         }
 
-        public DatasetContentViewModel DatasetContent { get; set; }
-        public IList<HistogramColumnRangeViewModel> ColumnInfo { get; set; }
+        public IList<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel> NumberColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
     }
 }
