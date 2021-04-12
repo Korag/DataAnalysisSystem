@@ -7,6 +7,9 @@ namespace DataAnalysisSystem.DTO.AnalysisDTO
     {
         public string AnalysisIdentificator { get; set; }
 
+        [Display(Name = "Name")]
+        public string AnalysisName { get; set; }
+
         [Display(Name = "Indexer")]
         public string AnalysisIndexer { get; set; }
 

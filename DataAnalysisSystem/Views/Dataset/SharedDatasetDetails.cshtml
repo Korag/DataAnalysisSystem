@@ -190,6 +190,9 @@
                     <thead>
                         <tr>
                             <th>
+                                @Html.DisplayNameFor(model => model.RelatedAnalyses.FirstOrDefault().AnalysisName)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.RelatedAnalyses.FirstOrDefault().AnalysisIndexer)
                             </th>
                             <th>
@@ -206,23 +209,26 @@
                     <tbody>
                         @foreach (var analysis in Model.RelatedAnalyses)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
-                                </td>
-                                <td>
-                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
-                                    {
-                                        <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.DateOfCreation)
-                                </td>
-                                <td>
-                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => analysis.AnalysisName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                            </td>
+                            <td>
+                                @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                {
+                                    <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DateOfCreation)
+                            </td>
+                            <td>
+                                <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

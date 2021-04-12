@@ -51,6 +51,9 @@
                     <thead>
                         <tr>
                             <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().AnalysisName)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().AnalysisIndexer)
                             </th>
                             <th>
@@ -80,6 +83,9 @@
                         @foreach (var analysis in Model.SharedAnalyses)
                         {
                         <tr>
+                            <td>
+                                @Html.DisplayFor(model => analysis.AnalysisName)
+                            </td>
                             <td>
                                 @Html.DisplayFor(model => analysis.AnalysisIndexer)
                             </td>

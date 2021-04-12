@@ -78,27 +78,6 @@ namespace DataAnalysisSystem.Controllers
         {
             ViewData["Message"] = notificationMessage;
 
-            //var test = _context.analysisRepository.GetAnalysisById("606b0a1c3305881f84bd122a");
-
-            //Analysis analysisTest = new Analysis();
-            //analysisTest.AnalysisIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
-            //analysisTest.DatasetIdentificator = "TESTID";
-            //analysisTest.DateOfCreation = DateTime.Now.ToString();
-            //analysisTest.IsShared = false;
-            //analysisTest.AccessKey = "000";
-
-            //analysisTest.AnalysisResults = new AnalysisResults();
-            ////analysisTest.AnalysisResults.AnalysisResultsIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
-            //analysisTest.AnalysisResults.HistogramResult = new HistogramResult();
-            //analysisTest.AnalysisResults.BasicStatisticsResult = new BasicStatisticsResult();
-
-            //analysisTest.AnalysisParameters = new AnalysisParameters();
-            ////analysisTest.AnalysisParameters.AnalysisParametersIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString();
-            //analysisTest.AnalysisParameters.ApproximationParameters = new ApproximationParameters();
-            //analysisTest.AnalysisParameters.KMeansClusteringParameters = new KMeansClusteringParameters();
-
-            //_context.analysisRepository.AddAnalysis(analysisTest);
-
             PerformNewAnalysisViewModel vm = new PerformNewAnalysisViewModel();
             vm.DatasetIdentificator = datasetIdentificator;
 
@@ -136,7 +115,7 @@ namespace DataAnalysisSystem.Controllers
 
             AddAnalysisParametersViewModel modelToValidate = _autoMapper.Map<AddAnalysisParametersViewModel>(parameters);
 
-            if (TryValidateModel(modelToValidate))
+            if (TryValidateModel(modelToValidate) && TryValidateModel(newAnalysis.AnalysisName))
             {
                 _analysisService.InitService(dataset.DatasetContent, parameters, _akkaSystem);
                 List<AAnalysisCommand> commands = _analysisHub.SelectCommandsToPerform(newAnalysis.SelectedAnalysisMethods, _analysisService);
@@ -147,6 +126,7 @@ namespace DataAnalysisSystem.Controllers
                 Analysis performedAnalysis = new Analysis()
                 {
                     AnalysisIdentificator = _codeGenerator.GenerateNewDbEntityUniqueIdentificatorAsString(),
+                    AnalysisName = newAnalysis.AnalysisName,
                     AnalysisIndexer = _codeGenerator.GenerateRandomKey(4),
                     AccessKey = "000",
 
@@ -412,7 +392,6 @@ namespace DataAnalysisSystem.Controllers
                 return RedirectToAction("MainAction", "UserSystemInteraction");
             }
 
-            //TO DO:
             AnalysisDetailsViewModel analysisDetails = _autoMapper.Map<AnalysisDetailsViewModel>(analysis);
             analysisDetails.AnalysisResults = _autoMapper.Map<AnalysisResultsDetailsViewModel>(analysis.AnalysisResults);
             analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);

@@ -14,6 +14,16 @@
                     <span class="card-title center">Perform analysis</span>
 
                     <div class="center-align" style="margin-top: 30px">
+
+                        <div class="input-field" style="width:70%; margin:auto;">
+
+                            <i class="material-icons prefix">input</i>
+                            <input type="text" asp-for="AnalysisName" required="" aria-required="true" class="validate">
+                            <label asp-for="AnalysisName"></label>
+
+                            <span asp-validation-for="AnalysisName" class="helper-text" style="color: #F44336"></span>
+                        </div>
+
                         <button class="btn waves-effect waves-light" type="submit" id="submitButton" style="margin-left:24px;">
                             Analyze
                         </button>
@@ -85,24 +95,10 @@
     <script>
         $(document).ready(function () {
             $('.methodSwitch').show();
-            //$('#divBasicStatisticsParameters').css("visibility", "visible");
         });
     </script>
 
     <script>
-        //function ChangeVisibilityOfParametersDiv(divId) {
-        //    console.log(divId);
-        //    if ($('#divBasicStatisticsParameters').is("display:none")) {
-        //        console.log("widoczny");
-        //        $('#divBasicStatisticsParameters').css("visibility", "hidden");
-        //    }
-        //    else {
-        //        console.log("niewidoczny");
-
-        //        $('#divBasicStatisticsParameters').css("visibility", "visible");
-        //    }
-        //}
-
         function ChangeVisibilityOfParametersDiv(divId) {
             if ($('#' + divId).css('display') == 'none') {
                 $('#' + divId).css("display", "block");
@@ -111,7 +107,6 @@
                 $('#' + divId).css("display", "none");
             }
         }
-
     </script>
 }
 

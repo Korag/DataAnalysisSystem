@@ -10,11 +10,14 @@
         <div class="card" style="display:block;">
             <div class="card-content">
                 <span class="card-title center">Analysis Details</span>
-                <span class="card-title center teal-text text-lighten-1">@Model.AnalysisIndexer</span>
-
+                <span class="card-title center teal-text text-lighten-1">@Model.AnalysisName</span>
+    
                 <div class="row">
-                    <div class="col s6 center offset-s3">
+                    <div class="col s6 center">
                         Created at: @Model.DateOfCreation
+                    </div>
+                    <div class="col s6 center">
+                        Indexer: @Model.AnalysisIndexer
                     </div>
                 </div>
 

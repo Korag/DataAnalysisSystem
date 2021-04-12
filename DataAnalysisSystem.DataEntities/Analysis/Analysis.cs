@@ -16,6 +16,8 @@ namespace DataAnalysisSystem.DataEntities
         public string AnalysisIdentificator { get; set; }
 
         public string AnalysisIndexer { get; set; }
+        public string AnalysisName { get; set; }
+
         public string DatasetIdentificator { get; set; }
 
         public string DateOfCreation { get; set; }

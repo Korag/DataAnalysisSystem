@@ -10,6 +10,9 @@ namespace DataAnalysisSystem.DTO.AnalysisDTO
         [Display(Name = "Indexer")]
         public string AnalysisIndexer { get; set; }
 
+        [Display(Name = "Name")]
+        public string AnalysisName { get; set; }
+
         [Display(Name = "Analyses methods")]
         public IList<string> PerformedAnalysisMethods { get; set; }
 

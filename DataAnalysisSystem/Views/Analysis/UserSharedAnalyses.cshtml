@@ -16,6 +16,9 @@
                     <thead>
                         <tr>
                             <th>
+                                @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().AnalysisName)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.NotSharedAnalyses.FirstOrDefault().AnalysisIndexer)
                             </th>
                             <th>
@@ -45,39 +48,42 @@
                         @{int i = 0;}
                         @foreach (var analysis in Model.NotSharedAnalyses)
                         {
-                            <tr>
-                                <td>
-                                    <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisIndexer)</span>
-                                </td>
-                                <td>
-                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
-                                    {
-                                        <div class="chip" style="width:200px">
-                                            @analysisMethod
-                                        </div>
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.DateOfCreation)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.DatasetName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
-                                </td>
-                                <td>
-                                    @{string modalDataTarget = "modalShareAnalysis" + i;}
-                                    <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
-                                    @{i++;}
-                                </td>
-                                <td>
-                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisName)</span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                            </td>
+                            <td>
+                                @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                {
+                                    <div class="chip" style="width:200px">
+                                        @analysisMethod
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DateOfCreation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DatasetName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
+                            </td>
+                            <td>
+                                @{string modalDataTarget = "modalShareAnalysis" + i;}
+                                <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Share</a>
+                                @{i++;}
+                            </td>
+                            <td>
+                                <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -97,6 +103,9 @@
                 <table id="sharedAnalysesInfoList" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
                     <thead>
                         <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().AnalysisName)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.SharedAnalyses.FirstOrDefault().AnalysisIndexer)
                             </th>
@@ -127,41 +136,44 @@
                         @{int t = 0;}
                         @foreach (var analysis in Model.SharedAnalyses)
                         {
-                            <tr>
-                                <td>
-                                    <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisIndexer)</span>
-                                </td>
-                                <td>
-                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
-                                    {
-                                        <div class="chip" style="width:200px">
-                                            @analysisMethod
-                                        </div>
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.DateOfCreation)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.DatasetName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
-                                </td>
-                                <td style="white-space: nowrap;">
-                                    @{string modalDataTarget = "modalGainAccessToSharedAnalysis" + t;}
-                                    <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Gain Access</a>
-                                    @{modalDataTarget = "modalStopSharingAnalysis" + t;}
-                                    <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
-                                    @{t++;}
-                                </td>
-                                <td>
-                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisName)</span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                            </td>
+                            <td>
+                                @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                {
+                                    <div class="chip" style="width:200px">
+                                        @analysisMethod
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DateOfCreation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DatasetName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
+                            </td>
+                            <td style="white-space: nowrap;">
+                                @{string modalDataTarget = "modalGainAccessToSharedAnalysis" + t;}
+                                <a class="waves-effect waves-light btn teal lighten-1 white-text modal-trigger" data-target="@modalDataTarget">Gain Access</a>
+                                @{modalDataTarget = "modalStopSharingAnalysis" + t;}
+                                <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
+                                @{t++;}
+                            </td>
+                            <td>
+                                <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

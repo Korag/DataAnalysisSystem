@@ -17,6 +17,9 @@
                     <thead>
                         <tr>
                             <th>
+                                @Html.DisplayNameFor(model => model.AnalysisName)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.AnalysisIndexer)
                             </th>
                             <th>
@@ -44,7 +47,10 @@
                         {
                             <tr>
                                 <td>
-                                    <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisIndexer)</span>
+                                    <span class="teal-text">@Html.DisplayFor(model => analysis.AnalysisName)</span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
                                 </td>
                                 <td>
                                     @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
