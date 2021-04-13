@@ -1,0 +1,10 @@
+﻿<script>
+        function StopEventPropagation(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            }
+            else if (window.event) {
+                window.event.cancelBubble = true;
+            }
+        }
+</script>

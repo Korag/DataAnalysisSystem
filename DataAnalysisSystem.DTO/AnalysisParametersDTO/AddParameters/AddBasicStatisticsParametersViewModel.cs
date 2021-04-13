@@ -31,7 +31,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                     var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                     this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
-                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, stringColumn.AttributeValue.Take(0).ToList()));
+                                                             stringColumn.AttributeName, stringColumn.PositionInDataset, stringColumn.AttributeValue.Take(0).ToList()));
                 }
             }
         }

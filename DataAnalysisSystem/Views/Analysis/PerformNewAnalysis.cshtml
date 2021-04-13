@@ -63,19 +63,19 @@
     </div>
 
     <div id="divDeriverativeMethodParameters" style="display: none">
-        @await Component.InvokeAsync("AddDeriverativeMethodParameters", Model.AnalysisParameters.DeriverativeParameters)
+        @await Component.InvokeAsync("AddDeriverativeMethodParameters", Model)
     </div>
 
-    <div id="divHistogramMethodParameters" style="display: none">
-        @await Component.InvokeAsync("AddHistogramMethodParameters", Model.AnalysisParameters.HistogramParameters)
+    <div id="divHistogramMethodParameters">
+        @await Component.InvokeAsync("AddHistogramMethodParameters", Model)
     </div>
 
     <div id="divKMeansClusteringMethodParameters" style="display: none">
-        @await Component.InvokeAsync("AddKMeansClusteringMethodParameters", Model.AnalysisParameters.KMeansClusteringParameters)
+        @await Component.InvokeAsync("AddKMeansClusteringMethodParameters", Model)
     </div>
 
     <div id="divRegressionMethodParameters" style="display: none">
-        @await Component.InvokeAsync("AddRegressionMethodParameters", Model.AnalysisParameters.RegressionParameters)
+        @await Component.InvokeAsync("AddRegressionMethodParameters", Model)
     </div>
 
 </form>
@@ -89,8 +89,11 @@
 
 @section Scripts{
 
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "addHistogramParametersDataTable", LoadingIndicatorId = "addHistogramDataTableLoadingIndicator" });}
+
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
     @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "PerformNewAnalysis", ModalId = "modalWaiter" });}
+    @{await Html.RenderPartialAsync("_StopEventPropagationScript");}
 
     <script>
         $(document).ready(function () {

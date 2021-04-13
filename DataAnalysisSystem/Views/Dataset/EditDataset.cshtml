@@ -158,16 +158,9 @@
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
     @{await Html.RenderPartialAsync("_UnwrapEditDataTableScript", new UnwrapEditDataTableScriptViewModel { DatasetContent = Model.DatasetContent, DataTableId = "datasetContentTable", ButtonId = "submitButton" });}
 
-    <script>
-        function StopEventPropagation(event) {
-            if (event.stopPropagation) {
-                event.stopPropagation();
-            }
-            else if (window.event) {
-                window.event.cancelBubble = true;
-            }
-        }
 
+    @{await Html.RenderPartialAsync("_StopEventPropagationScript");}
+    <script>
         function auto_grow(element) {
             element.style.height = "5px";
             element.style.height = (element.scrollHeight) + "px";
