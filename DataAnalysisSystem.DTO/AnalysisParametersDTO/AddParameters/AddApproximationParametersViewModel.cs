@@ -1,13 +1,42 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DataAnalysisSystem.DTO.DatasetDTO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 {
     public class AddApproximationParametersViewModel
     {
-        [Required(ErrorMessage = "Field \"{0}\" is required.")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "The first name should be between 3 and 100 characters")]
-        [DataType(DataType.Text)]
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
+        public AddApproximationParametersViewModel()
+        {
+            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
+        }
+
+        public AddApproximationParametersViewModel(DatasetContentViewModel datasestContent)
+        {
+            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
+
+            for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
+            {
+                var numberColumn = datasestContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+
+                if (numberColumn != null)
+                {
+                    this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDouble(
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, true));
+                }
+                else
+                {
+                    var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+
+                    this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
+                                                             stringColumn.AttributeName, stringColumn.PositionInDataset, false));
+                }
+            }
+        }
+
+        public IList<DatasetColumnSelectColumnForParametersTypeDouble> NumberColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
     }
 }

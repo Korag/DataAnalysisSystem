@@ -1,21 +1,64 @@
 ﻿@model DataAnalysisSystem.DTO.AnalysisDTO.PerformNewAnalysisViewModel
 
 <div class="row" style="margin-top: 2vh; margin-bottom: 2vh;">
-    <div class="col s12 m10 l8 offset-m1 offset-l2">
-        <div class="card">
+    <div class="col s12">
+        <div class="card" style="display:block;">
             <div class="card-content">
-                <span class="card-title center-align">AddApproximationMethodParameters</span>
+                <span class="card-title center-align">Add Approximation Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
-                <div class="input-field">
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addApproximationDataTableLoadingIndicator");}
 
-                    <i class="material-icons prefix">contact_page</i>
-                    <input type="text" asp-for="AnalysisParameters.ApproximationParameters.FirstName" required="" aria-required="true" class="validate">
-                    <label asp-for="AnalysisParameters.ApproximationParameters.FirstName"></label>
+                <table id="addApproximationParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                    <thead>
 
-                    <span asp-validation-for="AnalysisParameters.ApproximationParameters.FirstName" class="helper-text" style="color: #F44336"></span>
+                        <tr>
+                            @for (int i = 0; i < Model.AnalysisParameters.ApproximationParameters.NumberColumns.Count() + Model.AnalysisParameters.ApproximationParameters.StringColumns.Count(); i++)
+                            {
+                                var numberColumn = Model.AnalysisParameters.ApproximationParameters.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
-                </div>
+                                if (numberColumn != null)
+                                {
+                                    int index = Model.AnalysisParameters.ApproximationParameters.NumberColumns.IndexOf(numberColumn);
+
+                                    <th>
+                                        @numberColumn.AttributeName
+
+                                        <input asp-for="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].AttributeName" value="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].AttributeName" readonly hidden />
+
+                                        <p class="center" onclick="StopEventPropagation(event)">
+                                            <label>
+                                                <input asp-for="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in" />
+                                                <span></span>
+                                            </label>
+                                        </p>
+                                    </th>
+                                }
+                                else
+                                {
+                                    var stringColumn = Model.AnalysisParameters.ApproximationParameters.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                                    int index = Model.AnalysisParameters.ApproximationParameters.StringColumns.IndexOf(stringColumn);
+
+                                    <th>
+                                        @stringColumn.AttributeName
+
+                                        <input asp-for="@Model.AnalysisParameters.ApproximationParameters.StringColumns[index].AttributeName" value="@Model.AnalysisParameters.ApproximationParameters.StringColumns[index].AttributeName" readonly hidden />
+
+                                        <p class="center" onclick="StopEventPropagation(event)">
+                                            <label>
+                                                <input asp-for="@Model.AnalysisParameters.ApproximationParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in" readonly disabled />
+                                                <span></span>
+                                            </label>
+                                        </p>
+                                    </th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
 
             </div>
         </div>
