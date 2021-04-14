@@ -1,0 +1,20 @@
+﻿@model DataAnalysisSystem.DTO.Scripts.CheckboxCheckedLimiterScriptViewModel
+
+<script>
+      $(function () {
+            var limit = @Model.CheckedElementsLimit;
+            var state = 0;
+
+            $("@Model.CheckboxClass").change(function () {
+                if ($(this).is(':checked')) {
+                    if (state < limit) {
+                        state = parseInt(state) + 1;
+                    } else {
+                        $(this).prop('checked', false);
+                    }
+                } else {
+                    state = parseInt(state) - 1;
+                }
+            })
+        })
+</script>

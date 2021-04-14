@@ -93,6 +93,7 @@ namespace DataAnalysisSystem.Controllers
             performAnalysisViewModel.AnalysisParameters = new AddAnalysisParametersViewModel();
             performAnalysisViewModel.AnalysisParameters.HistogramParameters = new AddHistogramParametersViewModel(relatedDatasetContent);
             performAnalysisViewModel.AnalysisParameters.BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel(relatedDatasetContent);
+            performAnalysisViewModel.AnalysisParameters.KMeansClusteringParameters = new AddKMeansClusteringParametersViewModel(relatedDatasetContent);
 
             return View(performAnalysisViewModel);
         }
