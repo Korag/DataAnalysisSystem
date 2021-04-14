@@ -28,7 +28,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in" />
+                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheckBox" />
                                                 <span></span>
                                             </label>
                                         </p>
@@ -46,7 +46,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in" readonly disabled />
+                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheckBox" readonly disabled />
                                                 <span></span>
                                             </label>
                                         </p>

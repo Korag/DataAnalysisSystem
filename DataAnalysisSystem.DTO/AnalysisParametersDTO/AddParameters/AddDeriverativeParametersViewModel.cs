@@ -24,7 +24,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 if (numberColumn != null)
                 {
                     this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDouble(
-                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, true));
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, false));
                 }
                 else
                 {
@@ -38,6 +38,5 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
         public IList<DatasetColumnSelectColumnForParametersTypeDouble> NumberColumns { get; set; }
         public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
-
     }
 }

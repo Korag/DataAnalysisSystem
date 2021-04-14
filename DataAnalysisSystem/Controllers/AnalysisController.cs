@@ -96,6 +96,7 @@ namespace DataAnalysisSystem.Controllers
             performAnalysisViewModel.AnalysisParameters.KMeansClusteringParameters = new AddKMeansClusteringParametersViewModel(relatedDatasetContent);
             performAnalysisViewModel.AnalysisParameters.ApproximationParameters = new AddApproximationParametersViewModel(relatedDatasetContent);
             performAnalysisViewModel.AnalysisParameters.DeriverativeParameters = new AddDeriverativeParametersViewModel(relatedDatasetContent);
+            performAnalysisViewModel.AnalysisParameters.RegressionParameters = new AddRegressionParametersViewModel(relatedDatasetContent);
 
             return View(performAnalysisViewModel);
         }
