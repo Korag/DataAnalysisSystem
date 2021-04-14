@@ -89,7 +89,7 @@
 
 @section Scripts{
 
-    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "addHistogramParametersDataTable", LoadingIndicatorId = "addHistogramDataTableLoadingIndicator" });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "addKMeansClusteringParametersDataTable", LoadingIndicatorId = "addKMeansClusteringDataTableLoadingIndicator" });}
 
@@ -107,6 +107,8 @@
         function ChangeVisibilityOfParametersDiv(divId) {
             if ($('#' + divId).css('display') == 'none') {
                 $('#' + divId).css("display", "block");
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust();
             }
             else {
                 $('#' + divId).css("display", "none");

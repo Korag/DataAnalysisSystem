@@ -1,0 +1,12 @@
+﻿@model DataAnalysisSystem.DTO.Scripts.DataTableOnlyHeaderWLoadingIndicatorViewModel
+
+<script>
+    $(document).ready(function () {
+        $("#@Model.DataTableId").show();
+        $('div#@Model.LoadingIndicatorId').hide();
+
+        $("#@Model.DataTableId").DataTable({
+            language: { "zeroRecords": "@Model.EmptyDataAnnotation" }, "bInfo": false, "searching": false, "paging": false, scrollX: "true", "targets": 'no-sort', "bSort": false, "order": [], scrollCollapse: !0, drawCallback: function (t) { var e = this.api(); e.table().columns.adjust() } });
+            jQuery("select").not(".disabled").formSelect();
+    });
+</script>
