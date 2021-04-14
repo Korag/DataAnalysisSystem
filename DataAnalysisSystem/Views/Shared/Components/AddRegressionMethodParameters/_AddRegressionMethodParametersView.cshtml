@@ -6,6 +6,15 @@
             <div class="card-content">
                 <span class="card-title center-align">Add Regression Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
+                
+                <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
+                    <a class="btn waves-effect waves-light" onclick="SelectAll('regrCheck')">
+                        Select All
+                    </a>
+                    <a class="btn waves-effect waves-light grey" onclick="DeselectAll('regrCheck')">
+                        Deselect All
+                    </a>
+                </div>
 
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addRegressionDataTableLoadingIndicator");}
 
@@ -28,7 +37,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.RegressionParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in" />
+                                                <input asp-for="@Model.AnalysisParameters.RegressionParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in regrCheck" />
                                                 <span></span>
                                             </label>
                                         </p>

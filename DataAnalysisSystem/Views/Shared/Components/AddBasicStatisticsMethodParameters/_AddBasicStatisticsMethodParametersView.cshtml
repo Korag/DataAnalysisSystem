@@ -7,6 +7,15 @@
                 <span class="card-title center-align">Add Basic Statistics Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
+                <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
+                    <a class="btn waves-effect waves-light" onclick="SelectAll('basicStatCheck')">
+                        Select All
+                    </a>
+                    <a class="btn waves-effect waves-light grey" onclick="DeselectAll('basicStatCheck')">
+                        Deselect All
+                    </a>
+                </div>
+
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addBasicStatisticsDataTableLoadingIndicator");}
 
                 <table id="addBasicStatisticsParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
@@ -28,7 +37,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.BasicStatisticsParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in" />
+                                                <input asp-for="@Model.AnalysisParameters.BasicStatisticsParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in basicStatCheck" />
                                                 <span></span>
                                             </label>
                                         </p>
@@ -56,8 +65,7 @@
                         </tr>
 
                     </thead>
-                    <tbody>  
-
+                    <tbody>
                     </tbody>
                 </table>
 

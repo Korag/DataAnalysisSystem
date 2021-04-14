@@ -7,6 +7,15 @@
                 <span class="card-title center-align">Add Histogram Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
+                <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
+                    <a class="btn waves-effect waves-light" onclick="SelectAll('histCheck')">
+                        Select All
+                    </a>
+                    <a class="btn waves-effect waves-light grey" onclick="DeselectAll('histCheck')">
+                        Deselect All
+                    </a>
+                </div>
+
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addHistogramDataTableLoadingIndicator");}
 
                 <table id="addHistogramParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
@@ -28,7 +37,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.HistogramParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in" />
+                                                <input asp-for="@Model.AnalysisParameters.HistogramParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in histCheck" />
                                                 <span></span>
                                             </label>
                                         </p>
@@ -59,7 +68,7 @@
                         </tr>
 
                     </thead>
-                    <tbody>  
+                    <tbody>
                     </tbody>
                 </table>
 

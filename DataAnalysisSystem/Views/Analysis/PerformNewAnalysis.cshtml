@@ -117,6 +117,14 @@
                 $('#' + divId).css("display", "none");
             }
         }
+
+        function SelectAll(checkboxClass) {
+            $(`.${checkboxClass}`).prop("checked", true);
+        }
+
+        function DeselectAll(checkboxClass) {
+            $(`.${checkboxClass}`).prop("checked", false);
+        }
     </script>
 
     @{await Html.RenderPartialAsync("_CheckboxCheckedLimiterScript", new CheckboxCheckedLimiterScriptViewModel { CheckboxClass = ".kMeansCheckBox", CheckedElementsLimit = 2 });}

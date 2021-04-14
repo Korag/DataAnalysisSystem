@@ -7,6 +7,15 @@
                 <span class="card-title center-align">Add Approximation Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
+                <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
+                    <a class="btn waves-effect waves-light" onclick="SelectAll('approxCheck')">
+                        Select All
+                    </a>
+                    <a class="btn waves-effect waves-light grey" onclick="DeselectAll('approxCheck')">
+                        Deselect All
+                    </a>
+                </div>
+
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addApproximationDataTableLoadingIndicator");}
 
                 <table id="addApproximationParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
@@ -28,7 +37,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in" />
+                                                <input asp-for="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in approxCheck" />
                                                 <span></span>
                                             </label>
                                         </p>
