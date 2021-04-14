@@ -7,6 +7,12 @@
                 <span class="card-title center-align">Add K-Means Clustering Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
+                <div class="input-field left-align col s3" style="margin-top: 10px; margin-bottom: 10px">
+                    <input type="number" asp-for="AnalysisParameters.KMeansClusteringParameters.ClustersNumber" required="" aria-required="true" class="validate">
+                    <label asp-for="AnalysisParameters.KMeansClusteringParameters.ClustersNumber"></label>
+                    <span asp-validation-for="AnalysisParameters.KMeansClusteringParameters.ClustersNumber" class="helper-text" style="color: #F44336"></span>
+                </div>
+
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addKMeansClusteringDataTableLoadingIndicator");}
 
                 <table id="addKMeansClusteringParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
@@ -56,7 +62,7 @@
                         </tr>
 
                     </thead>
-                    <tbody>     
+                    <tbody>
                     </tbody>
                 </table>
 

@@ -6,7 +6,6 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 {
     public class AddHistogramParametersViewModel
     {
-        private const int DATASET_CONTENT_ELEMENTS_NEEDED = 9;
         private const int DEFAULT_RANGE = 10;
 
         public AddHistogramParametersViewModel()
