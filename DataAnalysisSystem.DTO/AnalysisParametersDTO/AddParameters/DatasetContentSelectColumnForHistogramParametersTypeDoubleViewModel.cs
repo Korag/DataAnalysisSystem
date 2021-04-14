@@ -10,16 +10,14 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
         }
 
-        public DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel(string attributeName, int positionInDataset, List<double> attributeValue)
+        public DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel(string attributeName, int positionInDataset)
         {
             this.AttributeName = attributeName;
             this.PositionInDataset = positionInDataset;
-            this.AttributeValue = attributeValue;
         }
 
         public string AttributeName { get; set; }
         public int PositionInDataset { get; set; }
-        public IList<double> AttributeValue { get; set; }
 
         public bool ColumnSelected { get; set; }
 

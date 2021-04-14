@@ -56,47 +56,7 @@
                         </tr>
 
                     </thead>
-                    <tbody>
-
-                        @for (int i = 0; i < Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns.FirstOrDefault().AttributeValue.Count(); i++)
-                        {
-                            var n = 0;
-                            var s = 0;
-
-                            <tr>
-                                @for (int j = 0; j < Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns.Count() + Model.AnalysisParameters.KMeansClusteringParameters.StringColumns.Count(); j++)
-                                {
-                                    var numberColumn = Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-                                    var position = Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-
-                                    if (numberColumn != null)
-                                    {
-                                        <td>
-                                            @numberColumn.AttributeValue[i]
-
-                                            <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[n].AttributeValue" value="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[n].AttributeValue" readonly hidden />
-                                            <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[n].PositionInDataset" value="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[n].PositionInDataset" readonly hidden />
-
-                                            @{n++;}
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        var stringColumn = Model.AnalysisParameters.KMeansClusteringParameters.StringColumns.Where(z => z.PositionInDataset == j).FirstOrDefault();
-
-                                        <td>
-                                            @stringColumn.AttributeValue[i]
-
-                                            <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[s].AttributeValue" value="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[s].AttributeValue" readonly hidden />
-                                            <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[s].PositionInDataset" value="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[s].PositionInDataset" readonly hidden />
-
-                                            @{s++;}
-                                        </td>
-                                    }
-                                }
-                            </tr>
-                        }
-
+                    <tbody>     
                     </tbody>
                 </table>
 

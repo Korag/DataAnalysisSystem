@@ -9,16 +9,15 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
         }
 
-        public DatasetColumnSelectColumnForParametersTypeString(string attributeName, int positionInDataset, List<string> attributeValue)
+        public DatasetColumnSelectColumnForParametersTypeString(string attributeName, int positionInDataset, bool columnsSelected = false)
         {
             this.AttributeName = attributeName;
             this.PositionInDataset = positionInDataset;
-            this.AttributeValue = attributeValue;
+            this.ColumnSelected = columnsSelected;
         }
 
         public string AttributeName { get; set; }
         public int PositionInDataset { get; set; }
-        public IList<string> AttributeValue { get; set; }
 
         public bool ColumnSelected { get; set; }
     }

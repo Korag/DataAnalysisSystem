@@ -6,8 +6,6 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 {
     public class AddKMeansClusteringParametersViewModel
     {
-        private const int DATASET_CONTENT_ELEMENTS_NEEDED = 9;
-
         public AddKMeansClusteringParametersViewModel()
         {
             this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
@@ -26,14 +24,14 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 if (numberColumn != null)
                 {
                     this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDouble(
-                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, numberColumn.AttributeValue.Take(DATASET_CONTENT_ELEMENTS_NEEDED).ToList()));
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset));
                 }
                 else
                 {
                     var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                     this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
-                                                             stringColumn.AttributeName, stringColumn.PositionInDataset, stringColumn.AttributeValue.Take(DATASET_CONTENT_ELEMENTS_NEEDED).ToList()));
+                                                             stringColumn.AttributeName, stringColumn.PositionInDataset));
                 }
             }
         }

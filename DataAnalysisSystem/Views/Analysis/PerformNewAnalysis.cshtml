@@ -21,7 +21,7 @@
                             <input type="text" asp-for="AnalysisName" required="" aria-required="true" class="validate">
                             <label asp-for="AnalysisName"></label>
 
-                            <span asp-validation-for="AnalysisName" class="helper-text" style="color: #F44336"></span>
+                            <span asp-validation-for="AnalysisName" class="helper-text" style="color: #F44336; text-align:left"></span>
                         </div>
 
                         <button class="btn waves-effect waves-light" type="submit" id="submitButton" style="margin-left:24px;">
@@ -90,8 +90,8 @@
 @section Scripts{
 
     @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
-    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "addHistogramParametersDataTable", LoadingIndicatorId = "addHistogramDataTableLoadingIndicator" });}
-    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "addKMeansClusteringParametersDataTable", LoadingIndicatorId = "addKMeansClusteringDataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addHistogramParametersDataTable", LoadingIndicatorId = "addHistogramDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addKMeansClusteringParametersDataTable", LoadingIndicatorId = "addKMeansClusteringDataTableLoadingIndicator", EmptyDataAnnotation = "Choose exactly 2 columns" });}
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
     @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "PerformNewAnalysis", ModalId = "modalWaiter" });}

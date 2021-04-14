@@ -24,14 +24,14 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 if (numberColumn != null)
                 {
                     this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDouble(
-                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, numberColumn.AttributeValue.Take(0).ToList()));
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, true));
                 }
                 else
                 {
                     var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                     this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
-                                                             stringColumn.AttributeName, stringColumn.PositionInDataset, stringColumn.AttributeValue.Take(0).ToList()));
+                                                             stringColumn.AttributeName, stringColumn.PositionInDataset, false));
                 }
             }
         }
