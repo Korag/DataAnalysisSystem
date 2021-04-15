@@ -110,6 +110,10 @@
         $(document).ready(function () {
             $('.methodSwitch').show();
 
+            SelectAll('histCheck');
+            SelectAll('basicStatCheck');
+            SelectAll('approxCheck');
+
         @if (Model.SelectedAnalysisMethods.Length != 0) {
             foreach (var methodName in Model.SelectedAnalysisMethods)
             {

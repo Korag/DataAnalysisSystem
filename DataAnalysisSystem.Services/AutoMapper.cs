@@ -156,10 +156,12 @@ namespace DataAnalysisSystem.Services
 
             CreateMap<DatasetColumnSelectColumnForParametersTypeDouble, DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
             CreateMap<DatasetColumnSelectColumnForParametersTypeString, DatasetColumnSelectColumnForParametersTypeStringViewModel>();
+            CreateMap<DatasetContentSelectColumnForHistogramParametersTypeString, DatasetContentSelectColumnForHistogramParametersTypeStringViewModel>();
             CreateMap<DatasetContentSelectColumnForHistogramParametersTypeDouble, DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel>();
 
             CreateMap<DatasetColumnSelectColumnForParametersTypeDoubleViewModel, DatasetColumnSelectColumnForParametersTypeDouble>();
             CreateMap<DatasetColumnSelectColumnForParametersTypeStringViewModel, DatasetColumnSelectColumnForParametersTypeString>();
+            CreateMap<DatasetContentSelectColumnForHistogramParametersTypeStringViewModel, DatasetContentSelectColumnForHistogramParametersTypeString>();
             CreateMap<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel, DatasetContentSelectColumnForHistogramParametersTypeDouble>();
 
             #endregion

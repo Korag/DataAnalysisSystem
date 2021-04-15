@@ -7,10 +7,11 @@
 
         }
 
-        public DatasetContentSelectColumnForHistogramParametersTypeStringViewModel(string attributeName, int positionInDataset)
+        public DatasetContentSelectColumnForHistogramParametersTypeStringViewModel(string attributeName, int positionInDataset, bool columnSelected = false)
         {
             this.AttributeName = attributeName;
             this.PositionInDataset = positionInDataset;
+            this.ColumnSelected = columnSelected;
         }
 
         public string AttributeName { get; set; }

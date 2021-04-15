@@ -10,7 +10,8 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
         public AddHistogramParametersViewModel()
         {
-
+            this.NumberColumns = new List<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel>();
+            this.StringColumns = new List<DatasetContentSelectColumnForHistogramParametersTypeStringViewModel>();
         }
 
         public AddHistogramParametersViewModel(DatasetContentViewModel datasestContent)
@@ -25,9 +26,8 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 if (numberColumn != null)
                 {
                     DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel singleColumn = new DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel(
-                                                                                                         numberColumn.AttributeName, numberColumn.PositionInDataset);
+                                                                                                         numberColumn.AttributeName, numberColumn.PositionInDataset, false);
                     singleColumn.Range = DEFAULT_RANGE;
-                    singleColumn.ColumnSelected = true;
 
                     this.NumberColumns.Add(singleColumn);
                 }
@@ -35,8 +35,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 {
                     var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
                     DatasetContentSelectColumnForHistogramParametersTypeStringViewModel singleColumn = new DatasetContentSelectColumnForHistogramParametersTypeStringViewModel(
-                                                                                                         stringColumn.AttributeName, stringColumn.PositionInDataset);
-                    singleColumn.ColumnSelected = true;
+                                                                                                         stringColumn.AttributeName, stringColumn.PositionInDataset, false);
                     this.StringColumns.Add(singleColumn);
                 }
             }
