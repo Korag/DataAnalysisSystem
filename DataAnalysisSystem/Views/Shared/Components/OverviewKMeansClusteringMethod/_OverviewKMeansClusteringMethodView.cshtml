@@ -1,9 +1,9 @@
 ﻿<li>
     <div class="collapsible-header">
         <i class="material-icons">travel_explore</i>K-Means Clustering
-        <div class="switch methodSwitch" style="margin-left: auto; margin-right: 0px; display:none">
+        <div class="switch methodSwitch" style="margin-left: auto; margin-right: 0px; display:none" onclick="StopEventPropagation(event)">
             <label>
-                <input type="checkbox" name="selectedAnalysisMethods" value="kMeansClusteringMethod" onclick="StopEventPropagation(event)" onchange="ChangeVisibilityOfParametersDiv('divKMeansClusteringMethodParameters')">
+                <input type="checkbox" name="selectedAnalysisMethods" value="kMeansClusteringMethod" id="kMeansClusteringMethod" onchange="ChangeVisibilityOfParametersDiv('divKMeansClusteringMethodParameters')">
                 <span class="lever"></span>
             </label>
         </div>

@@ -1,9 +1,9 @@
 ﻿<li>
     <div class="collapsible-header">
         <i class="material-icons">travel_explore</i>Regression
-        <div class="switch methodSwitch" style="margin-left: auto; margin-right: 0px; display:none">
+        <div class="switch methodSwitch" style="margin-left: auto; margin-right: 0px; display:none" onclick="StopEventPropagation(event)">
             <label>
-                <input type="checkbox" name="selectedAnalysisMethods" value="regressionMethod" onchange="ChangeVisibilityOfParametersDiv('divRegressionMethodParameters')">
+                <input type="checkbox" name="selectedAnalysisMethods" value="regressionMethod" id="regressionMethod" onchange="ChangeVisibilityOfParametersDiv('divRegressionMethodParameters')">
                 <span class="lever"></span>
             </label>
         </div>

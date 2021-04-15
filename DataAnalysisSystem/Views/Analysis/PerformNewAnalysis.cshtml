@@ -100,11 +100,19 @@
     @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "PerformNewAnalysis", ModalId = "modalWaiter" });}
     @{await Html.RenderPartialAsync("_StopEventPropagationScript");}
 
-    <script>
+<script>
         $(document).ready(function () {
             $('.methodSwitch').show();
+
+        @if (Model.SelectedAnalysisMethods.Length != 0) {
+            foreach (var methodName in Model.SelectedAnalysisMethods)
+            {
+                <text>$('#@methodName').click();</text>
+            }
+        }
+
         });
-    </script>
+</script>
 
     <script>
         function ChangeVisibilityOfParametersDiv(divId) {

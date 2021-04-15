@@ -5,6 +5,11 @@ namespace DataAnalysisSystem.DTO.AnalysisDTO
 {
     public class PerformNewAnalysisViewModel
     {
+        public PerformNewAnalysisViewModel()
+        {
+            this.SelectedAnalysisMethods = new string[] { };
+        }
+
         public string DatasetIdentificator { get; set; }
 
         [Required(ErrorMessage = "Field \"{0}\" is required.")]
