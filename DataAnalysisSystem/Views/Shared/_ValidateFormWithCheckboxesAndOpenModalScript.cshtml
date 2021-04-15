@@ -4,7 +4,6 @@
       function openModalWaiter(e) {
           var form = $("#@Model.FormId");
           form.validate();
-          e.preventDefault();
 
           @foreach (var checkbox in Model.CheckboxesToLimitValidation)
           {
@@ -16,6 +15,7 @@
               @:{
                  @:if ($('@checkbox.CheckboxClass:checked').length < @checkbox.MinAmountOfCheckedCheckboxes) {
                   @:$('#@Model.ValidationContainerId').css("display", "block");
+                  @:e.preventDefault();
                   @:return false;
                  @:}
               @:}

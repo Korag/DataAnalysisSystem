@@ -143,9 +143,9 @@ namespace DataAnalysisSystem.Repository.Repository
             return resultUser;
         }
 
-        public IdentityProviderUser RemoveAnalysisFromOwner(string userIdentificator, string analysisIdentificator)
+        public IdentityProviderUser RemoveAnalysisFromOwner(ObjectId userIdentificator, string analysisIdentificator)
         {
-            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.Id.ToString() == userIdentificator);
+            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.Id == userIdentificator);
             var update = Builders<IdentityProviderUser>.Update.Pull(x => x.UserAnalyses, analysisIdentificator);
 
             var resultUser = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();

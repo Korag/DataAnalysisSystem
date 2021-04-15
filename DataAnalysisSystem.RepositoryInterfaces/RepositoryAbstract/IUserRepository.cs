@@ -1,4 +1,5 @@
 ﻿using DataAnalysisSystem.DataEntities;
+using MongoDB.Bson;
 using System.Collections.Generic;
 
 namespace DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract
@@ -17,6 +18,6 @@ namespace DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract
         public IdentityProviderUser GetAnalysisOwnerByAnalysisId(string analysisIdentificator);
         public IList<IdentityProviderUser> GetUsersSharedDatasetBySharedDatasetId(string datasetIdentificator);
         public IList<IdentityProviderUser> RemoveSharedAnalysisFromUsers(string analysisIdentificator);
-        public IdentityProviderUser RemoveAnalysisFromOwner(string userIdentificator, string analysisIdentificator);
+        public IdentityProviderUser RemoveAnalysisFromOwner(ObjectId userIdentificator, string analysisIdentificator);
     }
 }

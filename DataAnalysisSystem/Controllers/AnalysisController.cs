@@ -199,7 +199,7 @@ namespace DataAnalysisSystem.Controllers
             }
 
             _context.analysisRepository.DeleteAnalysis(analysisIdentificator);
-            _context.userRepository.RemoveAnalysisFromOwner(loggedUser.Id.ToString(), analysisIdentificator);
+            _context.userRepository.RemoveAnalysisFromOwner(loggedUser.Id, analysisIdentificator);
             _context.userRepository.RemoveSharedAnalysisFromUsers(analysisIdentificator);
 
             return RedirectToAction("MainAction", "UserSystemInteraction", new { notificationMessage = "The analysis was successfully removed from the system." });
