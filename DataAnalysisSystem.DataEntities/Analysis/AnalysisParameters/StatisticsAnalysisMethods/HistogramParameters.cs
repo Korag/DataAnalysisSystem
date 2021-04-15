@@ -10,6 +10,6 @@ namespace DataAnalysisSystem.DataEntities
         }
 
         public IList<DatasetContentSelectColumnForHistogramParametersTypeDouble> NumberColumns { get; set; }
-        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
+        public IList<DatasetContentSelectColumnForHistogramParametersTypeString> StringColumns { get; set; }
     }
 }
