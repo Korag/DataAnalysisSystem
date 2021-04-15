@@ -1,0 +1,34 @@
+﻿@model DataAnalysisSystem.DTO.Scripts.ValidateFormWithCheckboxesAndOpenModalScriptViewModel
+
+<script>
+      function openModalWaiter(e) {
+          var form = $("#@Model.FormId");
+          form.validate();
+          e.preventDefault();
+
+          @foreach (var checkbox in Model.CheckboxesToLimitValidation)
+          {
+
+              @:if($('#@checkbox.CheckboxContainerId').css('display') == 'none') {
+                 @:$('#@Model.ValidationContainerId').css("display", "none");
+              @:}
+              @:else
+              @:{
+                 @:if ($('@checkbox.CheckboxClass:checked').length < @checkbox.MinAmountOfCheckedCheckboxes) {
+                  @:$('#@Model.ValidationContainerId').css("display", "block");
+                  @:return false;
+                 @:}
+              @:}
+
+              @*@:if ($('@checkbox.CheckboxClass:checked').length < @checkbox.MinAmountOfCheckedCheckboxes) {
+                  @:$('#@Model.ValidationContainerId').css("display", "block");
+                  @:return false;
+             @:}*@
+          };
+
+          if (form.valid()) {
+                $('#@Model.ValidationContainerId').css("display", "hidden");
+                $('#@Model.ModalId').modal('open');
+            }
+        }
+</script>

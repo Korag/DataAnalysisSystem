@@ -4,7 +4,7 @@
     ViewData["Title"] = "Perform Analysis";
 }
 
-<form id="PerformNewAnalysis" method="post" asp-action="PerformNewAnalysis" asp-controller="Analysis" enctype="multipart/form-data" onsubmit="openModalWaiter()">
+<form id="PerformNewAnalysis" method="post" asp-action="PerformNewAnalysis" asp-controller="Analysis" enctype="multipart/form-data" onsubmit="openModalWaiter(event)">
 
     <div class="row" style="margin-top: 5vh; margin-bottom: 2vh">
         <div class="col s12 m10 l8 offset-m1 offset-l2">
@@ -29,6 +29,11 @@
                         </button>
 
                         <a asp-controller="Dataset" asp-action="DatasetDetails" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect right"><i class="material-icons teal-text" style="margin-top: 10px">table_view</i></a>
+                    </div>
+
+
+                    <div class="center-align">
+                        <span id="checkboxValidationInfo" class="helper-text" style="color: #F44336; text-align:left; display:none">Not enough checkboxes were selected.</span>
                     </div>
 
                 </div>
@@ -97,10 +102,11 @@
     @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addRegressionParametersDataTable", LoadingIndicatorId = "addRegressionDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
-    @{await Html.RenderPartialAsync("_ValidateFormAndOpenModalScript", new ValidateFormAndOpenModalScriptViewModel { FormId = "PerformNewAnalysis", ModalId = "modalWaiter" });}
+    @{await Html.RenderPartialAsync("_ValidateFormWithCheckboxesAndOpenModalScript", new ValidateFormWithCheckboxesAndOpenModalScriptViewModel { FormId = "PerformNewAnalysis", ModalId = "modalWaiter", ValidationContainerId = "checkboxValidationInfo", CheckboxesToLimitValidation = new List<CheckboxLimiterValidationScriptViewModel>
+    () { new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".kMeansCheckBox", MinAmountOfCheckedCheckboxes = 2, CheckboxContainerId = "divKMeansClusteringMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".deriverativeCheckBox", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divDeriverativeMethodParameters" }}});}
     @{await Html.RenderPartialAsync("_StopEventPropagationScript");}
 
-<script>
+    <script>
         $(document).ready(function () {
             $('.methodSwitch').show();
 
@@ -112,7 +118,7 @@
         }
 
         });
-</script>
+    </script>
 
     <script>
         function ChangeVisibilityOfParametersDiv(divId) {
@@ -137,9 +143,9 @@
 
     @{await Html.RenderPartialAsync("_CheckboxCheckedLimiterScript", new CheckboxCheckedLimiterScriptViewModel { CheckboxClass = ".kMeansCheckBox", CheckedElementsLimit = 2 });}
     @{await Html.RenderPartialAsync("_CheckboxCheckedLimiterScript", new CheckboxCheckedLimiterScriptViewModel { CheckboxClass = ".deriverativeCheckBox", CheckedElementsLimit = 2 });}
-}
+    }
 
-@section Notification
+    @section Notification
 {
-    @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
-}
+        @{await Html.RenderPartialAsync("_NotificationMenuValidationAndMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
+    }
