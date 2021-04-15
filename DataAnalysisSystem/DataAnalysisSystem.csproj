@@ -27,8 +27,6 @@
     <ProjectReference Include="..\AspNetIdentityProvider\AspNetCore.Identity.Mongo\AspNetCore.Identity.Mongo.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.AkkaNet\DataAnalysisSystem.AkkaNet.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.DataAnalysisCommands\DataAnalysisSystem.DataAnalysisCommands.csproj" />
-    <ProjectReference Include="..\DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces\DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces.csproj" />
-    <ProjectReference Include="..\DataAnalysisSystem.DataAnalysisMethods.Adapters\DataAnalysisSystem.DataAnalysisMethods.Adapters.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.DataEntities\DataAnalysisSystem.DataEntities.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.DTO\DataAnalysisSystem.DTO.csproj" />
     <ProjectReference Include="..\DataAnalysisSystem.Repository\DataAnalysisSystem.Repository.csproj" />

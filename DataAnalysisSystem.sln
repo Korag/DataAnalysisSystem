@@ -23,36 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Identity.Mongo",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Materials", "Materials", "{E97C95E2-757D-4C8E-ACF4-F3296EAEE106}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MaterializeDataTable_configured", "MaterializeDataTable_configured", "{6E2E83E7-8419-4DCD-9E1C-02591CD08C59}"
-	ProjectSection(SolutionItems) = preProject
-		Materials\MaterializeDataTable_configured\dataTable.html = Materials\MaterializeDataTable_configured\dataTable.html
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "css", "css", "{23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D}"
-	ProjectSection(SolutionItems) = preProject
-		Materials\MaterializeDataTable_configured\css\admin-materialize.css = Materials\MaterializeDataTable_configured\css\admin-materialize.css
-		Materials\MaterializeDataTable_configured\css\datatables.css = Materials\MaterializeDataTable_configured\css\datatables.css
-		Materials\MaterializeDataTable_configured\css\materialize.css = Materials\MaterializeDataTable_configured\css\materialize.css
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{B584A586-1AE1-4D42-9FC8-D73FEA5F0490}"
-	ProjectSection(SolutionItems) = preProject
-		Materials\MaterializeDataTable_configured\js\datatables.js = Materials\MaterializeDataTable_configured\js\datatables.js
-		Materials\MaterializeDataTable_configured\js\jquery.min.js = Materials\MaterializeDataTable_configured\js\jquery.min.js
-		Materials\MaterializeDataTable_configured\js\materialize.js = Materials\MaterializeDataTable_configured\js\materialize.js
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataTables-1.10.22", "DataTables-1.10.22", "{B00F9B71-D675-494B-981F-261C259D1FA0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{EB717E73-ABAA-4117-B4C8-913DE7CC67A8}"
-	ProjectSection(SolutionItems) = preProject
-		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc.png
-		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc_disabled.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_asc_disabled.png
-		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_both.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_both.png
-		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc.png
-		Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc_disabled.png = Materials\MaterializeDataTable_configured\css\DataTables-1.10.22\images\sort_desc_disabled.png
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{DDAC90E3-6A5A-453B-A02E-7729FAE4A1FA}"
 	ProjectSection(SolutionItems) = preProject
 		Materials\Diagrams\dataAnalysisSystem_classDiagram_v1.0.png = Materials\Diagrams\dataAnalysisSystem_classDiagram_v1.0.png
@@ -73,13 +43,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{D8C2DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalysisSystem.AkkaNet", "DataAnalysisSystem.AkkaNet\DataAnalysisSystem.AkkaNet.csproj", "{9406EEB9-6C08-4E7E-AFA0-B5CDC5A0F64C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalysisSystem.DataAnalysisMethods", "DataAnalysisSystem.DataAnalysisMethods\DataAnalysisSystem.DataAnalysisMethods.csproj", "{E60F213A-AD58-489A-9FF2-BEE1D575BAF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalysisSystem.DataAnalysisMethods", "DataAnalysisSystem.DataAnalysisMethods\DataAnalysisSystem.DataAnalysisMethods.csproj", "{E60F213A-AD58-489A-9FF2-BEE1D575BAF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalysisSystem.DataAnalysisMethods.Adapters", "DataAnalysisSystem.DataAnalysisMethods.Adapters\DataAnalysisSystem.DataAnalysisMethods.Adapters.csproj", "{F46DB0D5-AE66-43D6-A9BF-3E1291481585}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalysisSystem.DataAnalysisCommands", "DataAnalysisSystem.DataAnalysisCommands\DataAnalysisSystem.DataAnalysisCommands.csproj", "{9A3C0C3D-7038-4EEF-A284-8CB598A8B1F7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces", "DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces\DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces.csproj", "{5A0E5F4E-A61F-4F19-9F30-4E484270A2CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalysisSystem.DataAnalysisCommands", "DataAnalysisSystem.DataAnalysisCommands\DataAnalysisSystem.DataAnalysisCommands.csproj", "{9A3C0C3D-7038-4EEF-A284-8CB598A8B1F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,29 +93,16 @@ Global
 		{E60F213A-AD58-489A-9FF2-BEE1D575BAF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E60F213A-AD58-489A-9FF2-BEE1D575BAF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E60F213A-AD58-489A-9FF2-BEE1D575BAF4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F46DB0D5-AE66-43D6-A9BF-3E1291481585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F46DB0D5-AE66-43D6-A9BF-3E1291481585}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F46DB0D5-AE66-43D6-A9BF-3E1291481585}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F46DB0D5-AE66-43D6-A9BF-3E1291481585}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A3C0C3D-7038-4EEF-A284-8CB598A8B1F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A3C0C3D-7038-4EEF-A284-8CB598A8B1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A3C0C3D-7038-4EEF-A284-8CB598A8B1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A3C0C3D-7038-4EEF-A284-8CB598A8B1F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A0E5F4E-A61F-4F19-9F30-4E484270A2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A0E5F4E-A61F-4F19-9F30-4E484270A2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A0E5F4E-A61F-4F19-9F30-4E484270A2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A0E5F4E-A61F-4F19-9F30-4E484270A2CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D810604A-818B-4930-928E-1744500BA19C} = {4CAE6D5E-7133-46F4-9865-DF5BBE72BF20}
-		{6E2E83E7-8419-4DCD-9E1C-02591CD08C59} = {E97C95E2-757D-4C8E-ACF4-F3296EAEE106}
-		{23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D} = {6E2E83E7-8419-4DCD-9E1C-02591CD08C59}
-		{B584A586-1AE1-4D42-9FC8-D73FEA5F0490} = {6E2E83E7-8419-4DCD-9E1C-02591CD08C59}
-		{B00F9B71-D675-494B-981F-261C259D1FA0} = {23282CA0-C1FB-4D8B-9234-2E1FC6A12F1D}
-		{EB717E73-ABAA-4117-B4C8-913DE7CC67A8} = {B00F9B71-D675-494B-981F-261C259D1FA0}
 		{DDAC90E3-6A5A-453B-A02E-7729FAE4A1FA} = {E97C95E2-757D-4C8E-ACF4-F3296EAEE106}
 		{4D89DB09-8267-4131-92F7-C8D2A6F1B5E3} = {E97C95E2-757D-4C8E-ACF4-F3296EAEE106}
 		{D8C2DAB8-B925-459B-A5D4-D79436BCAE58} = {4D89DB09-8267-4131-92F7-C8D2A6F1B5E3}

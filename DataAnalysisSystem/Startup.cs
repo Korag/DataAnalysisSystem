@@ -20,8 +20,6 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http.Features;
 using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
-using DataAnalysisSystem.DataAnalysisMethods.AdaptersInterfaces;
-using DataAnalysisSystem.DataAnalysisMethods.Adapters;
 using DataAnalysisSystem.DataAnalysisCommands;
 using DataAnalysisSystem.AkkaNet;
 using Akka.Actor;
@@ -82,14 +80,6 @@ namespace DataAnalysisSystem
             services.AddSingleton<RepositoryContext, RepositoryContext>();
             services.AddSingleton<DbContextAbstract, MongoDbContext>();
             services.AddSingleton<MongoDbContext, MongoDbContext>();
-
-            // Data Analysis Layer
-            services.AddTransient<IKMeansClusteringAdapter, KMeansClusteringAdapter>();
-            services.AddTransient<IRegressionMethodAdapter, RegressionMethodAdapter>();
-            services.AddTransient<IApproximationMethodAdapter, ApproximationMethodAdapter>();
-            services.AddTransient<IDeriverativeMethodAdapter, DeriverativeMethodAdapter>();
-            services.AddTransient<IBasicStatisticsMethodAdapter, BasicStatisticsMethodAdapter>();
-            services.AddTransient<IHistogramMethodAdapter, HistogramMethodAdapter>();
 
             // Repository Layer
             services.AddTransient<IUserRepository, MongoUserRepository>();
