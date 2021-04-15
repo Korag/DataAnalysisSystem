@@ -43,7 +43,7 @@
                                             </label>
                                         </p>
 
-                                        <input asp-for="@Model.AnalysisParameters.HistogramParameters.NumberColumns[index].Range" value="@Model.AnalysisParameters.HistogramParameters.NumberColumns[index].Range" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" style="width:auto; text-align: center" />
+                                        <input asp-for="@Model.AnalysisParameters.HistogramParameters.NumberColumns[index].Range" value="@Model.AnalysisParameters.HistogramParameters.NumberColumns[index].Range" required="" aria-required="true" class="validate" onclick="StopEventPropagation(event)" style="width:auto; text-align: center" min="1"/>
                                         <span asp-validation-for="AnalysisParameters.HistogramParameters.NumberColumns[index].Range" class="helper-text" style="color: #F44336"></span>
 
                                     </th>
@@ -61,7 +61,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.HistogramParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in" readonly disabled />
+                                                <input asp-for="@Model.AnalysisParameters.HistogramParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in" min="1" readonly disabled />
                                                 <span></span>
                                             </label>
                                         </p>

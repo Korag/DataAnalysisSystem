@@ -8,7 +8,7 @@
                 <span class="card-title center teal-text text-lighten-1"></span>
 
                 <div class="input-field left-align col s3" style="margin-top: 10px; margin-bottom: 10px">
-                    <input type="number" asp-for="AnalysisParameters.KMeansClusteringParameters.ClustersNumber" required="" aria-required="true" class="validate">
+                    <input type="number" asp-for="AnalysisParameters.KMeansClusteringParameters.ClustersNumber" required="" aria-required="true" class="validate" min="1">
                     <label asp-for="AnalysisParameters.KMeansClusteringParameters.ClustersNumber"></label>
                     <span asp-validation-for="AnalysisParameters.KMeansClusteringParameters.ClustersNumber" class="helper-text" style="color: #F44336"></span>
                 </div>
