@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
+namespace DataAnalysisSystem.DataEntities
 {
     public class DatasetColumnSelectColumnForParametersTypeString
     {

@@ -6,7 +6,7 @@
             <div class="card-content">
                 <span class="card-title center-align">Add Regression Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
-                
+
                 <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
                     <a class="btn waves-effect waves-light" onclick="SelectAll('regrCheck')">
                         Select All
@@ -34,6 +34,7 @@
                                         @numberColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.RegressionParameters.NumberColumns[index].AttributeName" value="@Model.AnalysisParameters.RegressionParameters.NumberColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.RegressionParameters.NumberColumns[index].PositionInDataset" value="@Model.AnalysisParameters.RegressionParameters.NumberColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
@@ -52,6 +53,7 @@
                                         @stringColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.RegressionParameters.StringColumns[index].AttributeName" value="@Model.AnalysisParameters.RegressionParameters.StringColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.RegressionParameters.StringColumns[index].PositionInDataset" value="@Model.AnalysisParameters.RegressionParameters.StringColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>

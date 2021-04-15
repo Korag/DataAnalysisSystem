@@ -34,6 +34,7 @@
                                         @numberColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].AttributeName" value="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].PositionInDataset" value="@Model.AnalysisParameters.ApproximationParameters.NumberColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
@@ -52,6 +53,7 @@
                                         @stringColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.ApproximationParameters.StringColumns[index].AttributeName" value="@Model.AnalysisParameters.ApproximationParameters.StringColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.ApproximationParameters.StringColumns[index].PositionInDataset" value="@Model.AnalysisParameters.ApproximationParameters.StringColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>

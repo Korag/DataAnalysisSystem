@@ -1,7 +1,15 @@
-﻿namespace DataAnalysisSystem.DataEntities
+﻿using System.Collections.Generic;
+
+namespace DataAnalysisSystem.DataEntities
 {
     public class ApproximationParameters
     {
-        public string FirstName { get; set; }
+        public ApproximationParameters()
+        {
+
+        }
+
+        public IList<DatasetColumnSelectColumnForParametersTypeDouble> NumberColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
     }
 }

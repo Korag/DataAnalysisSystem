@@ -152,6 +152,7 @@ namespace DataAnalysisSystem.Controllers
                 return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = performedAnalysis.AnalysisIdentificator, notificationMessage = "The data analysis has been completed." });
             }
 
+
             return View(newAnalysis);
         }
 
@@ -182,6 +183,7 @@ namespace DataAnalysisSystem.Controllers
                 }
             }
 
+            ModelState.AddModelError(string.Empty, "The parameters entered contain invalid settings.");
             return View(userAnalysesDTO);
         }
 

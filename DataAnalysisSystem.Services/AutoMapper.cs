@@ -154,6 +154,14 @@ namespace DataAnalysisSystem.Services
             CreateMap<KMeansClusteringParameters, DetailsKMeansClusteringParametersViewModel>();
             CreateMap<RegressionParameters, DetailsRegressionParametersViewModel>();
 
+            CreateMap<DatasetColumnSelectColumnForParametersTypeDouble, DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
+            CreateMap<DatasetColumnSelectColumnForParametersTypeString, DatasetColumnSelectColumnForParametersTypeStringViewModel>();
+            CreateMap<DatasetContentSelectColumnForHistogramParametersTypeDouble, DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel>();
+
+            CreateMap<DatasetColumnSelectColumnForParametersTypeDoubleViewModel, DatasetColumnSelectColumnForParametersTypeDouble>();
+            CreateMap<DatasetColumnSelectColumnForParametersTypeStringViewModel, DatasetColumnSelectColumnForParametersTypeString>();
+            CreateMap<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel, DatasetContentSelectColumnForHistogramParametersTypeDouble>();
+
             #endregion
         }
     }

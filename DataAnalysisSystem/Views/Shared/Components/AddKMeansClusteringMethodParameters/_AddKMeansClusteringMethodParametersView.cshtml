@@ -31,6 +31,7 @@
                                         @numberColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[index].AttributeName" value="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[index].PositionInDataset" value="@Model.AnalysisParameters.KMeansClusteringParameters.NumberColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
@@ -49,6 +50,7 @@
                                         @stringColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[index].AttributeName" value="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[index].PositionInDataset" value="@Model.AnalysisParameters.KMeansClusteringParameters.StringColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>

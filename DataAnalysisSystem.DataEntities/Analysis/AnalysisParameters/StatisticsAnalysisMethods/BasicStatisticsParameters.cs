@@ -1,7 +1,15 @@
-﻿namespace DataAnalysisSystem.DataEntities
+﻿using System.Collections.Generic;
+
+namespace DataAnalysisSystem.DataEntities
 {
     public class BasicStatisticsParameters
     {
-        public string LastName { get; set; }
+        public BasicStatisticsParameters()
+        {
+
+        }
+
+        public IList<DatasetColumnSelectColumnForParametersTypeDouble> NumberColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
     }
 }

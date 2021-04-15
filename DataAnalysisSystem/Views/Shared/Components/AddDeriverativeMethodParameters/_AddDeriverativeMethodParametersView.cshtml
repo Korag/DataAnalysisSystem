@@ -25,6 +25,7 @@
                                         @numberColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].AttributeName" value="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].PositionInDataset" value="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
@@ -43,6 +44,7 @@
                                         @stringColumn.AttributeName
 
                                         <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].AttributeName" value="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].AttributeName" readonly hidden />
+                                        <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].PositionInDataset" value="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].PositionInDataset" readonly hidden />
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>

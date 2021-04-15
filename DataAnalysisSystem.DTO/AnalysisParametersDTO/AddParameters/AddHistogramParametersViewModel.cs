@@ -16,7 +16,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
         public AddHistogramParametersViewModel(DatasetContentViewModel datasestContent)
         {
             this.NumberColumns = new List<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel>();
-            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeStringViewModel>();
 
             for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
             {
@@ -35,13 +35,13 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 {
                     var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
-                    this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
+                    this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeStringViewModel(
                                                              stringColumn.AttributeName, stringColumn.PositionInDataset));
                 }
             }
         }
 
         public IList<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel> NumberColumns { get; set; }
-        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeStringViewModel> StringColumns { get; set; }
     }
 }

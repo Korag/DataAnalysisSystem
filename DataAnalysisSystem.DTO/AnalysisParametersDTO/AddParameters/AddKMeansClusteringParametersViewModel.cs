@@ -9,14 +9,14 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
     {
         public AddKMeansClusteringParametersViewModel()
         {
-            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
-            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
+            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeStringViewModel>();
         }
 
         public AddKMeansClusteringParametersViewModel(DatasetContentViewModel datasestContent)
         {
-            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDouble>();
-            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeString>();
+            this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
+            this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeStringViewModel>();
             this.ClustersNumber = 3;
 
             for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
@@ -25,21 +25,21 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
                 if (numberColumn != null)
                 {
-                    this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDouble(
+                    this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDoubleViewModel(
                                                              numberColumn.AttributeName, numberColumn.PositionInDataset));
                 }
                 else
                 {
                     var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
-                    this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeString(
+                    this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeStringViewModel(
                                                              stringColumn.AttributeName, stringColumn.PositionInDataset));
                 }
             }
         }
 
-        public IList<DatasetColumnSelectColumnForParametersTypeDouble> NumberColumns { get; set; }
-        public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeDoubleViewModel> NumberColumns { get; set; }
+        public IList<DatasetColumnSelectColumnForParametersTypeStringViewModel> StringColumns { get; set; }
        
         [Display(Name="Number of clusters made")]
         [Range(typeof(int), "0", "2147483647")]
