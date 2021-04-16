@@ -20,7 +20,7 @@ namespace DataAnalysisSystem.DataEntities
 
             this.OutX = new List<double>();
             this.OutY = new List<double>();
-            this.DYDX = new List<double>();
+            //this.DYDX = new List<double>();
         }
 
         public string AttributeName { get; set; }
@@ -33,6 +33,6 @@ namespace DataAnalysisSystem.DataEntities
 
         public IList<double> OutX { get; set; }
         public IList<double> OutY { get; set; }
-        public IList<double> DYDX { get; set; }
+        //public IList<double> DYDX { get; set; }
     }
 }

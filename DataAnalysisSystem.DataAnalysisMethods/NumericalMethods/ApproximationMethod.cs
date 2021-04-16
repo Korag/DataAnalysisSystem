@@ -52,12 +52,12 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                     {
                         outX[i] = (inX.Last() * i) / (outX.Count - 1);
                         outY[i] = spline.Interpolate(outX[i]);
-                        dydx[i] = spline.Differentiate(outX[i]);
+                        //dydx[i] = spline.Differentiate(outX[i]);
                     }
 
                     singleNumberColumnResult.OutX = outX.ToList();
                     singleNumberColumnResult.OutY = outY.ToList();
-                    singleNumberColumnResult.DYDX = dydx.ToList();
+                    //singleNumberColumnResult.DYDX = dydx.ToList();
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                     singleNumberColumnResult.InY = null;
                     singleNumberColumnResult.OutX = null;
                     singleNumberColumnResult.OutY = null;
-                    singleNumberColumnResult.DYDX = null;
+                    //singleNumberColumnResult.DYDX = null;
                 }
 
                 results.ApproximationResult.NumberColumns.Add(singleNumberColumnResult);
