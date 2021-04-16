@@ -17,21 +17,24 @@ namespace DataAnalysisSystem.DataAnalysisMethods
             {
                 DatasetContentSelectColumnForHistogramParametersTypeDouble columnNumberParameters = parameters.HistogramParameters.NumberColumns.Where(z => z.PositionInDataset == numberColumn.PositionInDataset).FirstOrDefault();
                 DatasetContentHistogramResultsTypeDouble singleNumberColumnResult = new DatasetContentHistogramResultsTypeDouble(numberColumn.AttributeName, numberColumn.PositionInDataset, columnNumberParameters.ColumnSelected);
+                singleNumberColumnResult.Range = columnNumberParameters.Range;
 
                 if (columnNumberParameters.ColumnSelected)
                 {
-                    int smallestValue = singleNumberColumnResult.AttributeName.OrderByDescending(z => z).Last();
-                    int biggestValue = singleNumberColumnResult.AttributeName.OrderByDescending(z => z).First();
+                    double smallestValue = numberColumn.AttributeValue.OrderByDescending(z => z).Last();
+                    double biggestValue = numberColumn.AttributeValue.OrderByDescending(z => z).First();
 
                     var histogram = Histogram.CreateEmpty<double>(smallestValue, biggestValue, columnNumberParameters.Range);
-                    histogram.Tabulate<double>(numberColumn.AttributeValue);
+                    histogram.Tabulate(numberColumn.AttributeValue);
 
                     foreach (var pair in histogram.BinsAndValues)
                     {
                         singleNumberColumnResult.HistogramValues.Add(new HistogramNumberBin()
                         {
-                            Bin = Convert.ToInt32(pair.Key),
-                            Value = Convert.ToInt32(pair.Value)
+                            LowerBound = pair.Key.LowerBound,
+                            UpperBound = pair.Key.UpperBound,
+                            Width = pair.Key.Width,
+                            Value = pair.Value
                         });
                     };
                 }

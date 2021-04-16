@@ -7,7 +7,10 @@
 
         }
 
-        public int Bin { get; set; }
-        public int Value { get; set; }
+        public double LowerBound { get; set; }
+        public double UpperBound { get; set; }
+        public double Width { get; set; }
+
+        public double Value { get; set; }
     }
 }
