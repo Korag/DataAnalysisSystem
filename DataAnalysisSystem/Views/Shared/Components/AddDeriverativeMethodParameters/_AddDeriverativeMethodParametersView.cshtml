@@ -7,71 +7,79 @@
                 <span class="card-title center-align">Add Deriverative Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
-                <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
-                    <a class="btn waves-effect waves-light" onclick="SelectAll('deriverativeCheck')">
-                        Select All
-                    </a>
-                    <a class="btn waves-effect waves-light grey" onclick="DeselectAll('deriverativeCheck')">
-                        Deselect All
-                    </a>
+                <div>
+                    <div class="input-field left-align col s3" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisParameters.DeriverativeParameters.ApproximationPointsNumber" required="" aria-required="true" class="validate" min="1">
+                        <label asp-for="AnalysisParameters.DeriverativeParameters.ApproximationPointsNumber"></label>
+                        <span asp-validation-for="AnalysisParameters.DeriverativeParameters.ApproximationPointsNumber" class="helper-text" style="color: #F44336"></span>
+                    </div>
+
+                    <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
+                        <a class="btn waves-effect waves-light" style="margin-top: 10px;" onclick="SelectAll('deriverativeCheck')">
+                            Select All
+                        </a>
+                        <a class="btn waves-effect waves-light grey" style="margin-top: 10px;" onclick="DeselectAll('deriverativeCheck')">
+                            Deselect All
+                        </a>
+                    </div>
                 </div>
 
-                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addDeriverativeDataTableLoadingIndicator");}
+                    @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addDeriverativeDataTableLoadingIndicator");}
 
-                <table id="addDeriverativeParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
-                    <thead>
+                    <table id="addDeriverativeParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                        <thead>
 
-                        <tr>
-                            @for (int i = 0; i < Model.AnalysisParameters.DeriverativeParameters.NumberColumns.Count() + Model.AnalysisParameters.DeriverativeParameters.StringColumns.Count(); i++)
-                            {
-                                var numberColumn = Model.AnalysisParameters.DeriverativeParameters.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-
-                                if (numberColumn != null)
+                            <tr>
+                                @for (int i = 0; i < Model.AnalysisParameters.DeriverativeParameters.NumberColumns.Count() + Model.AnalysisParameters.DeriverativeParameters.StringColumns.Count(); i++)
                                 {
-                                    int index = Model.AnalysisParameters.DeriverativeParameters.NumberColumns.IndexOf(numberColumn);
+                                    var numberColumn = Model.AnalysisParameters.DeriverativeParameters.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
-                                    <th>
-                                        @numberColumn.AttributeName
+                                    if (numberColumn != null)
+                                    {
+                                        int index = Model.AnalysisParameters.DeriverativeParameters.NumberColumns.IndexOf(numberColumn);
 
-                                        <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].AttributeName" value="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].AttributeName" readonly hidden />
-                                        <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].PositionInDataset" value="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].PositionInDataset" readonly hidden />
+                                        <th>
+                                            @numberColumn.AttributeName
 
-                                        <p class="center" onclick="StopEventPropagation(event)">
-                                            <label>
-                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheck" />
-                                                <span></span>
-                                            </label>
-                                        </p>
-                                    </th>
+                                            <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].AttributeName" value="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].AttributeName" readonly hidden />
+                                            <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].PositionInDataset" value="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].PositionInDataset" readonly hidden />
+
+                                            <p class="center" onclick="StopEventPropagation(event)">
+                                                <label>
+                                                    <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheck" />
+                                                    <span></span>
+                                                </label>
+                                            </p>
+                                        </th>
+                                    }
+                                    else
+                                    {
+                                        var stringColumn = Model.AnalysisParameters.DeriverativeParameters.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                                        int index = Model.AnalysisParameters.DeriverativeParameters.StringColumns.IndexOf(stringColumn);
+
+                                        <th>
+                                            @stringColumn.AttributeName
+
+                                            <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].AttributeName" value="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].AttributeName" readonly hidden />
+                                            <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].PositionInDataset" value="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].PositionInDataset" readonly hidden />
+
+                                            <p class="center" onclick="StopEventPropagation(event)">
+                                                <label>
+                                                    <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in" readonly disabled />
+                                                    <span></span>
+                                                </label>
+                                            </p>
+                                        </th>
+                                    }
                                 }
-                                else
-                                {
-                                    var stringColumn = Model.AnalysisParameters.DeriverativeParameters.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
-                                    int index = Model.AnalysisParameters.DeriverativeParameters.StringColumns.IndexOf(stringColumn);
+                            </tr>
 
-                                    <th>
-                                        @stringColumn.AttributeName
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
 
-                                        <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].AttributeName" value="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].AttributeName" readonly hidden />
-                                        <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].PositionInDataset" value="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].PositionInDataset" readonly hidden />
-
-                                        <p class="center" onclick="StopEventPropagation(event)">
-                                            <label>
-                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in" readonly disabled />
-                                                <span></span>
-                                            </label>
-                                        </p>
-                                    </th>
-                                }
-                            }
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-
+                </div>
             </div>
-        </div>
     </div>
 </div>

@@ -11,7 +11,6 @@ namespace DataAnalysisSystem.DataEntities
 
         public IList<DatasetColumnSelectColumnForParametersTypeDouble> NumberColumns { get; set; }
         public IList<DatasetColumnSelectColumnForParametersTypeString> StringColumns { get; set; }
-        public int DataPointsNumber { get; set; }
         public int ApproximationPointsNumber { get; set; }
     }
 }

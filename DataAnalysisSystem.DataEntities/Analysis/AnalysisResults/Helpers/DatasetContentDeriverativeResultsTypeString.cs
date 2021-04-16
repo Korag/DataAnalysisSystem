@@ -1,13 +1,13 @@
 ﻿namespace DataAnalysisSystem.DataEntities
 {
-    public class DatasetContentApproximationResultsTypeString
+    public class DatasetContentDeriverativeResultsTypeString
     {
-        public DatasetContentApproximationResultsTypeString()
+        public DatasetContentDeriverativeResultsTypeString()
         {
 
         }
 
-        public DatasetContentApproximationResultsTypeString(string attributeName, int positionInDataset, bool columnSelected)
+        public DatasetContentDeriverativeResultsTypeString(string attributeName, int positionInDataset, bool columnSelected)
         {
             this.AttributeName = attributeName;
             this.PositionInDataset = positionInDataset;

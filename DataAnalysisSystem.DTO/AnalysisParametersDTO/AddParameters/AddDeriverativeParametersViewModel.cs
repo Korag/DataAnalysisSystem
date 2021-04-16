@@ -1,11 +1,14 @@
 ﻿using DataAnalysisSystem.DTO.DatasetDTO;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 {
     public class AddDeriverativeParametersViewModel
     {
+        private const int DEFAULT_APPROXIMATION_POINTS_NUMBER = 40;
+
         public AddDeriverativeParametersViewModel()
         {
             this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
@@ -38,5 +41,10 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
         public IList<DatasetColumnSelectColumnForParametersTypeDoubleViewModel> NumberColumns { get; set; }
         public IList<DatasetColumnSelectColumnForParametersTypeStringViewModel> StringColumns { get; set; }
+        
+        [Display(Name = "Number of approximation points")]
+        [Range(typeof(int), "0", "2147483647")]
+        [Required]
+        public int ApproximationPointsNumber { get; set; }
     }
 }
