@@ -7,13 +7,27 @@
                 <span class="card-title center-align">Add Approximation Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
-                <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
-                    <a class="btn waves-effect waves-light" onclick="SelectAll('approxCheck')">
-                        Select All
-                    </a>
-                    <a class="btn waves-effect waves-light grey" onclick="DeselectAll('approxCheck')">
-                        Deselect All
-                    </a>
+                <div>
+                    <div class="input-field left-align col s3" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisParameters.ApproximationParameters.DataPointsNumber" required="" aria-required="true" class="validate" min="1">
+                        <label asp-for="AnalysisParameters.ApproximationParameters.DataPointsNumber"></label>
+                        <span asp-validation-for="AnalysisParameters.ApproximationParameters.DataPointsNumber" class="helper-text" style="color: #F44336"></span>
+                    </div>
+
+                    <div class="input-field left-align col s3" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisParameters.ApproximationParameters.ApproximationPointsNumber" required="" aria-required="true" class="validate" min="1">
+                        <label asp-for="AnalysisParameters.ApproximationParameters.ApproximationPointsNumber"></label>
+                        <span asp-validation-for="AnalysisParameters.ApproximationParameters.ApproximationPointsNumber" class="helper-text" style="color: #F44336"></span>
+                    </div>
+
+                    <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
+                        <a class="btn waves-effect waves-light" style="margin-top: 10px;" onclick="SelectAll('approxCheck')">
+                            Select All
+                        </a>
+                        <a class="btn waves-effect waves-light grey" style="margin-top: 10px;" onclick="DeselectAll('approxCheck')">
+                            Deselect All
+                        </a>
+                    </div>
                 </div>
 
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addApproximationDataTableLoadingIndicator");}

@@ -7,6 +7,15 @@
                 <span class="card-title center-align">Add Deriverative Method Parameters</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
 
+                <div class="right-align" style="margin-top: 10px; margin-bottom: 10px">
+                    <a class="btn waves-effect waves-light" onclick="SelectAll('deriverativeCheck')">
+                        Select All
+                    </a>
+                    <a class="btn waves-effect waves-light grey" onclick="DeselectAll('deriverativeCheck')">
+                        Deselect All
+                    </a>
+                </div>
+
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "addDeriverativeDataTableLoadingIndicator");}
 
                 <table id="addDeriverativeParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
@@ -29,7 +38,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheckBox" />
+                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheck" />
                                                 <span></span>
                                             </label>
                                         </p>
@@ -48,7 +57,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheckBox" readonly disabled />
+                                                <input asp-for="@Model.AnalysisParameters.DeriverativeParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in deriverativeCheck" readonly disabled />
                                                 <span></span>
                                             </label>
                                         </p>

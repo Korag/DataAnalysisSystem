@@ -1,4 +1,9 @@
 ﻿using DataAnalysisSystem.DataEntities;
+using MathNet.Numerics.Interpolation;
+using MathNet.Numerics.LinearAlgebra.Complex;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalysisSystem.DataAnalysisMethods
 {
@@ -6,7 +11,64 @@ namespace DataAnalysisSystem.DataAnalysisMethods
     {
         public AnalysisResults GetDataAnalysisMethodResult(DatasetContent datasetContent, AnalysisParameters parameters)
         {
-            throw new System.NotImplementedException();
+            AnalysisResults results = new AnalysisResults();
+            results.ApproximationResult = new ApproximationResult();
+
+            results.ApproximationResult.DataPointsNumber = parameters.ApproximationParameters.DataPointsNumber;
+            results.ApproximationResult.DataPointsNumber = parameters.ApproximationParameters.DataPointsNumber;
+            results.ApproximationResult.ApproximationPointsNumber = parameters.ApproximationParameters.ApproximationPointsNumber;
+
+            IEnumerable<double> inX = Enumerable.Range(0, parameters.ApproximationParameters.DataPointsNumber).Select(z => Convert.ToDouble(z));
+
+            foreach (var numberColumn in datasetContent.NumberColumns)
+            {
+                DatasetColumnSelectColumnForParametersTypeDouble columnNumberParameters = parameters.ApproximationParameters.NumberColumns.Where(z => z.PositionInDataset == numberColumn.PositionInDataset).FirstOrDefault();
+                DatasetContentApproximationResultsTypeDouble singleNumberColumnResult = new DatasetContentApproximationResultsTypeDouble(numberColumn.AttributeName, numberColumn.PositionInDataset, columnNumberParameters.ColumnSelected);
+
+                if (columnNumberParameters.ColumnSelected)
+                {
+                    var inY = numberColumn.AttributeValue;
+
+                    singleNumberColumnResult.InX = inX.ToList();
+                    singleNumberColumnResult.InY = inY;
+
+                    var spline = CubicSpline.InterpolateNatural(inX, inY);
+
+                    var outX = new List<double>(parameters.ApproximationParameters.ApproximationPointsNumber);
+                    var outY = new List<double>(inY.Count);
+                    var dydx = new List<double>(inY.Count);
+
+                    for (int i = 0; i < outX.Count; i++)
+                    {
+                        outX[i] = (inX.Last() * i) / (outX.Count - 1);
+                        outY[i] = spline.Interpolate(outX[i]);
+                        dydx[i] = spline.Differentiate(outX[i]);
+                    }
+
+                    singleNumberColumnResult.OutX = outX;
+                    singleNumberColumnResult.OutY = outY;
+                    singleNumberColumnResult.DYDX = dydx;
+                }
+                else
+                {
+                    singleNumberColumnResult.InX = null;
+                    singleNumberColumnResult.InY = null;
+                    singleNumberColumnResult.OutX = null;
+                    singleNumberColumnResult.OutY = null;
+                    singleNumberColumnResult.DYDX = null;
+                }
+
+                results.ApproximationResult.NumberColumns.Add(singleNumberColumnResult);
+            }
+
+            foreach (var stringColumn in datasetContent.StringColumns)
+            {
+                DatasetColumnSelectColumnForParametersTypeString columnStringParameters = parameters.ApproximationParameters.StringColumns.Where(z => z.PositionInDataset == stringColumn.PositionInDataset).FirstOrDefault();
+                DatasetContentApproximationResultsTypeString singleStringColumnResult = new DatasetContentApproximationResultsTypeString(stringColumn.AttributeName, stringColumn.PositionInDataset, columnStringParameters.ColumnSelected);
+                results.ApproximationResult.StringColumns.Add(singleStringColumnResult);
+            }
+
+            return results;
         }
     }
 }
