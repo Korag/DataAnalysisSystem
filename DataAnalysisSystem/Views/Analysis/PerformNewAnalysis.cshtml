@@ -98,22 +98,25 @@
     @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addHistogramParametersDataTable", LoadingIndicatorId = "addHistogramDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
     @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addKMeansClusteringParametersDataTable", LoadingIndicatorId = "addKMeansClusteringDataTableLoadingIndicator", EmptyDataAnnotation = "Choose exactly 2 columns" });}
     @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addApproximationParametersDataTable", LoadingIndicatorId = "addApproximationDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
-    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addDeriverativeParametersDataTable", LoadingIndicatorId = "addDeriverativeDataTableLoadingIndicator", EmptyDataAnnotation = "Choose 1 or 2 columns" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addDeriverativeParametersDataTable", LoadingIndicatorId = "addDeriverativeDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
     @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addRegressionParametersDataTable", LoadingIndicatorId = "addRegressionDataTableLoadingIndicator", EmptyDataAnnotation = "Choose columns to perform operation" });}
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
     @{await Html.RenderPartialAsync("_ValidateFormWithCheckboxesAndOpenModalScript", new ValidateFormWithCheckboxesAndOpenModalScriptViewModel { FormId = "PerformNewAnalysis", ModalId = "modalWaiter", ValidationContainerId = "checkboxValidationInfo", CheckboxesToLimitValidation = new List<CheckboxLimiterValidationScriptViewModel>
-    () { new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".kMeansCheckBox", MinAmountOfCheckedCheckboxes = 2, CheckboxContainerId = "divKMeansClusteringMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".deriverativeCheckBox", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divDeriverativeMethodParameters" }}});}
+      () { new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".kMeansCheck", MinAmountOfCheckedCheckboxes = 2, CheckboxContainerId = "divKMeansClusteringMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".deriverativeCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divDeriverativeMethodParameters" }
+      ,new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".approxCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divApproximationMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".basicStatCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divBasicStatisticsMethodParameters" }
+      ,new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".histCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divHistogramMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".regrCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divRegressionMethodParameters" }}
+        });}
     @{await Html.RenderPartialAsync("_StopEventPropagationScript");}
 
     <script>
         $(document).ready(function () {
             $('.methodSwitch').show();
 
-            SelectAll('histCheck');
-            SelectAll('basicStatCheck');
-            SelectAll('approxCheck');
-            SelectAll('deriverativeCheck');
+            //SelectAll('histCheck');
+            //SelectAll('basicStatCheck');
+            //SelectAll('approxCheck');
+            //SelectAll('deriverativeCheck');
 
         @if (Model.SelectedAnalysisMethods.Length != 0) {
             foreach (var methodName in Model.SelectedAnalysisMethods)
@@ -147,7 +150,6 @@
     </script>
 
     @{await Html.RenderPartialAsync("_CheckboxCheckedLimiterScript", new CheckboxCheckedLimiterScriptViewModel { CheckboxClass = ".kMeansCheckBox", CheckedElementsLimit = 2 });}
-    @*@{await Html.RenderPartialAsync("_CheckboxCheckedLimiterScript", new CheckboxCheckedLimiterScriptViewModel { CheckboxClass = ".deriverativeCheckBox", CheckedElementsLimit = 2 });}*@
     }
 
     @section Notification

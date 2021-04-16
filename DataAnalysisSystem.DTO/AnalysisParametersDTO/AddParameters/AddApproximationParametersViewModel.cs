@@ -7,7 +7,6 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 {
     public class AddApproximationParametersViewModel
     {
-        private const int DEFAULT_DATA_POINTS_NUMBER = 10;
         private const int DEFAULT_APPROXIMATION_POINTS_NUMBER = 40;
 
         public AddApproximationParametersViewModel()
@@ -21,7 +20,6 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
             this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
             this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeStringViewModel>();
             
-            this.DataPointsNumber = DEFAULT_DATA_POINTS_NUMBER;
             this.ApproximationPointsNumber = DEFAULT_APPROXIMATION_POINTS_NUMBER;
 
             for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
@@ -45,11 +43,6 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
 
         public IList<DatasetColumnSelectColumnForParametersTypeDoubleViewModel> NumberColumns { get; set; }
         public IList<DatasetColumnSelectColumnForParametersTypeStringViewModel> StringColumns { get; set; }
-       
-        [Display(Name = "Number of data points")]
-        [Range(typeof(int), "0", "2147483647")]
-        [Required]
-        public int DataPointsNumber { get; set; }
        
         [Display(Name = "Number of approximation points")]
         [Range(typeof(int), "0", "2147483647")]

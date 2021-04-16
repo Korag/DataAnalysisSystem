@@ -1,6 +1,6 @@
 ﻿using DataAnalysisSystem.DataEntities;
 using MathNet.Numerics.Interpolation;
-using MathNet.Numerics.LinearAlgebra.Complex;
+using MathNet.Numerics.LinearAlgebra.Double;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +14,21 @@ namespace DataAnalysisSystem.DataAnalysisMethods
             AnalysisResults results = new AnalysisResults();
             results.ApproximationResult = new ApproximationResult();
 
-            results.ApproximationResult.DataPointsNumber = parameters.ApproximationParameters.DataPointsNumber;
-            results.ApproximationResult.DataPointsNumber = parameters.ApproximationParameters.DataPointsNumber;
             results.ApproximationResult.ApproximationPointsNumber = parameters.ApproximationParameters.ApproximationPointsNumber;
 
-            IEnumerable<double> inX = Enumerable.Range(0, parameters.ApproximationParameters.DataPointsNumber).Select(z => Convert.ToDouble(z));
+            var firstColumn = datasetContent.NumberColumns.FirstOrDefault();
+            int datasetLength = 0;
+
+            if (firstColumn != null)
+            {
+                datasetLength = firstColumn.AttributeValue.Count();
+            }
+            else
+            {
+                datasetLength = datasetContent.StringColumns.FirstOrDefault().AttributeValue.Count();
+            }
+
+            IEnumerable<double> inX = Enumerable.Range(0, datasetLength).Select(z => Convert.ToDouble(z));
 
             foreach (var numberColumn in datasetContent.NumberColumns)
             {
@@ -34,9 +44,9 @@ namespace DataAnalysisSystem.DataAnalysisMethods
 
                     var spline = CubicSpline.InterpolateNatural(inX, inY);
 
-                    var outX = new List<double>(parameters.ApproximationParameters.ApproximationPointsNumber);
-                    var outY = new List<double>(inY.Count);
-                    var dydx = new List<double>(inY.Count);
+                    var outX = new DenseVector(parameters.ApproximationParameters.ApproximationPointsNumber);
+                    var outY = new DenseVector(outX.Count);
+                    var dydx = new DenseVector(outX.Count);
 
                     for (int i = 0; i < outX.Count; i++)
                     {
@@ -45,9 +55,9 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                         dydx[i] = spline.Differentiate(outX[i]);
                     }
 
-                    singleNumberColumnResult.OutX = outX;
-                    singleNumberColumnResult.OutY = outY;
-                    singleNumberColumnResult.DYDX = dydx;
+                    singleNumberColumnResult.OutX = outX.ToList();
+                    singleNumberColumnResult.OutY = outY.ToList();
+                    singleNumberColumnResult.DYDX = dydx.ToList();
                 }
                 else
                 {
