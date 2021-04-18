@@ -11,7 +11,7 @@
             <div class="card-content">
                 <span class="card-title center">Analysis Details</span>
                 <span class="card-title center teal-text text-lighten-1">@Model.AnalysisName</span>
-    
+
                 <div class="row">
                     <div class="col s6 center">
                         Created at: @Model.DateOfCreation
@@ -54,38 +54,38 @@
 
 @if (Model.AnalysisResults.ApproximationResult != null)
 {
-    @await Component.InvokeAsync("DetailsApproximationMethodParameters", Model.AnalysisParameters.ApproximationParameters)
-    @await Component.InvokeAsync("DetailsApproximationMethodResults", Model.AnalysisResults.ApproximationResult)
+    @await Component.InvokeAsync("DetailsApproximationMethodParameters", Model)
+    @await Component.InvokeAsync("DetailsApproximationMethodResults", Model)
 }
 
 @if (Model.AnalysisResults.BasicStatisticsResult != null)
 {
-    @await Component.InvokeAsync("DetailsBasicStatisticsMethodParameters", Model.AnalysisParameters.BasicStatisticsParameters)
-    @await Component.InvokeAsync("DetailsBasicStatisticsMethodResults", Model.AnalysisResults.BasicStatisticsResult)
+    @await Component.InvokeAsync("DetailsBasicStatisticsMethodParameters", Model)
+    @await Component.InvokeAsync("DetailsBasicStatisticsMethodResults", Model)
 }
 
 @if (Model.AnalysisResults.DeriverativeResult != null)
 {
-    @await Component.InvokeAsync("DetailsDeriverativeMethodParameters", Model.AnalysisParameters.DeriverativeParameters)
-    @await Component.InvokeAsync("DetailsDeriverativeMethodResults", Model.AnalysisResults.DeriverativeResult)
+    @await Component.InvokeAsync("DetailsDeriverativeMethodParameters", Model)
+    @await Component.InvokeAsync("DetailsDeriverativeMethodResults", Model)
 }
 
 @if (Model.AnalysisResults.HistogramResult != null)
 {
-    @await Component.InvokeAsync("DetailsHistogramMethodParameters", Model.AnalysisParameters.HistogramParameters)
-    @await Component.InvokeAsync("DetailsHistogramMethodResults", Model.AnalysisResults.HistogramResult)
+    @await Component.InvokeAsync("DetailsHistogramMethodParameters", Model)
+    @await Component.InvokeAsync("DetailsHistogramMethodResults", Model)
 }
 
 @if (Model.AnalysisResults.KMeansClusteringResult != null)
 {
-    @await Component.InvokeAsync("DetailsKMeansClusteringMethodParameters", Model.AnalysisParameters.KMeansClusteringParameters)
-    @await Component.InvokeAsync("DetailsKMeansClusteringMethodResults", Model.AnalysisResults.KMeansClusteringResult)
+    @await Component.InvokeAsync("DetailsKMeansClusteringMethodParameters", Model)
+    @await Component.InvokeAsync("DetailsKMeansClusteringMethodResults", Model)
 }
 
 @if (Model.AnalysisResults.RegressionResult != null)
 {
-    @await Component.InvokeAsync("DetailsRegressionMethodParameters", Model.AnalysisParameters.RegressionParameters)
-    @await Component.InvokeAsync("DetailsRegressionMethodResults", Model.AnalysisResults.RegressionResult)
+    @await Component.InvokeAsync("DetailsRegressionMethodParameters", Model)
+    @await Component.InvokeAsync("DetailsRegressionMethodResults", Model)
 }
 
 @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
@@ -105,6 +105,15 @@
                                                 })
 
 @section Scripts{
+
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "approximationParametersDetailsDataTable", LoadingIndicatorId = "approximationParametersDetailsDataTableLoadingIndicator", EmptyDataAnnotation = "Chosen columns" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator", EmptyDataAnnotation = "Chosen columns" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator", EmptyDataAnnotation = "Chosen columns" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator", EmptyDataAnnotation = "Chosen columns" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator", EmptyDataAnnotation = "Chosen columns" });}
+    @{await Html.RenderPartialAsync("_DataTableOnlyHeaderWLoadingIndicatorInitScript", new DataTableOnlyHeaderWLoadingIndicatorViewModel { DataTableId = "addBasicStatisticsParametersDataTable", LoadingIndicatorId = "addBasicStatisticsDataTableLoadingIndicator", EmptyDataAnnotation = "Chosen columns" });}
+
+    @{await Html.RenderPartialAsync("_StopEventPropagationScript");}
 
     <script>
         $(document).ready(function () {
