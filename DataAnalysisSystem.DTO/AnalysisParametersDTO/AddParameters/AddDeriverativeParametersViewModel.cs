@@ -20,6 +20,8 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
             this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
             this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeStringViewModel>();
 
+            this.ApproximationPointsNumber = DEFAULT_APPROXIMATION_POINTS_NUMBER;
+
             for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
             {
                 var numberColumn = datasestContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
