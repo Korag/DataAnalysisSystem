@@ -8,6 +8,7 @@ using DataAnalysisSystem.DTO.AnalysisParametersDTO.ParametersDetails;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
 using DataAnalysisSystem.DTO.DatasetDTO;
+using DataAnalysisSystem.DTO.Helpers;
 using DataAnalysisSystem.DTO.UserDTO;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace DataAnalysisSystem.Services
         public MappingProfile()
         {
             #region User
+
             CreateMap<UserRegisterViewModel, IdentityProviderUser>()
                      .ForMember(dest => dest.UserName, opts => opts.MapFrom(src => src.Email))
                      .ForMember(dest => dest.NormalizedUserName, opts => opts.MapFrom(src => src.Email.ToUpper()))
@@ -41,6 +43,7 @@ namespace DataAnalysisSystem.Services
             #endregion
 
             #region Dataset
+
             CreateMap<Dataset, DatasetOverallInformationViewModel>()
                             .ForMember(dest => dest.NumberOfColumns, opts => opts.MapFrom(src => src.DatasetStatistics.NumberOfColumns))
                             .ForMember(dest => dest.NumberOfRows, opts => opts.MapFrom(src => src.DatasetStatistics.NumberOfRows))
@@ -84,6 +87,7 @@ namespace DataAnalysisSystem.Services
             #endregion
 
             #region Analysis
+
             CreateMap<Analysis, AnalysisOverallInformationViewModel>();
 
             CreateMap<Dataset, AnalysisOverallInformationViewModel>()
@@ -117,6 +121,7 @@ namespace DataAnalysisSystem.Services
             #endregion
 
             #region AnalysisResults
+
             CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>();
 
             CreateMap<ApproximationResult, DetailsApproximationResultViewModel>();
@@ -126,9 +131,30 @@ namespace DataAnalysisSystem.Services
             CreateMap<KMeansClusteringResult, DetailsKMeansClusteringResultViewModel>();
             CreateMap<RegressionResult, DetailsRegressionResultViewModel>();
 
+            CreateMap<ClusterMemberData, ClusterMemberDataViewModel>();
+            CreateMap<DatasetContentKMeansClusteringResultsTypeDouble, DatasetContentKMeansClusteringResultsTypeDoubleViewModel>();
+            CreateMap<DatasetContentKMeansClusteringResultsTypeString, DatasetContentKMeansClusteringResultsTypeStringViewModel>();
+            CreateMap<DatasetContentRegressionResultsTypeDouble, DatasetContentRegressionResultsTypeDoubleViewModel>();
+            CreateMap<DatasetContentRegressionResultsTypeString, DatasetContentRegressionResultsTypeStringViewModel>();
+            CreateMap<RegressionMetric, RegressionMetricViewModel>();
+            CreateMap<RegressionPredictedValue, RegressionPredictedValueViewModel>();
+
+            CreateMap<DatasetContentApproximationResultsTypeDouble, DatasetContentApproximationResultsTypeDoubleViewModel>();
+            CreateMap<DatasetContentApproximationResultsTypeString, DatasetContentApproximationResultsTypeStringViewModel>();
+            CreateMap<DatasetContentDeriverativeResultsTypeDouble, DatasetContentDeriverativeResultsTypeDoubleViewModel>();
+            CreateMap<DatasetContentDeriverativeResultsTypeString, DatasetContentDeriverativeResultsTypeStringViewModel>();
+
+            CreateMap<DatasetContentBasicStatisticsResultsTypeDouble, DatasetContentBasicStatisticsResultsTypeDoubleViewModel>();
+            CreateMap<DatasetContentBasicStatisticsResultsTypeString, DatasetContentBasicStatisticsResultsTypeStringViewModel>();
+            CreateMap<DatasetContentHistogramResultsTypeDouble, DatasetContentHistogramResultsTypeDoubleViewModel>();
+            CreateMap<DatasetContentHistogramResultsTypeString, DatasetContentHistogramResultsTypeStringViewModel>();
+            CreateMap<HistogramNumberBin, HistogramNumberBinViewModel>();
+            CreateMap<HistogramStringBin, HistogramStringBinViewModel>();
+
             #endregion
 
             #region AnalysisParameters
+
             CreateMap<AddAnalysisParametersViewModel, AnalysisParameters>();
             CreateMap<AnalysisParameters, AddAnalysisParametersViewModel>();
 
