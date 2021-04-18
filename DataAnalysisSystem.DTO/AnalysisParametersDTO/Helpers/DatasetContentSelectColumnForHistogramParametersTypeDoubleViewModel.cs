@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
+namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.Helpers
 {
     public class DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel
     {

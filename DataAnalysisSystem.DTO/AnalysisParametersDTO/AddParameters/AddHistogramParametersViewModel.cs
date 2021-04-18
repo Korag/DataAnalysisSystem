@@ -1,4 +1,5 @@
-﻿using DataAnalysisSystem.DTO.DatasetDTO;
+﻿using DataAnalysisSystem.DTO.AnalysisParametersDTO.Helpers;
+using DataAnalysisSystem.DTO.DatasetDTO;
 using System.Collections.Generic;
 using System.Linq;
 

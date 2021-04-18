@@ -9,6 +9,7 @@ namespace DataAnalysisSystem.DataAnalysisMethods.Helpers
             Name = name;
             Type = type;
         }
+
         public string Name { get; set; }
         public Type Type { get; set; }
     }

@@ -3,6 +3,7 @@ using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
+using DataAnalysisSystem.DTO.AnalysisParametersDTO.Helpers;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO.ParametersDetails;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
