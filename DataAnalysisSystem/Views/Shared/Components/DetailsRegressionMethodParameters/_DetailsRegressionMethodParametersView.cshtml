@@ -1,11 +1,60 @@
 ﻿@model DataAnalysisSystem.DTO.AnalysisDTO.AnalysisDetailsViewModel
 
 <div class="row" style="margin-top: 2vh; margin-bottom: 2vh;">
-    <div class="col s12 m10 l8 offset-m1 offset-l2">
-        <div class="card">
+    <div class="col s12">
+        <div class="card" style="display:block;">
             <div class="card-content">
-                <span class="card-title center-align">DetailsRegressionMethodParameters</span>
+                <span class="card-title center-align">Regression Method Parameters Details</span>
                 <span class="card-title center teal-text text-lighten-1"></span>
+
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "regressionParametersDataTableLoadingIndicator");}
+
+                <table id="regressionParametersDataTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                    <thead>
+
+                        <tr>
+                            @for (int i = 0; i < Model.AnalysisParameters.RegressionParameters.NumberColumns.Count() + Model.AnalysisParameters.RegressionParameters.StringColumns.Count(); i++)
+                            {
+                                var numberColumn = Model.AnalysisParameters.RegressionParameters.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+
+                                if (numberColumn != null)
+                                {
+                                    int index = Model.AnalysisParameters.RegressionParameters.NumberColumns.IndexOf(numberColumn);
+
+                                    <th>
+                                        @numberColumn.AttributeName
+
+                                        <p class="center">
+                                            <label>
+                                                <input @{if (Model.AnalysisParameters.RegressionParameters.NumberColumns[index].ColumnSelected) { <text> checked </text> }} type="checkbox" class="filled-in regrCheck" readonly disabled />
+                                                <span></span>
+                                            </label>
+                                        </p>
+                                    </th>
+                                }
+                                else
+                                {
+                                    var stringColumn = Model.AnalysisParameters.RegressionParameters.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                                    int index = Model.AnalysisParameters.RegressionParameters.StringColumns.IndexOf(stringColumn);
+
+                                    <th>
+                                        @stringColumn.AttributeName
+
+                                        <p class="center">
+                                            <label>
+                                                <input @{if (Model.AnalysisParameters.RegressionParameters.StringColumns[index].ColumnSelected) { <text> checked </text> }} type="checkbox" class="filled-in" readonly disabled />
+                                                <span></span>
+                                            </label>
+                                        </p>
+                                    </th>
+                                }
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
 
             </div>
         </div>
