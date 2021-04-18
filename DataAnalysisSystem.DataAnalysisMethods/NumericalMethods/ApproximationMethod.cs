@@ -14,8 +14,6 @@ namespace DataAnalysisSystem.DataAnalysisMethods
             AnalysisResults results = new AnalysisResults();
             results.ApproximationResult = new ApproximationResult();
 
-            results.ApproximationResult.ApproximationPointsNumber = parameters.ApproximationParameters.ApproximationPointsNumber;
-
             var firstColumn = datasetContent.NumberColumns.FirstOrDefault();
             int datasetLength = 0;
 
