@@ -12,6 +12,5 @@ namespace DataAnalysisSystem.DataEntities
 
         public IList<DatasetContentApproximationResultsTypeDouble> NumberColumns { get; set; }
         public IList<DatasetContentApproximationResultsTypeString> StringColumns { get; set; }
-        public int ApproximationPointsNumber { get; set; }
     }
 }
