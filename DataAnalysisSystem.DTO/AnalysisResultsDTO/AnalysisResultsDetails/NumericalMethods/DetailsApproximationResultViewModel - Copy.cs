@@ -1,5 +1,6 @@
 ﻿using DataAnalysisSystem.DataEntities;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
@@ -22,11 +23,22 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
                 {
                     AttributeName.Add(JsonConvert.SerializeObject(numberColumn.AttributeName));
 
+                    //for (int i = 0; i < length; i++)
+                    //{
+
+                    //}
+
                     InX.Add(JsonConvert.SerializeObject(numberColumn.InX));
                     InY.Add(JsonConvert.SerializeObject(numberColumn.InY));
 
                     OutX.Add(JsonConvert.SerializeObject(numberColumn.OutX));
                     OutY.Add(JsonConvert.SerializeObject(numberColumn.OutY));
+
+                    //InX.Add(JsonConvert.SerializeObject(Math.Round(numberColumn.InX, 2)));
+                    //InY.Add(JsonConvert.SerializeObject(Math.Round(numberColumn.InY, 2)));
+
+                    //OutX.Add(JsonConvert.SerializeObject(Math.Round(numberColumn.OutX, 2)));
+                    //OutY.Add(JsonConvert.SerializeObject(Math.Round(numberColumn.OutY, 2)));
                 }
             }
         }

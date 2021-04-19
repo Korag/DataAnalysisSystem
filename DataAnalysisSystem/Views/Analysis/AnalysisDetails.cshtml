@@ -89,20 +89,20 @@
 }
 
 @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
-                                                {
-                                                 ModalIdentificator = "modalDeleteAnalysis",
-                                                 ModalTitle = "Delete Analysis",
-                                                 ModalContent = "Are you sure you want to delete this analysis?",
+{
+    ModalIdentificator = "modalDeleteAnalysis",
+    ModalTitle = "Delete Analysis",
+    ModalContent = "Are you sure you want to delete this analysis?",
 
-                                                 ControllerName = "Analysis",
-                                                 ActionName = "DeleteAnalysis",
-                                                 RouteAdditionalArguments = new Dictionary<string, string>
+    ControllerName = "Analysis",
+    ActionName = "DeleteAnalysis",
+    RouteAdditionalArguments = new Dictionary<string, string>
                                                                                     {
                                                                                         { "analysisIdentificator", Model.AnalysisIdentificator }
                                                                                     },
-                                                 ModalActAsForm = false,
-                                                 LabelOnButton = "Delete"
-                                                })
+    ModalActAsForm = false,
+    LabelOnButton = "Delete"
+})
 
 @section Scripts{
 
@@ -130,75 +130,78 @@
 
     <script>
 
-        const DATA_COUNT = 12;
-        const labels = @Html.Raw(Model.AnalysisResults.ApproximationResult.NumberColumns.Where(z => z.ColumnSelected).FirstOrDefault().OutX);
-        for (let i = 0; i < DATA_COUNT; ++i) {
-            labels.push(i.toString());
+        @{int z = 0;};
+        @{int l = 1;};
+        @for (var i = 0; i < Model.AnalysisResults.ApproximationResult.AttributeName.Count; i++)
+        {
+    @:    const labels_@i = @Html.Raw(Model.AnalysisResults.ApproximationResult.OutX[i]);
+    @:    const datapoints_@z = @Html.Raw(Model.AnalysisResults.ApproximationResult.OutY[i]);
+    @:    const datapoints_@l = @Html.Raw(Model.AnalysisResults.ApproximationResult.InY[i]);
+    @:    const data_@i = {
+    @:        labels: labels_@i,
+    @:        datasets: [
+    @:            {
+    @:                label: 'Approximation',
+    @:                data: datapoints_@z,
+    @:                borderColor: 'red',
+    @:                fill: false,
+    @:                cubicInterpolationMode: 'none',
+    @:                tension: 0.5
+    @:            }, {
+    @:                label: 'Data points',
+    @:                data: datapoints_@l,
+    @:                borderColor: 'blue',
+    @:                fill: false,
+    @:                showLine: false,
+    @:                tension: 0.0
+    @:            }
+    @:        ]
+    @:    };
+    @:
+    @:    const config_@i = {
+    @:        type: 'line',
+    @:        data: data_@i,
+    @:        options: {
+    @:            title: {
+    @:                display: true,
+    @:                text: 'Approximation Chart'
+    @:            },
+    @:            responsive: true,
+    @:            plugins: {
+    @:                title: {
+    @:                    display: true,
+    @:                    text: 'Approximation Chart'
+    @:                },
+    @:            },
+    @:            interaction: {
+    @:                intersect: false,
+    @:            },
+    @:            scales: {
+    @:                x: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        text: 'X'
+    @:                    }
+    @:                },
+    @:                y: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        text: @Html.Raw(Model.AnalysisResults.ApproximationResult.AttributeName[i])
+    @:                    }
+    @:                }
+    @:            }
+    @:        },
+    @:    };
+    @:
+    @:    var approximationChart_@i = new Chart(
+    @:        document.getElementById('approximationChart_@i'),
+    @:        config_@i
+    @:    );
+         z++; z++;
+         l++; l++;
         }
-        const datapoints = @Html.Raw(Model.AnalysisResults.ApproximationResult.NumberColumns.Where(z=> z.ColumnSelected).FirstOrDefault().OutY),
-        const data = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Approximated',
-                    data: datapoints,
-                    borderColor: 'red',
-                    fill: false,
-                    cubicInterpolationMode: 'none',
-                    tension: 0.9
-                }, {
-                    label: 'Data points',
-                    data: datapoints,
-                    borderColor: 'blue',
-                    fill: false,
-                    tension: 0.4
-                }
-            ]
-        };
-
-        const config = {
-            type: 'line',
-            data: data,
-            options: {
-                title: {
-                    display: true,
-                    text: 'Approximation Chatrt'
-                },
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Approximation Chatrt'
-                    },
-                },
-                interaction: {
-                    intersect: false,
-                },
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'TEST TEST'
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true,
-                            text: 'Value'
-                        }/*,*/
-                        //suggestedMin: -10,
-                        //suggestedMax: 200
-                    }
-                }
-            },
-        };
-
-        var approximationChart1 = new Chart(
-            document.getElementById('test'),
-            config
-        );
 
     </script>
 
@@ -208,3 +211,4 @@
 {
     @{await Html.RenderPartialAsync("_NotificationMenuMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });}
 }
+
