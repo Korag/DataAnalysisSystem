@@ -131,23 +131,23 @@
     <script>
 
         const DATA_COUNT = 12;
-        const labels = [];
+        const labels = @Html.Raw(Model.AnalysisResults.ApproximationResult.NumberColumns.Where(z => z.ColumnSelected).FirstOrDefault().OutX);
         for (let i = 0; i < DATA_COUNT; ++i) {
             labels.push(i.toString());
         }
-        const datapoints = [0, 20, 20, 60, 60, 120, NaN, 180, 120, 125, 105, 110, 170];
+        const datapoints = @Html.Raw(Model.AnalysisResults.ApproximationResult.NumberColumns.Where(z=> z.ColumnSelected).FirstOrDefault().OutY),
         const data = {
             labels: labels,
             datasets: [
                 {
-                    label: 'Cubic interpolation (monotone)',
+                    label: 'Approximated',
                     data: datapoints,
                     borderColor: 'red',
                     fill: false,
                     cubicInterpolationMode: 'none',
-                    tension: 0.4
+                    tension: 0.9
                 }, {
-                    label: 'Cubic interpolation',
+                    label: 'Data points',
                     data: datapoints,
                     borderColor: 'blue',
                     fill: false,
@@ -162,13 +162,13 @@
             options: {
                 title: {
                     display: true,
-                    text: 'Custom Chart Title'
+                    text: 'Approximation Chatrt'
                 },
                 responsive: true,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Chart.js'
+                        text: 'Approximation Chatrt'
                     },
                 },
                 interaction: {
@@ -187,15 +187,15 @@
                         title: {
                             display: true,
                             text: 'Value'
-                        },
-                        suggestedMin: -10,
-                        suggestedMax: 200
+                        }/*,*/
+                        //suggestedMin: -10,
+                        //suggestedMax: 200
                     }
                 }
             },
         };
 
-        var myChart = new Chart(
+        var approximationChart1 = new Chart(
             document.getElementById('test'),
             config
         );

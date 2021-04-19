@@ -7,6 +7,7 @@ using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
+using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.Dictionaries;
 using DataAnalysisSystem.Extensions;
@@ -378,6 +379,8 @@ namespace DataAnalysisSystem.Controllers
             AnalysisDetailsViewModel analysisDetails = _autoMapper.Map<AnalysisDetailsViewModel>(analysis);
             analysisDetails.AnalysisResults = _autoMapper.Map<AnalysisResultsDetailsViewModel>(analysis.AnalysisResults);
             analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);
+
+            analysisDetails.AnalysisResults.ApproximationResult = new DetailsApproximationResultViewModel2(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {
