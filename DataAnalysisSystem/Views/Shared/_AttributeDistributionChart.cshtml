@@ -1,10 +1,9 @@
 ﻿@model DataAnalysisSystem.DTO.Charts.ChartUniversalViewModel
 
 <script>
-    var ctx = document.getElementById('@Model.ChartCanvasId').getContext('2d');
-
-        var myDoughnutChart = new Chart(ctx, {
-            type: 'doughnut',
+    const myAttributeDistributionChartConfig = {
+        type: 'bar',
+        type: 'doughnut',
             data: {
                 labels: ['Number', 'String'],
                 datasets: [{
@@ -20,6 +19,19 @@
                     ],
                     borderWidth: 1
                 }]
+            },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
             }
-        });
+        }
+    };
+
+        var myAttributeDistributionChart = new Chart(
+        document.getElementById('@Model.ChartCanvasId'),
+        myAttributeDistributionChartConfig
+    );
 </script>

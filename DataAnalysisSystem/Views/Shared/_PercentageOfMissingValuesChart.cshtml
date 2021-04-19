@@ -1,14 +1,12 @@
 ﻿@model DataAnalysisSystem.DTO.Charts.ChartUniversalViewModel
 
 <script>
-    var ctx = document.getElementById('@Model.ChartCanvasId').getContext('2d');
-
-    var myBarChart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: {
-                labels: ['Missing values percentage'],
+    const config = {
+        type: 'bar',
+        data: {
+                labels: ['Percentage'],
                 datasets: [{
-                    label: 'Percentage',
+                    label: 'Missing values percentage',
                     data: @Html.Raw(Model.Data),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -19,17 +17,34 @@
                     borderWidth: 1
                 }]
             },
-            options: {
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        stacked: true,
-                        ticks: {
-                            min: 0,
-                            max: 100
-                        }
-                    }]
+        options: {
+            indexAxis: 'y',
+            elements: {
+                bar: {
+                    borderWidth: 2,
                 }
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    stacked: true,
+                    ticks: {
+                        min: 0,
+                        max: 100
+                    }
+                }]
             }
-        });
+        }
+    };
+
+    var myPercentageOfMissingValuesChart = new Chart(
+        document.getElementById('@Model.ChartCanvasId'),
+        config
+    );
 </script>
