@@ -91,6 +91,7 @@ namespace DataAnalysisSystem.Services
             CreateMap<Analysis, AnalysisOverallInformationViewModel>();
 
             CreateMap<Dataset, AnalysisOverallInformationViewModel>()
+                            .ForMember(dest => dest.DateOfCreation, opts => opts.Ignore())
                             .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                             .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 
@@ -99,18 +100,21 @@ namespace DataAnalysisSystem.Services
             CreateMap<Dataset, PerformNewAnalysisViewModel>();
             
             CreateMap<Dataset, SharedAnalysisByOwnerViewModel>()
+                            .ForMember(dest => dest.DateOfCreation, opts => opts.Ignore())
                             .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                             .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 
             CreateMap<Analysis, NotSharedAnalysisViewModel>();
 
             CreateMap<Dataset, NotSharedAnalysisViewModel>()
+                           .ForMember(dest => dest.DateOfCreation, opts => opts.Ignore())
                            .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                            .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 
             CreateMap<Analysis, SharedAnalysisByCollabViewModel>();
 
             CreateMap<Dataset, SharedAnalysisByCollabViewModel>()
+                          .ForMember(dest => dest.DateOfCreation, opts => opts.Ignore())
                           .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                           .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 

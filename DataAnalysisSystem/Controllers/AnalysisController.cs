@@ -26,13 +26,6 @@ namespace DataAnalysisSystem.Controllers
     public class AnalysisController : Controller
     {
         private readonly ICodeGenerator _codeGenerator;
-        private readonly IEmailProvider _emailProvider;
-        private readonly IRegexComparatorChainFacade _regexComparator;
-        private readonly IMimeTypeGuesser _mimeTypeGuesser;
-        private readonly IFileHelper _fileHelper;
-
-        private readonly CustomSerializer _customSerializer;
-
         private readonly IMapper _autoMapper;
 
         private readonly RepositoryContext _context;
@@ -43,32 +36,17 @@ namespace DataAnalysisSystem.Controllers
         private readonly ActorSystem _akkaSystem;
 
         public AnalysisController(RepositoryContext context,
-                                  CustomSerializer customSerializer,
                                   ICodeGenerator codeGenerator,
-                                  IEmailProvider emailProvider,
                                   IMapper autoMapper,
-                                  IRegexComparatorChainFacade regexComparator,
-                                  IMimeTypeGuesser mimeTypeGuesser,
-                                  IFileHelper fileHelper,
                                   IDataAnalysisHub analysisHub,
                                   IDataAnalysisService analysisService,
                                   ActorSystem akkaSystem)
         {
             this._context = context;
-
             this._codeGenerator = codeGenerator;
-            this._emailProvider = emailProvider;
-            this._regexComparator = regexComparator;
-            this._mimeTypeGuesser = mimeTypeGuesser;
-            this._fileHelper = fileHelper;
-
-            this._customSerializer = customSerializer;
-
             this._autoMapper = autoMapper;
-
             this._analysisHub = analysisHub;
             this._analysisService = analysisService;
-
             this._akkaSystem = akkaSystem;
         }
 
