@@ -134,7 +134,7 @@
         @{int l = 1;};
         @for (var i = 0; i < Model.AnalysisResults.ApproximationResult.AttributeName.Count; i++)
         {
-    @:    const labels_@i = @Html.Raw(Model.AnalysisResults.ApproximationResult.OutX[i]);
+    @:    const labels_@i = @Html.Raw(Model.AnalysisResults.ApproximationResult.Labels[i]);
     @:    const datapoints_@z = @Html.Raw(Model.AnalysisResults.ApproximationResult.ApproximatedValuePoints[i]);
     @:    const datapoints_@l = @Html.Raw(Model.AnalysisResults.ApproximationResult.OriginalValuePoints[i]);
     @:    const data_@i = {

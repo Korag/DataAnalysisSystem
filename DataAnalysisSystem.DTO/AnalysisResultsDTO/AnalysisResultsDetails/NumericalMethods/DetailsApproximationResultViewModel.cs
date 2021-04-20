@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 {
@@ -19,6 +20,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 
             this.ApproximatedValuePoints = new List<string>();
             this.OriginalValuePoints = new List<string>();
+            this.Labels = new List<string>();
 
             foreach (var numberColumn in result.NumberColumns)
             {
@@ -28,6 +30,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 
                     List<ChartPoint> approximatedValuePoints = new List<ChartPoint>();
                     List<ChartPoint> originalValuePoints = new List<ChartPoint>();
+                    List<double> labels = new List<double>();
 
                     for (var i = 0; i < numberColumn.OutX.Count; i++)
                     {
@@ -38,6 +41,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
                         };
 
                         approximatedValuePoints.Add(cp);
+                        labels.Add(cp.x);
                     }
 
                     for (var i = 0; i < numberColumn.InY.Count; i++)
@@ -49,7 +53,13 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
                         };
 
                         originalValuePoints.Add(cp);
+                        labels.Add(cp.x);
                     }
+
+                    labels = labels.OrderBy(z=> z).ToList();
+                    labels = labels.Distinct().ToList();
+
+                    Labels.Add(JsonConvert.SerializeObject(labels));
 
                     ApproximatedValuePoints.Add(JsonConvert.SerializeObject(approximatedValuePoints));
                     OriginalValuePoints.Add(JsonConvert.SerializeObject(originalValuePoints));
@@ -72,5 +82,6 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 
         public IList<string> ApproximatedValuePoints { get; set; }
         public IList<string> OriginalValuePoints { get; set; }
+        public IList<string> Labels { get; set; }
     }
 }
