@@ -1,17 +1,76 @@
-﻿using DataAnalysisSystem.DTO.Helpers;
+﻿using DataAnalysisSystem.DataEntities;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 {
     public class DetailsApproximationResultViewModel
     {
-        public DetailsApproximationResultViewModel()
+        public DetailsApproximationResultViewModel(AnalysisResults analysisResults)
         {
-            this.NumberColumns = new List<DatasetContentApproximationResultsTypeDoubleViewModel>();
-            this.StringColumns = new List<DatasetContentApproximationResultsTypeStringViewModel>();
+            ApproximationResult result = analysisResults.ApproximationResult;
+
+            this.AttributeName = new List<string>();
+            this.InX = new List<string>();
+            this.InY = new List<string>();
+            this.OutX = new List<string>();
+            this.OutY = new List<string>();
+
+            this.ApproximatedValuePoints = new List<string>();
+            this.OriginalValuePoints = new List<string>();
+
+            foreach (var numberColumn in result.NumberColumns)
+            {
+                if (numberColumn.ColumnSelected)
+                {
+                    AttributeName.Add(JsonConvert.SerializeObject(numberColumn.AttributeName));
+
+                    List<ChartPoint> approximatedValuePoints = new List<ChartPoint>();
+                    List<ChartPoint> originalValuePoints = new List<ChartPoint>();
+
+                    for (var i = 0; i < numberColumn.OutX.Count; i++)
+                    {
+                        ChartPoint cp = new ChartPoint
+                        {
+                            x = Math.Round(numberColumn.OutX[i], 4),
+                            y = Math.Round(numberColumn.OutY[i], 4)
+                        };
+
+                        approximatedValuePoints.Add(cp);
+                    }
+
+                    for (var i = 0; i < numberColumn.InY.Count; i++)
+                    {
+                        ChartPoint cp = new ChartPoint
+                        {
+                            x = Math.Round(numberColumn.InX[i], 4),
+                            y = Math.Round(numberColumn.InY[i], 4)
+                        };
+
+                        originalValuePoints.Add(cp);
+                    }
+
+                    ApproximatedValuePoints.Add(JsonConvert.SerializeObject(approximatedValuePoints));
+                    OriginalValuePoints.Add(JsonConvert.SerializeObject(originalValuePoints));
+
+                    InX.Add(JsonConvert.SerializeObject(numberColumn.InX));
+                    InY.Add(JsonConvert.SerializeObject(numberColumn.InY));
+
+                    OutX.Add(JsonConvert.SerializeObject(numberColumn.OutX));
+                    OutY.Add(JsonConvert.SerializeObject(numberColumn.OutY));
+                }
+            }
         }
 
-        public IList<DatasetContentApproximationResultsTypeDoubleViewModel> NumberColumns { get; set; }
-        public IList<DatasetContentApproximationResultsTypeStringViewModel> StringColumns { get; set; }
+        public IList<string> AttributeName { get; set; }
+        public IList<string> InX { get; set; }
+        public IList<string> InY { get; set; }
+
+        public IList<string> OutX { get; set; }
+        public IList<string> OutY { get; set; }
+
+        public IList<string> ApproximatedValuePoints { get; set; }
+        public IList<string> OriginalValuePoints { get; set; }
     }
 }

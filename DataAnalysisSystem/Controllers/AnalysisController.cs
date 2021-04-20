@@ -12,10 +12,7 @@ using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.Dictionaries;
 using DataAnalysisSystem.Extensions;
 using DataAnalysisSystem.Repository.DataAccessLayer;
-using DataAnalysisSystem.Services.DesignPatterns.StrategyDesignPattern.FileObjectSerializer;
 using DataAnalysisSystem.ServicesInterfaces;
-using DataAnalysisSystem.ServicesInterfaces.DesignPatterns.FacadeDesignPattern;
-using DataAnalysisSystem.ServicesInterfaces.EmailProvider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -380,7 +377,7 @@ namespace DataAnalysisSystem.Controllers
             analysisDetails.AnalysisResults = _autoMapper.Map<AnalysisResultsDetailsViewModel>(analysis.AnalysisResults);
             analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);
 
-            analysisDetails.AnalysisResults.ApproximationResult = new DetailsApproximationResultViewModel2(analysis.AnalysisResults);
+            analysisDetails.AnalysisResults.ApproximationResult = new DetailsApproximationResultViewModel(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {
