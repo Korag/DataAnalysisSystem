@@ -22,5 +22,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 
         public int OXCoordinatePosition { get; set; }
         public int OYCoordinatePosition { get; set; }
+
+        public bool IsNull = true;
     }
 }

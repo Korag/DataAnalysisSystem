@@ -13,5 +13,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 
         public IList<DatasetContentHistogramResultsTypeDoubleViewModel> NumberColumns { get; set; }
         public IList<DatasetContentHistogramResultsTypeStringViewModel> StringColumns { get; set; }
+
+        public bool IsNull = true;
     }
 }

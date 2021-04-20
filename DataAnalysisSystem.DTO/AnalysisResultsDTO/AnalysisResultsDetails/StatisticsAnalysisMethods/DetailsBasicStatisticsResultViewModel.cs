@@ -16,5 +16,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
         public int NumberColumnsAmount { get; set; }
         public int StringColumnsAmount { get; set; }
         public int NumberOfRows { get; set; }
+
+        public bool IsNull = true;
     }
 }

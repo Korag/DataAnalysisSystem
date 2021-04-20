@@ -25,5 +25,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
         public RegressionMetricViewModel OYPredictionRegressionMetrics { get; set; }
 
         public IList<RegressionPredictedValueViewModel> PredictionResults { get; set; }
+
+        public bool IsNull = true;
     }
 }

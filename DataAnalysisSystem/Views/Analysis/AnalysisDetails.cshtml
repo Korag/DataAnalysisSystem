@@ -133,11 +133,30 @@
         await Html.RenderPartialAsync("_ApproximationMethodDetailsChart", Model);
     }
 
+    @if (Model.AnalysisResults.BasicStatisticsResult.IsNull == false)
+    {
+
+    }
+
     @if (Model.AnalysisResults.DeriverativeResult.IsNull == false)
     {
         await Html.RenderPartialAsync("_DeriverativeMethodDetailsChart", Model);
     }
 
+    @if (Model.AnalysisResults.HistogramResult.IsNull == false)
+    {
+
+    }
+
+    @if (Model.AnalysisResults.KMeansClusteringResult.IsNull == false)
+    {
+
+    }
+
+    @if (Model.AnalysisResults.RegressionResult.IsNull == false)
+    {
+
+    }
 }
 
 @section Notification
