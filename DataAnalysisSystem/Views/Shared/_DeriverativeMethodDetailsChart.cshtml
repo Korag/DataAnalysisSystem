@@ -1,0 +1,107 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.AnalysisDetailsViewModel
+
+<script>
+        @{int z2 = 0;};
+        @{int z3 = 1;};
+        @{int z4 = 2;};
+        @{int z5 = 3;};
+        @for (var i = 0; i < Model.AnalysisResults.DeriverativeResult.AttributeName.Count; i++)
+        {
+    @:    const deriverativeLabels_@i = @Html.Raw(Model.AnalysisResults.DeriverativeResult.Labels[i]);
+    @:    const deriverativeDatapoints_@z2 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.FirstDeriverative[i]);
+    @:    const deriverativeDatapoints_@z3 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.SecondDeriverative[i]);
+    @:    const deriverativeDatapoints_@z4 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.OriginalValuePoints[i]);
+    @:    const deriverativeDatapoints_@z5 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.ApproximatedValuePoints[i]);
+    @:    const deriverativeData_@i = {
+    @:        labels: deriverativeLabels_@i,
+    @:        datasets: [
+    @:            {
+    @:                label: 'First deriverative',
+    @:                data: deriverativeDatapoints_@z2,
+    @:                borderColor: 'black',
+    @:                fill: false,
+    @:                cubicInterpolationMode: 'none',
+    @:                tension: 0.5
+    @:            },
+    @:            {
+    @:                label: 'Second deriverative',
+    @:                data: deriverativeDatapoints_@z3,
+    @:                borderColor: 'green',
+    @:                fill: false,
+    @:                tension: 0.5
+    @:            },
+    @:            {
+    @:                label: 'Data point',
+    @:                data: deriverativeDatapoints_@z4,
+    @:                borderColor: 'blue',
+    @:                fill: false,
+    @:                showLine: false,
+    @:                tension: 0.0
+    @:            },
+    @:            {
+    @:                label: 'Approximation',
+    @:                data: deriverativeDatapoints_@z5,
+    @:                borderColor: 'red',
+    @:                fill: false,
+    @:                cubicInterpolationMode: 'none',
+    @:                tension: 0.5,
+    @:                hidden: true
+    @:            },
+    @:        ]
+    @:    };
+    @:
+    @:    const deriverativeConfig_@i = {
+    @:        type: 'line',
+    @:        data: deriverativeData_@i,
+    @:        options: {
+    @:            title: {
+    @:                display: true,
+    @:                text: 'Deriverative Chart'
+    @:            },
+    @:            responsive: true,
+    @:            plugins: {
+    @:                title: {
+    @:                    align: 'start',
+    @:                    display: true,
+    @:                    text: 'Deriverative Chart'
+    @:                },
+    @:                legend:
+    @:                      {
+    @:                        align: 'start',
+    @:                      }
+    @:                },
+    @:            interaction: {
+    @:                intersect: false,
+    @:            },
+    @:            scales: {
+    @:                x: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        position: 'left',
+    @:                        align: 'start',
+    @:                        text: 'X'
+    @:                    }
+    @:                },
+    @:                y: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        text: @Html.Raw(Model.AnalysisResults.DeriverativeResult.AttributeName[i])
+    @:                    }
+    @:                }
+    @:            }
+    @:        },
+    @:    };
+    @:
+    @:    var deriverativeChart_@i = new Chart(
+    @:        document.getElementById('deriverativeChart_@i'),
+    @:        deriverativeConfig_@i
+    @:    );
+            z2 += 4;
+            z3 += 4;
+            z4 += 4;
+            z5 += 4;
+        }
+
+</script>

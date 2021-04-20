@@ -1,0 +1,84 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.AnalysisDetailsViewModel
+
+<script>
+        @{int z = 0;};
+        @{int z1 = 1;};
+        @for (var i = 0; i < Model.AnalysisResults.ApproximationResult.AttributeName.Count; i++)
+        {
+    @:    const approximationLabels_@i = @Html.Raw(Model.AnalysisResults.ApproximationResult.Labels[i]);
+    @:    const approximationDatapoints_@z = @Html.Raw(Model.AnalysisResults.ApproximationResult.ApproximatedValuePoints[i]);
+    @:    const approximationDatapoints_@z1 = @Html.Raw(Model.AnalysisResults.ApproximationResult.OriginalValuePoints[i]);
+    @:    const approximationData_@i = {
+    @:        labels: approximationLabels_@i,
+    @:        datasets: [
+    @:            {
+    @:                label: 'Approximation',
+    @:                data: approximationDatapoints_@z,
+    @:                borderColor: 'red',
+    @:                fill: false,
+    @:                cubicInterpolationMode: 'none',
+    @:                tension: 0.5
+    @:            }, {
+    @:                label: 'Data point',
+    @:                data: approximationDatapoints_@z1,
+    @:                borderColor: 'blue',
+    @:                fill: false,
+    @:                showLine: false,
+    @:                tension: 0.0
+    @:            }
+    @:        ]
+    @:    };
+    @:
+    @:    const approximationConfig_@i = {
+    @:        type: 'line',
+    @:        data: approximationData_@i,
+    @:        options: {
+    @:            title: {
+    @:                display: true,
+    @:                text: 'Approximation Chart'
+    @:            },
+    @:            responsive: true,
+    @:            plugins: {
+    @:                title: {
+    @:                    align: 'start',
+    @:                    display: true,
+    @:                    text: 'Approximation Chart'
+    @:                },
+    @:                legend:
+    @:                      {
+    @:                        align: 'start',
+    @:                      }
+    @:                },
+    @:            interaction: {
+    @:                intersect: false,
+    @:            },
+    @:            scales: {
+    @:                x: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        position: 'left',
+    @:                        align: 'start',
+    @:                        text: 'X'
+    @:                    }
+    @:                },
+    @:                y: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        text: @Html.Raw(Model.AnalysisResults.ApproximationResult.AttributeName[i])
+    @:                    }
+    @:                }
+    @:            }
+    @:        },
+    @:    };
+    @:
+    @:    var approximationChart_@i = new Chart(
+    @:        document.getElementById('approximationChart_@i'),
+    @:        approximationConfig_@i
+    @:    );
+         z += 2;
+         z1 += 2;
+        }
+
+</script>
