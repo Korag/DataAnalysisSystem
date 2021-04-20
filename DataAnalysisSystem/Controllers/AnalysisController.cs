@@ -377,9 +377,9 @@ namespace DataAnalysisSystem.Controllers
             analysisDetails.AnalysisResults = _autoMapper.Map<AnalysisResultsDetailsViewModel>(analysis.AnalysisResults);
             analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);
 
-            //Delete old analysis with approximation number in deriverative
             analysisDetails.AnalysisResults.ApproximationResult = new DetailsApproximationResultViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisResults.DeriverativeResult = new DetailsDeriverativeResultViewModel(analysis.AnalysisResults);
+            analysisDetails.AnalysisResults.KMeansClusteringResult = new DetailsKMeansClusteringResultViewModel(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {

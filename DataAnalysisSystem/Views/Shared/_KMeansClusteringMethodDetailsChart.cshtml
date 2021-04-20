@@ -1,0 +1,71 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.AnalysisDetailsViewModel
+
+@{await Html.RenderPartialAsync("_ColorsArrayScript");}
+
+<script>
+    const kMeansClusteringLabels = @Html.Raw(Model.AnalysisResults.KMeansClusteringResult.Labels);
+    const kMeansClusteringData = {
+        labels: kMeansClusteringLabels,
+        datasets: [
+            @for (int i = 0; i < Model.AnalysisResults.KMeansClusteringResult.ClustersAssignment.Count; i++)
+            {
+                int index = i + 1;
+            @:{
+            @:  label: 'Cluster @index',
+            @:  data: @Html.Raw(Model.AnalysisResults.KMeansClusteringResult.ClustersAssignment[i]),
+            @:  borderColor: colors[@i],
+            @:  backgroundColor: colors[@i]
+            @: },
+            }
+        ]
+    };
+
+    const kMeansClusteringConfig = {
+        type: 'scatter',
+        data: kMeansClusteringData,
+        options: {
+            title: {
+                display: true,
+                text: 'K-Means Clustering Chart'
+            },
+            responsive: true,
+            plugins: {
+                title: {
+                    align: 'start',
+                    display: true,
+                    text: 'K-Means Clustering Chart'
+                },
+                legend:
+                      {
+                        align: 'start',
+                      }
+                },
+            interaction: {
+                intersect: false,
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        position: 'left',
+                        align: 'start',
+                        text: @Html.Raw(Model.AnalysisResults.KMeansClusteringResult.OXAttributeName)
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: @Html.Raw(Model.AnalysisResults.KMeansClusteringResult.OYAttributeName)
+                    }
+                }
+            }
+        },
+    };
+
+    var kMeansClusteringChart = new Chart(
+        document.getElementById('kMeansClusteringChart'),
+        kMeansClusteringConfig
+    );
+</script>

@@ -150,7 +150,7 @@
 
     @if (Model.AnalysisResults.KMeansClusteringResult.IsNull == false)
     {
-
+        await Html.RenderPartialAsync("_KMeansClusteringMethodDetailsChart", Model);
     }
 
     @if (Model.AnalysisResults.RegressionResult.IsNull == false)
