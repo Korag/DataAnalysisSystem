@@ -6,7 +6,7 @@ namespace DataAnalysisSystem.DTO.Dictionaries
     {
          public static readonly Dictionary<string, string> AnalysisType = new Dictionary<string, string>
          {
-           {"approximationMethod", "K-Means Clustering"},
+           {"approximationMethod", "Cubic Splines Approximation"},
            {"basicStatisticsMethod", "Basic Set of Statistics Indicators"},
            {"deriverativeMethod", "Deriverative"},
            {"histogramMethod", "Histogram"},

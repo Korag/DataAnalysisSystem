@@ -15,14 +15,14 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
             this.StringColumns = new List<DatasetContentSelectColumnForHistogramParametersTypeStringViewModel>();
         }
 
-        public AddHistogramParametersViewModel(DatasetContentViewModel datasestContent)
+        public AddHistogramParametersViewModel(DatasetContentViewModel datasetContent)
         {
             this.NumberColumns = new List<DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel>();
             this.StringColumns = new List<DatasetContentSelectColumnForHistogramParametersTypeStringViewModel>();
 
-            for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
+            for (int i = 0; i < datasetContent.NumberColumns.Count() + datasetContent.StringColumns.Count(); i++)
             {
-                var numberColumn = datasestContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                var numberColumn = datasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                 if (numberColumn != null)
                 {
@@ -34,7 +34,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 }
                 else
                 {
-                    var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                    var stringColumn = datasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
                     DatasetContentSelectColumnForHistogramParametersTypeStringViewModel singleColumn = new DatasetContentSelectColumnForHistogramParametersTypeStringViewModel(
                                                                                                          stringColumn.AttributeName, stringColumn.PositionInDataset, false);
                     this.StringColumns.Add(singleColumn);

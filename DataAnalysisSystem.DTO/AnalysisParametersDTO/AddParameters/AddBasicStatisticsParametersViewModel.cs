@@ -13,14 +13,14 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
             this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeStringViewModel>();
         }
 
-        public AddBasicStatisticsParametersViewModel(DatasetContentViewModel datasestContent)
+        public AddBasicStatisticsParametersViewModel(DatasetContentViewModel datasetContent)
         {
             this.NumberColumns = new List<DatasetColumnSelectColumnForParametersTypeDoubleViewModel>();
             this.StringColumns = new List<DatasetColumnSelectColumnForParametersTypeStringViewModel>();
 
-            for (int i = 0; i < datasestContent.NumberColumns.Count() + datasestContent.StringColumns.Count(); i++)
+            for (int i = 0; i < datasetContent.NumberColumns.Count() + datasetContent.StringColumns.Count(); i++)
             {
-                var numberColumn = datasestContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                var numberColumn = datasetContent.NumberColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                 if (numberColumn != null)
                 {
@@ -29,7 +29,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 }
                 else
                 {
-                    var stringColumn = datasestContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
+                    var stringColumn = datasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
 
                     this.StringColumns.Add(new DatasetColumnSelectColumnForParametersTypeStringViewModel(
                                                              stringColumn.AttributeName, stringColumn.PositionInDataset, false));

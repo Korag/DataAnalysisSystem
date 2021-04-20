@@ -86,5 +86,5 @@
 
 @section Scripts{
 
-    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator", SortedByColumnNumber = 3, SortingType = "desc" });}
 }
