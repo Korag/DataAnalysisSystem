@@ -52,7 +52,7 @@
     </div>
 </div>
 
-@if (Model.AnalysisResults.ApproximationResult != null)
+@if (Model.AnalysisResults.ApproximationResult.IsNull == false)
 {
     @await Component.InvokeAsync("DetailsApproximationMethodParameters", Model)
     @await Component.InvokeAsync("DetailsApproximationMethodResults", Model)
@@ -128,15 +128,16 @@
         });
     </script>
 
-    <script>
-
+    @if (Model.AnalysisResults.ApproximationResult.IsNull == false)
+    {
+        <script>
         @{int z = 0;};
-        @{int l = 1;};
+        @{int z1 = 1;};
         @for (var i = 0; i < Model.AnalysisResults.ApproximationResult.AttributeName.Count; i++)
         {
     @:    const approximationLabels_@i = @Html.Raw(Model.AnalysisResults.ApproximationResult.Labels[i]);
     @:    const approximationDatapoints_@z = @Html.Raw(Model.AnalysisResults.ApproximationResult.ApproximatedValuePoints[i]);
-    @:    const approximationDatapoints_@l = @Html.Raw(Model.AnalysisResults.ApproximationResult.OriginalValuePoints[i]);
+    @:    const approximationDatapoints_@z1 = @Html.Raw(Model.AnalysisResults.ApproximationResult.OriginalValuePoints[i]);
     @:    const approximationData_@i = {
     @:        labels: approximationLabels_@i,
     @:        datasets: [
@@ -149,7 +150,7 @@
     @:                tension: 0.5
     @:            }, {
     @:                label: 'Data point',
-    @:                data: approximationDatapoints_@l,
+    @:                data: approximationDatapoints_@z1,
     @:                borderColor: 'blue',
     @:                fill: false,
     @:                showLine: false,
@@ -207,48 +208,61 @@
     @:        approximationConfig_@i
     @:    );
          z++; z++;
-         l++; l++;
+         z1++; z1++;
         }
 
-    </script>
+        </script>
+    }
 
-    <script>
-
-        @{z = 0;};
-        @{l = 1;};
-        @{int m = 2;};
+    @if (Model.AnalysisResults.DeriverativeResult.IsNull == false)
+    {
+        <script>
+        @{int z2 = 0;};
+        @{int z3 = 1;};
+        @{int z4 = 2;};
+        @{int z5 = 3;};
         @for (var i = 0; i < Model.AnalysisResults.DeriverativeResult.AttributeName.Count; i++)
         {
     @:    const deriverativeLabels_@i = @Html.Raw(Model.AnalysisResults.DeriverativeResult.Labels[i]);
-    @:    const deriverativeDatapoints_@z = @Html.Raw(Model.AnalysisResults.DeriverativeResult.FirstDeriverative[i]);
-    @:    const deriverativeDatapoints_@l = @Html.Raw(Model.AnalysisResults.DeriverativeResult.SecondDeriverative[i]);
-    @:    const deriverativeDatapoints_@m = @Html.Raw(Model.AnalysisResults.DeriverativeResult.OriginalValuePoints[i]);
+    @:    const deriverativeDatapoints_@z2 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.FirstDeriverative[i]);
+    @:    const deriverativeDatapoints_@z3 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.SecondDeriverative[i]);
+    @:    const deriverativeDatapoints_@z4 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.OriginalValuePoints[i]);
+    @:    const deriverativeDatapoints_@z5 = @Html.Raw(Model.AnalysisResults.DeriverativeResult.ApproximatedValuePoints[i]);
     @:    const deriverativeData_@i = {
     @:        labels: deriverativeLabels_@i,
     @:        datasets: [
     @:            {
     @:                label: 'First deriverative',
-    @:                data: deriverativeDatapoints_@z,
-    @:                borderColor: 'red',
+    @:                data: deriverativeDatapoints_@z2,
+    @:                borderColor: 'black',
     @:                fill: false,
     @:                cubicInterpolationMode: 'none',
-    @:                tension: 0.3
+    @:                tension: 0.5
     @:            },
     @:            {
     @:                label: 'Second deriverative',
-    @:                data: deriverativeDatapoints_@l,
+    @:                data: deriverativeDatapoints_@z3,
     @:                borderColor: 'green',
     @:                fill: false,
     @:                tension: 0.5
     @:            },
     @:            {
     @:                label: 'Data point',
-    @:                data: deriverativeDatapoints_@m,
+    @:                data: deriverativeDatapoints_@z4,
     @:                borderColor: 'blue',
     @:                fill: false,
     @:                showLine: false,
     @:                tension: 0.0
-    @:            }
+    @:            },
+    @:            {
+    @:                label: 'Approximation',
+    @:                data: deriverativeDatapoints_@z5,
+    @:                borderColor: 'red',
+    @:                fill: false,
+    @:                cubicInterpolationMode: 'none',
+    @:                tension: 0.5,
+    @:                hidden: true
+    @:            },
     @:        ]
     @:    };
     @:
@@ -300,12 +314,14 @@
     @:        document.getElementById('deriverativeChart_@i'),
     @:        deriverativeConfig_@i
     @:    );
-         z++; z++; z++;
-         l++; l++; l++;
-         m++; m++; m++;
+         z2++; z2++; z2++; z2++;
+            z3++; z3++; z3++; z3++;
+            z4++; z4++; z4++; z4++;
+            z5++; z5++; z5++; z5++;
         }
 
-    </script>
+        </script>
+    }
 
 }
 

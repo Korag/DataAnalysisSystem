@@ -12,6 +12,12 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
         {
             ApproximationResult result = analysisResults.ApproximationResult;
 
+            if (result == null)
+            {
+                IsNull = true;
+                return;
+            }
+
             this.AttributeName = new List<string>();
             this.ApproximatedValuePoints = new List<string>();
             this.OriginalValuePoints = new List<string>();
@@ -64,6 +70,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
             }
         }
 
+        public bool IsNull { get; set; }
         public IList<string> AttributeName { get; set; }
 
         public IList<string> ApproximatedValuePoints { get; set; }

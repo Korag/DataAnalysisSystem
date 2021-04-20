@@ -13,10 +13,19 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
         {
             DeriverativeResult result = analysisResults.DeriverativeResult;
 
+            if (result == null)
+            {
+                IsNull = true;
+                return;
+            }
+
             this.AttributeName = new List<string>();
             this.FirstDeriverative = new List<string>();
             this.SecondDeriverative = new List<string>();
+
             this.OriginalValuePoints = new List<string>();
+            this.ApproximatedValuePoints = new List<string>();
+
             this.Labels = new List<string>();
 
             foreach (var numberColumn in result.NumberColumns)
@@ -29,6 +38,7 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
                     List<ChartPoint> secondDeriverativeValuePoints = new List<ChartPoint>();
 
                     List<ChartPoint> originalValuePoints = new List<ChartPoint>();
+                    List<ChartPoint> approximatedValuePoints = new List<ChartPoint>();
                     List<double> labels = new List<double>();
 
                     for (var i = 0; i < numberColumn.OutX.Count; i++)
@@ -48,6 +58,14 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
                         };
 
                         secondDeriverativeValuePoints.Add(cp2);
+
+                        ChartPoint cp3 = new ChartPoint
+                        {
+                            x = Math.Round(numberColumn.OutX[i], 4),
+                            y = Math.Round(numberColumn.OutY[i], 4)
+                        };
+
+                        approximatedValuePoints.Add(cp3);
 
                         labels.Add(cp.x);
                     }
@@ -74,13 +92,17 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
                     FirstDeriverative.Add(JsonConvert.SerializeObject(firstDeriverativeValuePoints));
                     SecondDeriverative.Add(JsonConvert.SerializeObject(secondDeriverativeValuePoints));
                     OriginalValuePoints.Add(JsonConvert.SerializeObject(originalValuePoints));
+                    ApproximatedValuePoints.Add(JsonConvert.SerializeObject(approximatedValuePoints));
                 }
             }
         }
 
+        public bool IsNull { get; set; }
         public IList<string> AttributeName { get; set; }
 
         public IList<string> OriginalValuePoints { get; set; }
+        public IList<string> ApproximatedValuePoints { get; set; }
+
         public IList<string> FirstDeriverative { get; set; }
         public IList<string> SecondDeriverative { get; set; }
 

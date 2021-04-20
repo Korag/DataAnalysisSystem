@@ -14,8 +14,6 @@ namespace DataAnalysisSystem.DataAnalysisMethods
             AnalysisResults results = new AnalysisResults();
             results.DeriverativeResult = new DeriverativeResult();
 
-            results.DeriverativeResult.ApproximationPointsNumber = parameters.DeriverativeParameters.ApproximationPointsNumber;
-
             var firstColumn = datasetContent.NumberColumns.FirstOrDefault();
             int datasetLength = 0;
 
@@ -44,7 +42,7 @@ namespace DataAnalysisSystem.DataAnalysisMethods
 
                     var spline = CubicSpline.InterpolateNatural(inX, inY);
 
-                    var outX = new DenseVector(parameters.ApproximationParameters.ApproximationPointsNumber);
+                    var outX = new DenseVector(parameters.DeriverativeParameters.ApproximationPointsNumber);
                     var outY = new DenseVector(outX.Count);
 
                     var dydx = new DenseVector(outX.Count);
@@ -60,6 +58,7 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                     }
 
                     singleNumberColumnResult.OutX = outX.ToList();
+                    singleNumberColumnResult.OutY = outY.ToList();
 
                     singleNumberColumnResult.DYDX = dydx.ToList();
                     singleNumberColumnResult.DY2DX2 = dy2dx2.ToList();
@@ -70,6 +69,8 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                     singleNumberColumnResult.InY = null;
                    
                     singleNumberColumnResult.OutX = null;
+                    singleNumberColumnResult.OutY = null;
+
                     singleNumberColumnResult.DYDX = null;
                     singleNumberColumnResult.DY2DX2 = null;
                 }
@@ -83,44 +84,6 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                 DatasetContentDeriverativeResultsTypeString singleStringColumnResult = new DatasetContentDeriverativeResultsTypeString(stringColumn.AttributeName, stringColumn.PositionInDataset, columnStringParameters.ColumnSelected);
                 results.DeriverativeResult.StringColumns.Add(singleStringColumnResult);
             }
-
-            #region ToDO
-            //foreach (var numberColumn in datasetContent.NumberColumns)
-            //{
-            //    DatasetColumnSelectColumnForParametersTypeDouble columnNumberParameters = parameters.DeriverativeParameters.NumberColumns.Where(z => z.PositionInDataset == numberColumn.PositionInDataset).FirstOrDefault();
-            //    //DatasetContentApproximationResultsTypeDouble singleNumberColumnResult = new DatasetContentApproximationResultsTypeDouble(numberColumn.AttributeName, numberColumn.PositionInDataset, columnNumberParameters.ColumnSelected);
-
-            //}
-
-            //foreach (var stringColumn in datasetContent.StringColumns)
-            //{
-            //    DatasetColumnSelectColumnForParametersTypeString columnStringParameters = parameters.DeriverativeParameters.StringColumns.Where(z => z.PositionInDataset == stringColumn.PositionInDataset).FirstOrDefault();
-            //    //DatasetContentApproximationResultsTypeString singleStringColumnResult = new DatasetContentApproximationResultsTypeString(stringColumn.AttributeName, stringColumn.PositionInDataset, columnStringParameters.ColumnSelected);
-            //    //results.ApproximationResult.StringColumns.Add(singleStringColumnResult);
-            //}
-
-            //double result;
-            //double estimatedError;
-
-            //Func<double, double> fCentral = Math.Cos;
-
-            //result = fCentral.CentralDerivative(1.0);
-            //result = fCentral.CentralDerivative(1.0, out estimatedError);
-            //Func<double, double> fForward = x => (x + 2) * (x + 2) * Math.Sqrt(x + 2);
-
-            //// Calculating the derivative using central 
-            //// differences returns NaN (Not a Number):
-            //result = fForward.CentralDerivative(-2.0, out estimatedError);
-
-            //result = fForward.ForwardDerivative(-2.0, out estimatedError);
-
-            //Func<double, double> fBackward = x => x > 0.0 ? 1.0 : Math.Sin(x);
-            //result = fBackward.BackwardDerivative(0.0, out estimatedError);
-
-            //Func<double, double> dfCentral = fCentral.GetNumericalDifferentiator();
-            //Func<double, double> dfForward = fForward.GetForwardDifferentiator();
-            //Func<double, double> dfBackward = fBackward.GetBackwardDifferentiator();
-            #endregion
 
             return results;
         }
