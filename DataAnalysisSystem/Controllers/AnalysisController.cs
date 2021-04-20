@@ -378,6 +378,7 @@ namespace DataAnalysisSystem.Controllers
             analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);
 
             analysisDetails.AnalysisResults.ApproximationResult = new DetailsApproximationResultViewModel(analysis.AnalysisResults);
+            analysisDetails.AnalysisResults.DeriverativeResult = new DetailsDeriverativeResultViewModel(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {

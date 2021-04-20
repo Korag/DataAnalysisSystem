@@ -5,8 +5,18 @@
 
         <div class="card" style="display:block;">
             <div class="card-content">
-                <span class="card-title center">DetailsDeriverativeMethodResults</span>
+                <span class="card-title center">Deriverative Method Results</span>
 
+                @for (int i = 0; i < Model.AnalysisResults.DeriverativeResult.AttributeName.Count; i++)
+                {
+                    int pixelSize = Model.AnalysisResults.DeriverativeResult.LabelsCount * 20;
+                    string widthPx = pixelSize.ToString() + "px";
+                    <div style="width: 100%; overflow-x: auto; overflow-y: hidden; margin-bottom: 40px">
+                        <div style="width: @widthPx; height: 500px">
+                            <canvas id="deriverativeChart_@i" width="0"></canvas>
+                        </div>
+                    </div>
+                }
 
             </div>
 

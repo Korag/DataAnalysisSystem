@@ -134,22 +134,22 @@
         @{int l = 1;};
         @for (var i = 0; i < Model.AnalysisResults.ApproximationResult.AttributeName.Count; i++)
         {
-    @:    const labels_@i = @Html.Raw(Model.AnalysisResults.ApproximationResult.Labels[i]);
-    @:    const datapoints_@z = @Html.Raw(Model.AnalysisResults.ApproximationResult.ApproximatedValuePoints[i]);
-    @:    const datapoints_@l = @Html.Raw(Model.AnalysisResults.ApproximationResult.OriginalValuePoints[i]);
-    @:    const data_@i = {
-    @:        labels: labels_@i,
+    @:    const approximationLabels_@i = @Html.Raw(Model.AnalysisResults.ApproximationResult.Labels[i]);
+    @:    const approximationDatapoints_@z = @Html.Raw(Model.AnalysisResults.ApproximationResult.ApproximatedValuePoints[i]);
+    @:    const approximationDatapoints_@l = @Html.Raw(Model.AnalysisResults.ApproximationResult.OriginalValuePoints[i]);
+    @:    const approximationData_@i = {
+    @:        labels: approximationLabels_@i,
     @:        datasets: [
     @:            {
     @:                label: 'Approximation',
-    @:                data: datapoints_@z,
+    @:                data: approximationDatapoints_@z,
     @:                borderColor: 'red',
     @:                fill: false,
     @:                cubicInterpolationMode: 'none',
     @:                tension: 0.5
     @:            }, {
     @:                label: 'Data point',
-    @:                data: datapoints_@l,
+    @:                data: approximationDatapoints_@l,
     @:                borderColor: 'blue',
     @:                fill: false,
     @:                showLine: false,
@@ -158,9 +158,9 @@
     @:        ]
     @:    };
     @:
-    @:    const config_@i = {
+    @:    const approximationConfig_@i = {
     @:        type: 'line',
-    @:        data: data_@i,
+    @:        data: approximationData_@i,
     @:        options: {
     @:            title: {
     @:                display: true,
@@ -204,10 +204,105 @@
     @:
     @:    var approximationChart_@i = new Chart(
     @:        document.getElementById('approximationChart_@i'),
-    @:        config_@i
+    @:        approximationConfig_@i
     @:    );
          z++; z++;
          l++; l++;
+        }
+
+    </script>
+
+    <script>
+
+        @{z = 0;};
+        @{l = 1;};
+        @{int m = 2;};
+        @for (var i = 0; i < Model.AnalysisResults.DeriverativeResult.AttributeName.Count; i++)
+        {
+    @:    const deriverativeLabels_@i = @Html.Raw(Model.AnalysisResults.DeriverativeResult.Labels[i]);
+    @:    const deriverativeDatapoints_@z = @Html.Raw(Model.AnalysisResults.DeriverativeResult.FirstDeriverative[i]);
+    @:    const deriverativeDatapoints_@l = @Html.Raw(Model.AnalysisResults.DeriverativeResult.SecondDeriverative[i]);
+    @:    const deriverativeDatapoints_@m = @Html.Raw(Model.AnalysisResults.DeriverativeResult.OriginalValuePoints[i]);
+    @:    const deriverativeData_@i = {
+    @:        labels: deriverativeLabels_@i,
+    @:        datasets: [
+    @:            {
+    @:                label: 'First deriverative',
+    @:                data: deriverativeDatapoints_@z,
+    @:                borderColor: 'red',
+    @:                fill: false,
+    @:                cubicInterpolationMode: 'none',
+    @:                tension: 0.3
+    @:            },
+    @:            {
+    @:                label: 'Second deriverative',
+    @:                data: deriverativeDatapoints_@l,
+    @:                borderColor: 'green',
+    @:                fill: false,
+    @:                tension: 0.5
+    @:            },
+    @:            {
+    @:                label: 'Data point',
+    @:                data: deriverativeDatapoints_@m,
+    @:                borderColor: 'blue',
+    @:                fill: false,
+    @:                showLine: false,
+    @:                tension: 0.0
+    @:            }
+    @:        ]
+    @:    };
+    @:
+    @:    const deriverativeConfig_@i = {
+    @:        type: 'line',
+    @:        data: deriverativeData_@i,
+    @:        options: {
+    @:            title: {
+    @:                display: true,
+    @:                text: 'Deriverative Chart'
+    @:            },
+    @:            responsive: true,
+    @:            plugins: {
+    @:                title: {
+    @:                    align: 'start',
+    @:                    display: true,
+    @:                    text: 'Deriverative Chart'
+    @:                },
+    @:                legend:
+    @:                      {
+    @:                        align: 'start',
+    @:                      }
+    @:                },
+    @:            interaction: {
+    @:                intersect: false,
+    @:            },
+    @:            scales: {
+    @:                x: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        position: 'left',
+    @:                        align: 'start',
+    @:                        text: 'X'
+    @:                    }
+    @:                },
+    @:                y: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        text: @Html.Raw(Model.AnalysisResults.DeriverativeResult.AttributeName[i])
+    @:                    }
+    @:                }
+    @:            }
+    @:        },
+    @:    };
+    @:
+    @:    var deriverativeChart_@i = new Chart(
+    @:        document.getElementById('deriverativeChart_@i'),
+    @:        deriverativeConfig_@i
+    @:    );
+         z++; z++; z++;
+         l++; l++; l++;
+         m++; m++; m++;
         }
 
     </script>
