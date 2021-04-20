@@ -141,14 +141,14 @@
     @:        labels: labels_@i,
     @:        datasets: [
     @:            {
-    @:                label: 'Approximation',
+    @:                label: 'Approximated Value',
     @:                data: datapoints_@z,
     @:                borderColor: 'red',
     @:                fill: false,
     @:                cubicInterpolationMode: 'none',
     @:                tension: 0.5
     @:            }, {
-    @:                label: 'Data points',
+    @:                label: 'Data point',
     @:                data: datapoints_@l,
     @:                borderColor: 'blue',
     @:                fill: false,
@@ -169,10 +169,15 @@
     @:            responsive: true,
     @:            plugins: {
     @:                title: {
+    @:                    align: 'start',
     @:                    display: true,
     @:                    text: 'Approximation Chart'
     @:                },
-    @:            },
+    @:                legend:
+    @:                      {
+    @:                        align: 'start',
+    @:                      }
+    @:                },
     @:            interaction: {
     @:                intersect: false,
     @:            },
@@ -181,6 +186,8 @@
     @:                    display: true,
     @:                    title: {
     @:                        display: true,
+    @:                        position: 'left',
+    @:                        align: 'start',
     @:                        text: 'X'
     @:                    }
     @:                },

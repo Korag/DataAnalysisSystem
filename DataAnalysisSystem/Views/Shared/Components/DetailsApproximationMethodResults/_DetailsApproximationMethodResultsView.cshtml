@@ -9,9 +9,16 @@
 
                 @for (int i = 0; i < Model.AnalysisResults.ApproximationResult.AttributeName.Count; i++)
                 {
-                    <div>
-                        <canvas id="approximationChart_@i"></canvas>
+
+                    <div style="width: 100%; overflow-x: auto; overflow-y: hidden; margin-bottom: 40px">
+                        <div style="width: 2000px; height: 500px">
+                            <canvas id="approximationChart_@i" width="0"></canvas>
+                        </div>
                     </div>
+
+                    @*<div>
+                        <canvas id="approximationChart_@i"></canvas>
+                    </div>*@
                 }
 
             </div>
