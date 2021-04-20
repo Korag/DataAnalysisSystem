@@ -13,11 +13,6 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
             ApproximationResult result = analysisResults.ApproximationResult;
 
             this.AttributeName = new List<string>();
-            this.InX = new List<string>();
-            this.InY = new List<string>();
-            this.OutX = new List<string>();
-            this.OutY = new List<string>();
-
             this.ApproximatedValuePoints = new List<string>();
             this.OriginalValuePoints = new List<string>();
             this.Labels = new List<string>();
@@ -59,29 +54,21 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
                     labels = labels.OrderBy(z=> z).ToList();
                     labels = labels.Distinct().ToList();
 
+                    this.LabelsCount = labels.Count();
+
                     Labels.Add(JsonConvert.SerializeObject(labels));
 
                     ApproximatedValuePoints.Add(JsonConvert.SerializeObject(approximatedValuePoints));
                     OriginalValuePoints.Add(JsonConvert.SerializeObject(originalValuePoints));
-
-                    InX.Add(JsonConvert.SerializeObject(numberColumn.InX));
-                    InY.Add(JsonConvert.SerializeObject(numberColumn.InY));
-
-                    OutX.Add(JsonConvert.SerializeObject(numberColumn.OutX));
-                    OutY.Add(JsonConvert.SerializeObject(numberColumn.OutY));
                 }
             }
         }
 
         public IList<string> AttributeName { get; set; }
-        public IList<string> InX { get; set; }
-        public IList<string> InY { get; set; }
-
-        public IList<string> OutX { get; set; }
-        public IList<string> OutY { get; set; }
 
         public IList<string> ApproximatedValuePoints { get; set; }
         public IList<string> OriginalValuePoints { get; set; }
         public IList<string> Labels { get; set; }
+        public int LabelsCount { get; set; }
     }
 }
