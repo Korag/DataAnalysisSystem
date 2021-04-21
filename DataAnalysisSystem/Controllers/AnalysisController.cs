@@ -382,6 +382,7 @@ namespace DataAnalysisSystem.Controllers
             analysisDetails.AnalysisResults.KMeansClusteringResult = new DetailsKMeansClusteringResultViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisResults.RegressionResult = new DetailsRegressionResultViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisResults.BasicStatisticsResult = new DetailsBasicStatisticsResultViewModel(analysis.AnalysisResults);
+            analysisDetails.AnalysisResults.HistogramResult = new DetailsHistogramResultViewModel(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {

@@ -1,0 +1,69 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.AnalysisDetailsViewModel
+
+<script>
+        @for (var i = 0; i < Model.AnalysisResults.HistogramResult.AttributeName.Count; i++)
+        {
+    @:    const histogramLabels_@i = @Html.Raw(Model.AnalysisResults.HistogramResult.Labels[i]);
+    @:    const histogramDatapoints_@i = @Html.Raw(Model.AnalysisResults.HistogramResult.HistogramValues[i]);
+    @:    const histogramData_@i = {
+    @:        labels: histogramLabels_@i,
+    @:        datasets: [
+    @:            {
+    @:                label: 'Amount of elements',
+    @:                data: histogramDatapoints_@i,
+    @:                backgroundColor: 'rgba(91, 16, 69, 0.67)'
+    @:            },
+    @:        ]
+    @:    };
+    @:
+    @:    const histogramConfig_@i = {
+    @:        type: 'bar',
+    @:        data: histogramData_@i,
+    @:        options: {
+    @:            title: {
+    @:                display: true,
+    @:                text: 'Histogram Chart'
+    @:            },
+    @:            responsive: true,
+    @:            plugins: {
+    @:                title: {
+    @:                    align: 'start',
+    @:                    display: true,
+    @:                    text: 'Histogram Chart'
+    @:                },
+    @:                legend:
+    @:                      {
+    @:                        align: 'start',
+    @:                      }
+    @:                },
+    @:            interaction: {
+    @:                intersect: false,
+    @:            },
+    @:            scales: {
+    @:                x: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        position: 'left',
+    @:                        align: 'start',
+    @:                        text: 'Range'
+    @:                    }
+    @:                },
+    @:                y: {
+    @:                    display: true,
+    @:                    title: {
+    @:                        display: true,
+    @:                        text: @Html.Raw(Model.AnalysisResults.HistogramResult.AttributeName[i])
+    @:                    }
+    @:                }
+    @:            }
+    @:        },
+    @:    };
+    @:
+    @:    var histogramChart_@i = new Chart(
+    @:        document.getElementById('histogramChart_@i'),
+    @:        histogramConfig_@i
+    @:    );
+        }
+
+</script>

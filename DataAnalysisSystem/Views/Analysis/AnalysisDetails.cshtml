@@ -70,7 +70,7 @@
     @await Component.InvokeAsync("DetailsDeriverativeMethodResults", Model)
 }
 
-@if (Model.AnalysisResults.HistogramResult != null)
+@if (Model.AnalysisResults.HistogramResult.IsNull == false)
 {
     @await Component.InvokeAsync("DetailsHistogramMethodParameters", Model)
     @await Component.InvokeAsync("DetailsHistogramMethodResults", Model)
@@ -143,9 +143,9 @@
         await Html.RenderPartialAsync("_DeriverativeMethodDetailsChart", Model);
     }
 
-    @if (Model.AnalysisResults.HistogramResult != null)
+    @if (Model.AnalysisResults.HistogramResult.IsNull == false)
     {
-        await Html.RenderPartialAsync("_KMeansClusteringMethodDetailsChart", Model);
+        await Html.RenderPartialAsync("_HistogramMethodDetailsChart", Model);
     }
 
     @if (Model.AnalysisResults.KMeansClusteringResult.IsNull == false)
