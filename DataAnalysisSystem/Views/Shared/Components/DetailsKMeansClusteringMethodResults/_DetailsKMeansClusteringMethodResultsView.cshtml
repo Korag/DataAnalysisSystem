@@ -7,10 +7,10 @@
             <div class="card-content">
                 <span class="card-title center">K-Means Clustering Method Results</span>
 
-                    @{int pixelSize = Model.AnalysisResults.ApproximationResult.LabelsCount * 5;
+                    @{int pixelSize = Model.AnalysisResults.KMeansClusteringResult.LabelsCount * 20;
                       string widthPx = pixelSize.ToString() + "px"; }
                     <div style="width: 100%; overflow-x: auto; overflow-y: hidden; margin-bottom: 40px;">
-                        <div style="width: @widthPx; height: 700px; margin: auto">
+                        <div style="min-width:1000px; width: @widthPx; height: 700px; margin: auto">
                             <canvas id="kMeansClusteringChart" width="0"></canvas>
                         </div>
                     </div>

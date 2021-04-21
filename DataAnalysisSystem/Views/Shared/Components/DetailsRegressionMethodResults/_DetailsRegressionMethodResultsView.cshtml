@@ -5,8 +5,71 @@
 
         <div class="card" style="display:block;">
             <div class="card-content">
-                <span class="card-title center">DetailsRegressionMethodResults</span>
+                <span class="card-title center">Regression Method Results</span>
 
+                <div class="row" style="margin-top: 30px;">
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OXAttributeNameInfo" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OXAttributeNameInfo"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.LossFunction" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.LossFunction"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.MeanAbsoluteError" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.MeanAbsoluteError"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.MeanSquaredError" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.MeanSquaredError"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.RootMeanSquaredError" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.RootMeanSquaredError"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.RSquared" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OXPredictionRegressionMetrics.RSquared"></label>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row" style="margin-top: 30px;">
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OYAttributeNameInfo" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OYAttributeNameInfo"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.LossFunction" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.LossFunction"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.MeanAbsoluteError" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.MeanAbsoluteError"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.MeanSquaredError" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.MeanSquaredError"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.RootMeanSquaredError" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.RootMeanSquaredError"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3 xl2" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.RSquared" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.RegressionResult.OYPredictionRegressionMetrics.RSquared"></label>
+                    </div>
+                </div>
+
+                @{int pixelSize = Model.AnalysisResults.RegressionResult.LabelsCount * 20;
+                    string widthPx = pixelSize.ToString() + "px"; }
+                <div style="width: 100%; overflow-x: auto; overflow-y: hidden; margin-bottom: 40px;">
+                    <div style="min-width: 1000px; width: @widthPx; height: 700px; margin: auto">
+                        <canvas id="regressionChart" width="0"></canvas>
+                    </div>
+                </div>
 
             </div>
 

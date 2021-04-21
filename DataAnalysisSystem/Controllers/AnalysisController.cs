@@ -380,6 +380,7 @@ namespace DataAnalysisSystem.Controllers
             analysisDetails.AnalysisResults.ApproximationResult = new DetailsApproximationResultViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisResults.DeriverativeResult = new DetailsDeriverativeResultViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisResults.KMeansClusteringResult = new DetailsKMeansClusteringResultViewModel(analysis.AnalysisResults);
+            analysisDetails.AnalysisResults.RegressionResult = new DetailsRegressionResultViewModel(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {

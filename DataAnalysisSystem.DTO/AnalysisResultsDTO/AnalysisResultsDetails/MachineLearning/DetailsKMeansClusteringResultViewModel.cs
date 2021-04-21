@@ -48,6 +48,8 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 
             labels = labels.OrderBy(z => z).ToList();
             labels = labels.Distinct().ToList();
+            this.LabelsCount = labels.Count();
+
             Labels = JsonConvert.SerializeObject(labels);
         }
 
@@ -58,5 +60,6 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 
         public IList<string> ClustersAssignment { get; set; }
         public string Labels { get; set; }
+        public int LabelsCount { get; set; }
     }
 }

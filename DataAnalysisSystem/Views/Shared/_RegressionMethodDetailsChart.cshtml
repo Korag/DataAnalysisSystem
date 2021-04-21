@@ -1,0 +1,71 @@
+﻿@model DataAnalysisSystem.DTO.AnalysisDTO.AnalysisDetailsViewModel
+
+<script>
+    const regressionLabels = @Html.Raw(Model.AnalysisResults.RegressionResult.Labels);
+    const regressionData = {
+        labels: regressionLabels,
+        datasets: [
+             {
+                label: 'Data points',
+                data: @Html.Raw(Model.AnalysisResults.RegressionResult.OriginalValuePoints),
+                borderColor: "#0000FF",
+                backgroundColor: "rgba(0, 0, 255, 0.6)",
+             },
+             {
+                label: 'Predicted data points',
+                data: @Html.Raw(Model.AnalysisResults.RegressionResult.PredictedValuePoints),
+                borderColor: "#FF0000",
+                backgroundColor: "rgba(255, 0, 0, 0.6)",
+               },
+        ]
+    };
+
+    const regressionConfig = {
+        type: 'scatter',
+        data: regressionData,
+        options: {
+            title: {
+                display: true,
+                text: 'Regression Chart'
+            },
+            responsive: true,
+            plugins: {
+                title: {
+                    align: 'start',
+                    display: true,
+                    text: 'Regression Chart'
+                },
+                legend:
+                      {
+                        align: 'start',
+                      }
+                },
+            interaction: {
+                intersect: false,
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        position: 'left',
+                        align: 'start',
+                        text: @Html.Raw(Model.AnalysisResults.RegressionResult.OXAttributeName)
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: @Html.Raw(Model.AnalysisResults.RegressionResult.OYAttributeName)
+                    }
+                }
+            }
+        },
+    };
+
+    var regressionChart = new Chart(
+        document.getElementById('regressionChart'),
+        regressionConfig
+    );
+</script>

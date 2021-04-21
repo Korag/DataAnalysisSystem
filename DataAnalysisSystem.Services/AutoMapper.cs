@@ -129,7 +129,8 @@ namespace DataAnalysisSystem.Services
             CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>()
                  .ForMember(dest => dest.ApproximationResult, opts => opts.Ignore())
                  .ForMember(dest => dest.DeriverativeResult, opts => opts.Ignore())
-                 .ForMember(dest => dest.KMeansClusteringResult, opts => opts.Ignore());
+                 .ForMember(dest => dest.KMeansClusteringResult, opts => opts.Ignore())
+                 .ForMember(dest => dest.RegressionResult, opts => opts.Ignore());
 
             CreateMap<ApproximationResult, DetailsApproximationResultViewModel>();
             CreateMap<BasicStatisticsResult, DetailsBasicStatisticsResultViewModel>();

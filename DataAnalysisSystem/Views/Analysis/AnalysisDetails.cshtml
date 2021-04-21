@@ -76,13 +76,13 @@
     @await Component.InvokeAsync("DetailsHistogramMethodResults", Model)
 }
 
-@if (Model.AnalysisResults.KMeansClusteringResult != null)
+@if (Model.AnalysisResults.KMeansClusteringResult.IsNull == false)
 {
     @await Component.InvokeAsync("DetailsKMeansClusteringMethodParameters", Model)
     @await Component.InvokeAsync("DetailsKMeansClusteringMethodResults", Model)
 }
 
-@if (Model.AnalysisResults.RegressionResult != null)
+@if (Model.AnalysisResults.RegressionResult.IsNull == false)
 {
     @await Component.InvokeAsync("DetailsRegressionMethodParameters", Model)
     @await Component.InvokeAsync("DetailsRegressionMethodResults", Model)
@@ -133,7 +133,7 @@
         await Html.RenderPartialAsync("_ApproximationMethodDetailsChart", Model);
     }
 
-    @if (Model.AnalysisResults.BasicStatisticsResult.IsNull == false)
+    @if (Model.AnalysisResults.BasicStatisticsResult != null)
     {
 
     }
@@ -143,7 +143,7 @@
         await Html.RenderPartialAsync("_DeriverativeMethodDetailsChart", Model);
     }
 
-    @if (Model.AnalysisResults.HistogramResult.IsNull == false)
+    @if (Model.AnalysisResults.HistogramResult != null)
     {
 
     }
@@ -155,7 +155,7 @@
 
     @if (Model.AnalysisResults.RegressionResult.IsNull == false)
     {
-
+        await Html.RenderPartialAsync("_RegressionMethodDetailsChart", Model);
     }
 }
 
