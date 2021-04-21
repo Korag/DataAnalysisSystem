@@ -5,9 +5,64 @@
 
         <div class="card" style="display:block;">
             <div class="card-content">
-                <span class="card-title center">DetailsBasicStatisticsMethodResults</span>
+                <span class="card-title center">Basic Statistics Method Results</span>
 
+                @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "basicStatisticsDataTableLoadingIndicator");}
 
+                <table id="basicStatisticsTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">
+                    <thead>
+
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().AttributeName)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().PositionInDataset)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Max)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Min)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Mean)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Median)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Variance)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().StdDev)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Kurtosis)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Skewness)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().Covariance)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().LowerQuartile)</th>
+                            <th>@Html.DisplayNameFor(model => model.AnalysisResults.BasicStatisticsResult.NumberColumns.FirstOrDefault().UpperQuartile)</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        @for (int i = 0; i < Model.AnalysisResults.BasicStatisticsResult.NumberColumns.Count(); i++)
+                        {
+                            <tr>
+                                <th>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].AttributeName</th>
+                                <th>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].PositionInDataset</th>
+
+                                @if (!Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].ColumnSelected)
+                                {
+                                    for (int j = 0; j < 11; j++)
+                                    {
+                                        <td>---</td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Max</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Min</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Mean</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Median</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Variance</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].StdDev</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Kurtosis</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Skewness</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].Covariance</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].LowerQuartile</td>
+                                    <td>@Model.AnalysisResults.BasicStatisticsResult.NumberColumns[i].UpperQuartile</td>
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
             </div>
 
         </div>

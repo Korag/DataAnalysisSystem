@@ -58,7 +58,7 @@
     @await Component.InvokeAsync("DetailsApproximationMethodResults", Model)
 }
 
-@if (Model.AnalysisResults.BasicStatisticsResult != null)
+@if (Model.AnalysisResults.BasicStatisticsResult.IsNull == false)
 {
     @await Component.InvokeAsync("DetailsBasicStatisticsMethodParameters", Model)
     @await Component.InvokeAsync("DetailsBasicStatisticsMethodResults", Model)
@@ -133,9 +133,9 @@
         await Html.RenderPartialAsync("_ApproximationMethodDetailsChart", Model);
     }
 
-    @if (Model.AnalysisResults.BasicStatisticsResult != null)
+    @if (Model.AnalysisResults.BasicStatisticsResult.IsNull == false)
     {
-
+        await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "basicStatisticsTable", LoadingIndicatorId = "basicStatisticsDataTableLoadingIndicator", SortedByColumnNumber = 1, SortingType = "asc" });
     }
 
     @if (Model.AnalysisResults.DeriverativeResult.IsNull == false)
@@ -145,7 +145,7 @@
 
     @if (Model.AnalysisResults.HistogramResult != null)
     {
-
+        await Html.RenderPartialAsync("_KMeansClusteringMethodDetailsChart", Model);
     }
 
     @if (Model.AnalysisResults.KMeansClusteringResult.IsNull == false)

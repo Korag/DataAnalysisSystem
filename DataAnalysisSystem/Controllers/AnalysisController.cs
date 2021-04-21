@@ -381,6 +381,7 @@ namespace DataAnalysisSystem.Controllers
             analysisDetails.AnalysisResults.DeriverativeResult = new DetailsDeriverativeResultViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisResults.KMeansClusteringResult = new DetailsKMeansClusteringResultViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisResults.RegressionResult = new DetailsRegressionResultViewModel(analysis.AnalysisResults);
+            analysisDetails.AnalysisResults.BasicStatisticsResult = new DetailsBasicStatisticsResultViewModel(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {
