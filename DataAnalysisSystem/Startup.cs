@@ -68,7 +68,6 @@ namespace DataAnalysisSystem
             services.AddSingleton<IEmailProviderConfigurationProfile>(Configuration.GetSection("EmailProviderConfiguration").Get<EmailProviderConfigurationProfile>());
 
             services.AddTransient<ICodeGenerator, CodeGeneratorUtilityForMongoDB>();
-            services.AddTransient<ICodeQRGenerator, CodeQRGenerator>();
 
             services.AddTransient<IMimeTypeGuesser, MimeTypeGuesser>();
             services.AddTransient<IFileHelper, FileHelper>();

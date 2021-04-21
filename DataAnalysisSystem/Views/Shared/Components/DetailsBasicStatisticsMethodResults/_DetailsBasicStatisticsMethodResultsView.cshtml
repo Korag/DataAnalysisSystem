@@ -7,6 +7,21 @@
             <div class="card-content">
                 <span class="card-title center">Basic Statistics Method Results</span>
 
+                <div class="row" style="margin-top: 30px; margin-bottom: 0px">
+                    <div class="input-field left-align col s6 l3" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.BasicStatisticsResult.NumberColumnsAmount" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.BasicStatisticsResult.NumberColumnsAmount"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.BasicStatisticsResult.StringColumnsAmount" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.BasicStatisticsResult.StringColumnsAmount"></label>
+                    </div>
+                    <div class="input-field left-align col s6 l3" style="margin-top: 10px; margin-bottom: 10px">
+                        <input type="number" asp-for="AnalysisResults.BasicStatisticsResult.NumberOfRows" style="text-align:center" readonly>
+                        <label asp-for="AnalysisResults.BasicStatisticsResult.NumberOfRows"></label>
+                    </div>
+                </div>
+
                 @{await Html.RenderPartialAsync("_LoadingIndicatorPartial", "basicStatisticsDataTableLoadingIndicator");}
 
                 <table id="basicStatisticsTable" class="row-border highlight striped" cellspacing="0" width="100%" style="display:none">

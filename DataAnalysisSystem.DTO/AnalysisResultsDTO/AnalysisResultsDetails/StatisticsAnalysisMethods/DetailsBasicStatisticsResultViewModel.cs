@@ -2,6 +2,7 @@
 using DataAnalysisSystem.DTO.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
 {
@@ -48,8 +49,14 @@ namespace DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails
         public bool IsNull { get; set; }
 
         public IList<DatasetContentBasicStatisticsResultsTypeDoubleViewModel> NumberColumns { get; set; }
+
+        [Display(Name = "Number columns amount")]
         public int NumberColumnsAmount { get; set; }
+
+        [Display(Name = "String columns amount")]
         public int StringColumnsAmount { get; set; }
+
+        [Display(Name = "Number of rows")]
         public int NumberOfRows { get; set; }
     }
 }
