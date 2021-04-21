@@ -166,7 +166,7 @@ namespace DataAnalysisSystem.Controllers
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
 
             _context.datasetRepository.AddDataset(dataset);
-            _context.userRepository.AddDatasetToOwner(loggedUser.Id.ToString(), dataset.DatasetIdentificator);
+            _context.userRepository.AddDatasetToOwner(loggedUser.Id, dataset.DatasetIdentificator);
 
             return RedirectToAction("AddNewDataset", "Dataset", new { notificationMessage = "The dataset has been successfully uploaded to the server." });
         }
@@ -235,7 +235,7 @@ namespace DataAnalysisSystem.Controllers
             }
 
             _context.datasetRepository.DeleteDataset(dataset.DatasetIdentificator);
-            _context.userRepository.RemoveDatasetFromOwner(loggedUser.Id.ToString(), dataset.DatasetIdentificator);
+            _context.userRepository.RemoveDatasetFromOwner(loggedUser.Id, dataset.DatasetIdentificator);
             _context.userRepository.RemoveSharedDatasetsFromUsers(dataset.DatasetIdentificator);
 
             List<string> dataAnalysesId = _context.analysisRepository.GetAnalysesByDatasetId(dataset.DatasetIdentificator).Select(z => z.AnalysisIdentificator).ToList();

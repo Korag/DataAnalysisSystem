@@ -25,9 +25,9 @@ namespace DataAnalysisSystem.Repository.Repository
             return _users = _context.databaseInfo.GetCollection<IdentityProviderUser>(_usersCollectionName);
         }
 
-        public IdentityProviderUser GetUserById(string userIdentificator)
+        public IdentityProviderUser GetUserById(ObjectId userIdentificator)
         {
-            var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.Id, new ObjectId(userIdentificator));
+            var filter = Builders<IdentityProviderUser>.Filter.Eq(x => x.Id, userIdentificator);
             var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
 
             return user;
@@ -71,7 +71,7 @@ namespace DataAnalysisSystem.Repository.Repository
             var result = GetUsers().ReplaceOne(filter, user);
         }
 
-        public void AddDatasetToOwner(string userIdentificator, string datasetIdentificator)
+        public void AddDatasetToOwner(ObjectId userIdentificator, string datasetIdentificator)
         {
             var user = GetUserById(userIdentificator);
             user.UserDatasets.Add(datasetIdentificator);
@@ -79,9 +79,9 @@ namespace DataAnalysisSystem.Repository.Repository
             UpdateUser(user);
         }
 
-        public IdentityProviderUser RemoveDatasetFromOwner(string userIdentificator, string datasetIdentificator)
+        public IdentityProviderUser RemoveDatasetFromOwner(ObjectId userIdentificator, string datasetIdentificator)
         {
-            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.Id.ToString() == userIdentificator);
+            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.Id == userIdentificator);
             var update = Builders<IdentityProviderUser>.Update.Pull(x => x.UserDatasets, datasetIdentificator);
 
             var resultUser = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
