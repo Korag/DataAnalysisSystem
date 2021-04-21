@@ -13,11 +13,13 @@ namespace DataAnalysisSystem.RepositoryInterfaces.RepositoryAbstract
         public IdentityProviderUser RemoveDatasetFromOwner(string userIdentificator, string datasetIdentificator);
         public IList<IdentityProviderUser> RemoveSharedDatasetsFromUsers(string datasetIdentificator);
         public IList<IdentityProviderUser> RemoveSharedAnalysesFromUsers(IList<string> analysesIdentificators);
-        public IdentityProviderUser RemoveAnalysesFromOwner(string userIdentificator, IList<string> analysesIdentificators);
+        public IdentityProviderUser RemoveAnalysesFromOwner(ObjectId userIdentificator, IList<string> analysesIdentificators);
         public IdentityProviderUser GetDatasetOwnerByDatasetId(string datasetIdentificator);
         public IdentityProviderUser GetAnalysisOwnerByAnalysisId(string analysisIdentificator);
         public IList<IdentityProviderUser> GetUsersSharedDatasetBySharedDatasetId(string datasetIdentificator);
         public IList<IdentityProviderUser> RemoveSharedAnalysisFromUsers(string analysisIdentificator);
+        public IdentityProviderUser RemoveSharedAnalysisFromUser(string analysisIdentificator, ObjectId userIdentificator);
         public IdentityProviderUser RemoveAnalysisFromOwner(ObjectId userIdentificator, string analysisIdentificator);
+        public IdentityProviderUser RemoveSharedDatasetFromUser(string datasetIdentificator, ObjectId userIdentificator);
     }
 }

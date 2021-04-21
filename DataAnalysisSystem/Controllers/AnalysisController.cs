@@ -182,6 +182,23 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
+        public IActionResult DeleteSharedAnalysisByCollab(string analysisIdentificator)
+        {
+            Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (analysis == null || !loggedUser.SharedAnalysesToUser.Contains(analysisIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            _context.userRepository.RemoveSharedAnalysisFromUser(analysisIdentificator, loggedUser.Id);
+
+            return RedirectToAction("SharedAnalysesBrowser", "Analysis", new { notificationMessage = "The analysis was successfully removed from your account." });
+        }
+
+        [Authorize]
+        [HttpGet]
         public IActionResult UserSharedAnalyses(string notificationMessage = null)
         {
             ViewData["Message"] = notificationMessage;
@@ -241,7 +258,7 @@ namespace DataAnalysisSystem.Controllers
 
             _context.analysisRepository.UpdateAnalysis(analysisToShare);
 
-            return RedirectToAction("UserSharedAnalysis", "Analysis", new { notificationMessage = "A analysis has been made available." });
+            return RedirectToAction("UserSharedAnalyses", "Analysis", new { notificationMessage = "A analysis has been made available." });
         }
 
         [Authorize]
@@ -262,7 +279,7 @@ namespace DataAnalysisSystem.Controllers
             analysis.AccessKey = "000";
             _context.analysisRepository.UpdateAnalysis(analysis);
 
-            return RedirectToAction("UserSharedAnalysis", "Analysis", new { notificationMessage = "The selected analysis is no longer shared with other system users." });
+            return RedirectToAction("UserSharedAnalyses", "Analysis", new { notificationMessage = "The selected analysis is no longer shared with other system users." });
         }
 
         public string GetAnalysisOwnerName(string analysisIdentificator)

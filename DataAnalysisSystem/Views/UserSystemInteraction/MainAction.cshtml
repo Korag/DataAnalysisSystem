@@ -13,7 +13,10 @@
     </div>
 </div>
 
-@if (ViewData["Message"] != null)
+@section Notification
 {
-    await Html.RenderPartialAsync("_NotificationMenuMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });
+    @if (ViewData["Message"] != null)
+    {
+        await Html.RenderPartialAsync("_NotificationMenuMessage", new NotificationMenuViewModel { NotificationContainerId = "notificationContainer" });
+    }
 }

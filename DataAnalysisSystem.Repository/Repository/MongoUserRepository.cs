@@ -102,6 +102,30 @@ namespace DataAnalysisSystem.Repository.Repository
             return resultListOfUsers;
         }
 
+        public IdentityProviderUser RemoveSharedDatasetFromUser(string datasetIdentificator, ObjectId userIdentificator)
+        {
+            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.SharedDatasetsToUser.Contains(datasetIdentificator) && z.Id == userIdentificator);
+            var update = Builders<IdentityProviderUser>.Update.Pull(x => x.SharedDatasetsToUser, datasetIdentificator);
+
+            var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
+
+            var result = _users.UpdateOne(filter, update);
+
+            return user;
+        }
+
+        public IdentityProviderUser RemoveSharedAnalysisFromUser(string analysisIdentificator, ObjectId userIdentificator)
+        {
+            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.SharedAnalysesToUser.Contains(analysisIdentificator) && z.Id == userIdentificator);
+            var update = Builders<IdentityProviderUser>.Update.Pull(x => x.SharedAnalysesToUser, analysisIdentificator);
+
+            var user = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();
+
+            var result = _users.UpdateOne(filter, update);
+
+            return user;
+        }
+
         public IList<IdentityProviderUser> RemoveSharedAnalysisFromUsers(string analysisIdentificator)
         {
             var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.SharedAnalysesToUser.Contains(analysisIdentificator));
@@ -132,9 +156,9 @@ namespace DataAnalysisSystem.Repository.Repository
             return resultListOfUsers;
         }
 
-        public IdentityProviderUser RemoveAnalysesFromOwner(string userIdentificator, IList<string> analysesIdentificators)
+        public IdentityProviderUser RemoveAnalysesFromOwner(ObjectId userIdentificator, IList<string> analysesIdentificators)
         {
-            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.Id.ToString() == userIdentificator);
+            var filter = Builders<IdentityProviderUser>.Filter.Where(z => z.Id == userIdentificator);
             var update = Builders<IdentityProviderUser>.Update.PullAll(x => x.UserAnalyses, analysesIdentificators);
 
             var resultUser = GetUsers().Find<IdentityProviderUser>(filter).FirstOrDefault();

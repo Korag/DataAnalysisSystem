@@ -101,6 +101,7 @@ namespace DataAnalysisSystem.Services
             
             CreateMap<Dataset, SharedAnalysisByOwnerViewModel>()
                             .ForMember(dest => dest.DateOfCreation, opts => opts.Ignore())
+                            .ForMember(dest => dest.AccessKey, opts => opts.Ignore())
                             .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                             .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 

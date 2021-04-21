@@ -80,40 +80,46 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{int t = 0;}
                         @foreach (var analysis in Model.SharedAnalyses)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(model => analysis.AnalysisName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.AnalysisIndexer)
-                            </td>
-                            <td>
-                                @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
-                                {
-                                    <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.DateOfCreation)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.DatasetName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.OwnerName)
-                            </td>
-                            <td>
-                                <a asp-action="SharedAnalysisDetails" asp-controller="Dataset" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                </td>
+                                <td>
+                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                    {
+                                        <div class="chip" style="width:200px">
+                                            @analysisMethod
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DateOfCreation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.OriginalDatasetFileFullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DatasetDateOfEdition)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.OwnerName)
+                                </td>
+                                <td>
+                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                    @{string modalDataTarget = "modalDeleteSharedAnalysisByCollab" + t;}
+                                    <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
+                                    @{t++;}
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -121,6 +127,26 @@
         </div>
     </div>
 </div>
+
+@for (int z = 0; z < Model.SharedAnalyses.Count; z++)
+{
+    string modalDataTarget = "modalDeleteSharedAnalysisByCollab" + z;
+    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+    {
+        ModalIdentificator = modalDataTarget,
+        ModalTitle = "Stop observing the shared analysis",
+        ModalContent = "Are you sure you want to stop observing the shared analysis?",
+
+        ControllerName = "Analysis",
+        ActionName = "DeleteSharedAnalysisByCollab",
+        RouteAdditionalArguments = new Dictionary<string, string>
+                                                    {
+                                                        { "analysisIdentificator", Model.SharedAnalyses[z].AnalysisIdentificator }
+                                                    },
+        ModalActAsForm = false,
+        LabelOnButton = "Stop observing"
+    });
+}
 
 @section Scripts{
 
@@ -130,6 +156,16 @@
         $(document).ready(function () {
             $('.collapsible').collapsible();
         });
+    </script>
+
+    <script>
+    @for (int f = 0; f < Model.SharedAnalyses.Count; f++)
+        {
+            <text>
+                 @{string id = "#modalDeleteSharedAnalysisByCollab" + f;}
+                 $("@id").modal();
+            </text>
+        }
     </script>
 }
 

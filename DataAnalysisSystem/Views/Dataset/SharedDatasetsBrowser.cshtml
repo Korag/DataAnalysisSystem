@@ -77,6 +77,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{int t = 0;}
                         @foreach (var dataset in Model.SharedDatasets)
                         {
                             <tr>
@@ -103,6 +104,9 @@
                                 </td>
                                 <td>
                                     <a asp-action="SharedDatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                    @{string modalDataTarget = "modalDeleteSharedDatasetByCollab" + t;}
+                                    <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
+                                    @{t++;}
                                 </td>
                             </tr>
                         }
@@ -113,6 +117,26 @@
     </div>
 </div>
 
+@for (int z = 0; z < Model.SharedDatasets.Count; z++)
+{
+    string modalDataTarget = "modalDeleteSharedDatasetByCollab" + z;
+    @await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
+    {
+        ModalIdentificator = modalDataTarget,
+        ModalTitle = "Stop observing the shared data set",
+        ModalContent = "Are you sure you want to stop observing the shared data set?",
+
+        ControllerName = "Dataset",
+        ActionName = "DeleteSharedDatasetByCollab",
+        RouteAdditionalArguments = new Dictionary<string, string>
+                                                    {
+                                                        { "datasetIdentificator", Model.SharedDatasets[z].DatasetIdentificator }
+                                                    },
+        ModalActAsForm = false,
+        LabelOnButton = "Stop observing"
+    });
+}
+
 @section Scripts{
 
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "datasetsInfoList", LoadingIndicatorId = "dataTableLoadingIndicator" });}
@@ -121,6 +145,16 @@
         $(document).ready(function () {
             $('.collapsible').collapsible();
         });
+    </script>
+
+    <script>
+    @for (int f = 0; f < Model.SharedDatasets.Count; f++)
+        {
+            <text>
+                 @{string id = "#modalDeleteSharedDatasetByCollab" + f;}
+                 $("@id").modal();
+            </text>
+        }
     </script>
 }
 

@@ -241,10 +241,27 @@ namespace DataAnalysisSystem.Controllers
             List<string> dataAnalysesId = _context.analysisRepository.GetAnalysesByDatasetId(dataset.DatasetIdentificator).Select(z => z.AnalysisIdentificator).ToList();
 
             _context.analysisRepository.DeleteAnalyses(dataAnalysesId);
-            _context.userRepository.RemoveAnalysesFromOwner(loggedUser.Id.ToString(), dataAnalysesId);
+            _context.userRepository.RemoveAnalysesFromOwner(loggedUser.Id, dataAnalysesId);
             _context.userRepository.RemoveSharedAnalysesFromUsers(dataAnalysesId);
 
             return RedirectToAction("MainAction", "UserSystemInteraction", new { notificationMessage = "The dataset and associated data analyses were successfully removed from the system." });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult DeleteSharedDatasetByCollab(string datasetIdentificator)
+        {
+            Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
+            var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
+
+            if (dataset == null || !loggedUser.SharedDatasetsToUser.Contains(datasetIdentificator))
+            {
+                return RedirectToAction("MainAction", "UserSystemInteraction");
+            }
+
+            _context.userRepository.RemoveSharedDatasetFromUser(datasetIdentificator, loggedUser.Id);
+
+            return RedirectToAction("SharedDatasetsBrowser", "Dataset", new { notificationMessage = "The dataset was successfully removed from your account." });
         }
 
         [Authorize]
@@ -340,29 +357,6 @@ namespace DataAnalysisSystem.Controllers
 
             ExportDatasetViewModel exportDataset = _autoMapper.Map<ExportDatasetViewModel>(datasetToExport);
             exportDataset.DatasetContent = _autoMapper.Map<DatasetContentViewModel>(datasetToExport.DatasetContent);
-
-            #region ToCheck
-            //var interfaceType = typeof(ISerializerStrategy);
-            //var subclasses = AppDomain.CurrentDomain.GetAssemblies()
-            //    .SelectMany(s => s.GetTypes())
-            //    .Where(p => interfaceType.IsAssignableFrom(p) && !p.IsInterface);
-
-            //foreach (var strategy in subclasses)
-            //{
-            //    _customSerializer.ChangeStrategy((ISerializerStrategy)strategy.GetElementType());
-            //    _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
-            //}
-
-            //Task<string> csvSerializerTask = Task<string>.Factory.StartNew(() => {return new CustomSerializer(new CsvSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
-            //Task<string> jsonSerializerTask = Task<string>.Factory.StartNew(() => {return new CustomSerializer(new JsonSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
-            //Task<string> xlsxSerializerTask = Task<string>.Factory.StartNew(() => { return new CustomSerializer(new XlsxSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
-            //Task<string> xmlSerializerTask = Task<string>.Factory.StartNew(() => { return new CustomSerializer(new XmlSerializerStrategy()).ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent); });
-
-            //exportDataset.DatasetContentFormatCSV = csvSerializerTask.Result;
-            //exportDataset.DatasetContentFormatJSON = jsonSerializerTask.Result;
-            //exportDataset.DatasetContentFormatXLSX = xlsxSerializerTask.Result;
-            //exportDataset.DatasetContentFormatXML = xmlSerializerTask.Result;
-            #endregion
 
             _customSerializer.ChangeStrategy(new CsvSerializerStrategy());
             exportDataset.DatasetContentFormatCSV = _customSerializer.ConvertFromObjectToSpecificFile(datasetToExport.DatasetContent);
@@ -478,42 +472,6 @@ namespace DataAnalysisSystem.Controllers
         [ActionName("SharedDatasetsBrowser")]
         public IActionResult SharedDatasetsBrowserPost(string newSharedDatasetAccessKey)
         {
-            #region Legacy
-            //Dataset datasetShared = _context.datasetRepository.GetDatasetByAccessKey(datasetBrowser.NewSharedDatasetAccessKey);
-
-            //if (ModelState.IsValid && datasetShared != null)
-            //{
-            //    var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-
-            //    if (loggedUser.UserDatasets.Contains(datasetShared.DatasetIdentificator))
-            //    {
-            //        datasetBrowser = GetDatasetsSharedToLoggedUser();
-            //        ModelState.AddModelError(string.Empty, "You are the owner of this data set.");
-
-            //        return View(datasetBrowser);
-            //    }
-            //    if(loggedUser.SharedDatasetsToUser.Contains(datasetShared.DatasetIdentificator))
-            //    {
-            //        datasetBrowser = GetDatasetsSharedToLoggedUser();
-            //        ModelState.AddModelError(string.Empty, "You already have access to this dataset.");
-
-            //        return View(datasetBrowser);
-            //    }
-
-            //    loggedUser.SharedDatasetsToUser.Add(datasetShared.DatasetIdentificator);
-            //    _context.userRepository.UpdateUser(loggedUser);
-
-            //    return RedirectToAction("SharedDatasetsBrowser", "Dataset", new { notificationMessage = "You have successfully gained access to a shared dataset." });
-            //}
-            //else
-            //{
-            //    datasetBrowser = GetDatasetsSharedToLoggedUser();
-            //    ModelState.AddModelError(string.Empty, "Invalid access key.");
-
-            //    return View(datasetBrowser);
-            //}
-            #endregion
-
             return RedirectToAction("GainAccessToSharedDataset", new { datasetAccessKey = newSharedDatasetAccessKey });
         }
 
