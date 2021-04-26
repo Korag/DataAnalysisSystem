@@ -108,7 +108,7 @@
             ModalId = "modalWaiter",
             ValidationContainerId = "checkboxValidationInfo",
             CheckboxesToLimitValidation = new List<CheckboxLimiterValidationScriptViewModel>
-        () { new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".kMeansCheck", MinAmountOfCheckedCheckboxes = 2, CheckboxContainerId = "divKMeansClusteringMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".deriverativeCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divDeriverativeMethodParameters" }
+            () { new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".kMeansCheck", MinAmountOfCheckedCheckboxes = 2, CheckboxContainerId = "divKMeansClusteringMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".deriverativeCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divDeriverativeMethodParameters" }
       ,new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".approxCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divApproximationMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".basicStatCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divBasicStatisticsMethodParameters" }
       ,new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".histCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divHistogramMethodParameters" }, new CheckboxLimiterValidationScriptViewModel() { CheckboxClass = ".regrCheck", MinAmountOfCheckedCheckboxes = 1, CheckboxContainerId = "divRegressionMethodParameters" }}
         });}
@@ -154,11 +154,11 @@
         }
 
         function CheckBoxClick(e) {
-            if ($(e).prop("checked") == "false") {
-                $(e).prop("checked", true);
+            if (!$(e).is(":checked")) {
+                $(e).prop("checked", false);
             }
             else {
-                $(e).prop("checked", false);
+                $(e).prop("checked", true);
             }
         }
     </script>
