@@ -38,7 +38,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.BasicStatisticsParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in basicStatCheck" />
+                                                <input asp-for="@Model.AnalysisParameters.BasicStatisticsParameters.NumberColumns[index].ColumnSelected" type="checkbox" class="filled-in basicStatCheck"  onclick="CheckBoxClick(this)"/>
                                                 <span></span>
                                             </label>
                                         </p>
@@ -57,7 +57,7 @@
 
                                         <p class="center" onclick="StopEventPropagation(event)">
                                             <label>
-                                                <input asp-for="@Model.AnalysisParameters.BasicStatisticsParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in" readonly disabled />
+                                                <input asp-for="@Model.AnalysisParameters.BasicStatisticsParameters.StringColumns[index].ColumnSelected" type="checkbox" class="filled-in"  onclick="CheckBoxClick(this)" readonly disabled />
                                                 <span></span>
                                             </label>
                                         </p>

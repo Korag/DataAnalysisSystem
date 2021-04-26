@@ -6,13 +6,9 @@ namespace DataAnalysisSystem.DataEntities
     {
         public KMeansClusteringResult()
         {
-            this.NumberColumns = new List<DatasetContentKMeansClusteringResultsTypeDouble>();
-            this.StringColumns = new List<DatasetContentKMeansClusteringResultsTypeString>();
             this.CentroidsPoints = new List<IList<double>>();
         }
 
-        public IList<DatasetContentKMeansClusteringResultsTypeDouble> NumberColumns { get; set; }
-        public IList<DatasetContentKMeansClusteringResultsTypeString> StringColumns { get; set; }
         public IList<ClusterMemberData> Clusters { get; set; }
         public IList<IList<double>> CentroidsPoints { get; set; }
 

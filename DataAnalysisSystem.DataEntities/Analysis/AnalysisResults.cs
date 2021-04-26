@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace DataAnalysisSystem.DataEntities
 {
@@ -17,6 +16,5 @@ namespace DataAnalysisSystem.DataEntities
         public DeriverativeResult DeriverativeResult { get; set; }
         public BasicStatisticsResult BasicStatisticsResult { get; set; }
         public HistogramResult HistogramResult { get; set; }
-
     }
 }

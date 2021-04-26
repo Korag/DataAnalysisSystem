@@ -28,10 +28,7 @@ namespace DataAnalysisSystem.DataAnalysisMethods
 
                 attributeNames.Add(numberColumn.AttributeName);
 
-
                 DatasetColumnSelectColumnForParametersTypeDouble columnNumberParameters = parameters.KMeansClusteringParameters.NumberColumns.Where(z => z.PositionInDataset == numberColumn.PositionInDataset).FirstOrDefault();
-                DatasetContentKMeansClusteringResultsTypeDouble singleNumberColumnResult = new DatasetContentKMeansClusteringResultsTypeDouble(numberColumn.AttributeName, numberColumn.PositionInDataset, columnNumberParameters.ColumnSelected);
-                results.KMeansClusteringResult.NumberColumns.Add(singleNumberColumnResult);
 
                 if (columnNumberParameters.ColumnSelected)
                 {
@@ -46,13 +43,6 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                         results.KMeansClusteringResult.OYCoordinatePosition = numberColumn.PositionInDataset;
                     }
                 }
-            }
-
-            foreach (var stringColumn in datasetContent.StringColumns)
-            {
-                DatasetColumnSelectColumnForParametersTypeString columnStringParameters = parameters.KMeansClusteringParameters.StringColumns.Where(z => z.PositionInDataset == stringColumn.PositionInDataset).FirstOrDefault();
-                DatasetContentKMeansClusteringResultsTypeString singleStringColumnResult = new DatasetContentKMeansClusteringResultsTypeString(stringColumn.AttributeName, stringColumn.PositionInDataset, columnStringParameters.ColumnSelected);
-                results.KMeansClusteringResult.StringColumns.Add(singleStringColumnResult);
             }
 
             var dynamicType = DynamicType.CreateDynamicType(properties);

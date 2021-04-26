@@ -27,8 +27,6 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                 ));
 
                 DatasetColumnSelectColumnForParametersTypeDouble columnNumberParameters = parameters.RegressionParameters.NumberColumns.Where(z => z.PositionInDataset == numberColumn.PositionInDataset).FirstOrDefault();
-                DatasetContentRegressionResultsTypeDouble singleNumberColumnResult = new DatasetContentRegressionResultsTypeDouble(numberColumn.AttributeName, numberColumn.PositionInDataset, columnNumberParameters.ColumnSelected);
-                results.RegressionResult.NumberColumns.Add(singleNumberColumnResult);
 
                 if (columnNumberParameters.ColumnSelected)
                 {
@@ -52,13 +50,6 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                     attributeNamesWithoutFirstPredictionAttribute.Add(numberColumn.AttributeName);
                     attributeNamesWithoutSecondPredictionAttribute.Add(numberColumn.AttributeName);
                 }
-            }
-
-            foreach (var stringColumn in datasetContent.StringColumns)
-            {
-                DatasetColumnSelectColumnForParametersTypeString columnStringParameters = parameters.RegressionParameters.StringColumns.Where(z => z.PositionInDataset == stringColumn.PositionInDataset).FirstOrDefault();
-                DatasetContentRegressionResultsTypeString singleStringColumnResult = new DatasetContentRegressionResultsTypeString(stringColumn.AttributeName, stringColumn.PositionInDataset, columnStringParameters.ColumnSelected);
-                results.RegressionResult.StringColumns.Add(singleStringColumnResult);
             }
 
             var dynamicType = DynamicType.CreateDynamicType(properties);

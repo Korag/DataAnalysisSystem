@@ -11,7 +11,6 @@ using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.Helpers;
 using DataAnalysisSystem.DTO.UserDTO;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataAnalysisSystem.Services
 {
@@ -143,10 +142,6 @@ namespace DataAnalysisSystem.Services
             CreateMap<RegressionResult, DetailsRegressionResultViewModel>();
 
             CreateMap<ClusterMemberData, ClusterMemberDataViewModel>();
-            CreateMap<DatasetContentKMeansClusteringResultsTypeDouble, DatasetContentKMeansClusteringResultsTypeDoubleViewModel>();
-            CreateMap<DatasetContentKMeansClusteringResultsTypeString, DatasetContentKMeansClusteringResultsTypeStringViewModel>();
-            CreateMap<DatasetContentRegressionResultsTypeDouble, DatasetContentRegressionResultsTypeDoubleViewModel>();
-            CreateMap<DatasetContentRegressionResultsTypeString, DatasetContentRegressionResultsTypeStringViewModel>();
             CreateMap<RegressionMetric, RegressionMetricViewModel>();
             CreateMap<RegressionPredictedValue, RegressionPredictedValueViewModel>();
 
