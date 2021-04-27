@@ -131,6 +131,26 @@
         }
 
         });
+
+    </script>
+
+    <script>
+        $('.selectall').on('change', function (e) {
+            var $inputs = $('form input[type=checkbox]');
+            if (e.originalEvent === undefined) {
+                var allChecked = true;
+                $inputs.each(function () {
+                    allChecked = allChecked && this.checked;
+                });
+                this.checked = allChecked;
+            } else {
+                $inputs.prop('checked', this.checked);
+            }
+        });
+
+        $('form input[type=checkbox]').on('change', function () {
+            $('.selectall').trigger('change');
+        });
     </script>
 
     <script>
@@ -147,6 +167,7 @@
 
         function SelectAll(checkboxClass) {
             $(`.${checkboxClass}`).prop("checked", true);
+
         }
 
         function DeselectAll(checkboxClass) {
@@ -154,12 +175,16 @@
         }
 
         function CheckBoxClick(e) {
-            if (!$(e).is(":checked")) {
-                $(e).prop("checked", false);
-            }
-            else {
-                $(e).prop("checked", true);
-            }
+            console.log($(e));
+            console.log($(e).prop("checked"));
+            console.log($(e).val());
+            //if ($(e).prop("checked") == "checked") {
+            //    $(e).prop("checked", false);
+            //}
+            //else ($(e).prop("checked") == "false")
+            //{
+            //    $(e).prop("checked", "checked");
+            //}
         }
     </script>
 

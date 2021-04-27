@@ -61,7 +61,7 @@ namespace DataAnalysisSystem.Controllers
 
             if (this.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("MainAction", "User");
+                return RedirectToAction("MainAction", "UserSystemInteraction");
             }
 
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);

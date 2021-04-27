@@ -27,7 +27,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 if (numberColumn != null)
                 {
                     DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel singleColumn = new DatasetContentSelectColumnForHistogramParametersTypeDoubleViewModel(
-                                                                                                         numberColumn.AttributeName, numberColumn.PositionInDataset, false);
+                                                                                                         numberColumn.AttributeName, numberColumn.PositionInDataset, true);
                     singleColumn.Range = DEFAULT_RANGE;
 
                     this.NumberColumns.Add(singleColumn);
@@ -36,7 +36,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 {
                     var stringColumn = datasetContent.StringColumns.Where(z => z.PositionInDataset == i).FirstOrDefault();
                     DatasetContentSelectColumnForHistogramParametersTypeStringViewModel singleColumn = new DatasetContentSelectColumnForHistogramParametersTypeStringViewModel(
-                                                                                                         stringColumn.AttributeName, stringColumn.PositionInDataset, false);
+                                                                                                         stringColumn.AttributeName, stringColumn.PositionInDataset, true);
                     this.StringColumns.Add(singleColumn);
                 }
             }

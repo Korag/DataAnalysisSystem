@@ -26,7 +26,7 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters
                 if (numberColumn != null)
                 {
                     this.NumberColumns.Add(new DatasetColumnSelectColumnForParametersTypeDoubleViewModel(
-                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, false));
+                                                             numberColumn.AttributeName, numberColumn.PositionInDataset, true));
                 }
                 else
                 {
