@@ -5,8 +5,11 @@
     ViewData["Title"] = "Shared Datasets";
 }
 
-<div id="notSharedDatasets" class="row" style="margin-top: 10vh; margin-bottom: 5vh;">
-    <div class="col s12">
+<div id="notSharedDatasets" class="row" style="margin-bottom: 5vh;">
+
+    @{string marginTop = ViewData["Message"] == null ? "10vh" : "0vh";}
+
+    <div class="col s12" style="margin-top: @marginTop">
         <div class="card" style="display:block;">
             <div class="card-content">
                 <span class="card-title center">My not shared datasets</span>
@@ -76,8 +79,8 @@
     </div>
 </div>
 
-<div id="sharedDatasets" class="row" style="margin-top: 10vh; margin-bottom: 5vh;">
-    <div class="col s12">
+<div id="sharedDatasets" class="row" style="margin-bottom: 5vh;">
+    <div class="col s12" style="margin-top: @marginTop">
         <div class="card" style="display:block;">
             <div class="card-content">
                 <span class="card-title center">My shared datasets</span>

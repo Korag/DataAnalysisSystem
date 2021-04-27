@@ -5,8 +5,11 @@
 }
 
 <div id="datasetDetails">
-    <div class="row" style="margin-top: 10vh; margin-bottom: 2vh">
-        <div class="col s12 m10 l8 offset-m1 offset-l2">
+    <div class="row" style="margin-bottom: 2vh">
+
+        @{string marginTop = ViewData["Message"] == null ? "10vh" : "0vh";}
+
+        <div class="col s12 m10 l8 offset-m1 offset-l2" style="margin-top: @marginTop">
 
             <div class="card" style="display:block;">
                 <div class="card-content">
@@ -181,7 +184,7 @@
     </div>
 </div>
 
-<div id="relatedAnalysesInfoList" class="row" style="margin-top: 10vh; margin-bottom: 5vh">
+<div id="relatedAnalysesInfoList" class="row" style="margin-top: @marginTop; margin-bottom: 5vh">
     <div class="col s12">
 
         <div class="card" style="display:block;">

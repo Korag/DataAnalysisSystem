@@ -187,8 +187,10 @@ namespace DataAnalysisSystem.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult DatasetDetails(string datasetIdentificator)
+        public IActionResult DatasetDetails(string datasetIdentificator, string notificationMessage)
         {
+            ViewData["Message"] = notificationMessage;
+
             Dataset dataset = _context.datasetRepository.GetDatasetById(datasetIdentificator);
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
 
@@ -244,7 +246,7 @@ namespace DataAnalysisSystem.Controllers
             _context.userRepository.RemoveAnalysesFromOwner(loggedUser.Id, dataAnalysesId);
             _context.userRepository.RemoveSharedAnalysesFromUsers(dataAnalysesId);
 
-            return RedirectToAction("MainAction", "UserSystemInteraction", new { notificationMessage = "The dataset and associated data analyses were successfully removed from the system." });
+            return RedirectToAction("UserDatasets", "Dataset", new { notificationMessage = "The dataset and associated data analyses were successfully removed from the system." });
         }
 
         [Authorize]
@@ -666,7 +668,7 @@ namespace DataAnalysisSystem.Controllers
 
                 _context.datasetRepository.UpdateDataset(dataset);
 
-                return RedirectToAction("DatasetDetails", "Dataset", new { datasetIdentificator = datasetToEdit.DatasetIdentificator });
+                return RedirectToAction("DatasetDetails", "Dataset", new { datasetIdentificator = datasetToEdit.DatasetIdentificator, notificationMessage = "The dataset has been updated." });
             }
             else
             {
