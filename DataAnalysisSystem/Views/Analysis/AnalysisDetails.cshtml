@@ -135,7 +135,9 @@
 
     @if (Model.AnalysisResults.BasicStatisticsResult.IsNull == false)
     {
-        await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "basicStatisticsTable", LoadingIndicatorId = "basicStatisticsDataTableLoadingIndicator", SortedByColumnNumber = 1, SortingType = "asc" });
+        await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel 
+        { DataTableId = "basicStatisticsTable", LoadingIndicatorId = "basicStatisticsDataTableLoadingIndicator", 
+          SortedByColumnNumber = 1, SortingType = "asc" });
     }
 
     @if (Model.AnalysisResults.DeriverativeResult.IsNull == false)

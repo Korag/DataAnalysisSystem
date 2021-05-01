@@ -14,11 +14,11 @@ namespace DataAnalysisSystem.Services.DesignPatterns.FacadeDesignPattern
 
         public RegexComparatorChainFacade()
         {
-            InitializeChainOfResposonsibilityElemets();
+            InitializeChainOfResposonsibilityElements();
             SetNextComparators();
         }
 
-        private void InitializeChainOfResposonsibilityElemets()
+        private void InitializeChainOfResposonsibilityElements()
         {
             _comparatorCsv = new RegexComparatorCsv();
             _comparatorJson = new RegexComparatorJson();

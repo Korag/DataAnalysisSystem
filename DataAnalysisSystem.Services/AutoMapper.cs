@@ -5,8 +5,6 @@ using DataAnalysisSystem.DTO.AnalysisParametersDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO.Helpers;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO.ParametersDetails;
-using DataAnalysisSystem.DTO.AnalysisResultsDTO;
-using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.Helpers;
 using DataAnalysisSystem.DTO.UserDTO;
@@ -118,28 +116,14 @@ namespace DataAnalysisSystem.Services
                           .ForMember(dest => dest.DatasetDateOfEdition, opts => opts.MapFrom(src => src.DateOfEdition))
                           .ForMember(dest => dest.OriginalDatasetFileFullName, opts => opts.MapFrom(src => src.DatasetStatistics.InputFileName + " " + src.DatasetStatistics.InputFileFormat));
 
-            CreateMap<Analysis, AnalysisDetailsViewModel>();
+            CreateMap<Analysis, AnalysisDetailsViewModel>()
+                          .ForMember(dest => dest.AnalysisResults, opts => opts.Ignore());
 
             CreateMap<Analysis, DatasetDetailsAnalysisInformationViewModel>();
 
             #endregion
 
             #region AnalysisResults
-
-            CreateMap<AnalysisResults, AnalysisResultsDetailsViewModel>()
-                 .ForMember(dest => dest.ApproximationResult, opts => opts.Ignore())
-                 .ForMember(dest => dest.DeriverativeResult, opts => opts.Ignore())
-                 .ForMember(dest => dest.KMeansClusteringResult, opts => opts.Ignore())
-                 .ForMember(dest => dest.RegressionResult, opts => opts.Ignore())
-                 .ForMember(dest => dest.BasicStatisticsResult, opts => opts.Ignore())
-                 .ForMember(dest => dest.HistogramResult, opts => opts.Ignore());
-
-            CreateMap<ApproximationResult, DetailsApproximationResultViewModel>();
-            CreateMap<BasicStatisticsResult, DetailsBasicStatisticsResultViewModel>();
-            CreateMap<DeriverativeResult, DetailsDeriverativeResultViewModel>();
-            CreateMap<HistogramResult, DetailsHistogramResultViewModel>();
-            CreateMap<KMeansClusteringResult, DetailsKMeansClusteringResultViewModel>();
-            CreateMap<RegressionResult, DetailsRegressionResultViewModel>();
 
             CreateMap<ClusterMemberData, ClusterMemberDataViewModel>();
             CreateMap<RegressionMetric, RegressionMetricViewModel>();

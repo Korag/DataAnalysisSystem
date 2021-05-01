@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DataAnalysisSystem.DataEntities
+﻿namespace DataAnalysisSystem.DataEntities
 {
     public class DatasetColumnSelectColumnForParametersTypeString
     {

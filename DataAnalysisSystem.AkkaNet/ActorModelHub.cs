@@ -1,5 +1,4 @@
 ﻿using Akka.Actor;
-using Akka.Configuration;
 using DataAnalysisSystem.AkkaNet.Actors;
 using DataAnalysisSystem.AkkaNet.MessagesViewModels;
 using DataAnalysisSystem.DataAnalysisMethods;

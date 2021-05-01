@@ -1,4 +1,5 @@
 ﻿using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
+using DataAnalysisSystem.DTO.DatasetDTO;
 
 namespace DataAnalysisSystem.DTO.AnalysisParametersDTO
 {
@@ -12,6 +13,16 @@ namespace DataAnalysisSystem.DTO.AnalysisParametersDTO
             this.DeriverativeParameters = new AddDeriverativeParametersViewModel();
             this.BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel();
             this.HistogramParameters = new AddHistogramParametersViewModel();
+        }
+
+        public AddAnalysisParametersViewModel(DatasetContentViewModel datasetContent)
+        {
+            this.KMeansClusteringParameters = new AddKMeansClusteringParametersViewModel(datasetContent);
+            this.RegressionParameters = new AddRegressionParametersViewModel(datasetContent);
+            this.ApproximationParameters = new AddApproximationParametersViewModel(datasetContent);
+            this.DeriverativeParameters = new AddDeriverativeParametersViewModel(datasetContent);
+            this.BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel(datasetContent);
+            this.HistogramParameters = new AddHistogramParametersViewModel(datasetContent);
         }
 
         public AddKMeansClusteringParametersViewModel KMeansClusteringParameters { get; set; }

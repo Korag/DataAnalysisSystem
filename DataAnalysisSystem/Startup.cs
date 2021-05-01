@@ -24,7 +24,6 @@ using DataAnalysisSystem.DataAnalysisCommands;
 using DataAnalysisSystem.AkkaNet;
 using Akka.Actor;
 using Akka.Configuration;
-using DataAnalysisSystem.AkkaNet.Actors;
 
 namespace DataAnalysisSystem
 {
@@ -65,7 +64,8 @@ namespace DataAnalysisSystem
 
             // Services Layer
             services.AddTransient<IEmailProvider, EmailServiceProvider>();
-            services.AddSingleton<IEmailProviderConfigurationProfile>(Configuration.GetSection("EmailProviderConfiguration").Get<EmailProviderConfigurationProfile>());
+            services.AddSingleton<IEmailProviderConfigurationProfile>
+                (Configuration.GetSection("EmailProviderConfiguration").Get<EmailProviderConfigurationProfile>());
 
             services.AddTransient<ICodeGenerator, CodeGeneratorUtilityForMongoDB>();
 

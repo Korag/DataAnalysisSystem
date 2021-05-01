@@ -1,5 +1,4 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using System.Collections.Generic;
 
 namespace DataAnalysisSystem.DataAnalysisCommands.Abstract
 {

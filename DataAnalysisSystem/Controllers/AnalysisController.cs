@@ -5,9 +5,7 @@ using DataAnalysisSystem.DataAnalysisCommands.Abstract;
 using DataAnalysisSystem.DataEntities;
 using DataAnalysisSystem.DTO.AnalysisDTO;
 using DataAnalysisSystem.DTO.AnalysisParametersDTO;
-using DataAnalysisSystem.DTO.AnalysisParametersDTO.AddParameters;
 using DataAnalysisSystem.DTO.AnalysisResultsDTO;
-using DataAnalysisSystem.DTO.AnalysisResultsDTO.AnalysisResultsDetails;
 using DataAnalysisSystem.DTO.DatasetDTO;
 using DataAnalysisSystem.DTO.Dictionaries;
 using DataAnalysisSystem.Extensions;
@@ -65,13 +63,7 @@ namespace DataAnalysisSystem.Controllers
 
             PerformNewAnalysisViewModel performAnalysisViewModel = _autoMapper.Map<PerformNewAnalysisViewModel>(relatedDataset);
            
-            performAnalysisViewModel.AnalysisParameters = new AddAnalysisParametersViewModel();
-            performAnalysisViewModel.AnalysisParameters.HistogramParameters = new AddHistogramParametersViewModel(relatedDatasetContent);
-            performAnalysisViewModel.AnalysisParameters.BasicStatisticsParameters = new AddBasicStatisticsParametersViewModel(relatedDatasetContent);
-            performAnalysisViewModel.AnalysisParameters.KMeansClusteringParameters = new AddKMeansClusteringParametersViewModel(relatedDatasetContent);
-            performAnalysisViewModel.AnalysisParameters.ApproximationParameters = new AddApproximationParametersViewModel(relatedDatasetContent);
-            performAnalysisViewModel.AnalysisParameters.DeriverativeParameters = new AddDeriverativeParametersViewModel(relatedDatasetContent);
-            performAnalysisViewModel.AnalysisParameters.RegressionParameters = new AddRegressionParametersViewModel(relatedDatasetContent);
+            performAnalysisViewModel.AnalysisParameters = new AddAnalysisParametersViewModel(relatedDatasetContent);
 
             return View(performAnalysisViewModel);
         }
@@ -391,15 +383,8 @@ namespace DataAnalysisSystem.Controllers
             }
 
             AnalysisDetailsViewModel analysisDetails = _autoMapper.Map<AnalysisDetailsViewModel>(analysis);
-            analysisDetails.AnalysisResults = _autoMapper.Map<AnalysisResultsDetailsViewModel>(analysis.AnalysisResults);
+            analysisDetails.AnalysisResults = new AnalysisResultsDetailsViewModel(analysis.AnalysisResults);
             analysisDetails.AnalysisParameters = _autoMapper.Map<AnalysisParametersDetailsViewModel>(analysis.AnalysisParameters);
-
-            analysisDetails.AnalysisResults.ApproximationResult = new DetailsApproximationResultViewModel(analysis.AnalysisResults);
-            analysisDetails.AnalysisResults.DeriverativeResult = new DetailsDeriverativeResultViewModel(analysis.AnalysisResults);
-            analysisDetails.AnalysisResults.KMeansClusteringResult = new DetailsKMeansClusteringResultViewModel(analysis.AnalysisResults);
-            analysisDetails.AnalysisResults.RegressionResult = new DetailsRegressionResultViewModel(analysis.AnalysisResults);
-            analysisDetails.AnalysisResults.BasicStatisticsResult = new DetailsBasicStatisticsResultViewModel(analysis.AnalysisResults);
-            analysisDetails.AnalysisResults.HistogramResult = new DetailsHistogramResultViewModel(analysis.AnalysisResults);
 
             if (loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator) || loggedUser.UserDatasets.Contains(analysis.DatasetIdentificator))
             {

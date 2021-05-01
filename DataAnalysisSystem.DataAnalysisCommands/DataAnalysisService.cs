@@ -2,8 +2,6 @@
 using DataAnalysisSystem.AkkaNet;
 using DataAnalysisSystem.DataAnalysisMethods;
 using DataAnalysisSystem.DataEntities;
-using System;
-using System.Collections.Generic;
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {

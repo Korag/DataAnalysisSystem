@@ -1,10 +1,7 @@
 ﻿using DataAnalysisSystem.DataAnalysisCommands.Abstract;
 using DataAnalysisSystem.DataEntities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace DataAnalysisSystem.DataAnalysisCommands
 {
