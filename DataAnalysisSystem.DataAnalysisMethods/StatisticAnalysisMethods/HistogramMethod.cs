@@ -1,7 +1,7 @@
 ﻿using DataAnalysisSystem.DataEntities;
-using Extreme.DataAnalysis;
-using Extreme.Mathematics;
+using MathNet.Numerics.Statistics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAnalysisSystem.DataAnalysisMethods
@@ -24,17 +24,16 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                     double smallestValue = numberColumn.AttributeValue.OrderByDescending(z => z).Last();
                     double biggestValue = numberColumn.AttributeValue.OrderByDescending(z => z).First();
 
-                    var histogram = Histogram.CreateEmpty<double>(smallestValue, biggestValue, columnNumberParameters.Range);
-                    histogram.Tabulate(numberColumn.AttributeValue);
+                    var histogram = new Histogram(numberColumn.AttributeValue, columnNumberParameters.Range, smallestValue, biggestValue);
 
-                    foreach (var pair in histogram.BinsAndValues)
+                    for(int i = 0; i < singleNumberColumnResult.Range; i++)
                     {
                         singleNumberColumnResult.HistogramValues.Add(new HistogramNumberBin()
                         {
-                            LowerBound = pair.Key.LowerBound,
-                            UpperBound = pair.Key.UpperBound,
-                            Width = pair.Key.Width,
-                            Value = pair.Value
+                            LowerBound = histogram[i].LowerBound,
+                            UpperBound = histogram[i].UpperBound,
+                            Width = histogram[i].Width,
+                            Value = histogram[i].Count
                         });
                     };
                 }
@@ -52,15 +51,33 @@ namespace DataAnalysisSystem.DataAnalysisMethods
 
                 if (columnStringParameters.ColumnSelected)
                 {
-                    var categoricalVector = Vector.CreateCategorical(stringColumn.AttributeValue);
-                    var histogram = categoricalVector.CreateHistogram();
+                    Dictionary<string, double> categoricalDataDictionary = new Dictionary<string, double>();
+                    List<double> codedCategoricalData = new List<double>();
 
-                    foreach (var pair in histogram.BinsAndValues)
+                    int uniqueValuesCount = stringColumn.AttributeValue.Distinct().Count();
+
+                    double j = 0;
+                    foreach (var categoricalValue in stringColumn.AttributeValue.Distinct())
                     {
+                        categoricalDataDictionary.Add(categoricalValue, j);
+                        j += 1;
+                    }
+
+                    foreach (var categoricalValue in stringColumn.AttributeValue)
+                    {
+                        codedCategoricalData.Add(categoricalDataDictionary.Where(z=> z.Key == categoricalValue).Select(z=> z.Value).FirstOrDefault());
+                    }
+
+                    var histogram = new Histogram(codedCategoricalData, uniqueValuesCount, codedCategoricalData.Min(), codedCategoricalData.Max());
+
+                    for (int i = 0; i < uniqueValuesCount; i++)
+                    {
+                        string categoricalValue = categoricalDataDictionary.ElementAt(i).Key;
+
                         singleStringColumnResult.HistogramValues.Add(new HistogramStringBin()
                         {
-                            Bin = pair.Key,
-                            Value = Convert.ToInt32(pair.Value)
+                            Bin = categoricalValue,
+                            Value = Convert.ToInt32(histogram[i].Count)
                         });
                     };
                 }
