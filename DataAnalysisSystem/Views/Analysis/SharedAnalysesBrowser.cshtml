@@ -113,7 +113,7 @@
                                 <td>
                                     @Html.DisplayFor(model => analysis.OwnerName)
                                 </td>
-                                <td>
+                                <td style="text-align:center">
                                     <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
                                     @{string modalDataTarget = "modalDeleteSharedAnalysisByCollab" + t;}
                                     <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>

@@ -209,26 +209,28 @@
                     <tbody>
                         @foreach (var analysis in Model.RelatedAnalyses)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(model => analysis.AnalysisName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.AnalysisIndexer)
-                            </td>
-                            <td>
-                                @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
-                                {
-                                    <span class="new badge" data-badge-caption="custom caption">@Html.DisplayFor(model => analysisMethod)</span>
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => analysis.DateOfCreation)
-                            </td>
-                            <td>
-                                <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.AnalysisIndexer)
+                                </td>
+                                <td>
+                                    @foreach (var analysisMethod in analysis.PerformedAnalysisMethods)
+                                    {
+                                        <div class="chip" style="width:200px">
+                                            @analysisMethod
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => analysis.DateOfCreation)
+                                </td>
+                                <td>
+                                    <a asp-action="AnalysisDetails" asp-controller="Analysis" asp-route-analysisIdentificator="@analysis.AnalysisIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -271,20 +273,20 @@
 
 @section Scripts{
 
-    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2", SortedByColumnNumber = 3, SortingType = "asc" });}
 
-    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
-    @{await Html.RenderPartialAsync("_DataTableWLoadingAndTabsInitScript", new DataTableInitScriptWithLoadingAndTabsViewModel { TabsContentDivsId = new List<string> { "datasetDetails", "relatedAnalysesInfoList" }, DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+@{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
+@{await Html.RenderPartialAsync("_DataTableWLoadingAndTabsInitScript", new DataTableInitScriptWithLoadingAndTabsViewModel { TabsContentDivsId = new List<string> { "datasetDetails", "relatedAnalysesInfoList" }, DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
 
-    <script>
-        $(document).ready(function () {
-            $('.collapsible').collapsible();
-            $("#modalDeleteDataset").modal();
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+        $("#modalDeleteDataset").modal();
+    });
+</script>
 
-    @{await Html.RenderPartialAsync("_AttributeDistributionChart", new ChartUniversalViewModel { ChartCanvasId = "attributeDistributionChart", Data = Model.DatasetStatistics.AttributesDistribution });}
-    @{await Html.RenderPartialAsync("_PercentageOfMissingValuesChart", new ChartUniversalViewModel { ChartCanvasId = "percentageOfMissingValuesChart", Data = Model.DatasetStatistics.MissingValuePercentage });}
+@{await Html.RenderPartialAsync("_AttributeDistributionChart", new ChartUniversalViewModel { ChartCanvasId = "attributeDistributionChart", Data = Model.DatasetStatistics.AttributesDistribution });}
+@{await Html.RenderPartialAsync("_PercentageOfMissingValuesChart", new ChartUniversalViewModel { ChartCanvasId = "percentageOfMissingValuesChart", Data = Model.DatasetStatistics.MissingValuePercentage });}
 }
 
 @section Notification

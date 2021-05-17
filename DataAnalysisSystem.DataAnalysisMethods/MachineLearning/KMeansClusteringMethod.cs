@@ -28,6 +28,12 @@ namespace DataAnalysisSystem.DataAnalysisMethods
 
                 attributeNames.Add(numberColumn.AttributeName);
 
+                if (properties.Last().Name == "default")
+                {
+                    properties.Last().Name = "defaultName";
+                    attributeNames[attributeNames.Count-1] = "defaultName";
+                }
+
                 DatasetColumnSelectColumnForParametersTypeDouble columnNumberParameters = parameters.KMeansClusteringParameters.NumberColumns.Where(z => z.PositionInDataset == numberColumn.PositionInDataset).FirstOrDefault();
 
                 if (columnNumberParameters.ColumnSelected)

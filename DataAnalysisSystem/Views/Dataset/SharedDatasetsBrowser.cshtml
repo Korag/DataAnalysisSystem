@@ -102,8 +102,8 @@
                                 <td>
                                     @Html.DisplayFor(model => dataset.OwnerName)
                                 </td>
-                                <td>
-                                    <a asp-action="SharedDatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text">Details</a>
+                                <td style="text-align:center">
+                                    <a asp-action="SharedDatasetDetails" asp-controller="Dataset" asp-route-datasetIdentificator="@dataset.DatasetIdentificator" class="waves-effect waves-light btn teal lighten-1 white-text" style="margin:auto">Details</a>
                                     @{string modalDataTarget = "modalDeleteSharedDatasetByCollab" + t;}
                                     <a class="waves-effect waves-light modal-trigger" data-target="@modalDataTarget"><i class="material-icons" style="color:#b71c1c; font-size:16px; padding-bottom:20px">clear</i></a>
                                     @{t++;}

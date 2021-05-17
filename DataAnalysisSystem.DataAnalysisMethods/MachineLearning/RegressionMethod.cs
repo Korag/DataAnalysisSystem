@@ -26,6 +26,12 @@ namespace DataAnalysisSystem.DataAnalysisMethods
                                    typeof(float)
                 ));
 
+                if (properties.Last().Name == "default")
+                {
+                    properties.Last().Name = "defaultName";
+                    numberColumn.AttributeName = "defaultName";
+                }
+
                 DatasetColumnSelectColumnForParametersTypeDouble columnNumberParameters = parameters.RegressionParameters.NumberColumns.Where(z => z.PositionInDataset == numberColumn.PositionInDataset).FirstOrDefault();
 
                 if (columnNumberParameters.ColumnSelected)
