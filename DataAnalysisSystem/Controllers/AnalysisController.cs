@@ -111,10 +111,19 @@ namespace DataAnalysisSystem.Controllers
                     PerformedAnalysisMethods = newAnalysis.SelectedAnalysisMethods.ToList()
                 };
 
-                loggedUser.UserAnalyses.Add(performedAnalysis.AnalysisIdentificator);
-
                 _context.analysisRepository.AddAnalysis(performedAnalysis);
-                _context.userRepository.UpdateUser(loggedUser);
+
+                if (!loggedUser.UserDatasets.Contains(relatedDataset.DatasetIdentificator))
+                {
+                    var datasetOwnerUser = _context.userRepository.GetDatasetOwnerByDatasetId(relatedDataset.DatasetIdentificator);
+                    datasetOwnerUser.UserAnalyses.Add(performedAnalysis.AnalysisIdentificator);
+                    _context.userRepository.UpdateUser(datasetOwnerUser);
+                }
+                else
+                {
+                    loggedUser.UserAnalyses.Add(performedAnalysis.AnalysisIdentificator);
+                    _context.userRepository.UpdateUser(loggedUser);
+                }
 
                 return RedirectToAction("AnalysisDetails", "Analysis", new { analysisIdentificator = performedAnalysis.AnalysisIdentificator, notificationMessage = "The data analysis has been completed." });
             }
