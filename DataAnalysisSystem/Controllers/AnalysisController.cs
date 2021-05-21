@@ -385,8 +385,8 @@ namespace DataAnalysisSystem.Controllers
 
             Analysis analysis = _context.analysisRepository.GetAnalysisById(analysisIdentificator);
             var loggedUser = _context.userRepository.GetUserByName(this.User.Identity.Name);
-
-            if (!loggedUser.UserAnalyses.Contains(analysisIdentificator) && !loggedUser.SharedAnalysesToUser.Contains(analysisIdentificator))
+      
+            if (!loggedUser.UserAnalyses.Contains(analysisIdentificator) && !loggedUser.SharedAnalysesToUser.Contains(analysisIdentificator) && !loggedUser.SharedDatasetsToUser.Contains(analysis.DatasetIdentificator))
             {
                 return RedirectToAction("MainAction", "UserSystemInteraction");
             }

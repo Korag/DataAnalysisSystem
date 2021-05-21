@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="center-align" style="margin-top: 5px">
-                        <a asp-controller="Analysis" asp-action="AnalyseDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Analyze</a>
+                        <a asp-controller="Analysis" asp-action="PerformNewAnalysis" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="btn waves-effect waves-teal" style="margin-left:24px;">Analyze</a>
 
                         <a href="#!" data-target="optionsList2" class="dropdown-trigger waves-effect right" style="margin-top: 10px"><i class="material-icons" style="color:black">more_horiz</i></a>
 
@@ -31,10 +31,10 @@
                             <div class="col s12">
                                 <div class="options-container">
                                     <div class="single-option">
-                                        <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
+                                        <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px" onclick="openModalWaiter()">Export</a>
                                     </div>
                                     <div class="single-option">
-                                        <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px">Edit</a>
+                                        <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px" onclick="openModalWaiter()">Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -239,23 +239,12 @@
     </div>
 </div>
 
-<!-- Analyses List with action -->
-<!-- #region Logout Modal -->
-@await Component.InvokeAsync("ModalPopupWindow", new ModalPopupViewModel
-                                                {
-                                                 ModalIdentificator = "modalDeleteDataset",
-                                                 ModalTitle = "Delete Dataset",
-                                                 ModalContent = "Are you sure you want to delete this dataset and all the analyses associated with it?",
-
-                                                 ControllerName = "Dataset",
-                                                 ActionName = "DeleteDataset",
-                                                 RouteAdditionalArguments = new Dictionary<string, string>
-                                                                                    {
-                                                                                        { "datasetIdentificator", Model.DatasetIdentificator }
-                                                                                    },
-                                                 ModalActAsForm = false,
-                                                 LabelOnButton = "Delete"
-                                                })
+@await Component.InvokeAsync("ModalBottomSheetWindow", new ModalBottomSheetViewModel
+       {
+           ModalIdentificator = "modalWaiter",
+           ModalHeader = "Preparing a dataset.",
+           ModalPrimaryText = "This may take a while."
+       })
 
 @section NavContent {
 
@@ -273,20 +262,24 @@
 
 @section Scripts{
 
+    @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2", SortedByColumnNumber = 3, SortingType = "asc" });}
 
-@{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
-@{await Html.RenderPartialAsync("_DataTableWLoadingAndTabsInitScript", new DataTableInitScriptWithLoadingAndTabsViewModel { TabsContentDivsId = new List<string> { "datasetDetails", "relatedAnalysesInfoList" }, DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
+    @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
+    @{await Html.RenderPartialAsync("_DataTableWLoadingAndTabsInitScript", new DataTableInitScriptWithLoadingAndTabsViewModel { TabsContentDivsId = new List<string> { "datasetDetails", "relatedAnalysesInfoList" }, DataTableId = "datasetContentTable", LoadingIndicatorId = "dataTableLoadingIndicator" });}
 
-<script>
-    $(document).ready(function () {
-        $('.collapsible').collapsible();
-        $("#modalDeleteDataset").modal();
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible();
+        });
 
-@{await Html.RenderPartialAsync("_AttributeDistributionChart", new ChartUniversalViewModel { ChartCanvasId = "attributeDistributionChart", Data = Model.DatasetStatistics.AttributesDistribution });}
-@{await Html.RenderPartialAsync("_PercentageOfMissingValuesChart", new ChartUniversalViewModel { ChartCanvasId = "percentageOfMissingValuesChart", Data = Model.DatasetStatistics.MissingValuePercentage });}
+        function openModalWaiter() {
+            $('#modalWaiter').modal('open');
+        }
+    </script>
+
+    @{await Html.RenderPartialAsync("_AttributeDistributionChart", new ChartUniversalViewModel { ChartCanvasId = "attributeDistributionChart", Data = Model.DatasetStatistics.AttributesDistribution });}
+    @{await Html.RenderPartialAsync("_PercentageOfMissingValuesChart", new ChartUniversalViewModel { ChartCanvasId = "percentageOfMissingValuesChart", Data = Model.DatasetStatistics.MissingValuePercentage });}
 }
 
 @section Notification

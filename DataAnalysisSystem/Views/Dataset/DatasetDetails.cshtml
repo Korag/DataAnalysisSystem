@@ -34,7 +34,7 @@
                             <div class="col s12">
                                 <div class="options-container">
                                     <div class="single-option">
-                                        <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px">Export</a>
+                                        <a asp-controller="Dataset" asp-action="ExportDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn light-blue darken-4 white-text" style="width:140px" onclick="openModalWaiter()">Export</a>
                                     </div>
                                     <div class="single-option">
                                         <a asp-controller="Dataset" asp-action="EditDataset" asp-route-datasetIdentificator="@Model.DatasetIdentificator" class="waves-effect waves-light btn amber darken-2 white-text" style="width:140px" onclick="openModalWaiter()">Edit</a>
@@ -289,7 +289,6 @@
 @section Scripts{
 
     @{await Html.RenderPartialAsync("_ModalBottomSheetScript", new ModalBottomSheetScriptViewModel { ModalIdentificator = "modalWaiter", ModalDismissible = false });}
-
     @{await Html.RenderPartialAsync("_DataTableWLoadingIndicatorInitScript", new DataTableInitScriptWithLoadingIndicatorViewModel { DataTableId = "analysesInfoList", LoadingIndicatorId = "dataTableLoadingIndicator2", SortedByColumnNumber = 3, SortingType = "asc" });}
 
     @{await Html.RenderPartialAsync("_NavExtendedWithTabsScript", new NavExtendedWithTabsViewModel { NavbarId = "navbarTop", NotificationContainerId = "notificationContainer" });}
