@@ -25,7 +25,6 @@ namespace DataAnalysisSystem.Controllers
 
         private readonly RepositoryContext _context;
 
-        //All actions OK
         public UserController(UserManager<IdentityProviderUser> userManager,
                               SignInManager<IdentityProviderUser> signInManager,
                               RepositoryContext context,
